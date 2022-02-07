@@ -21,5 +21,15 @@
 	"bugs": {
 		"url": "https://phabricator.wikimedia.org/project/board/5674/"
 	},
-	"homepage": "https://github.com/wmde/new-lexeme-special-page#readme"
+	"homepage": "https://github.com/wmde/new-lexeme-special-page#readme",
+	"devDependencies": {
+		"husky": "^7.0.4",
+		"lint-staged": "^12.3.3",
+		"prettier": "2.5.1"
+	},
+	"lint-staged": {
+		"*.{json,yml,yaml}": [
+			"prettier --check"
+		]
+	}
 }
