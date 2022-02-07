@@ -8,9 +8,12 @@
 		"dev": "vite",
 		"build": "vue-tsc --noEmit && vite build",
 		"preview": "vite preview",
-		"test": "echo \"Error: no test specified\" && exit 1",
 		"prepare": "husky install",
-		"fix": "prettier --write '**/*.{json,yml,yaml}'"
+		"test": "npm-run-all test:*",
+		"test:lint": "eslint --ext .js,.ts,.vue --ignore-path .gitignore .",
+		"fix": "npm-run-all fix:*",
+		"fix:script": "eslint --fix --ext .js,.ts,.vue --ignore-path .gitignore .",
+		"fix:jsonYaml": "prettier --write '**/*.{json,yml,yaml}'"
 	},
 	"repository": {
 		"type": "git",
@@ -35,9 +38,20 @@
 		"prettier": "2.5.1",
 		"typescript": "^4.5.5",
 		"vite": "^2.7.13",
-		"vue-tsc": "^0.31.2"
+		"vue-tsc": "^0.31.2",
+		"@typescript-eslint/eslint-plugin": "^5.10.2",
+		"@typescript-eslint/parser": "^5.10.2",
+		"@vue/eslint-config-typescript": "^10.0.0",
+		"@wmde/eslint-config-wikimedia-typescript": "^0.2.1",
+		"eslint": "^8.8.0",
+		"eslint-config-wikimedia": "^0.21.0",
+		"eslint-plugin-vue": "^8.4.1",
+		"npm-run-all": "^4.1.5"
 	},
 	"lint-staged": {
+		"*.{js,ts,vue}": [
+			"eslint"
+		],
 		"*.{json,yml,yaml}": [
 			"prettier --check"
 		]
