@@ -10,10 +10,13 @@
 		"preview": "vite preview",
 		"prepare": "husky install",
 		"test": "npm-run-all test:*",
-		"test:lint": "eslint --ext .js,.ts,.vue --ignore-path .gitignore .",
-		"fix": "npm-run-all fix:*",
+		"lint": "run-s lint:*",
+		"lint:config": "prettier --check '**/*.{json,yml,yaml}'",
+		"lint:script": "eslint --ext .js,.ts,.vue --ignore-path .gitignore .",
+		"lint:style": "stylelint '**/*.{css,scss,vue}'",
+		"fix": "run-s fix:*",
+		"fix:config": "prettier --write '**/*.{json,yml,yaml}'",
 		"fix:script": "eslint --fix --ext .js,.ts,.vue --ignore-path .gitignore .",
-		"fix:jsonYaml": "prettier --write '**/*.{json,yml,yaml}'",
 		"fix:style": "stylelint --fix '**/*.{css,scss,vue}'"
 	},
 	"repository": {
