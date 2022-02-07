@@ -1,0 +1,9 @@
+package-lock.json
+
+# Ignore all files covered by a wikimedia code style:
+*.js
+*.ts
+*.vue
+*.scss
+*.css
+*.less
