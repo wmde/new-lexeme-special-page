@@ -5,6 +5,9 @@
 	"description": "Form for the upcoming revival of the NewLexeme special page on Wikidata",
 	"main": "main.ts",
 	"scripts": {
+		"dev": "vite",
+		"build": "vue-tsc --noEmit && vite build",
+		"preview": "vite preview",
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"prepare": "husky install",
 		"fix": "prettier --write '**/*.{json,yml,yaml}'"
@@ -22,10 +25,17 @@
 		"url": "https://phabricator.wikimedia.org/project/board/5674/"
 	},
 	"homepage": "https://github.com/wmde/new-lexeme-special-page#readme",
+	"dependencies": {
+		"vue": "^3.2.30"
+	},
 	"devDependencies": {
+		"@vitejs/plugin-vue": "^2.1.0",
 		"husky": "^7.0.4",
 		"lint-staged": "^12.3.3",
-		"prettier": "2.5.1"
+		"prettier": "2.5.1",
+		"typescript": "^4.5.5",
+		"vite": "^2.7.13",
+		"vue-tsc": "^0.31.2"
 	},
 	"lint-staged": {
 		"*.{json,yml,yaml}": [
