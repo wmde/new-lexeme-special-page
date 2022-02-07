@@ -1,23 +1,25 @@
 {
-  "name": "new-lexeme-special-page",
-  "private": true,
-  "version": "0.0.1",
-  "description": "Form for the upcoming revival of the NewLexeme special page on Wikidata",
-  "main": "main.ts",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/wmde/new-lexeme-special-page.git"
-  },
-  "keywords": [
-    "Wikidata"
-  ],
-  "author": "The Wikidata team",
-  "license": "GPL-2.0-or-later",
-  "bugs": {
-    "url": "https://phabricator.wikimedia.org/project/board/5674/"
-  },
-  "homepage": "https://github.com/wmde/new-lexeme-special-page#readme"
+	"name": "new-lexeme-special-page",
+	"private": true,
+	"version": "0.0.1",
+	"description": "Form for the upcoming revival of the NewLexeme special page on Wikidata",
+	"main": "main.ts",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"prepare": "husky install",
+		"fix": "prettier --write '**/*.{json,yml,yaml}'"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/wmde/new-lexeme-special-page.git"
+	},
+	"keywords": [
+		"Wikidata"
+	],
+	"author": "The Wikidata team",
+	"license": "GPL-2.0-or-later",
+	"bugs": {
+		"url": "https://phabricator.wikimedia.org/project/board/5674/"
+	},
+	"homepage": "https://github.com/wmde/new-lexeme-special-page#readme"
 }
