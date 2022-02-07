@@ -17,6 +17,6 @@ import '@wmde/wikit-vue-components/dist/wikit-vue-components.css';
 	-moz-osx-font-smoothing: grayscale;
 	text-align: center;
 	color: #2c3e50;
-	margin-top: 60px;
+	margin-block-start: 60px;
 }
 </style>
