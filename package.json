@@ -10,6 +10,7 @@
 		"preview": "vite preview",
 		"prepare": "husky install",
 		"test": "npm-run-all test:*",
+		"test:unit": "echo 'Tests TBD'",
 		"lint": "run-s lint:*",
 		"lint:config": "prettier --check '**/*.{json,yml,yaml}'",
 		"lint:script": "eslint --ext .js,.ts,.vue --ignore-path .gitignore .",
