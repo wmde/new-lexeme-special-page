@@ -4,5 +4,8 @@ root = true
 end_of_line = lf
 insert_final_newline = true
 
-[*.{js,ts,vue,html}]
+[*.{js,ts,vue,html,json}]
 indent_style = tab
+
+[*.{yml,yaml}]
+indent_size = 4
