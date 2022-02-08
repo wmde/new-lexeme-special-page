@@ -7,18 +7,19 @@
 	"scripts": {
 		"dev": "vite",
 		"build": "vue-tsc --noEmit && vite build",
-		"preview": "vite preview",
-		"prepare": "husky install",
-		"test": "run-s lint test:*",
-		"test:unit": "echo 'Tests TBD'",
+		"fix": "run-s fix:*",
+		"fix:prettier": "prettier --write '**/*.{json,yml,yaml}'",
+		"fix:eslint": "eslint --fix --ext .js,.ts,.vue --ignore-path .gitignore .",
+		"fix:stylelint": "stylelint --fix '**/*.{css,scss,vue}'",
 		"lint": "run-s lint:*",
 		"lint:prettier": "prettier --check '**/*.{json,yml,yaml}'",
 		"lint:eslint": "eslint --ext .js,.ts,.vue --ignore-path .gitignore .",
 		"lint:stylelint": "stylelint '**/*.{css,scss,vue}'",
-		"fix": "run-s fix:*",
-		"fix:prettier": "prettier --write '**/*.{json,yml,yaml}'",
-		"fix:eslint": "eslint --fix --ext .js,.ts,.vue --ignore-path .gitignore .",
-		"fix:stylelint": "stylelint --fix '**/*.{css,scss,vue}'"
+		"preview": "vite preview",
+		"prepare": "husky install",
+		"test": "run-s lint test-only",
+		"test-only": "run-s test:*",
+		"test:unit": "echo 'Tests TBD'"
 	},
 	"repository": {
 		"type": "git",
