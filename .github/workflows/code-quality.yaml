@@ -1,8 +1,8 @@
-name: Test
+name: Code Quality
 on: push
 
 jobs:
-    js-test:
+    code-quality:
         runs-on: ubuntu-latest
         steps:
             - uses: actions/checkout@v2
@@ -15,5 +15,8 @@ jobs:
             - name: Install Dependencies
               run: npm ci
 
+            - name: Lint Files
+              run: npm run lint
+
             - name: Run Tests
-              run: npm test
+              run: npm run test-only

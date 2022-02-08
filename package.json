@@ -7,13 +7,19 @@
 	"scripts": {
 		"dev": "vite",
 		"build": "vue-tsc --noEmit && vite build",
+		"fix": "run-s fix:*",
+		"fix:prettier": "prettier --write '**/*.{json,yml,yaml}'",
+		"fix:eslint": "eslint --fix --ext .js,.ts,.vue --ignore-path .gitignore .",
+		"fix:stylelint": "stylelint --fix '**/*.{css,scss,vue}'",
+		"lint": "run-s lint:*",
+		"lint:prettier": "prettier --check '**/*.{json,yml,yaml}'",
+		"lint:eslint": "eslint --ext .js,.ts,.vue --ignore-path .gitignore .",
+		"lint:stylelint": "stylelint '**/*.{css,scss,vue}'",
 		"preview": "vite preview",
 		"prepare": "husky install",
-		"test": "npm-run-all test:*",
-		"test:lint": "eslint --ext .js,.ts,.vue --ignore-path .gitignore .",
-		"fix": "npm-run-all fix:*",
-		"fix:script": "eslint --fix --ext .js,.ts,.vue --ignore-path .gitignore .",
-		"fix:jsonYaml": "prettier --write '**/*.{json,yml,yaml}'"
+		"test": "run-s lint test-only",
+		"test-only": "run-s test:*",
+		"test:unit": "echo 'Tests TBD'"
 	},
 	"repository": {
 		"type": "git",
@@ -47,6 +53,11 @@
 		"npm-run-all": "^4.1.5",
 		"prettier": "2.5.1",
 		"sass": "^1.49.7",
+		"stylelint": "^14.3.0",
+		"stylelint-config-recommended-vue": "^1.1.0",
+		"stylelint-config-standard-scss": "^3.0.0",
+		"stylelint-config-wikimedia": "^0.11.1",
+		"stylelint-use-logical-spec": "^3.2.2",
 		"typescript": "^4.5.5",
 		"vite": "^2.7.13",
 		"vue-tsc": "^0.31.2"
@@ -57,6 +68,9 @@
 		],
 		"*.{json,yml,yaml}": [
 			"prettier --check"
+		],
+		"*.{css,scss,vue}": [
+			"stylelint"
 		]
 	}
 }

@@ -1,0 +1,13 @@
+{
+	"extends": [
+		"stylelint-config-wikimedia/support-modern",
+		"stylelint-config-standard-scss",
+		"stylelint-config-recommended-vue/scss"
+	],
+	"plugins": ["stylelint-use-logical-spec"],
+	"rules": {
+		"indentation": "tab",
+		"selector-max-id": 1,
+		"liberty/use-logical-spec": true
+	}
+}
