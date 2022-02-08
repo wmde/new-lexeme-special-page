@@ -12,13 +12,13 @@
 		"test": "npm-run-all test:*",
 		"test:unit": "echo 'Tests TBD'",
 		"lint": "run-s lint:*",
-		"lint:config": "prettier --check '**/*.{json,yml,yaml}'",
-		"lint:script": "eslint --ext .js,.ts,.vue --ignore-path .gitignore .",
-		"lint:style": "stylelint '**/*.{css,scss,vue}'",
+		"lint:prettier": "prettier --check '**/*.{json,yml,yaml}'",
+		"lint:eslint": "eslint --ext .js,.ts,.vue --ignore-path .gitignore .",
+		"lint:stylelint": "stylelint '**/*.{css,scss,vue}'",
 		"fix": "run-s fix:*",
-		"fix:config": "prettier --write '**/*.{json,yml,yaml}'",
-		"fix:script": "eslint --fix --ext .js,.ts,.vue --ignore-path .gitignore .",
-		"fix:style": "stylelint --fix '**/*.{css,scss,vue}'"
+		"fix:prettier": "prettier --write '**/*.{json,yml,yaml}'",
+		"fix:eslint": "eslint --fix --ext .js,.ts,.vue --ignore-path .gitignore .",
+		"fix:stylelint": "stylelint --fix '**/*.{css,scss,vue}'"
 	},
 	"repository": {
 		"type": "git",
