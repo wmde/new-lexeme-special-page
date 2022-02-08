@@ -17,5 +17,8 @@ module.exports = {
 
 		// resetting this back to the default value, to comply with modern vite conventions
 		'vue/component-tags-order': [ 'error', { order: [ [ 'script', 'template' ], 'style' ] } ],
+
+		// we still need to use some legacy APIs to interact with the vue3compat build of Wikit
+		'vue/no-deprecated-v-on-native-modifier': 'off',
 	},
 };
