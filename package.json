@@ -9,6 +9,7 @@
 		"build": "vue-tsc --noEmit && vite build",
 		"preview": "vite preview",
 		"prepare": "husky install",
+		"check": "run-s lint test",
 		"test": "npm-run-all test:*",
 		"test:unit": "echo 'Tests TBD'",
 		"lint": "run-s lint:*",
