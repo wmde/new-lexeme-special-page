@@ -4,6 +4,7 @@ module.exports = {
 		'vue/setup-compiler-macros': true,
 	},
 	extends: [
+		'plugin:import/recommended',
 		'wikimedia',
 		'wikimedia/node',
 		'wikimedia/client-common', // client-es6 still extends vue2 config
@@ -12,6 +13,15 @@ module.exports = {
 		'@wmde/wikimedia-typescript',
 		'@vue/typescript/recommended',
 	],
+	settings: {
+		'import/resolver': {
+			alias: {
+				map: [
+					[ '@', './src' ],
+				],
+			},
+		},
+	},
 	rules: {
 		'comma-dangle': [ 'error', 'always-multiline' ],
 
@@ -20,5 +30,8 @@ module.exports = {
 
 		// we still need to use some legacy APIs to interact with the vue3compat build of Wikit
 		'vue/no-deprecated-v-on-native-modifier': 'off',
+
+		// superseded by plugin:import
+		'node/no-missing-import': 'off',
 	},
 };
