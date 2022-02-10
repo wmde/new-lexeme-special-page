@@ -18,6 +18,7 @@ export default defineConfig( {
 				__dirname,
 				'node_modules/@wmde/wikit-vue-components/dist/wikit-vue-components-vue3compat.common.js',
 			),
+			'@': resolve( __dirname, 'src' ),
 		},
 	},
 	plugins: [ vue( {
