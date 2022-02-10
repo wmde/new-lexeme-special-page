@@ -1,4 +1,11 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 
-createApp( App ).mount( '#app' );
+interface Config {
+	rootSelector: string;
+}
+
+export default function createAndMount( config: Config ): void {
+	createApp( App )
+		.mount( config.rootSelector );
+}
