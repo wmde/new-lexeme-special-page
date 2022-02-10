@@ -105,3 +105,7 @@ dist
 
 # IDE
 .vscode/
+
+# Cypress outputs
+/cypress/screenshots
+/cypress/videos
