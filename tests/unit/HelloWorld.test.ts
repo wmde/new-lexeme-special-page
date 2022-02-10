@@ -1,6 +1,6 @@
 import { mount } from '@vue/test-utils';
 import { Button as WikitButton } from '@wmde/wikit-vue-components';
-import HelloWorld from '../../src/components/HelloWorld.vue';
+import HelloWorld from '@/components/HelloWorld.vue';
 
 beforeAll( () => {
 	process.env = Object.assign( process.env, { VUE_APP_VUE3COMPAT: '1' } );
