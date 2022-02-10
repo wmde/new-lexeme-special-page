@@ -16,6 +16,7 @@ module.exports = {
 		'./jest.overrides.js',
 	],
 	testEnvironment: 'jsdom',
+	testPathIgnorePatterns: [ '<rootDir>/cypress/' ],
 	transform: {
 		'^.*\\.ts$': 'ts-jest',
 		'^.*\\.vue$': '@vue/vue3-jest',
