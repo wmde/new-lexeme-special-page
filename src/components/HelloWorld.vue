@@ -1,10 +1,13 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { useStore } from 'vuex';
 import { Button as WikitButton } from '@wmde/wikit-vue-components';
+import { computed } from 'vue';
 
 defineProps<{ msg: string }>();
 
-const count = ref( 0 );
+const store = useStore();
+const count = computed( () => store.state.count );
+const increment = () => store.commit( 'increment' );
 </script>
 
 <template>
@@ -20,7 +23,7 @@ const count = ref( 0 );
 		<a href="https://v3.vuejs.org/" target="_blank">Vue 3 Docs</a>
 	</p>
 
-	<wikit-button @click.native="count++">
+	<wikit-button @click.native="increment">
 		count is: {{ count }}
 	</wikit-button>
 	<p>
