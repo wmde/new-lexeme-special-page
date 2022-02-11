@@ -15,7 +15,7 @@ export default defineConfig( {
 			formats: [ 'cjs' ],
 		},
 		rollupOptions: {
-			external: [ '@vue/compat', 'vue' ],
+			external: [ '@vue/compat', 'vue', 'vuex' ],
 		},
 	},
 	resolve: {
