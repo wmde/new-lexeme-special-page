@@ -2,12 +2,13 @@
 import { useStore } from 'vuex';
 import { Button as WikitButton } from '@wmde/wikit-vue-components';
 import { computed } from 'vue';
+import { INCREMENT } from '@/store/mutations';
 
 defineProps<{ msg: string }>();
 
 const store = useStore();
 const count = computed( () => store.state.count );
-const increment = () => store.commit( 'increment' );
+const increment = () => store.commit( INCREMENT );
 </script>
 
 <template>

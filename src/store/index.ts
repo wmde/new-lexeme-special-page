@@ -1,18 +1,13 @@
 import { createStore } from 'vuex';
 
-interface State {
-	count: number
-}
+import mutations from './mutations';
+import RootState from './RootState';
 
 export default createStore( {
-	state(): State {
+	state(): RootState {
 		return {
 			count: 0,
 		};
 	},
-	mutations: {
-		increment( state: State ) {
-			state.count++;
-		},
-	},
+	mutations,
 } );
