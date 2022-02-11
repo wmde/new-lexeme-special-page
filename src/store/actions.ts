@@ -6,16 +6,18 @@
  * @see https://vuex.vuejs.org/guide/structure.html
  */
 
-import { ActionContext, Store } from 'vuex';
+import { ActionContext } from 'vuex';
 import RootState from './RootState';
 import { INCREMENT } from './mutations';
+
+type RootContext = ActionContext<RootState, RootState>;
 
 // TODO: Remove this example action once the first store action is implemented.
 export const DELAYED_INCREMENT = 'incrementAsync';
 
 export default {
 	async [ DELAYED_INCREMENT ](
-		{ commit }: ActionContext<RootState, RootState>,
+		{ commit }: RootContext,
 		{ delay }: { delay: number },
 	): Promise<void> {
 		await <Promise<void>> new Promise( ( resolve ) => {
