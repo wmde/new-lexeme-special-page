@@ -6,6 +6,18 @@ import vue from '@vitejs/plugin-vue';
 
 // https://vitejs.dev/config/
 export default defineConfig( {
+	build: {
+		target: 'es2015',
+		lib: {
+			entry: resolve( __dirname, 'src/main.ts' ),
+			name: 'main',
+			fileName: ( format ) => `SpecialNewLexeme.${format}.js`,
+			formats: [ 'cjs' ],
+		},
+		rollupOptions: {
+			external: [ '@vue/compat', 'vue' ],
+		},
+	},
 	resolve: {
 		alias: {
 			'vue': '@vue/compat',

@@ -1,4 +1,14 @@
-import { createApp } from 'vue';
+import {
+	ComponentPublicInstance,
+	createApp,
+} from 'vue';
 import App from './App.vue';
 
-createApp( App ).mount( '#app' );
+interface Config {
+	rootSelector: string;
+}
+
+export default function createAndMount( config: Config ): ComponentPublicInstance {
+	return createApp( App )
+		.mount( config.rootSelector );
+}
