@@ -1,8 +1,8 @@
 {
 	"compilerOptions": {
-		"target": "esnext",
+		"target": "es2015",
 		"useDefineForClassFields": true,
-		"module": "esnext",
+		"module": "es2015",
 		"moduleResolution": "node",
 		"strict": true,
 		"jsx": "preserve",
@@ -13,7 +13,7 @@
 		"paths": {
 			"@/*": ["src/*"]
 		},
-		"lib": ["esnext", "dom"],
+		"lib": ["es2015", "dom"],
 		"typeRoots": ["node_modules/@types"]
 	},
 	"include": [
