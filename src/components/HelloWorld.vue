@@ -1,3 +1,5 @@
+<!-- TODO: Remove this component once this demo is no longer useful. -->
+
 <script setup lang="ts">
 import { useStore } from 'vuex';
 import { Button as WikitButton } from '@wmde/wikit-vue-components';

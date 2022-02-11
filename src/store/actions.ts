@@ -1,7 +1,16 @@
+/**
+ * This file stores all the actions that can be dispatched to the store.
+ * Action names are saved and exported as constants for later use in components.
+ *
+ * @see https://vuex.vuejs.org/guide/actions.html
+ * @see https://vuex.vuejs.org/guide/structure.html
+ */
+
 import { ActionContext, Store } from 'vuex';
 import RootState from './RootState';
 import { INCREMENT } from './mutations';
 
+// TODO: Remove this example action once the first store action is implemented.
 export const DELAYED_INCREMENT = 'incrementAsync';
 
 export default {

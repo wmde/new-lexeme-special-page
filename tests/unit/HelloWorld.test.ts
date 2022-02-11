@@ -1,3 +1,5 @@
+// TODO: Remove this test once the example component is no longer needed.
+
 import { mount } from '@vue/test-utils';
 import { Button as WikitButton } from '@wmde/wikit-vue-components';
 

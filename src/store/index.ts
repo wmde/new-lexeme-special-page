@@ -1,3 +1,9 @@
+/**
+ * This script creates the store with an initial state and exports it.
+ *
+ * @see https://vuex.vuejs.org/guide/structure.html
+ */
+
 import { createStore } from 'vuex';
 
 import actions from './actions';
