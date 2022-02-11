@@ -1,5 +1,6 @@
 import { createStore } from 'vuex';
 
+import actions from './actions';
 import mutations from './mutations';
 import RootState from './RootState';
 
@@ -10,4 +11,5 @@ export default createStore( {
 		};
 	},
 	mutations,
+	actions,
 } );

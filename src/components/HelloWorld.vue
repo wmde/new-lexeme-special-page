@@ -2,13 +2,13 @@
 import { useStore } from 'vuex';
 import { Button as WikitButton } from '@wmde/wikit-vue-components';
 import { computed } from 'vue';
-import { INCREMENT } from '@/store/mutations';
+import { DELAYED_INCREMENT } from '@/store/actions';
 
 defineProps<{ msg: string }>();
 
 const store = useStore();
 const count = computed( () => store.state.count );
-const increment = () => store.commit( INCREMENT );
+const increment = () => store.dispatch( DELAYED_INCREMENT, { delay: 300 } );
 </script>
 
 <template>
