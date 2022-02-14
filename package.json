@@ -18,10 +18,11 @@
 		"lint:stylelint": "stylelint '**/*.{css,scss,vue}'",
 		"preview": "vite preview",
 		"prepare": "husky install",
-		"test": "run-s lint test-only",
+		"test": "run-s lint check-types test-only",
 		"test-only": "run-s test:*",
 		"test:unit": "jest",
 		"test:cypress": "cypress run",
+		"check-types": "vue-tsc --noEmit",
 		"cypress:open": "cypress open"
 	},
 	"repository": {
