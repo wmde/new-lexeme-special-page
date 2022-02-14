@@ -18,5 +18,8 @@ jobs:
             - name: Lint Files
               run: npm run lint
 
+            - name: Check Types
+              run: npm run check-types
+
             - name: Run Tests
               run: npm run test-only
