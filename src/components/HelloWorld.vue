@@ -3,20 +3,24 @@
 <script setup lang="ts">
 import { useStore } from 'vuex';
 import { Button as WikitButton } from '@wmde/wikit-vue-components';
-import { computed } from 'vue';
+import { computed, inject } from 'vue';
 import { DELAYED_INCREMENT } from '@/store/actions';
+import Messages, { MessagesKey } from '@/plugins/MessagesPlugin/Messages';
 
 defineProps<{ msg: string }>();
 
 const store = useStore();
 const count = computed( () => store.state.count );
 const increment = () => store.dispatch( DELAYED_INCREMENT, { delay: 300 } );
+const $messages = inject( MessagesKey, new Messages() );
 </script>
 
 <template>
 	<h1>{{ msg }}</h1>
 
 	<p>See <code>README.md</code> for more information.</p>
+
+	<p>i18n example: {{ $messages.get( 'wikibaselexeme-newlexeme-lemma' ) }}</p>
 
 	<p>
 		<a href="https://vitejs.dev/guide/features.html" target="_blank">
