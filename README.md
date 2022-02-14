@@ -20,3 +20,6 @@ Afterwards, run `npm run netlify deploy` to run manual deployments to a unique a
 To deploy to [https://new-lexeme-special-page.netlify.app](https://new-lexeme-special-page.netlify.app) run `npm run netlify deploy --prod`. 
 
 To be able to run the netlify commands you will need to run `netlify login` once after installing netlify to authenticate and obtain a token.
+
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/wmde/new-lexeme-special-page)
+Clicking this button would be an equivalent to running `npm run netlify deploy --prod`.
