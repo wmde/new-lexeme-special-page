@@ -7,8 +7,8 @@ import { InjectionKey } from 'vue';
  *
  * FIXME: write something about when to use getText vs get
  *
- * `this.$messages.get( this.$messages.KEYS.LEMMA_INPUT_LABEL )`
- * `this.$messages.getText( this.$messages.KEYS.LEMMA_INPUT_LABEL )`
+ * `this.$messages.get( 'wikibaselexeme-newlexeme-lemma' )`
+ * `this.$messages.getText( 'wikibaselexeme-newlexeme-lemma' )`
  */
 export default class Messages {
 
