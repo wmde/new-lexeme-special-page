@@ -40,6 +40,10 @@ export default defineConfig( {
 				__dirname,
 				'node_modules/@wmde/wikit-vue-components/dist/wikit-vue-components-vue3compat.common.js',
 			),
+			'@wmde/wikit-tokens/variables': resolve(
+				__dirname,
+				'node_modules/@wmde/wikit-tokens/dist/_variables.scss',
+			),
 			'@': resolve( __dirname, 'src' ),
 		},
 	},
