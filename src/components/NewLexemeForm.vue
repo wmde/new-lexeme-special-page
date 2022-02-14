@@ -1,5 +1,9 @@
 <script setup lang="ts">
+import { inject } from 'vue';
 import { Button as WikitButton } from '@wmde/wikit-vue-components';
+import { MessagesKey } from '@/plugins/MessagesPlugin/Messages';
+
+const $messages = inject( MessagesKey );
 </script>
 
 <template>
@@ -9,7 +13,7 @@ import { Button as WikitButton } from '@wmde/wikit-vue-components';
 			type="progressive"
 			variant="primary"
 		>
-			Create Lexeme
+			{{ $messages.get( 'new-lexeme-submit' ) }}
 		</wikit-button>
 	</form>
 </template>

@@ -10,7 +10,18 @@
 		<script type="module">
 			import createAndMount from './src/main.ts';
 
-			createAndMount( { rootSelector: '#app' } );
+			const messages = {
+				'new-lexeme-submit': 'Create Lexeme',
+			}
+			
+			createAndMount( { rootSelector: '#app' }, {
+				get(key) {
+					return messages[key];
+				},
+				getText(key) {
+					return this.get(key);
+				},
+			} );
 		</script>
 	</body>
 </html>
