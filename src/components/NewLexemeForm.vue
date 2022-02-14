@@ -13,7 +13,7 @@ const $messages = inject( MessagesKey );
 			type="progressive"
 			variant="primary"
 		>
-			{{ $messages.get( 'new-lexeme-submit' ) }}
+			{{ $messages.get( 'wikibaselexeme-new-lexeme-submit' ) }}
 		</wikit-button>
 	</form>
 </template>
