@@ -1,12 +1,17 @@
 /* eslint quote-props: [ "error", "consistent-as-needed" ] */
 
 import { resolve } from 'path';
-import { defineConfig } from 'vite';
+import { BuildOptions, defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 
-// https://vitejs.dev/config/
-export default defineConfig( {
-	build: {
+function getBuildConfig( isAappBuild: bool ): BuildOptions {
+	if ( isAappBuild ) {
+		return {
+			target: 'es2015',
+		};
+	}
+
+	return {
 		target: 'es2015',
 		lib: {
 			entry: resolve( __dirname, 'src/main.ts' ),
@@ -17,7 +22,12 @@ export default defineConfig( {
 		rollupOptions: {
 			external: [ '@vue/compat', 'vue', 'vuex' ],
 		},
-	},
+	};
+}
+
+// https://vitejs.dev/config/
+export default defineConfig( {
+	build: getBuildConfig( !!process.env.BUILD_AS_APP ),
 	resolve: {
 		alias: {
 			'vue': '@vue/compat',
