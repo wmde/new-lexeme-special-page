@@ -1,10 +1,16 @@
+<!-- TODO: Remove this component once this demo is no longer useful. -->
+
 <script setup lang="ts">
-import { ref } from 'vue';
+import { useStore } from 'vuex';
 import { Button as WikitButton } from '@wmde/wikit-vue-components';
+import { computed } from 'vue';
+import { DELAYED_INCREMENT } from '@/store/actions';
 
 defineProps<{ msg: string }>();
 
-const count = ref( 0 );
+const store = useStore();
+const count = computed( () => store.state.count );
+const increment = () => store.dispatch( DELAYED_INCREMENT, { delay: 300 } );
 </script>
 
 <template>
@@ -20,7 +26,7 @@ const count = ref( 0 );
 		<a href="https://v3.vuejs.org/" target="_blank">Vue 3 Docs</a>
 	</p>
 
-	<wikit-button @click.native="count++">
+	<wikit-button @click.native="increment">
 		count is: {{ count }}
 	</wikit-button>
 	<p>

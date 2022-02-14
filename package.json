@@ -39,7 +39,8 @@
 	"dependencies": {
 		"@vue/compat": "^3.2.30",
 		"@wmde/wikit-vue-components": "^2.1.0-alpha.11",
-		"vue": "^3.2.30"
+		"vue": "^3.2.30",
+		"vuex": "^4.0.2"
 	},
 	"devDependencies": {
 		"@types/jest": "^27.4.0",
