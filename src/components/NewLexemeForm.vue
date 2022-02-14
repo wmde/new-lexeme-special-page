@@ -19,6 +19,16 @@ const $messages = inject( MessagesKey );
 </template>
 
 <style scoped lang="scss">
-// FIXME: Remove this ignore rule, added to appease stylelint
-/* stylelint-disable-line no-empty-source */
+@import "@wmde/wikit-tokens/variables";
+
+.new-lexeme-form {
+	// Box model
+	padding: $dimension-layout-small;
+
+	// Border
+	border-style: $border-style-base;
+	border-width: $border-width-thin;
+	border-radius: $border-radius-base;
+	border-color: $border-color-base-subtle;
+}
 </style>
