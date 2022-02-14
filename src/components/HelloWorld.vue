@@ -3,16 +3,16 @@
 <script setup lang="ts">
 import { useStore } from 'vuex';
 import { Button as WikitButton } from '@wmde/wikit-vue-components';
-import { computed, inject } from 'vue';
+import { computed } from 'vue';
 import { DELAYED_INCREMENT } from '@/store/actions';
-import Messages, { MessagesKey } from '@/plugins/MessagesPlugin/Messages';
+import { useMessages } from '@/plugins/MessagesPlugin/Messages';
 
 defineProps<{ msg: string }>();
 
 const store = useStore();
 const count = computed( () => store.state.count );
 const increment = () => store.dispatch( DELAYED_INCREMENT, { delay: 300 } );
-const $messages = inject( MessagesKey, new Messages() );
+const $messages = useMessages();
 </script>
 
 <template>

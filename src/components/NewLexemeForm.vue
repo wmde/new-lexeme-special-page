@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import { inject } from 'vue';
 import { Button as WikitButton } from '@wmde/wikit-vue-components';
-import { MessagesKey } from '@/plugins/MessagesPlugin/Messages';
+import { useMessages } from '@/plugins/MessagesPlugin/Messages';
 
-const $messages = inject( MessagesKey );
+const $messages = useMessages();
 </script>
 
 <template>

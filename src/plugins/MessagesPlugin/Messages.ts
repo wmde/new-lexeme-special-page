@@ -1,6 +1,6 @@
 import MessagesRepository from '@/plugins/MessagesPlugin/MessagesRepository';
 import MessageKeys from '@/plugins/MessagesPlugin/MessageKeys';
-import { InjectionKey } from 'vue';
+import { inject, InjectionKey } from 'vue';
 
 /**
  * Usage (assuming this has been registered as a Vue plugin):
@@ -39,3 +39,7 @@ export default class Messages {
 }
 
 export const MessagesKey: InjectionKey<Messages> = Symbol( 'Messages' );
+
+export function useMessages(): Messages {
+	return inject( MessagesKey, new Messages() );
+}
