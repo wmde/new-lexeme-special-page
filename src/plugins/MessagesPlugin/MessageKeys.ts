@@ -1,5 +1,5 @@
 type MessageKeys
  = 'wikibaselexeme-newlexeme-lemma'
- | 'wikibaselexeme-new-lexeme-submit';
+ | 'wikibaselexeme-newlexeme-submit';
 
 export default MessageKeys;

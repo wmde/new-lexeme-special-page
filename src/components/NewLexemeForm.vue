@@ -12,7 +12,7 @@ const $messages = useMessages();
 			type="progressive"
 			variant="primary"
 		>
-			{{ $messages.get( 'wikibaselexeme-new-lexeme-submit' ) }}
+			{{ $messages.get( 'wikibaselexeme-newlexeme-submit' ) }}
 		</wikit-button>
 	</form>
 </template>
