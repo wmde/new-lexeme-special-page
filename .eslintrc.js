@@ -14,6 +14,9 @@ module.exports = {
 	],
 	rules: {
 		'comma-dangle': [ 'error', 'always-multiline' ],
+		'vue/component-name-in-template-casing': [ 'error', 'kebab-case', {
+			registeredComponentsOnly: false, // we don’t use custom elements
+		} ],
 
 		// resetting this back to the default value, to comply with modern vite conventions
 		'vue/component-tags-order': [ 'error', { order: [ [ 'script', 'template' ], 'style' ] } ],

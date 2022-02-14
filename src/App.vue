@@ -7,5 +7,5 @@ import '@wmde/wikit-vue-components/dist/wikit-vue-components.css';
 </script>
 
 <template>
-	<HelloWorld msg="Hello Vue 3 + TypeScript + Vite" />
+	<hello-world msg="Hello Vue 3 + TypeScript + Vite" />
 </template>
