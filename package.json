@@ -7,6 +7,7 @@
 	"scripts": {
 		"dev": "vite",
 		"build": "vue-tsc --noEmit && vite build",
+		"buildPreview": "BUILD_AS_APP=1 vite build",
 		"fix": "run-s fix:*",
 		"fix:prettier": "prettier --write '**/*.{json,yml,yaml}'",
 		"fix:eslint": "eslint --fix --ext .js,.ts,.vue --ignore-path .gitignore . --ignore-pattern 'cypress'",
