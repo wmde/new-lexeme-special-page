@@ -46,13 +46,15 @@ export default {
 		<lexical-category-input
 			v-model="lexicalCategory"
 		/>
-		<wikit-button
-			class="form-button-submit"
-			type="progressive"
-			variant="primary"
-		>
-			{{ $messages.get( 'wikibaselexeme-newlexeme-submit' ) }}
-		</wikit-button>
+		<div>
+			<wikit-button
+				class="form-button-submit"
+				type="progressive"
+				variant="primary"
+			>
+				{{ $messages.get( 'wikibaselexeme-newlexeme-submit' ) }}
+			</wikit-button>
+		</div>
 	</form>
 </template>
 
@@ -60,6 +62,10 @@ export default {
 @import "@wmde/wikit-tokens/variables";
 
 .wbl-snl-form {
+	& > * + * {
+		margin-block-start: $dimension-layout-xsmall;
+	}
+
 	// Box model
 	padding: $dimension-layout-small;
 
