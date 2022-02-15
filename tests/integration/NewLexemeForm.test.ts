@@ -15,8 +15,17 @@ describe( 'NewLexemeForm', () => {
 		const wrapper = mountForm();
 		const lemmaInput = wrapper.find( '.mw-wbl-snl-lemma-input input' );
 
-		lemmaInput.setValue( 'foo' );
+		await lemmaInput.setValue( 'foo' );
 
 		expect( store.state.lemma ).toBe( 'foo' );
+	} );
+
+	it( 'updates the store if something is entered into the lexical category input', async () => {
+		const wrapper = mountForm();
+		const lexicalCategoryInput = wrapper.find( '.mw-wbl-snl-lexical-category-input input' );
+
+		await lexicalCategoryInput.setValue( 'foo' );
+
+		expect( store.state.lexicalCategory ).toBe( 'foo' );
 	} );
 } );

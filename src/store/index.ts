@@ -14,6 +14,7 @@ export default createStore( {
 	state(): RootState {
 		return {
 			lemma: '',
+			lexicalCategory: '',
 		};
 	},
 	mutations,
