@@ -22,14 +22,24 @@ export default {
 </script>
 
 <template>
-	<text-input
-		class="mw-wbl-snl-lexical-category-input"
-		:label="messages.get( 'wikibaselexeme-newlexeme-lexicalcategory' )"
-		:placeholder="messages.get( 'wikibaselexeme-newlexeme-lexicalcategory-placeholder' )"
-		name="lexicalcategory"
-		required
-		pattern="Q[1-9][0-9]*"
-		:value="modelValue"
-		@input="$emit( 'update:modelValue', $event )"
-	/>
+	<div class="mw-wbl-snl-lexical-category-input">
+		<text-input
+			class="mw-wbl-snl-lexical-category-input"
+			:label="messages.get( 'wikibaselexeme-newlexeme-lexicalcategory' )"
+			:placeholder="messages.get( 'wikibaselexeme-newlexeme-lexicalcategory-placeholder' )"
+			name="lexicalcategory"
+			required
+			pattern="Q[1-9][0-9]*"
+			:value="modelValue"
+			@input="$emit( 'update:modelValue', $event )"
+		/>
+	</div>
 </template>
+
+<style lang="scss">
+@import "@wmde/wikit-tokens/variables";
+
+.mw-wbl-snl-lexical-category-input {
+	margin-block-end: $dimension-layout-xsmall;
+}
+</style>

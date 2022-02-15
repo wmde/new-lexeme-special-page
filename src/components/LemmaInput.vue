@@ -39,14 +39,23 @@ export default {
 </script>
 
 <template>
-	<text-input
-		class="mw-wbl-snl-lemma-input"
-		:label="messages.get( 'wikibaselexeme-newlexeme-lemma' )"
-		:placeholder="messages.get( 'wikibaselexeme-newlexeme-lemma-placeholder' )"
-		name="lemma"
-		required
-		:error="buildError( error )"
-		:value="modelValue"
-		@input="$emit( 'update:modelValue', $event )"
-	/>
+	<div class="mw-wbl-snl-lemma-input">
+		<text-input
+			:label="messages.get( 'wikibaselexeme-newlexeme-lemma' )"
+			:placeholder="messages.get( 'wikibaselexeme-newlexeme-lemma-placeholder' )"
+			name="lemma"
+			required
+			:error="buildError( error )"
+			:value="modelValue"
+			@input="$emit( 'update:modelValue', $event )"
+		/>
+	</div>
 </template>
+
+<style lang="scss">
+@import "@wmde/wikit-tokens/variables";
+
+.mw-wbl-snl-lemma-input {
+	margin-block-end: $dimension-layout-xsmall;
+}
+</style>
