@@ -12,7 +12,7 @@ _**Prerequisits: This repository requires node v16 and up**_
 2. Install dependecies with `npm i`
 3. Test and lint with `npm test`
 
-## Manual Deployment
+## Deploy Local Commits
 
 ### The first time you run a deploy
 
