@@ -4,7 +4,11 @@ import { useStore } from 'vuex';
 import { Button as WikitButton } from '@wmde/wikit-vue-components';
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
 import LemmaInput from '@/components/LemmaInput.vue';
-import { UPDATE_LEMMA } from '@/store/actions';
+import LexicalCategoryInput from '@/components/LexicalCategoryInput.vue';
+import {
+	UPDATE_LEMMA,
+	UPDATE_LEXICAL_CATEGORY,
+} from '@/store/actions';
 
 const $messages = useMessages();
 const store = useStore();
@@ -14,6 +18,14 @@ const lemma = computed( {
 	},
 	set( newLemmaValue: string ): void {
 		store.dispatch( UPDATE_LEMMA, newLemmaValue );
+	},
+} );
+const lexicalCategory = computed( {
+	get(): string {
+		return store.state.lexicalCategory;
+	},
+	set( newLexicalCategory: string ): void {
+		store.dispatch( UPDATE_LEXICAL_CATEGORY, newLexicalCategory );
 	},
 } );
 </script>
@@ -30,6 +42,9 @@ export default {
 	<form class="new-lexeme-form">
 		<lemma-input
 			v-model="lemma"
+		/>
+		<lexical-category-input
+			v-model="lexicalCategory"
 		/>
 		<wikit-button
 			class="form-button-submit"
