@@ -13,7 +13,7 @@ import RootState from './RootState';
 export default createStore( {
 	state(): RootState {
 		return {
-			count: 0,
+			lemma: '',
 		};
 	},
 	mutations,

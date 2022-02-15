@@ -1,12 +1,36 @@
 <script setup lang="ts">
+import { computed } from 'vue';
+import { useStore } from 'vuex';
 import { Button as WikitButton } from '@wmde/wikit-vue-components';
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
+import LemmaInput from '@/components/LemmaInput.vue';
+import { UPDATE_LEMMA } from '@/store/actions';
 
 const $messages = useMessages();
+const store = useStore();
+const lemma = computed( {
+	get(): string {
+		return store.state.lemma;
+	},
+	set( newLemmaValue: string ): void {
+		store.dispatch( UPDATE_LEMMA, newLemmaValue );
+	},
+} );
+</script>
+
+<script lang="ts">
+export default {
+	compatConfig: {
+		MODE: 3,
+	},
+};
 </script>
 
 <template>
 	<form class="new-lexeme-form">
+		<lemma-input
+			v-model="lemma"
+		/>
 		<wikit-button
 			class="form-button-submit"
 			type="progressive"

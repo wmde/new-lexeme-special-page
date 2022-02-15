@@ -8,21 +8,14 @@
 
 import { ActionContext } from 'vuex';
 import RootState from './RootState';
-import { INCREMENT } from './mutations';
+import { SET_LEMMA } from './mutations';
 
 type RootContext = ActionContext<RootState, RootState>;
 
-// TODO: Remove this example action once the first store action is implemented.
-export const DELAYED_INCREMENT = 'incrementAsync';
+export const UPDATE_LEMMA = 'updateLemma';
 
 export default {
-	async [ DELAYED_INCREMENT ](
-		{ commit }: RootContext,
-		{ delay }: { delay: number },
-	): Promise<void> {
-		await <Promise<void>> new Promise( ( resolve ) => {
-			setTimeout( () => resolve(), delay );
-		} );
-		commit( INCREMENT );
+	[ UPDATE_LEMMA ]( { commit }: RootContext, lemma: string ): void {
+		commit( SET_LEMMA, lemma );
 	},
 };
