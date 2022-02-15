@@ -16,7 +16,7 @@
 			
 			createAndMount( { rootSelector: '#app' }, {
 				get(key) {
-					return messages[key];
+					return messages[key] ? messages[key] : `⧼${key}⧽`;
 				},
 				getText(key) {
 					return this.get(key);

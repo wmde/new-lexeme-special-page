@@ -8,11 +8,10 @@
 
 import RootState from './RootState';
 
-// TODO: Remove this example mutation once the first store mutation is implemented.
-export const INCREMENT = 'increment';
+export const SET_LEMMA = 'setLemma';
 
 export default {
-	[ INCREMENT ]( state: RootState ): void {
-		state.count++;
+	[ SET_LEMMA ]( state: RootState, lemma: string ): void {
+		state.lemma = lemma;
 	},
 };

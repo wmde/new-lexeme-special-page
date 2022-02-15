@@ -30,8 +30,17 @@ function buildError( errorKey: Props['error'] ) {
 }
 </script>
 
+<script lang="ts">
+export default {
+	compatConfig: {
+		MODE: 3,
+	},
+};
+</script>
+
 <template>
 	<text-input
+		class="mw-wbl-snl-lemma-input"
 		:label="messages.get( 'wikibaselexeme-newlexeme-lemma' )"
 		:placeholder="messages.get( 'wikibaselexeme-newlexeme-lemma-placeholder' )"
 		name="lemma"
