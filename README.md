@@ -21,6 +21,6 @@ To be able to run the netlify commands you will need to run `npm run netlify log
 ### Every time when doing a deploy
 
 To create a deploy of the current commit, run `npm run deployCommit`. This will create a build in the `./dist` folder and create a manual deployment to a unique address that will be generated at the time of deploy. 
-To deploy to [https://new-lexeme-special-page.netlify.app](https://new-lexeme-special-page.netlify.app) run `npm run netlify deploy --prod`.
+To deploy to [https://new-lexeme-special-page.netlify.app](https://new-lexeme-special-page.netlify.app) run `npx netlify deploy --prod`.
 
 
