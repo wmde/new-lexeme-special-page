@@ -10,7 +10,7 @@
 		"selector-max-id": 1,
 		"liberty/use-logical-spec": true,
 		"selector-class-pattern": [
-			"^wbl-snl-[a-z0-9]+$",
+			"^wbl-snl-[-_a-z0-9]+$",
 			{
 				"resolveNestedSelectors": true,
 				"message": "Selector class names should be lowercase and prefixed with wbl-snl-*."
