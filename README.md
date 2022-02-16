@@ -16,7 +16,7 @@ _**Prerequisits: This repository requires node v16 and up**_
 
 ### The first time you run a deploy
 
-To be able to run the netlify commands you will need to run `npm run netlify login` once after installing netlify to authenticate and obtain a token.
+To be able to run the netlify commands locally you will need to run `npx netlify login` once after `npm install` to authenticate and obtain a token.
 
 ### Every time when doing a deploy
 
