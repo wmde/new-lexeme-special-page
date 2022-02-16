@@ -20,9 +20,7 @@ To be able to run the netlify commands you will need to run `npm run netlify log
 
 ### Every time when doing a deploy
 
-Before making a deploy make sure you make a build locally of the content that should be deployed by running `npm run buildPreview`, this command will create a bundle of the project inside a `/dist` folder.
-
-Afterwards, run `npm run netlify deploy --dir="./dist"` to run manual deployments to a unique address that will be generated at the time of deploy. 
-To deploy to [https://new-lexeme-special-page.netlify.app](https://new-lexeme-special-page.netlify.app) run `npm run netlify deploy --prod --dir="./dist`. 
+To create a deploy of the current commit, run `npm run deployCommit`. This will create a build in the `./dist` folder and create a manual deployment to a unique address that will be generated at the time of deploy. 
+To deploy to [https://new-lexeme-special-page.netlify.app](https://new-lexeme-special-page.netlify.app) run `npm run netlify deploy --prod`.
 
 

@@ -12,7 +12,7 @@
 		"fix:prettier": "prettier --write '**/*.{json,yml,yaml}'",
 		"fix:eslint": "eslint --fix --ext .js,.ts,.vue --ignore-path .gitignore . --ignore-pattern 'cypress'",
 		"fix:stylelint": "stylelint --fix '**/*.{css,scss,vue}'",
-		"netlify": "netlify",
+		"deployCommit": "npm run buildPreview && netlify deploy --dir='./dist'",
 		"lint": "run-s lint:*",
 		"lint:prettier": "prettier --check '**/*.{json,yml,yaml}'",
 		"lint:eslint": "eslint --ext .js,.ts,.vue --ignore-path .gitignore . --ignore-pattern 'cypress'",
