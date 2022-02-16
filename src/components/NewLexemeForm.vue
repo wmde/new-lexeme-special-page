@@ -39,7 +39,7 @@ export default {
 </script>
 
 <template>
-	<form class="new-lexeme-form">
+	<form class="wbl-snl-form">
 		<lemma-input
 			v-model="lemma"
 		/>
@@ -59,7 +59,7 @@ export default {
 <style scoped lang="scss">
 @import "@wmde/wikit-tokens/variables";
 
-.new-lexeme-form {
+.wbl-snl-form {
 	// Box model
 	padding: $dimension-layout-small;
 
