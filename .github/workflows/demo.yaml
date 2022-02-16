@@ -1,0 +1,41 @@
+# This workflow will do
+# - a clean install of node dependencies
+# - run tests
+# - build and upload the storybook to a staging area
+#
+# For more information see: https://help.github.com/actions/language-and-framework-guides/using-nodejs-with-github-actions
+
+on:
+    push:
+        branches:
+            - main
+    pull_request:
+name: Deploy
+jobs:
+    deploy:
+        runs-on: ubuntu-latest
+        if: ${{ github.repository_owner == 'wmde' }}
+        outputs:
+            deploy_url: ${{ steps.netlify_deploy.outputs.url }}
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+            - name: Set up node
+              uses: actions/setup-node@v2
+              with:
+                  node-version: "16"
+            - name: Install dependencies
+              run: npm ci
+            - name: Build Project as app
+              run: npm run buildPreview
+            - name: Deploy to netlify
+              id: netlify_deploy
+              run: echo "::set-output name=url::$(npx -p netlify-cli
+                  netlify deploy --dir='./dist' --json
+                  --alias $(echo '${{ github.ref }}' | shasum | awk '{print $1}')
+                  | jq '.deploy_url' --raw-output)"
+              env:
+                  NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_ACCESS_TOKEN }}
+                  NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+            - name: Print deploy URL
+              run: echo ${{ steps.netlify_deploy.outputs.url }}
