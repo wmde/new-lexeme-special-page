@@ -39,6 +39,15 @@ const lexicalCategory = computed( {
 	},
 } );
 const token = computed( () => store.state.token );
+const submitMsg = $messages.get( 'wikibaselexeme-newlexeme-submit' );
+const termsOfUseTitle = $messages.get( 'copyrightpage' );
+const copyrightText = $messages.get(
+	'wikibase-shortcopyrightwarning',
+	submitMsg,
+	termsOfUseTitle,
+	store.state.config.licenseUrl,
+	store.state.config.licenseName,
+);
 </script>
 
 <script lang="ts">
@@ -65,13 +74,14 @@ export default {
 			name="wpEditToken"
 			:value="token"
 		>
+		<p class="wbl-snl-copyright" v-html="copyrightText" />
 		<div>
 			<wikit-button
 				class="form-button-submit"
 				type="progressive"
 				variant="primary"
 			>
-				{{ $messages.get( 'wikibaselexeme-newlexeme-submit' ) }}
+				{{ submitMsg }}
 			</wikit-button>
 		</div>
 	</form>
@@ -79,6 +89,7 @@ export default {
 
 <style scoped lang="scss">
 @import "@wmde/wikit-tokens/variables";
+@import "@wmde/wikit-vue-components/src/styles/mixins/Typography";
 
 .wbl-snl-form {
 	& > * + * {
@@ -94,4 +105,10 @@ export default {
 	border-radius: $border-radius-base;
 	border-color: $border-color-base-subtle;
 }
+
+.wbl-snl-copyright {
+	@include small-text;
+	font-style: italic;
+}
+
 </style>
