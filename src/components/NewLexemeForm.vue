@@ -6,9 +6,9 @@ import { useMessages } from '@/plugins/MessagesPlugin/Messages';
 import LemmaInput from '@/components/LemmaInput.vue';
 import LexicalCategoryInput from '@/components/LexicalCategoryInput.vue';
 import {
-	UPDATE_LEMMA,
-	UPDATE_LEXICAL_CATEGORY,
-} from '@/store/actions';
+	SET_LEMMA,
+	SET_LEXICAL_CATEGORY,
+} from '@/store/mutations';
 
 const $messages = useMessages();
 const store = useStore();
@@ -17,7 +17,7 @@ const lemma = computed( {
 		return store.state.lemma;
 	},
 	set( newLemmaValue: string ): void {
-		store.dispatch( UPDATE_LEMMA, newLemmaValue );
+		store.commit( SET_LEMMA, newLemmaValue );
 	},
 } );
 const lexicalCategory = computed( {
@@ -25,7 +25,7 @@ const lexicalCategory = computed( {
 		return store.state.lexicalCategory;
 	},
 	set( newLexicalCategory: string ): void {
-		store.dispatch( UPDATE_LEXICAL_CATEGORY, newLexicalCategory );
+		store.commit( SET_LEXICAL_CATEGORY, newLexicalCategory );
 	},
 } );
 </script>

@@ -6,23 +6,27 @@
  * @see https://vuex.vuejs.org/guide/structure.html
  */
 
+/*
+ * Actions should be used for complex or asynchronous changes,
+ * otherwise it’s preferred to directly use mutations.
+ * Currently, there are no actions, but see the commented-out code below for guidance.
+ */
+
+/*
 import { ActionContext } from 'vuex';
 import RootState from './RootState';
 import {
-	SET_LEMMA,
-	SET_LEXICAL_CATEGORY,
+	MUTATION_NAME,
 } from './mutations';
+*/
 
-type RootContext = ActionContext<RootState, RootState>;
+// type RootContext = ActionContext<RootState, RootState>;
 
-export const UPDATE_LEMMA = 'updateLemma';
-export const UPDATE_LEXICAL_CATEGORY = 'updateLexicalCategory';
+// export const ACTION_NAME = 'actionName';
 
 export default {
-	[ UPDATE_LEMMA ]( { commit }: RootContext, lemma: string ): void {
-		commit( SET_LEMMA, lemma );
-	},
-	[ UPDATE_LEXICAL_CATEGORY ]( { commit }: RootContext, lexicalCategory: string ): void {
-		commit( SET_LEXICAL_CATEGORY, lexicalCategory );
-	},
+	/* async [ ACTION_NAME ]( { commit }: RootContext, payload ): Promise<void> {
+		await ...;
+		commit( MUTATION_NAME, payload );
+	}, */
 };
