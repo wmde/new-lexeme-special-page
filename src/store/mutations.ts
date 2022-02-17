@@ -9,11 +9,15 @@
 import RootState from './RootState';
 
 export const SET_LEMMA = 'setLemma';
+export const SET_LANGUAGE = 'setLanguage';
 export const SET_LEXICAL_CATEGORY = 'setLexicalCategory';
 
 export default {
 	[ SET_LEMMA ]( state: RootState, lemma: string ): void {
 		state.lemma = lemma;
+	},
+	[ SET_LANGUAGE ]( state: RootState, language: string ): void {
+		state.language = language;
 	},
 	[ SET_LEXICAL_CATEGORY ]( state: RootState, lexicalCategory: string ): void {
 		state.lexicalCategory = lexicalCategory;
