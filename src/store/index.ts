@@ -14,11 +14,15 @@ import mutations from './mutations';
 import RootState from './RootState';
 
 interface StoreParams {
-	token?: string;
+	token?: string,
+	licenseUrl?: string,
+	licenseName?: string;
 }
 
 export default function initStore( {
 	token = '',
+	licenseUrl = '',
+	licenseName = ''
 }: StoreParams ): Store<RootState> {
 	return createStore( {
 		state(): RootState {
@@ -27,6 +31,10 @@ export default function initStore( {
 				language: '',
 				lexicalCategory: '',
 				token,
+				config: {
+					licenseUrl,
+					licenseName,
+				},
 			};
 		},
 		mutations,

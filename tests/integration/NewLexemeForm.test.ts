@@ -2,6 +2,7 @@ import { mount } from '@vue/test-utils';
 import NewLexemeForm from '@/components/NewLexemeForm.vue';
 import initStore from '@/store';
 
+const store = initStore( {} );
 describe( 'NewLexemeForm', () => {
 	let store: ReturnType<typeof initStore>;
 	beforeEach( () => {

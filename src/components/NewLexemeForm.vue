@@ -54,9 +54,14 @@ const copyrightText = $messages.get(
 	'wikibase-shortcopyrightwarning',
 	submitMsg,
 	termsOfUseURL,
+<<<<<<< HEAD
 	store.state.config.cc0Url,
 	store.state.config.cc0Text,
 >>>>>>> Add cc0 link text and url to store and inject into createAndMount
+=======
+	store.state.config.licenseUrl,
+	store.state.config.licenseName,
+>>>>>>> Add parameters to store dynamically upon its creation
 );
 </script>
 
