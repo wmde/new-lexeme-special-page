@@ -1,0 +1,20 @@
+name: Comment deploy URL to PR
+
+on:
+    pull_request:
+        types: [opened]
+
+jobs:
+    comment-on-pr:
+        runs-on: ubuntu-latest
+        name: Comment deploy URL to PR
+        steps:
+            - name: Get branch hash
+              id: get_hash
+              # This hash ⬇ is also calculated and used in the deploy workflow in demo.yaml to  push the dist/ to Netlify
+              run: echo "::set-output name=hash::$(echo '${{ github.ref }}' | shasum | awk '{print substr($1,0,36)}')"
+            - name: Comment on PR
+              uses: thollander/actions-comment-pull-request@1.0.1
+              with:
+                  message: "<https://${{ steps.get_hash.outputs.hash }}--new-lexeme-special-page.netlify.app>"
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
