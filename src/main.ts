@@ -15,6 +15,8 @@ interface Config {
 export default function createAndMount(
 	config: Config,
 	messageRepo?: MessagesRepository,
+	dataRightsUrl: string,
+	dataRightsText: string,
 ): ComponentPublicInstance {
 	const app = createApp( App );
 	const store = initStore( config );

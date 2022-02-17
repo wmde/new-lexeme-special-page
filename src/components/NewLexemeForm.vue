@@ -40,6 +40,7 @@ const lexicalCategory = computed( {
 } );
 const token = computed( () => store.state.token );
 const submitMsg = $messages.get( 'wikibaselexeme-newlexeme-submit' );
+<<<<<<< HEAD
 const termsOfUseTitle = $messages.get( 'copyrightpage' );
 const copyrightText = $messages.get(
 	'wikibase-shortcopyrightwarning',
@@ -47,6 +48,15 @@ const copyrightText = $messages.get(
 	termsOfUseTitle,
 	store.state.config.licenseUrl,
 	store.state.config.licenseName,
+=======
+const termsOfUseURL = 'https://foundation.wikimedia.org/wiki/Terms_of_Use';
+const copyrightText = $messages.get(
+	'wikibase-shortcopyrightwarning',
+	submitMsg,
+	termsOfUseURL,
+	store.state.config.cc0Url,
+	store.state.config.cc0Text,
+>>>>>>> Add cc0 link text and url to store and inject into createAndMount
 );
 </script>
 
