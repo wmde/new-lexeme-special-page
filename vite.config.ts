@@ -32,10 +32,7 @@ export default defineConfig( {
 		alias: {
 			'vue': '@vue/compat',
 			'@vue/composition-api': '@vue/compat',
-			'@wmde/wikit-vue-components/dist/wikit-vue-components.css': resolve(
-				__dirname,
-				'node_modules/@wmde/wikit-vue-components/dist/wikit-vue-components.css',
-			),
+			'@wmde/wikit-vue-components/dist/wikit-vue-components.css': '@wmde/wikit-vue-components/dist/wikit-vue-components.css',
 			'@wmde/wikit-vue-components/src/styles/mixins/Typography': '@wmde/wikit-vue-components/src/styles/mixins/Typography',
 			'@wmde/wikit-vue-components': resolve(
 				__dirname,
