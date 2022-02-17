@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useStore } from 'vuex';
 import { Button as WikitButton } from '@wmde/wikit-vue-components';
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
@@ -38,6 +38,12 @@ const lexicalCategory = computed( {
 		store.commit( SET_LEXICAL_CATEGORY, newLexicalCategory );
 	},
 } );
+
+const newLexemeUrl = new mw.Title( 'Special:NewLexeme' ).getUrl();
+const token = ref( '' );
+new mw.Api().getEditToken().then( ( editToken: string ) => {
+	token.value = editToken;
+} );
 </script>
 
 <script lang="ts">
@@ -49,7 +55,11 @@ export default {
 </script>
 
 <template>
-	<form class="wbl-snl-form">
+	<form
+		class="wbl-snl-form"
+		:action="newLexemeUrl"
+		method="post"
+	>
 		<lemma-input
 			v-model="lemma"
 		/>
@@ -59,11 +69,22 @@ export default {
 		<lexical-category-input
 			v-model="lexicalCategory"
 		/>
+		<input
+			type="hidden"
+			name="lemma-language"
+			value="en"
+		>
+		<input
+			type="hidden"
+			name="wpEditToken"
+			:value="token"
+		>
 		<div>
 			<wikit-button
 				class="form-button-submit"
 				type="progressive"
 				variant="primary"
+				native-type="submit"
 			>
 				{{ $messages.get( 'wikibaselexeme-newlexeme-submit' ) }}
 			</wikit-button>
