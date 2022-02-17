@@ -36,6 +36,7 @@ export default defineConfig( {
 				__dirname,
 				'node_modules/@wmde/wikit-vue-components/dist/wikit-vue-components.css',
 			),
+			'@wmde/wikit-vue-components/src/styles/mixins/Typography': '@wmde/wikit-vue-components/src/styles/mixins/Typography',
 			'@wmde/wikit-vue-components': resolve(
 				__dirname,
 				'node_modules/@wmde/wikit-vue-components/dist/wikit-vue-components-vue3compat.common.js',
