@@ -84,11 +84,14 @@ export default {
 		<lexical-category-input
 			v-model="lexicalCategory"
 		/>
+<<<<<<< HEAD
 		<input
 			type="hidden"
 			name="wpEditToken"
 			:value="token"
 		>
+=======
+>>>>>>> Restore lost divs
 		<p class="wbl-snl-copyright" v-html="copyrightText" />
 		<div>
 			<wikit-button
