@@ -2,7 +2,7 @@ import {
 	ComponentPublicInstance,
 	createApp,
 } from 'vue';
-import store from './store';
+import initStore from './store';
 import App from './App.vue';
 import Messages, { MessagesKey } from './plugins/MessagesPlugin/Messages';
 import MessagesRepository from './plugins/MessagesPlugin/MessagesRepository';
@@ -16,6 +16,7 @@ export default function createAndMount(
 	messageRepo?: MessagesRepository,
 ): ComponentPublicInstance {
 	const app = createApp( App );
+	const store = initStore( config );
 	app.use( store );
 
 	app.provide( MessagesKey, new Messages( messageRepo ) );

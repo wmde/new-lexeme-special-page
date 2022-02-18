@@ -1,8 +1,10 @@
 import { mount } from '@vue/test-utils';
 import NewLexemeForm from '@/components/NewLexemeForm.vue';
-import store from '@/store';
+import initStore from '@/store';
 
 describe( 'NewLexemeForm', () => {
+	const store = initStore( {} );
+
 	function mountForm() {
 		return mount( NewLexemeForm, {
 			global: {
