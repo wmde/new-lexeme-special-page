@@ -3,7 +3,10 @@ import NewLexemeForm from '@/components/NewLexemeForm.vue';
 import initStore from '@/store';
 
 describe( 'NewLexemeForm', () => {
-	const store = initStore( {} );
+	let store: ReturnType<typeof initStore>;
+	beforeEach( () => {
+		store = initStore( {} );
+	} );
 
 	function mountForm() {
 		return mount( NewLexemeForm, {
@@ -38,5 +41,16 @@ describe( 'NewLexemeForm', () => {
 		await lexicalCategoryInput.setValue( 'foo' );
 
 		expect( store.state.lexicalCategory ).toBe( 'foo' );
+	} );
+
+	it( 'has a hidden input with the edit token', async () => {
+		const token = 'edit token+\\';
+		store = initStore( { token } );
+		const wrapper = mountForm();
+
+		const tokenInput = wrapper.find( 'input[name=wpEditToken]' );
+
+		expect( tokenInput.attributes().value ).toBe( token );
+		expect( tokenInput.attributes().type ).toBe( 'hidden' );
 	} );
 } );

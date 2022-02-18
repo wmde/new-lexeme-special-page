@@ -9,6 +9,7 @@ import MessagesRepository from './plugins/MessagesPlugin/MessagesRepository';
 
 interface Config {
 	rootSelector: string;
+	token: string;
 }
 
 export default function createAndMount(

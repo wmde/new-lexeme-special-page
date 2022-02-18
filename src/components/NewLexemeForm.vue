@@ -38,6 +38,7 @@ const lexicalCategory = computed( {
 		store.commit( SET_LEXICAL_CATEGORY, newLexicalCategory );
 	},
 } );
+const token = computed( () => store.state.token );
 </script>
 
 <script lang="ts">
@@ -59,6 +60,11 @@ export default {
 		<lexical-category-input
 			v-model="lexicalCategory"
 		/>
+		<input
+			type="hidden"
+			name="wpEditToken"
+			:value="token"
+		>
 		<div>
 			<wikit-button
 				class="form-button-submit"
