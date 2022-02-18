@@ -85,6 +85,7 @@ export default {
 			v-model="lexicalCategory"
 		/>
 <<<<<<< HEAD
+<<<<<<< HEAD
 		<input
 			type="hidden"
 			name="wpEditToken"
@@ -93,6 +94,9 @@ export default {
 =======
 >>>>>>> Restore lost divs
 		<p class="wbl-snl-copyright" v-html="copyrightText" />
+=======
+		<p class="wbl-snl-copyright wbl-snl-small-text" v-html="copyrightText" />
+>>>>>>> Add styles to the copyright info
 		<div>
 			<wikit-button
 				class="form-button-submit"
@@ -124,8 +128,16 @@ export default {
 	border-color: $border-color-base-subtle;
 }
 
+<<<<<<< HEAD
 .wbl-snl-copyright {
 	@include small-text;
+=======
+.wbl-snl-small-text {
+	@include small-text;
+}
+
+.wbl-snl-copyright {
+>>>>>>> Add styles to the copyright info
 	font-style: italic;
 }
 
