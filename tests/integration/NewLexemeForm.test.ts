@@ -15,7 +15,7 @@ describe( 'NewLexemeForm', () => {
 
 	it( 'updates the store if something is entered into the lemma input', async () => {
 		const wrapper = mountForm();
-		const lemmaInput = wrapper.find( '.mw-wbl-snl-lemma-input input' );
+		const lemmaInput = wrapper.find( '.wbl-snl-lemma-input input' );
 
 		await lemmaInput.setValue( 'foo' );
 
@@ -33,7 +33,7 @@ describe( 'NewLexemeForm', () => {
 
 	it( 'updates the store if something is entered into the lexical category input', async () => {
 		const wrapper = mountForm();
-		const lexicalCategoryInput = wrapper.find( '.mw-wbl-snl-lexical-category-input input' );
+		const lexicalCategoryInput = wrapper.find( '.wbl-snl-lexical-category-input input' );
 
 		await lexicalCategoryInput.setValue( 'foo' );
 
