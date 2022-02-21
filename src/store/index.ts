@@ -13,14 +13,12 @@ import actions from './actions';
 import mutations from './mutations';
 import RootState from './RootState';
 
-// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface StoreParams {
-	// param: Type;
+	token?: string;
 }
 
-// eslint-disable-next-line no-empty-pattern
 export default function initStore( {
-	// param = 'default',
+	token = '',
 }: StoreParams ): Store<RootState> {
 	return createStore( {
 		state(): RootState {
@@ -28,6 +26,7 @@ export default function initStore( {
 				lemma: '',
 				language: '',
 				lexicalCategory: '',
+				token,
 			};
 		},
 		mutations,
