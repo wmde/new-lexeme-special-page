@@ -23,7 +23,7 @@ export default {
 
 <template>
 	<text-input
-		class="mw-wbl-snl-lexical-category-input"
+		class="wbl-snl-lexical-category-input"
 		:label="messages.get( 'wikibaselexeme-newlexeme-lexicalcategory' )"
 		:placeholder="messages.get( 'wikibaselexeme-newlexeme-lexicalcategory-placeholder' )"
 		name="lexicalcategory"

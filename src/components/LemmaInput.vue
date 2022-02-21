@@ -40,7 +40,7 @@ export default {
 
 <template>
 	<text-input
-		class="mw-wbl-snl-lemma-input"
+		class="wbl-snl-lemma-input"
 		:label="messages.get( 'wikibaselexeme-newlexeme-lemma' )"
 		:placeholder="messages.get( 'wikibaselexeme-newlexeme-lemma-placeholder' )"
 		name="lemma"
