@@ -11,6 +11,7 @@ module.exports = {
 		'wikimedia/language/es2021', // this should ensure that we can use all the new features, not only es6
 		'@wmde/wikimedia-typescript',
 		'@vue/typescript/recommended',
+		'plugin:cypress/recommended',
 	],
 	rules: {
 		'comma-dangle': [ 'error', 'always-multiline' ],
