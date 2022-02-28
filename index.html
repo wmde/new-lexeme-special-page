@@ -14,7 +14,7 @@
 				'wikibaselexeme-newlexeme-submit': 'Create Lexeme',
 			}
 			
-			createAndMount( { rootSelector: '#app' }, {
+			createAndMount( { rootSelector: '#app', token: 'dev-token' }, {
 				get(key) {
 					return messages[key] ? messages[key] : `⧼${key}⧽`;
 				},
