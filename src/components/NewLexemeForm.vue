@@ -86,6 +86,7 @@ export default {
 		/>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 		<input
 			type="hidden"
 			name="wpEditToken"
@@ -97,6 +98,9 @@ export default {
 =======
 		<p class="wbl-snl-copyright wbl-snl-small-text" v-html="copyrightText" />
 >>>>>>> Add styles to the copyright info
+=======
+		<p class="wbl-snl-copyright" v-html="copyrightText" />
+>>>>>>> removing small text class and unifying mixin inclusion under copyright class
 		<div>
 			<wikit-button
 				class="form-button-submit"
@@ -129,15 +133,21 @@ export default {
 }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 .wbl-snl-copyright {
 	@include small-text;
 =======
 .wbl-snl-small-text {
+=======
+.wbl-snl-copyright {
+>>>>>>> removing small text class and unifying mixin inclusion under copyright class
 	@include small-text;
-}
 
+<<<<<<< HEAD
 .wbl-snl-copyright {
 >>>>>>> Add styles to the copyright info
+=======
+>>>>>>> removing small text class and unifying mixin inclusion under copyright class
 	font-style: italic;
 }
 
