@@ -9,19 +9,9 @@
 		<div id="app"></div>
 		<script type="module">
 			import createAndMount from './src/main.ts';
+			import { MockMessagesRepository } from './src/plugins/MessagesPlugin/MockMessagesRepository';
 
-			const messages = {
-				'wikibaselexeme-newlexeme-submit': 'Create Lexeme',
-			}
-			
-			createAndMount( { rootSelector: '#app', token: 'dev-token' }, {
-				get(key) {
-					return messages[key] ? messages[key] : `⧼${key}⧽`;
-				},
-				getText(key) {
-					return this.get(key);
-				},
-			} );
+			createAndMount( { rootSelector: '#app', token: 'dev-token' }, new MockMessagesRepository() );
 		</script>
 	</body>
 </html>
