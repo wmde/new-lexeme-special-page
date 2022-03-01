@@ -40,7 +40,6 @@ const lexicalCategory = computed( {
 } );
 const token = computed( () => store.state.token );
 const submitMsg = $messages.get( 'wikibaselexeme-newlexeme-submit' );
-<<<<<<< HEAD
 const termsOfUseTitle = $messages.get( 'copyrightpage' );
 const copyrightText = $messages.get(
 	'wikibase-shortcopyrightwarning',
@@ -48,20 +47,6 @@ const copyrightText = $messages.get(
 	termsOfUseTitle,
 	store.state.config.licenseUrl,
 	store.state.config.licenseName,
-=======
-const termsOfUseURL = 'https://foundation.wikimedia.org/wiki/Terms_of_Use';
-const copyrightText = $messages.get(
-	'wikibase-shortcopyrightwarning',
-	submitMsg,
-	termsOfUseURL,
-<<<<<<< HEAD
-	store.state.config.cc0Url,
-	store.state.config.cc0Text,
->>>>>>> Add cc0 link text and url to store and inject into createAndMount
-=======
-	store.state.config.licenseUrl,
-	store.state.config.licenseName,
->>>>>>> Add parameters to store dynamically upon its creation
 );
 </script>
 
@@ -84,23 +69,12 @@ export default {
 		<lexical-category-input
 			v-model="lexicalCategory"
 		/>
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 		<input
 			type="hidden"
 			name="wpEditToken"
 			:value="token"
 		>
-=======
->>>>>>> Restore lost divs
 		<p class="wbl-snl-copyright" v-html="copyrightText" />
-=======
-		<p class="wbl-snl-copyright wbl-snl-small-text" v-html="copyrightText" />
->>>>>>> Add styles to the copyright info
-=======
-		<p class="wbl-snl-copyright" v-html="copyrightText" />
->>>>>>> removing small text class and unifying mixin inclusion under copyright class
 		<div>
 			<wikit-button
 				class="form-button-submit"
@@ -132,22 +106,8 @@ export default {
 	border-color: $border-color-base-subtle;
 }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 .wbl-snl-copyright {
 	@include small-text;
-=======
-.wbl-snl-small-text {
-=======
-.wbl-snl-copyright {
->>>>>>> removing small text class and unifying mixin inclusion under copyright class
-	@include small-text;
-
-<<<<<<< HEAD
-.wbl-snl-copyright {
->>>>>>> Add styles to the copyright info
-=======
->>>>>>> removing small text class and unifying mixin inclusion under copyright class
 	font-style: italic;
 }
 
