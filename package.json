@@ -6,7 +6,7 @@
 	"main": "main.ts",
 	"scripts": {
 		"dev": "vite",
-		"build": "vue-tsc --noEmit && vite build",
+		"build": "vite build",
 		"buildPreview": "BUILD_AS_APP=1 vite build",
 		"fix": "run-s fix:*",
 		"fix:prettier": "prettier --write '**/*.{json,yml,yaml}'",
