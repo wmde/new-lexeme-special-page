@@ -108,6 +108,7 @@ export default {
 
 .wbl-snl-copyright {
 	@include small-text;
+
 	font-style: italic;
 }
 

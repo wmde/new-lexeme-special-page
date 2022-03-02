@@ -22,7 +22,7 @@ interface StoreParams {
 export default function initStore( {
 	token = '',
 	licenseUrl = '',
-	licenseName = ''
+	licenseName = '',
 }: StoreParams ): Store<RootState> {
 	return createStore( {
 		state(): RootState {
