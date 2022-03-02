@@ -40,6 +40,9 @@
 		"url": "https://phabricator.wikimedia.org/project/board/5674/"
 	},
 	"homepage": "https://github.com/wmde/new-lexeme-special-page#readme",
+	"engines": {
+		"node": ">=16"
+	},
 	"dependencies": {
 		"@vue/compat": "^3.2.30",
 		"@wmde/wikit-tokens": "^2.1.0-alpha.12",
