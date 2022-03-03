@@ -16,7 +16,7 @@ import RootState from './RootState';
 interface StoreParams {
 	token?: string,
 	licenseUrl?: string,
-	licenseName?: string;
+	licenseName?: string,
 }
 
 export default function initStore( {
