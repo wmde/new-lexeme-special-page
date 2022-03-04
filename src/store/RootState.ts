@@ -6,5 +6,5 @@ export default interface RootState {
 	config: {
 		licenseUrl: string;
 		licenseName: string;
-	}
+	};
 }
