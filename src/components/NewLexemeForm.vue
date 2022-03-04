@@ -74,6 +74,7 @@ export default {
 			name="wpEditToken"
 			:value="token"
 		>
+		<!-- eslint-disable-next-line vue/no-v-html -->
 		<p class="wbl-snl-copyright" v-html="copyrightText" />
 		<div>
 			<wikit-button
