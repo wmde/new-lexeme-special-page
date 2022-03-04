@@ -59,10 +59,15 @@ export default {
 </script>
 
 <template>
-	<form class="wbl-snl-form">
+	<form class="wbl-snl-form" method="post">
 		<lemma-input
 			v-model="lemma"
 		/>
+		<input
+			type="hidden"
+			name="lemma-language"
+			value="en"
+		>
 		<language-input
 			v-model="language"
 		/>
@@ -81,6 +86,7 @@ export default {
 				class="form-button-submit"
 				type="progressive"
 				variant="primary"
+				native-type="submit"
 			>
 				{{ submitMsg }}
 			</wikit-button>
