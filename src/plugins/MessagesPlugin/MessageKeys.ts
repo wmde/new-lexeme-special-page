@@ -7,6 +7,8 @@ type MessageKeys
  | 'wikibaselexeme-newlexeme-lexicalcategory-placeholder'
  | 'wikibaselexeme-newlexeme-submit'
  | 'wikibaselexeme-newlexeme-error-no-lemma'
- | 'wikibaselexeme-newlexeme-error-lemma-is-too-long';
+ | 'wikibaselexeme-newlexeme-error-lemma-is-too-long'
+ | 'wikibase-shortcopyrightwarning'
+ | 'copyrightpage';
 
 export default MessageKeys;

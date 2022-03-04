@@ -10,6 +10,8 @@ import MessagesRepository from './plugins/MessagesPlugin/MessagesRepository';
 interface Config {
 	rootSelector: string;
 	token: string;
+	licenseUrl?: string;
+	licenseName?: string;
 }
 
 export default function createAndMount(

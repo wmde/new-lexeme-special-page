@@ -3,4 +3,8 @@ export default interface RootState {
 	language: string;
 	lexicalCategory: string;
 	token: string;
+	config: {
+		licenseUrl: string;
+		licenseName: string;
+	};
 }
