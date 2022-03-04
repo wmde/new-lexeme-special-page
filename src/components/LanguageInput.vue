@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { TextInput } from '@wmde/wikit-vue-components';
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
+import ItemLookup from '@/components/ItemLookup.vue';
 
 interface Props {
-	modelValue: string;
+	modelValue: string | null;
 }
 
 defineProps<Props>();
@@ -22,14 +22,12 @@ export default {
 </script>
 
 <template>
-	<text-input
-		class="wbl-snl-language-input"
-		:label="messages.get( 'wikibaselexeme-newlexeme-language' )"
-		:placeholder="messages.get( 'wikibaselexeme-newlexeme-language-placeholder' )"
-		name="lexeme-language"
-		required
-		pattern="Q[1-9][0-9]*"
-		:value="modelValue"
-		@input="$emit( 'update:modelValue', $event )"
-	/>
+	<div>
+		<item-lookup
+			:label="messages.get( 'wikibaselexeme-newlexeme-language' )"
+			:placeholder="messages.get( 'wikibaselexeme-newlexeme-language-placeholder' )"
+			:value="modelValue"
+			@update:model-value="$emit( 'update:modelValue', $event )"
+		/>
+	</div>
 </template>
