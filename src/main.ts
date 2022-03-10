@@ -7,7 +7,7 @@ import App from './App.vue';
 import Messages, { MessagesKey } from './plugins/MessagesPlugin/Messages';
 import MessagesRepository from './plugins/MessagesPlugin/MessagesRepository';
 
-interface Config {
+export interface Config {
 	rootSelector: string;
 	token: string;
 	licenseUrl?: string;

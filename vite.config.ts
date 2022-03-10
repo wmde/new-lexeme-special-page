@@ -14,7 +14,7 @@ function getBuildConfig( isAppBuild: bool ): BuildOptions {
 	return {
 		target: 'es2015',
 		lib: {
-			entry: resolve( __dirname, 'src/main.ts' ),
+			entry: resolve( __dirname, 'src/init.ts' ),
 			name: 'main',
 			fileName: ( format ) => `SpecialNewLexeme.${format}.js`,
 			formats: [ 'cjs' ],
