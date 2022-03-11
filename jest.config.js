@@ -6,9 +6,6 @@ module.exports = {
 		'vue',
 	],
 	moduleNameMapper: {
-		'^vue$': '@vue/compat',
-		'^@vue/composition-api$': '@vue/compat',
-		'^@wmde/wikit-vue-components$': '<rootDir>/node_modules/@wmde/wikit-vue-components/dist/wikit-vue-components-vue3compat.common.js',
 		'^@/(.*)$': '<rootDir>/src/$1',
 		'\\.css$': '<rootDir>/tests/mocks/styleMock.js',
 	},

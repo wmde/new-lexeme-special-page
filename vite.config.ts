@@ -20,7 +20,7 @@ function getBuildConfig( isAppBuild: bool ): BuildOptions {
 			formats: [ 'cjs' ],
 		},
 		rollupOptions: {
-			external: [ '@vue/compat', 'vue', 'vuex' ],
+			external: [ 'vue', 'vuex' ],
 		},
 	};
 }
@@ -30,14 +30,6 @@ export default defineConfig( {
 	build: getBuildConfig( !!process.env.BUILD_AS_APP ),
 	resolve: {
 		alias: {
-			'vue': '@vue/compat',
-			'@vue/composition-api': '@vue/compat',
-			'@wmde/wikit-vue-components/dist/wikit-vue-components.css': '@wmde/wikit-vue-components/dist/wikit-vue-components.css',
-			'@wmde/wikit-vue-components/src/styles/mixins/Typography': '@wmde/wikit-vue-components/src/styles/mixins/Typography',
-			'@wmde/wikit-vue-components': resolve(
-				__dirname,
-				'node_modules/@wmde/wikit-vue-components/dist/wikit-vue-components-vue3compat.common.js',
-			),
 			'@wmde/wikit-tokens/variables': resolve(
 				__dirname,
 				'node_modules/@wmde/wikit-tokens/dist/_variables.scss',
@@ -49,7 +41,7 @@ export default defineConfig( {
 		template: {
 			compilerOptions: {
 				compatConfig: {
-					MODE: 2,
+					MODE: 3,
 				},
 			},
 		},

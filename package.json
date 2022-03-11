@@ -44,9 +44,8 @@
 		"node": ">=16"
 	},
 	"dependencies": {
-		"@vue/compat": "^3.2.30",
-		"@wmde/wikit-tokens": "^2.1.0-alpha.12",
-		"@wmde/wikit-vue-components": "^2.1.0-alpha.12",
+		"@wmde/wikit-tokens": "^3.0.0-alpha.1",
+		"@wmde/wikit-vue-components": "^3.0.0-alpha.1",
 		"vue": "^3.2.30",
 		"vuex": "^4.0.2"
 	},
