@@ -1,3 +1,4 @@
+import LexemeCreator from '@/data-access/LexemeCreator';
 import {
 	ComponentPublicInstance,
 	createApp,
@@ -16,6 +17,7 @@ export interface Config {
 
 export interface Services {
 	messagesRepository?: MessagesRepository;
+	lexemeCreator: LexemeCreator;
 }
 
 export default function createAndMount(
@@ -23,7 +25,7 @@ export default function createAndMount(
 	services: Services,
 ): ComponentPublicInstance {
 	const app = createApp( App );
-	const store = initStore( config );
+	const store = initStore( config, services );
 	app.use( store );
 
 	app.provide( MessagesKey, new Messages( services.messagesRepository ) );

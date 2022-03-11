@@ -1,11 +1,12 @@
 import { mount } from '@vue/test-utils';
 import NewLexemeForm from '@/components/NewLexemeForm.vue';
 import initStore from '@/store';
+import unusedLexemeCreator from '../mocks/unusedLexemeCreator';
 
 describe( 'NewLexemeForm', () => {
 	let store: ReturnType<typeof initStore>;
 	beforeEach( () => {
-		store = initStore( {} );
+		store = initStore( {}, { lexemeCreator: unusedLexemeCreator } );
 	} );
 
 	function mountForm() {
@@ -45,7 +46,7 @@ describe( 'NewLexemeForm', () => {
 
 	it( 'has a hidden input with the edit token', async () => {
 		const token = 'edit token+\\';
-		store = initStore( { token } );
+		store = initStore( { token }, { lexemeCreator: unusedLexemeCreator } );
 		const wrapper = mountForm();
 
 		const tokenInput = wrapper.find( 'input[name=wpEditToken]' );

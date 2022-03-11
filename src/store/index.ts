@@ -4,12 +4,13 @@
  * @see https://vuex.vuejs.org/guide/structure.html
  */
 
+import LexemeCreator from '@/data-access/LexemeCreator';
 import {
 	createStore,
 	Store,
 } from 'vuex';
 
-import actions from './actions';
+import createActions from './actions';
 import mutations from './mutations';
 import RootState from './RootState';
 
@@ -19,11 +20,20 @@ interface StoreParams {
 	licenseName?: string;
 }
 
-export default function initStore( {
-	token = '',
-	licenseUrl = '',
-	licenseName = '',
-}: StoreParams ): Store<RootState> {
+interface StoreServices {
+	lexemeCreator: LexemeCreator;
+}
+
+export default function initStore(
+	{
+		token = '',
+		licenseUrl = '',
+		licenseName = '',
+	}: StoreParams,
+	{
+		lexemeCreator,
+	}: StoreServices,
+): Store<RootState> {
 	return createStore( {
 		state(): RootState {
 			return {
@@ -38,6 +48,6 @@ export default function initStore( {
 			};
 		},
 		mutations,
-		actions,
+		actions: createActions( lexemeCreator ),
 	} );
 }

@@ -10,6 +10,7 @@
 		<script type="module">
 			import createAndMount from './src/main.ts';
 			import { MockMessagesRepository } from './src/plugins/MessagesPlugin/MockMessagesRepository';
+			import AlertLexemeCreator from './src/data-access/AlertLexemeCreator';
 
 			const config = {
 				rootSelector: '#app',
@@ -17,6 +18,7 @@
 			};
 			const services = {
 				messagesRepository: new MockMessagesRepository(),
+				lexemeCreator: new AlertLexemeCreator(),
 			};
 
 			createAndMount( config, services );

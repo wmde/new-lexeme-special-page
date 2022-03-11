@@ -9,24 +9,35 @@
 /*
  * Actions should be used for complex or asynchronous changes,
  * otherwise it’s preferred to directly use mutations.
- * Currently, there are no actions, but see the commented-out code below for guidance.
  */
 
-/*
-import { ActionContext } from 'vuex';
+import LexemeCreator from '@/data-access/LexemeCreator';
+import {
+	ActionContext,
+	ActionTree,
+} from 'vuex';
 import RootState from './RootState';
+/*
 import {
 	MUTATION_NAME,
 } from './mutations';
 */
 
-// type RootContext = ActionContext<RootState, RootState>;
+type RootContext = ActionContext<RootState, RootState>;
+type RootActions = ActionTree<RootState, RootState>;
 
-// export const ACTION_NAME = 'actionName';
+export const CREATE_LEXEME = 'createLexeme';
 
-export default {
-	/* async [ ACTION_NAME ]( { commit }: RootContext, payload ): Promise<void> {
-		await ...;
-		commit( MUTATION_NAME, payload );
-	}, */
-};
+export default function createActions( lexemeCreator: LexemeCreator ): RootActions {
+	return {
+		async [ CREATE_LEXEME ]( { state }: RootContext ): Promise<string> {
+			const lexemeId = await lexemeCreator.createLexeme(
+				state.lemma,
+				'en', // TODO
+				state.language,
+				state.lexicalCategory,
+			);
+			return lexemeId;
+		},
+	};
+}

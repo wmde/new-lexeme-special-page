@@ -3,8 +3,7 @@ describe( 'NewLexemeForm', () => {
 	it( 'submits form data', () => {
 		cy.visit( '/' );
 
-		cy.intercept( 'POST', '/' )
-			.as( 'post' );
+		cy.on( 'window:alert', cy.stub().as( 'alert' ) );
 
 		cy.get( 'input[name=lemma]' )
 			.type( 'test lemma' );
@@ -18,15 +17,11 @@ describe( 'NewLexemeForm', () => {
 		cy.get( '.wbl-snl-form' )
 			.submit();
 
-		cy.wait( '@post' )
-			.then( ( { request } ) => {
-				const params = new URLSearchParams( request.body );
-				expect( params.get( 'lemma' ) ).to.equal( 'test lemma' );
-				expect( params.get( 'lemma-language' ) ).to.equal( 'en' );
-				expect( params.get( 'lexeme-language' ) ).to.equal( 'Q123' );
-				expect( params.get( 'lexicalcategory' ) ).to.equal( 'Q456' );
-				expect( params.get( 'wpEditToken' ) ).to.equal( 'dev-token' );
-			} );
+		cy.get( '@alert' ).then( ( spy ) => {
+			expect( spy ).to.have.been.calledOnceWith(
+				'Create Lexeme "test lemma"@en as Q123 Q456',
+			);
+		} );
 	} );
 
 } );
