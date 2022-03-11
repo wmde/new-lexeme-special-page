@@ -11,7 +11,15 @@
 			import createAndMount from './src/main.ts';
 			import { MockMessagesRepository } from './src/plugins/MessagesPlugin/MockMessagesRepository';
 
-			createAndMount( { rootSelector: '#app', token: 'dev-token' }, new MockMessagesRepository() );
+			const config = {
+				rootSelector: '#app',
+				token: 'dev-token',
+			};
+			const services = {
+				messagesRepository: new MockMessagesRepository(),
+			};
+
+			createAndMount( config, services );
 		</script>
 	</body>
 </html>

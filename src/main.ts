@@ -14,15 +14,19 @@ export interface Config {
 	licenseName?: string;
 }
 
+export interface Services {
+	messagesRepository?: MessagesRepository;
+}
+
 export default function createAndMount(
 	config: Config,
-	messageRepo?: MessagesRepository,
+	services: Services,
 ): ComponentPublicInstance {
 	const app = createApp( App );
 	const store = initStore( config );
 	app.use( store );
 
-	app.provide( MessagesKey, new Messages( messageRepo ) );
+	app.provide( MessagesKey, new Messages( services.messagesRepository ) );
 
 	return app.mount( config.rootSelector );
 }

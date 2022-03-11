@@ -12,7 +12,7 @@ describe( 'createAndMount', () => {
 		const instance = createAndMount( {
 			rootSelector: '#test-app',
 			token: 'test-token',
-		} );
+		}, {} );
 
 		expect( rootElement.firstChild ).toBe( instance.$el );
 		expect( discardedElement.parentElement ).toBe( null );
