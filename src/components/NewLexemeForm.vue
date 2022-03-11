@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { CREATE_LEXEME } from '@/store/actions';
 import { computed } from 'vue';
 import { useStore } from 'vuex';
 import { Button as WikitButton } from '@wmde/wikit-vue-components';
@@ -48,6 +49,11 @@ const copyrightText = $messages.get(
 	store.state.config.licenseUrl,
 	store.state.config.licenseName,
 );
+
+const onSubmit = () => {
+	store.dispatch( CREATE_LEXEME );
+	// TODO redirect to created lexeme
+};
 </script>
 
 <script lang="ts">
@@ -59,7 +65,7 @@ export default {
 </script>
 
 <template>
-	<form class="wbl-snl-form" method="post">
+	<form class="wbl-snl-form" @submit.prevent="onSubmit">
 		<lemma-input
 			v-model="lemma"
 		/>
