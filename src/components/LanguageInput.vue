@@ -13,14 +13,6 @@ defineEmits( [ 'update:modelValue' ] );
 const messages = useMessages();
 </script>
 
-<script lang="ts">
-export default {
-	compatConfig: {
-		MODE: 3,
-	},
-};
-</script>
-
 <template>
 	<text-input
 		class="wbl-snl-language-input"

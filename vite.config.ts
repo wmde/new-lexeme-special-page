@@ -3,8 +3,9 @@
 import { resolve } from 'path';
 import { BuildOptions, defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
+import banner from 'vite-plugin-banner';
 
-function getBuildConfig( isAppBuild: bool ): BuildOptions {
+function getBuildConfig( isAppBuild: boolean ): BuildOptions {
 	if ( isAppBuild ) {
 		return {
 			target: 'es2015',
@@ -20,7 +21,7 @@ function getBuildConfig( isAppBuild: bool ): BuildOptions {
 			formats: [ 'cjs' ],
 		},
 		rollupOptions: {
-			external: [ '@vue/compat', 'vue', 'vuex' ],
+			external: [ 'vue', 'vuex' ],
 		},
 	};
 }
@@ -30,14 +31,6 @@ export default defineConfig( {
 	build: getBuildConfig( !!process.env.BUILD_AS_APP ),
 	resolve: {
 		alias: {
-			'vue': '@vue/compat',
-			'@vue/composition-api': '@vue/compat',
-			'@wmde/wikit-vue-components/dist/wikit-vue-components.css': '@wmde/wikit-vue-components/dist/wikit-vue-components.css',
-			'@wmde/wikit-vue-components/src/styles/mixins/Typography': '@wmde/wikit-vue-components/src/styles/mixins/Typography',
-			'@wmde/wikit-vue-components': resolve(
-				__dirname,
-				'node_modules/@wmde/wikit-vue-components/dist/wikit-vue-components-vue3compat.common.js',
-			),
 			'@wmde/wikit-tokens/variables': resolve(
 				__dirname,
 				'node_modules/@wmde/wikit-tokens/dist/_variables.scss',
@@ -45,13 +38,16 @@ export default defineConfig( {
 			'@': resolve( __dirname, 'src' ),
 		},
 	},
-	plugins: [ vue( {
-		template: {
-			compilerOptions: {
-				compatConfig: {
-					MODE: 2,
+	plugins: [
+		vue( {
+			template: {
+				compilerOptions: {
+					compatConfig: {
+						MODE: 3,
+					},
 				},
 			},
-		},
-	} ) ],
+		} ),
+		banner( '/*!/*@nomin*/' ),
+	],
 } );
