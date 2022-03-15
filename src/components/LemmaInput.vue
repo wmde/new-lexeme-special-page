@@ -30,6 +30,14 @@ function buildError( errorKey: Props['error'] ) {
 }
 </script>
 
+<script lang="ts">
+export default {
+	compatConfig: {
+		MODE: 3,
+	},
+};
+</script>
+
 <template>
 	<text-input
 		class="wbl-snl-lemma-input"
