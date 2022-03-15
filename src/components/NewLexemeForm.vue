@@ -50,14 +50,6 @@ const copyrightText = $messages.get(
 );
 </script>
 
-<script lang="ts">
-export default {
-	compatConfig: {
-		MODE: 3,
-	},
-};
-</script>
-
 <template>
 	<form class="wbl-snl-form" method="post">
 		<lemma-input
