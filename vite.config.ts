@@ -4,7 +4,7 @@ import { resolve } from 'path';
 import { BuildOptions, defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 
-function getBuildConfig( isAppBuild: bool ): BuildOptions {
+function getBuildConfig( isAppBuild: boolean ): BuildOptions {
 	if ( isAppBuild ) {
 		return {
 			target: 'es2015',
