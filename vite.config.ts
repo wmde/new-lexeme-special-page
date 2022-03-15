@@ -3,6 +3,7 @@
 import { resolve } from 'path';
 import { BuildOptions, defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
+import banner from 'vite-plugin-banner';
 
 function getBuildConfig( isAppBuild: boolean ): BuildOptions {
 	if ( isAppBuild ) {
@@ -37,13 +38,16 @@ export default defineConfig( {
 			'@': resolve( __dirname, 'src' ),
 		},
 	},
-	plugins: [ vue( {
-		template: {
-			compilerOptions: {
-				compatConfig: {
-					MODE: 3,
+	plugins: [
+		vue( {
+			template: {
+				compilerOptions: {
+					compatConfig: {
+						MODE: 3,
+					},
 				},
 			},
-		},
-	} ) ],
+		} ),
+		banner( '/*!/*@nomin*/' ),
+	],
 } );
