@@ -42,6 +42,10 @@ const searchSuggestions = ref( [] as MonolingualItemOption[] );
 const searchInput = ref( '' );
 const onSearchInput = async ( inputValue: string ) => {
 	searchInput.value = inputValue;
+	if ( inputValue.trim() === '' ) {
+		searchSuggestions.value = [];
+		return;
+	}
 	const searchResults = await props.searchForItems( inputValue );
 	searchSuggestions.value = searchResults.map( ( result ) => {
 		return {

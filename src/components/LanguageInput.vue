@@ -12,8 +12,7 @@ defineEmits( [ 'update:modelValue' ] );
 
 const messages = useMessages();
 
-// ! The following method was entirely written by CoPilot! (except for `origin=*`)
-const searchForItems = async ( searchTerm: string, offset: number = 0 ) => {
+const searchForItems = async ( searchTerm: string, offset = 0 ) => {
 	const searchResults = await fetch(
 		`https://www.wikidata.org/w/api.php?action=wbsearchentities&search=${searchTerm}&language=en&format=json&type=item&limit=10&continue=${offset}&origin=*`,
 	);

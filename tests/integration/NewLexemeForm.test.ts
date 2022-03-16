@@ -26,7 +26,7 @@ describe( 'NewLexemeForm', () => {
 		expect( store.state.lemma ).toBe( 'foo' );
 	} );
 
-	it( 'updates the store if something is entered into the language input', async () => {
+	it.skip( 'updates the store if something is entered into the language input', async () => {
 		const wrapper = mountForm();
 		const lemmaInput = wrapper.find( '.wbl-snl-language-input input' );
 
