@@ -68,11 +68,6 @@ export default {
 		<lemma-input
 			v-model="lemma"
 		/>
-		<input
-			type="hidden"
-			name="lemma-language"
-			value="en"
-		>
 		<language-input
 			v-model="language"
 		/>
