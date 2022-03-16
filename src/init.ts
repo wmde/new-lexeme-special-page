@@ -7,9 +7,13 @@ import MwMessagesRepository from './mediawiki/MwMessagesRepository';
 import { MediaWiki } from './@types/mediawiki';
 import { ComponentPublicInstance } from 'vue';
 
-export default function init( config: Config, mw: MediaWiki ): ComponentPublicInstance {
+interface InitConfig extends Config {
+	tags: string[];
+}
+
+export default function init( config: InitConfig, mw: MediaWiki ): ComponentPublicInstance {
 	const messagesRepository = new MwMessagesRepository( mw.message );
-	const lexemeCreator = new MwApiLexemeCreator( new mw.Api() );
+	const lexemeCreator = new MwApiLexemeCreator( new mw.Api(), config.tags );
 	const services: Services = {
 		messagesRepository,
 		lexemeCreator,
