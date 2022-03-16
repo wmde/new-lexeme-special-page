@@ -4,7 +4,7 @@ import { Lookup as WikitLookup } from '@wmde/wikit-vue-components';
 
 interface MonolingualItemOption {
 	label: string;
-	description: string;
+	description?: string;
 	value: string;
 	tag?: string;
 }
@@ -15,7 +15,7 @@ interface SearchedItemOption {
 			language: string;
 			value: string;
 		}; // Term
-		description: {
+		description?: {
 			language: string;
 			value: string;
 		}; // Term
@@ -50,7 +50,7 @@ const onSearchInput = async ( inputValue: string ) => {
 	searchSuggestions.value = searchResults.map( ( result ) => {
 		return {
 			label: result.display.label.value,
-			description: result.display.description.value,
+			description: result.display.description?.value,
 			value: result.itemId,
 		};
 	} );
@@ -64,7 +64,7 @@ const onScroll = async () => {
 	searchSuggestions.value.push( ...searchReults.map( ( result ) => {
 		return {
 			label: result.display.label.value,
-			description: result.display.description.value,
+			description: result.display.description?.value,
 			value: result.itemId,
 		};
 	} ) );
