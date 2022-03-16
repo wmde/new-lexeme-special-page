@@ -10,7 +10,6 @@ import MessagesRepository from './plugins/MessagesPlugin/MessagesRepository';
 
 export interface Config {
 	rootSelector: string;
-	token: string;
 	licenseUrl?: string;
 	licenseName?: string;
 }

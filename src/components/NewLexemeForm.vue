@@ -39,7 +39,6 @@ const lexicalCategory = computed( {
 		store.commit( SET_LEXICAL_CATEGORY, newLexicalCategory );
 	},
 } );
-const token = computed( () => store.state.token );
 const submitMsg = $messages.get( 'wikibaselexeme-newlexeme-submit' );
 const termsOfUseTitle = $messages.get( 'copyrightpage' );
 const copyrightText = $messages.get(
@@ -80,11 +79,6 @@ export default {
 		<lexical-category-input
 			v-model="lexicalCategory"
 		/>
-		<input
-			type="hidden"
-			name="wpEditToken"
-			:value="token"
-		>
 		<!-- eslint-disable-next-line vue/no-v-html -->
 		<p class="wbl-snl-copyright" v-html="copyrightText" />
 		<div>
