@@ -9,10 +9,25 @@ interface MonolingualItemOption {
 	tag?: string;
 }
 
+interface SearchedItemOption {
+	display: {
+		label: {
+			language: string;
+			value: string;
+		}; // Term
+		description: {
+			language: string;
+			value: string;
+		}; // Term
+	};
+	itemId: string;
+}
+
 interface Props {
 	label: string;
 	placeholder: string;
 	value: string | null;
+	searchForItems: ( searchTerm: string, offset?: number ) => SearchedItemOption[];
 	// error?: 'ERROR_LEMMA_TOO_LONG' | 'ERROR_NO_LEMMA' | null;
 }
 const props = defineProps<Props>();
