@@ -43,15 +43,4 @@ describe( 'NewLexemeForm', () => {
 
 		expect( store.state.lexicalCategory ).toBe( 'foo' );
 	} );
-
-	it( 'has a hidden input with the edit token', async () => {
-		const token = 'edit token+\\';
-		store = initStore( { token }, { lexemeCreator: unusedLexemeCreator } );
-		const wrapper = mountForm();
-
-		const tokenInput = wrapper.find( 'input[name=wpEditToken]' );
-
-		expect( tokenInput.attributes().value ).toBe( token );
-		expect( tokenInput.attributes().type ).toBe( 'hidden' );
-	} );
 } );

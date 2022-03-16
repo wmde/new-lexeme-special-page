@@ -15,7 +15,6 @@ import mutations from './mutations';
 import RootState from './RootState';
 
 interface StoreParams {
-	token?: string;
 	licenseUrl?: string;
 	licenseName?: string;
 }
@@ -26,7 +25,6 @@ interface StoreServices {
 
 export default function initStore(
 	{
-		token = '',
 		licenseUrl = '',
 		licenseName = '',
 	}: StoreParams,
@@ -40,7 +38,6 @@ export default function initStore(
 				lemma: '',
 				language: '',
 				lexicalCategory: '',
-				token,
 				config: {
 					licenseUrl,
 					licenseName,
