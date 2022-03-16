@@ -30,6 +30,7 @@ interface Props {
 	searchForItems: ( searchTerm: string, offset?: number ) => Promise<SearchedItemOption[]>;
 	// error?: 'ERROR_LEMMA_TOO_LONG' | 'ERROR_NO_LEMMA' | null;
 }
+
 const props = defineProps<Props>();
 const emit = defineEmits( {
 	'update:modelValue': ( selectedItemId: string | null ) => {

@@ -2,6 +2,7 @@ import { mount } from '@vue/test-utils';
 import ItemLookup from '@/components/ItemLookup.vue';
 import { Lookup as WikitLookup } from '@wmde/wikit-vue-components';
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function createLookup( propsOverrides: any = {} ) {
 	return mount( ItemLookup, {
 		props: {
@@ -88,9 +89,49 @@ describe( 'ItemLookup', () => {
 			expect( searchForItems ).toHaveBeenNthCalledWith( 2, 'foo', 3 );
 		} );
 
-		it.todo( ':value - selects the selected Item with this QID' );
+		it( ':value - selects the selected Item with this QID', async () => {
+			const searchForItems = jest.fn().mockReturnValue( exampleSearchResults );
+			const lookup = createLookup( { searchForItems } );
+			await lookup.find( 'input' ).setValue( 'foo' );
+			const selectedItemId = 1;
+
+			await lookup.setProps( { value: exampleSearchResults[ selectedItemId ].itemId } );
+
+			expect( lookup.findComponent( WikitLookup ).props().value.label )
+				.toBe( exampleSearchResults[ selectedItemId ].display.label.value );
+		} );
 	} );
 	describe( '@events', () => {
-		it.todo( '@update:modelValue - emits the itemId of the selected option' );
+		it( '@update:modelValue - emits null when the input is changed', async () => {
+			const searchForItems = jest.fn().mockReturnValue( exampleSearchResults );
+			const lookup = createLookup( { searchForItems } );
+
+			await lookup.find( 'input' ).setValue( 'foo' );
+
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore
+			expect( lookup.emitted( 'update:modelValue' )[ 0 ][ 0 ] ).toBe( null );
+		} );
+
+		it( '@update:modelValue - emits the itemId of the selected option', async () => {
+			const searchForItems = jest.fn().mockReturnValue( exampleSearchResults );
+			const lookup = createLookup( { searchForItems } );
+			await lookup.find( 'input' ).setValue( 'foo' );
+			const selectedItemId = 0;
+
+			await lookup.findComponent( WikitLookup ).vm.$emit(
+				'input',
+				{
+					label: exampleSearchResults[ selectedItemId ].display.label.value,
+					description: exampleSearchResults[ selectedItemId ].display.description.value,
+					value: exampleSearchResults[ selectedItemId ].itemId,
+				},
+			);
+
+			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+			// @ts-ignore
+			expect( lookup.emitted( 'update:modelValue' )[ 1 ][ 0 ] ).toBe( exampleSearchResults[ selectedItemId ].itemId );
+
+		} );
 	} );
 } );
