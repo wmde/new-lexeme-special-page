@@ -12,12 +12,14 @@ defineEmits( [ 'update:modelValue' ] );
 
 const messages = useMessages();
 
+// TODO: replace with LanguageItemSearcher plugin that uses mw.api
 const searchForItems = async ( searchTerm: string, offset = 0 ) => {
 	const searchResults = await fetch(
 		`https://www.wikidata.org/w/api.php?action=wbsearchentities&search=${searchTerm}&language=en&format=json&type=item&limit=10&continue=${offset}&origin=*`,
 	);
 	const searchResultsJson = await searchResults.json();
-	return searchResultsJson.search.map( ( result ) => {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	return searchResultsJson.search.map( ( result: any ) => {
 		return {
 			display: {
 				label: {
