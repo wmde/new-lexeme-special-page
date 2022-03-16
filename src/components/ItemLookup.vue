@@ -27,7 +27,7 @@ interface Props {
 	label: string;
 	placeholder: string;
 	value: string | null;
-	searchForItems: ( searchTerm: string, offset?: number ) => SearchedItemOption[];
+	searchForItems: ( searchTerm: string, offset?: number ) => Promise<SearchedItemOption[]>;
 	// error?: 'ERROR_LEMMA_TOO_LONG' | 'ERROR_NO_LEMMA' | null;
 }
 const props = defineProps<Props>();
@@ -37,79 +37,33 @@ const emit = defineEmits( {
 	},
 } );
 
-const vegetableItems: MonolingualItemOption[] = [
-	{
-		label: 'potato',
-		description: 'root vegetable',
-		value: 'Q10998',
-	},
-	{
-		label: 'carrot',
-		description: 'root vegetable, usually orange in color',
-		value: 'Q81',
-		tag: 'limited support',
-	},
-	{
-		label: 'zucchini',
-		description: 'Edible summer squash, typically green in colour',
-		value: 'Q7533',
-	},
-	{
-		label: 'eggplant',
-		description: 'plant species Solanum melongena',
-		value: 'Q7540',
-	},
-	{
-		label: 'broccoli',
-		description: 'edible green plant in the cabbage family',
-		value: 'Q47722',
-	},
-	{
-		label: 'cauliflower',
-		description: 'vegetable, for the plant see Q7537 (Brassica oleracea var. botrytis)',
-		value: 'Q23900272',
-	},
-	{
-		label: 'brussels sprouts',
-		description: 'vegetable',
-		value: 'Q150463',
-	},
-	{
-		label: 'cassava root',
-		description: 'root vegetable',
-		value: 'Q43304555',
-	},
-	{
-		label: 'plantain',
-		description: 'banana-like vegetable, less sweet',
-		value: 'Q165449',
-	},
-	{
-		label: 'cabbage',
-		description: 'Vegetable, the generic term for several varieties.',
-		value: 'Q14328596',
-	},
-	{
-		label: 'napa cabbage',
-		description: 'a type of Chinese cabbage',
-		value: 'Q13360268',
-	},
-];
-
-const searchResults = ref( [] as MonolingualItemOption[] );
-
-searchResults.value = vegetableItems;
+const searchSuggestions = ref( [] as MonolingualItemOption[] );
 
 const searchInput = ref( '' );
-const onSearchInput = ( value: string ) => {
-	console.log( 'search input 2: ' + value );
-	searchInput.value = value;
-	searchResults.value = vegetableItems.filter( ( item ) => item.label.includes( value ) );
-	// FIXME: search for items here!
+const onSearchInput = async ( inputValue: string ) => {
+	searchInput.value = inputValue;
+	const searchResults = await props.searchForItems( inputValue );
+	searchSuggestions.value = searchResults.map( ( result ) => {
+		return {
+			label: result.display.label.value,
+			description: result.display.description.value,
+			value: result.itemId,
+		};
+	} );
 };
 
-const onScroll = () => {
-	console.log( 'list of results is being scrolled - load more!' );
+const onScroll = async () => {
+	const searchReults = await props.searchForItems(
+		searchInput.value,
+		searchSuggestions.value.length,
+	);
+	searchSuggestions.value.push( ...searchReults.map( ( result ) => {
+		return {
+			label: result.display.label.value,
+			description: result.display.description.value,
+			value: result.itemId,
+		};
+	} ) );
 };
 
 const onOptionSelected = ( value: unknown ) => {
@@ -121,7 +75,7 @@ const selectedOption = computed( () => {
 	if ( props.value === null ) {
 		return null;
 	}
-	return searchResults.value.find( ( item ) => item.value === props.value );
+	return searchSuggestions.value.find( ( item ) => item.value === props.value );
 } );
 
 </script>
@@ -131,7 +85,7 @@ const selectedOption = computed( () => {
 		:label="label"
 		:placeholder="placeholder"
 		:search-input="searchInput"
-		:menu-items="searchResults"
+		:menu-items="searchSuggestions"
 		:value="selectedOption"
 		@update:search-input="onSearchInput"
 		@scroll="onScroll"
