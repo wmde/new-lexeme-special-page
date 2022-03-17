@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { Lookup as WikitLookup } from '@wmde/wikit-vue-components';
+import WikitLookup from './WikitLookup';
 
 interface MonolingualItemOption {
 	label: string;
