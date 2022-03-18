@@ -1,3 +1,4 @@
+import MwApiItemSearcher from '@/data-access/MwApiItemSearcher';
 import createAndMount, {
 	Config,
 	Services,
@@ -21,9 +22,12 @@ export default function init( config: InitConfig, mw: MediaWiki ): ComponentPubl
 		},
 	} );
 
+	const itemSearcher = new MwApiItemSearcher( api, languageCode );
 	const messagesRepository = new MwMessagesRepository( mw.message );
 	const lexemeCreator = new MwApiLexemeCreator( api, config.tags );
+
 	const services: Services = {
+		itemSearcher,
 		messagesRepository,
 		lexemeCreator,
 	};
