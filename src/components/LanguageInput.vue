@@ -28,7 +28,7 @@ export default {
 </script>
 
 <template>
-	<div>
+	<div class="wbl-snl-language-lookup">
 		<item-lookup
 			:label="messages.get( 'wikibaselexeme-newlexeme-language' )"
 			:placeholder="messages.get( 'wikibaselexeme-newlexeme-language-placeholder' )"
