@@ -1,9 +1,12 @@
+import { MwApi } from '@/@types/mediawiki';
 import MwApiLexemeCreator from '@/data-access/MwApiLexemeCreator';
+import unusedApi from '../../mocks/unusedApi';
 
 describe( 'MwApiLexemeCreator', () => {
 
 	it( 'POSTs the right data', async () => {
-		const api = {
+		const api: MwApi = {
+			...unusedApi,
 			assertCurrentUser: ( params: object ) => ( { assert: 'user', ...params } ),
 			postWithEditToken: jest.fn().mockResolvedValue( { entity: { id: 'L123' } } ),
 		};

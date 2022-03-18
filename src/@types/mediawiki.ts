@@ -5,6 +5,7 @@ export interface MwMessage {
 export type MwMessages = ( key: string, ...params: readonly ( string|HTMLElement )[] ) => MwMessage;
 
 export interface MwApi {
+	get( params: object ): Promise<unknown>;
 	assertCurrentUser( params: object ): object;
 	postWithEditToken( params: object ): Promise<unknown>;
 }
