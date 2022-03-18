@@ -10,12 +10,14 @@
 		<script type="module">
 			import createAndMount from './src/main.ts';
 			import DevMessagesRepository from './src/plugins/MessagesPlugin/DevMessagesRepository';
+			import DevItemSearcher from './src/data-access/DevItemSearcher';
 			import DevLexemeCreator from './src/data-access/DevLexemeCreator';
 
 			const config = {
 				rootSelector: '#app',
 			};
 			const services = {
+				itemSearcher: new DevItemSearcher(),
 				messagesRepository: new DevMessagesRepository(),
 				lexemeCreator: new DevLexemeCreator(),
 			};

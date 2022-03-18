@@ -1,4 +1,6 @@
+import ItemSearcher from '@/data-access/ItemSearcher';
 import LexemeCreator from '@/data-access/LexemeCreator';
+import { ItemSearchKey } from '@/plugins/ItemSearchPlugin/ItemSearch';
 import {
 	ComponentPublicInstance,
 	createApp,
@@ -15,6 +17,7 @@ export interface Config {
 }
 
 export interface Services {
+	itemSearcher: ItemSearcher;
 	messagesRepository?: MessagesRepository;
 	lexemeCreator: LexemeCreator;
 }
@@ -28,6 +31,7 @@ export default function createAndMount(
 	app.use( store );
 
 	app.provide( MessagesKey, new Messages( services.messagesRepository ) );
+	app.provide( ItemSearchKey, services.itemSearcher );
 
 	return app.mount( config.rootSelector );
 }

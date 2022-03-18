@@ -1,4 +1,5 @@
 import createAndMount from '@/main';
+import unusedItemSearcher from '../mocks/unusedItemSearcher';
 import unusedLexemeCreator from '../mocks/unusedLexemeCreator';
 
 describe( 'createAndMount', () => {
@@ -12,7 +13,10 @@ describe( 'createAndMount', () => {
 
 		const instance = createAndMount( {
 			rootSelector: '#test-app',
-		}, { lexemeCreator: unusedLexemeCreator } );
+		}, {
+			itemSearcher: unusedItemSearcher,
+			lexemeCreator: unusedLexemeCreator,
+		} );
 
 		expect( rootElement.firstChild ).toBe( instance.$el );
 		expect( discardedElement.parentElement ).toBe( null );
