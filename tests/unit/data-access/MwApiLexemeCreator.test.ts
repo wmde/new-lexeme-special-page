@@ -1,4 +1,4 @@
-import MwApiLexemeCreator from '@/mediawiki/MwApiLexemeCreator';
+import MwApiLexemeCreator from '@/data-access/MwApiLexemeCreator';
 
 describe( 'MwApiLexemeCreator', () => {
 
