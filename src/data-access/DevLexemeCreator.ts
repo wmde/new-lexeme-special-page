@@ -1,6 +1,7 @@
 import LexemeCreator from './LexemeCreator';
 
-export default class AlertLexemeCreator implements LexemeCreator {
+/** Lexeme creator for the dev entry point. */
+export default class DevLexemeCreator implements LexemeCreator {
 
 	public async createLexeme(
 		lemma: string,

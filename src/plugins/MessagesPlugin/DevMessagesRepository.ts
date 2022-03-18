@@ -15,7 +15,8 @@ const messages: Record<MessageKeys, string> = {
 	copyrightpage: '{{ns:project}}:Copyrights',
 };
 
-export class MockMessagesRepository implements MessagesRepository {
+/** Messages repository for the dev entry point. */
+export default class DevMessagesRepository implements MessagesRepository {
 
 	public get( key: MessageKeys ): string {
 		return messages[ key ] !== undefined ? messages[ key ] : `⧼${key}⧽`;

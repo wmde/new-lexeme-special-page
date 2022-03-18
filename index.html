@@ -9,15 +9,15 @@
 		<div id="app"></div>
 		<script type="module">
 			import createAndMount from './src/main.ts';
-			import { MockMessagesRepository } from './src/plugins/MessagesPlugin/MockMessagesRepository';
-			import AlertLexemeCreator from './src/data-access/AlertLexemeCreator';
+			import DevMessagesRepository from './src/plugins/MessagesPlugin/DevMessagesRepository';
+			import DevLexemeCreator from './src/data-access/DevLexemeCreator';
 
 			const config = {
 				rootSelector: '#app',
 			};
 			const services = {
-				messagesRepository: new MockMessagesRepository(),
-				lexemeCreator: new AlertLexemeCreator(),
+				messagesRepository: new DevMessagesRepository(),
+				lexemeCreator: new DevLexemeCreator(),
 			};
 
 			createAndMount( config, services );
