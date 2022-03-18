@@ -10,8 +10,8 @@ interface Props {
 	value: string | null;
 	searchForItems: ( searchTerm: string, offset?: number ) => Promise<SearchedItemOption[]>;
 }
-
 const props = defineProps<Props>();
+
 const emit = defineEmits( {
 	'update:modelValue': ( selectedItemId: string | null ) => {
 		return selectedItemId === null || /^Q\d+$/.test( selectedItemId );

@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import FetchItemSearcher from '@/data-access/FetchItemSearcher';
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
 import ItemLookup from '@/components/ItemLookup.vue';
+import { useItemSearch } from '@/plugins/ItemSearchPlugin/ItemSearch';
 
 interface Props {
 	modelValue: string | null;
@@ -13,8 +13,7 @@ defineEmits( [ 'update:modelValue' ] );
 
 const messages = useMessages();
 
-// TODO: inject searcher
-const searcher = new FetchItemSearcher();
+const searcher = useItemSearch();
 const searchForItems = searcher.searchItems.bind( searcher );
 
 </script>
