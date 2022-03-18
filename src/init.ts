@@ -2,8 +2,8 @@ import createAndMount, {
 	Config,
 	Services,
 } from './main';
-import MwApiLexemeCreator from './mediawiki/MwApiLexemeCreator';
-import MwMessagesRepository from './mediawiki/MwMessagesRepository';
+import MwApiLexemeCreator from './data-access/MwApiLexemeCreator';
+import MwMessagesRepository from './plugins/MessagesPlugin/MwMessagesRepository';
 import { MediaWiki } from './@types/mediawiki';
 import { ComponentPublicInstance } from 'vue';
 
