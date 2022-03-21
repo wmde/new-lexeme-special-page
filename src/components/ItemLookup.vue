@@ -69,8 +69,6 @@ const onSearchInput = async ( inputValue: string ) => {
 			searchSuggestions.value = searchResults.map( searchResultToMonolingualOption );
 		}, 150 );
 	}
-	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-	// @ts-ignore
 	debouncedSearchForItems.value( inputValue );
 };
 
