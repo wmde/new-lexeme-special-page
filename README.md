@@ -23,3 +23,4 @@ To be able to run the netlify commands locally you will need to run `npx netlify
 To create a deploy of the current commit, run `npm run deployCommit`. This will create a build in the `./dist` folder and create a manual deployment to a unique address that will be generated at the time of deploy. 
 
 
+[Development on this project powered by Netlify](https://www.netlify.com/)
