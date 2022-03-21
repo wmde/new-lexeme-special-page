@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { MenuItem } from '@wmde/wikit-vue-components/dist/components/MenuItem';
 import { SearchedItemOption } from '@/data-access/ItemSearcher';
 import WikitLookup from './WikitLookup';
 import debounce from 'lodash/debounce';
@@ -20,7 +19,13 @@ const emit = defineEmits( {
 	},
 } );
 
-interface MonolingualOption extends MenuItem {
+interface WikitMenuItem {
+	label: string;
+	description: string;
+	tag?: string;
+}
+
+interface MonolingualOption extends WikitMenuItem {
 	value: string;
 }
 const searchSuggestions = ref( [] as MonolingualOption[] );
