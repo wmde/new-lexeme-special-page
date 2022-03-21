@@ -32,7 +32,9 @@ const selectedOption = computed( () => {
 
 const searchInput = ref( '' );
 
+const lastSelectedOption = ref( null as MonolingualOption | null );
 const onOptionSelected = ( value: unknown ) => {
+	lastSelectedOption.value = value as MonolingualOption;
 	const itemId = value === null ? null : ( value as MonolingualOption ).value;
 	emit( 'update:modelValue', itemId );
 };
@@ -41,6 +43,10 @@ const onSearchInput = async ( inputValue: string ) => {
 	searchInput.value = inputValue;
 	if ( inputValue.trim() === '' ) {
 		searchSuggestions.value = [];
+		return;
+	}
+
+	if ( inputValue === lastSelectedOption.value?.label ) {
 		return;
 	}
 	const searchResults = await props.searchForItems( inputValue );
