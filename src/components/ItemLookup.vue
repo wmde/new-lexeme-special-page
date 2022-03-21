@@ -30,8 +30,11 @@ const selectedOption = computed( () => {
 	return searchSuggestions.value.find( ( item ) => item.value === props.value );
 } );
 
-const searchInput = ref( '' );
-
+// `lastSelectedOption` is needed to prevent search for new suggestions when one was just selected
+// by the user and thus the input updated to display the label of the selected option. This should
+// be identical to the `selectedOption` computed above, but that is too "slow" because it only
+// updates after the parent component tree has finished processing the `'update:modelValue'` event
+// emitted here and updated this component's value prop.
 const lastSelectedOption = ref( null as MonolingualOption | null );
 const onOptionSelected = ( value: unknown ) => {
 	lastSelectedOption.value = value as MonolingualOption;
@@ -39,6 +42,7 @@ const onOptionSelected = ( value: unknown ) => {
 	emit( 'update:modelValue', itemId );
 };
 
+const searchInput = ref( '' );
 const onSearchInput = async ( inputValue: string ) => {
 	searchInput.value = inputValue;
 	if ( inputValue.trim() === '' ) {
