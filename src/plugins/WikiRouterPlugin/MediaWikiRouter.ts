@@ -15,12 +15,12 @@ export default class MediaWikiRouter implements WikiRouter {
 		this.getUrl = getUrl;
 	}
 
-	public getPageUrl( title: string, params?: Record<string, unknown> ): string {
-		return this.getUrl( title, params );
-	}
-
 	public goToTitle( title: string, params?: Record<string, unknown> ): void {
 		window.location.href = this.getPageUrl( title, params );
+	}
+
+	private getPageUrl( title: string, params?: Record<string, unknown> ): string {
+		return this.getUrl( title, params );
 	}
 
 }

@@ -54,7 +54,7 @@ const copyrightText = $messages.get(
 const wikiRouter = useWikiRouter();
 const onSubmit = async () => {
 	const lexemeId = await store.dispatch( CREATE_LEXEME );
-	wikiRouter.goToTitle( `Special:EntityData/${lexemeId}` );
+	wikiRouter.goToTitle( `Special:EntityPage/${lexemeId}` );
 };
 </script>
 

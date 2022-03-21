@@ -4,6 +4,7 @@ import initStore from '@/store';
 import unusedLexemeCreator from '../mocks/unusedLexemeCreator';
 import { ItemSearchKey } from '@/plugins/ItemSearchPlugin/ItemSearch';
 import DevItemSearcher from '@/data-access/DevItemSearcher';
+import { WikiRouterKey } from '@/plugins/WikiRouterPlugin/MediaWikiRouter';
 
 jest.mock( 'lodash/debounce', () => jest.fn( ( fn ) => fn ) );
 
@@ -19,6 +20,7 @@ describe( 'NewLexemeForm', () => {
 				plugins: [ store ],
 				provide: {
 					[ ItemSearchKey as symbol ]: new DevItemSearcher(),
+					[ WikiRouterKey as symbol ]: null,
 				},
 			},
 		} );
