@@ -9,6 +9,8 @@ import initStore from './store';
 import App from './App.vue';
 import Messages, { MessagesKey } from './plugins/MessagesPlugin/Messages';
 import MessagesRepository from './plugins/MessagesPlugin/MessagesRepository';
+import { WikiRouterKey } from './plugins/WikiRouterPlugin/MediaWikiRouter';
+import WikiRouter from './plugins/WikiRouterPlugin/WikiRouter';
 
 export interface Config {
 	rootSelector: string;
@@ -20,6 +22,7 @@ export interface Services {
 	itemSearcher: ItemSearcher;
 	messagesRepository?: MessagesRepository;
 	lexemeCreator: LexemeCreator;
+	wikiRouter: WikiRouter;
 }
 
 export default function createAndMount(
@@ -32,6 +35,7 @@ export default function createAndMount(
 
 	app.provide( MessagesKey, new Messages( services.messagesRepository ) );
 	app.provide( ItemSearchKey, services.itemSearcher );
+	app.provide( WikiRouterKey, services.wikiRouter );
 
 	return app.mount( config.rootSelector );
 }

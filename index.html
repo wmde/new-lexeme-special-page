@@ -20,6 +20,7 @@
 				itemSearcher: new DevItemSearcher(),
 				messagesRepository: new DevMessagesRepository(),
 				lexemeCreator: new DevLexemeCreator(),
+				wikiRouter: { goToTitle( title ) { console.log( 'goToTitle', title ); } },
 			};
 
 			createAndMount( config, services );

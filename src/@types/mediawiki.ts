@@ -18,8 +18,13 @@ interface MwConfig {
 	get( key: string ): unknown;
 }
 
+export type MwUtilGetUrl = ( pageName: string|null, params?: Record<string, unknown> ) => string;
+
 export interface MediaWiki {
 	config: MwConfig;
 	message: MwMessages;
 	Api: new( defaultOptions?: MwApiOptions ) => MwApi;
+	util: {
+		getUrl: MwUtilGetUrl;
+	};
 }
