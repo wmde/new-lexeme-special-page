@@ -4,6 +4,7 @@ import { SearchedItemOption } from '@/data-access/ItemSearcher';
 import WikitLookup from './WikitLookup';
 import debounce from 'lodash/debounce';
 import { DebouncedFunc } from 'lodash';
+import { useMessages } from '@/plugins/MessagesPlugin/Messages';
 
 interface Props {
 	label: string;
@@ -87,6 +88,8 @@ function searchResultToMonolingualOption( searchResult: SearchedItemOption ): Mo
 		value: searchResult.itemId,
 	};
 }
+
+const messages = useMessages();
 </script>
 
 <template>
@@ -101,7 +104,7 @@ function searchResultToMonolingualOption( searchResult: SearchedItemOption ): Mo
 		@input="onOptionSelected"
 	>
 		<template #no-results>
-			FIXME: add no results copy!
+			{{ messages.get( 'wikibaselexeme-newlexeme-no-results' ) }}
 		</template>
 	</wikit-lookup>
 </template>
