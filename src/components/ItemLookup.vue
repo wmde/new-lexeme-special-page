@@ -3,6 +3,7 @@ import { ref, computed } from 'vue';
 import { MenuItem } from '@wmde/wikit-vue-components/dist/components/MenuItem';
 import { SearchedItemOption } from '@/data-access/ItemSearcher';
 import WikitLookup from './WikitLookup';
+import debounce from 'lodash/debounce';
 
 interface Props {
 	label: string;
@@ -42,6 +43,7 @@ const onOptionSelected = ( value: unknown ) => {
 	emit( 'update:modelValue', itemId );
 };
 
+const debouncedSearchForItems = ref( null as null | ( ( searchTerm: string, offset?: number ) => Promise<SearchedItemOption[]> ) );
 const searchInput = ref( '' );
 const onSearchInput = async ( inputValue: string ) => {
 	searchInput.value = inputValue;
@@ -53,8 +55,15 @@ const onSearchInput = async ( inputValue: string ) => {
 	if ( inputValue === lastSelectedOption.value?.label ) {
 		return;
 	}
-	const searchResults = await props.searchForItems( inputValue );
-	searchSuggestions.value = searchResults.map( searchResultToMonolingualOption );
+	if ( debouncedSearchForItems.value === null ) {
+		debouncedSearchForItems.value = debounce( async ( debouncedInputValue: string ) => {
+			const searchResults = await props.searchForItems( debouncedInputValue );
+			searchSuggestions.value = searchResults.map( searchResultToMonolingualOption );
+		}, 150 );
+	}
+	// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+	// @ts-ignore
+	debouncedSearchForItems.value( inputValue );
 };
 
 const onScroll = async () => {

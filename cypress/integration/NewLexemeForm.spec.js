@@ -9,7 +9,8 @@ describe( 'NewLexemeForm', () => {
 			.type( 'test lemma' );
 
 		cy.get( '.wbl-snl-language-lookup input' )
-			.type( '=Q123' );
+			.type( '=Q123', { delay: 0 } );
+
 		cy.get( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).click();
 
 		cy.get( 'input[name=lexicalcategory]' )
