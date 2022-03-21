@@ -2,6 +2,8 @@ import { mount } from '@vue/test-utils';
 import ItemLookup from '@/components/ItemLookup.vue';
 import { Lookup as WikitLookup } from '@wmde/wikit-vue-components';
 
+jest.mock( 'lodash/debounce', () => jest.fn( ( fn ) => fn ) );
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function createLookup( propsOverrides: any = {} ) {
 	return mount( ItemLookup, {

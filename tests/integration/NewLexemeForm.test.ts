@@ -5,6 +5,8 @@ import unusedLexemeCreator from '../mocks/unusedLexemeCreator';
 import { ItemSearchKey } from '@/plugins/ItemSearchPlugin/ItemSearch';
 import DevItemSearcher from '@/data-access/DevItemSearcher';
 
+jest.mock( 'lodash/debounce', () => jest.fn( ( fn ) => fn ) );
+
 describe( 'NewLexemeForm', () => {
 	let store: ReturnType<typeof initStore>;
 	beforeEach( () => {

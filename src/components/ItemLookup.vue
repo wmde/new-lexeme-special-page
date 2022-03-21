@@ -4,6 +4,7 @@ import { MenuItem } from '@wmde/wikit-vue-components/dist/components/MenuItem';
 import { SearchedItemOption } from '@/data-access/ItemSearcher';
 import WikitLookup from './WikitLookup';
 import debounce from 'lodash/debounce';
+import { DebouncedFunc } from 'lodash';
 
 interface Props {
 	label: string;
@@ -43,7 +44,9 @@ const onOptionSelected = ( value: unknown ) => {
 	emit( 'update:modelValue', itemId );
 };
 
-const debouncedSearchForItems = ref( null as null | ( ( searchTerm: string, offset?: number ) => Promise<SearchedItemOption[]> ) );
+const debouncedSearchForItems = ref(
+	null as null | DebouncedFunc<( debouncedInputValue: string ) => Promise<void>>,
+);
 const searchInput = ref( '' );
 const onSearchInput = async ( inputValue: string ) => {
 	searchInput.value = inputValue;
