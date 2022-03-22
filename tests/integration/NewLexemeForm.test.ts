@@ -62,6 +62,7 @@ describe( 'NewLexemeForm', () => {
 			global: {
 				plugins: [ testStore ],
 				provide: {
+					[ ItemSearchKey as symbol ]: new DevItemSearcher(),
 					[ WikiRouterKey as symbol ]: { goToTitle },
 				},
 			},
@@ -70,8 +71,9 @@ describe( 'NewLexemeForm', () => {
 		const lemmaInput = wrapper.find( '.wbl-snl-lemma-input input' );
 		await lemmaInput.setValue( 'foo' );
 
-		const languageInput = wrapper.find( '.wbl-snl-language-input input' );
-		await languageInput.setValue( 'Q123' );
+		const languageInput = wrapper.find( '.wbl-snl-language-lookup input' );
+		await languageInput.setValue( '=Q123' );
+		await wrapper.find( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
 
 		const lexicalCategoryInput = wrapper.find( '.wbl-snl-lexical-category-input input' );
 		await lexicalCategoryInput.setValue( 'Q456' );
