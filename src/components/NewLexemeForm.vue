@@ -1,4 +1,3 @@
-import { useWikiRouter } from '@/plugins/WikiRouterPlugin/MediaWikiRouter';
 <script setup lang="ts">
 import { CREATE_LEXEME } from '@/store/actions';
 import { computed } from 'vue';
@@ -54,6 +53,7 @@ const copyrightText = $messages.get(
 const wikiRouter = useWikiRouter();
 const onSubmit = async () => {
 	const lexemeId = await store.dispatch( CREATE_LEXEME );
+	// TODO: deal with errors during Lexeme creation, see T303393
 	wikiRouter.goToTitle( `Special:EntityPage/${lexemeId}` );
 };
 </script>
