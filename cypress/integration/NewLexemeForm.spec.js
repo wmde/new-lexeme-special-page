@@ -20,8 +20,11 @@ describe( 'NewLexemeForm', () => {
 			.submit();
 
 		cy.get( '@alert' ).then( ( spy ) => {
-			expect( spy ).to.have.been.calledOnceWith(
+			expect( spy ).to.have.been.calledWith(
 				'Create Lexeme "test lemma"@en as Q123 Q456',
+			);
+			expect( spy ).to.have.been.calledWith(
+				'Navigating to: Special:EntityPage/L1',
 			);
 		} );
 	} );
