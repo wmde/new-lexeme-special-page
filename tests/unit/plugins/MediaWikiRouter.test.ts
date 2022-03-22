@@ -13,8 +13,7 @@ describe( 'MediaWikiRouter', () => {
 
 	it( 'delegates to mw.util.getUrl', () => {
 		const title = 'Some page';
-		const params = { action: 'edit' };
-		const url = '/w/index.php?action=edit&title=Some_page';
+		const url = '/w/index.php?title=Some_page';
 		const getUrlMock = jest.fn().mockReturnValue( url );
 		const router = new MediaWikiRouter( getUrlMock );
 
@@ -29,9 +28,9 @@ describe( 'MediaWikiRouter', () => {
 			set: setHrefSpy,
 		} );
 
-		router.goToTitle( title, params );
+		router.goToTitle( title );
 
-		expect( getUrlMock ).toHaveBeenCalledWith( title, params );
+		expect( getUrlMock ).toHaveBeenCalledWith( title );
 		expect( setHrefSpy ).toHaveBeenCalledWith( url );
 	} );
 } );
