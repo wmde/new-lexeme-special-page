@@ -24,8 +24,10 @@ export default {
 <template>
 	<text-input
 		class="wbl-snl-lexical-category-input"
-		:label="messages.get( 'wikibaselexeme-newlexeme-lexicalcategory' )"
-		:placeholder="messages.get( 'wikibaselexeme-newlexeme-lexicalcategory-placeholder' )"
+		:label="messages.getUnescaped( 'wikibaselexeme-newlexeme-lexicalcategory' )"
+		:placeholder="messages.getUnescaped(
+			'wikibaselexeme-newlexeme-lexicalcategory-placeholder'
+		)"
 		name="lexicalcategory"
 		required
 		pattern="Q[1-9][0-9]*"
