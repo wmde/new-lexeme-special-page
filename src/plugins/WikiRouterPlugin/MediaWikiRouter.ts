@@ -11,10 +11,10 @@ export default class MediaWikiRouter implements WikiRouter {
 
 	/**
 	 * The plugin uses a utilty to generate wiki urls from a wiki
-	 * page's title and ensure urls are consistent with various 
+	 * page's title and ensure urls are consistent with various
 	 * mediawiki instances without relying on config variables or
 	 * constructing the url within the class itself.
-	 * 
+	 *
 	 * @see https://doc.wikimedia.org/mediawiki-core/master/js/#!/api/mw.util-method-getUrl
 	 *
 	 * @param {MwUtilGetUrl} getUrl
