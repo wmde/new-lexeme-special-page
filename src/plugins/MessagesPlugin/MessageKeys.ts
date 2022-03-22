@@ -8,6 +8,7 @@ type MessageKeys
  | 'wikibaselexeme-newlexeme-submit'
  | 'wikibaselexeme-newlexeme-error-no-lemma'
  | 'wikibaselexeme-newlexeme-error-lemma-is-too-long'
+ | 'wikibaselexeme-newlexeme-no-results'
  | 'wikibase-shortcopyrightwarning'
  | 'copyrightpage';
 

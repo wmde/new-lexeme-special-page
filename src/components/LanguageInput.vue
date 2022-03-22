@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { TextInput } from '@wmde/wikit-vue-components';
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
+import ItemLookup from '@/components/ItemLookup.vue';
+import { useItemSearch } from '@/plugins/ItemSearchPlugin/ItemSearch';
 
 interface Props {
-	modelValue: string;
+	modelValue: string | null;
 }
 
 defineProps<Props>();
@@ -11,6 +12,10 @@ defineProps<Props>();
 defineEmits( [ 'update:modelValue' ] );
 
 const messages = useMessages();
+
+const searcher = useItemSearch();
+const searchForItems = searcher.searchItems.bind( searcher );
+
 </script>
 
 <script lang="ts">
@@ -22,14 +27,13 @@ export default {
 </script>
 
 <template>
-	<text-input
-		class="wbl-snl-language-input"
-		:label="messages.get( 'wikibaselexeme-newlexeme-language' )"
-		:placeholder="messages.get( 'wikibaselexeme-newlexeme-language-placeholder' )"
-		name="lexeme-language"
-		required
-		pattern="Q[1-9][0-9]*"
-		:value="modelValue"
-		@input="$emit( 'update:modelValue', $event )"
-	/>
+	<div class="wbl-snl-language-lookup">
+		<item-lookup
+			:label="messages.get( 'wikibaselexeme-newlexeme-language' )"
+			:placeholder="messages.get( 'wikibaselexeme-newlexeme-language-placeholder' )"
+			:value="modelValue"
+			:search-for-items="searchForItems"
+			@update:model-value="$emit( 'update:modelValue', $event )"
+		/>
+	</div>
 </template>

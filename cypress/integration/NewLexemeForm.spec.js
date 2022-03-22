@@ -8,8 +8,10 @@ describe( 'NewLexemeForm', () => {
 		cy.get( 'input[name=lemma]' )
 			.type( 'test lemma' );
 
-		cy.get( 'input[name=lexeme-language]' )
-			.type( 'Q123' );
+		cy.get( '.wbl-snl-language-lookup input' )
+			.type( '=Q123', { delay: 0 } );
+
+		cy.get( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).click();
 
 		cy.get( 'input[name=lexicalcategory]' )
 			.type( 'Q456' );
