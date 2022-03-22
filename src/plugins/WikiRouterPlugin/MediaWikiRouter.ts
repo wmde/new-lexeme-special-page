@@ -9,6 +9,12 @@ export default class MediaWikiRouter implements WikiRouter {
 
 	private readonly getUrl: MwUtilGetUrl;
 
+	/**
+	 * This uses the standard Mediawiki utility, because that is simpler than constructing it
+	 * ourselves out of multiple pieces of config.
+	 *
+	 * @param {MwUtilGetUrl} getUrl
+	 */
 	public constructor(
 		getUrl: MwUtilGetUrl,
 	) {
