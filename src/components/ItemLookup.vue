@@ -83,7 +83,7 @@ const onScroll = async () => {
 
 function searchResultToMonolingualOption( searchResult: SearchedItemOption ): MonolingualOption {
 	return {
-		label: searchResult.display.label?.value || '',
+		label: searchResult.display.label?.value || searchResult.itemId,
 		description: searchResult.display.description?.value || '',
 		value: searchResult.itemId,
 	};

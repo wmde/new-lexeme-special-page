@@ -57,6 +57,15 @@ const exampleSearchResults = [
 		},
 		itemId: 'Q47722',
 	},
+	{
+		display: {
+			description: {
+				language: 'en',
+				value: 'heated beverage of chocolate',
+			},
+		},
+		itemId: 'Q13261',
+	},
 ];
 
 describe( 'ItemLookup', () => {
@@ -88,7 +97,7 @@ describe( 'ItemLookup', () => {
 			await lookup.findComponent( WikitLookup ).vm.$emit( 'scroll' );
 
 			expect( searchForItems ).toHaveBeenCalledTimes( 2 );
-			expect( searchForItems ).toHaveBeenNthCalledWith( 2, 'foo', 3 );
+			expect( searchForItems ).toHaveBeenNthCalledWith( 2, 'foo', 4 );
 		} );
 
 		it( ':value - selects the selected Item with this QID', async () => {
@@ -100,7 +109,38 @@ describe( 'ItemLookup', () => {
 			await lookup.setProps( { value: exampleSearchResults[ selectedItemId ].itemId } );
 
 			expect( lookup.findComponent( WikitLookup ).props().value.label )
-				.toBe( exampleSearchResults[ selectedItemId ].display.label.value );
+				.toBe( exampleSearchResults[ selectedItemId ].display.label?.value );
+		} );
+
+		it( ':searchForItems - returned suggestions are provided to Wikit Lookup', async () => {
+			const searchForItems = jest.fn().mockReturnValue( exampleSearchResults );
+			const lookup = createLookup( { searchForItems } );
+
+			await lookup.find( 'input' ).setValue( 'foo' );
+
+			const wikitLookup = lookup.getComponent( WikitLookup );
+			expect( wikitLookup.props( 'menuItems' ) ).toStrictEqual( [
+				{
+					description: 'bar',
+					label: 'foo',
+					value: 'Q123',
+				},
+				{
+					description: 'Edible summer squash, typically green in colour',
+					label: 'zucchini',
+					value: 'Q7533',
+				},
+				{
+					description: 'edible green plant in the cabbage family',
+					label: 'broccoli',
+					value: 'Q47722',
+				},
+				{
+					description: 'heated beverage of chocolate',
+					label: 'Q13261',
+					value: 'Q13261',
+				},
+			] );
 		} );
 	} );
 	describe( '@events', () => {
@@ -124,7 +164,7 @@ describe( 'ItemLookup', () => {
 			await lookup.findComponent( WikitLookup ).vm.$emit(
 				'input',
 				{
-					label: exampleSearchResults[ selectedItemId ].display.label.value,
+					label: exampleSearchResults[ selectedItemId ].display.label?.value,
 					description: exampleSearchResults[ selectedItemId ].display.description.value,
 					value: exampleSearchResults[ selectedItemId ].itemId,
 				},
