@@ -53,4 +53,32 @@ describe( 'NewLexemeForm', () => {
 
 		expect( store.state.lexicalCategory ).toBe( 'foo' );
 	} );
+
+	it( 'calls the API to create the Lexeme and then redirects to it', async () => {
+		const createLexeme = jest.fn().mockReturnValue( 'L123' );
+		const goToTitle = jest.fn();
+		const testStore = initStore( {}, { lexemeCreator: { createLexeme } } );
+		const wrapper = mount( NewLexemeForm, {
+			global: {
+				plugins: [ testStore ],
+				provide: {
+					[ WikiRouterKey as symbol ]: { goToTitle },
+				},
+			},
+		} );
+
+		const lemmaInput = wrapper.find( '.wbl-snl-lemma-input input' );
+		await lemmaInput.setValue( 'foo' );
+
+		const languageInput = wrapper.find( '.wbl-snl-language-input input' );
+		await languageInput.setValue( 'Q123' );
+
+		const lexicalCategoryInput = wrapper.find( '.wbl-snl-lexical-category-input input' );
+		await lexicalCategoryInput.setValue( 'Q456' );
+
+		await wrapper.trigger( 'submit' );
+
+		expect( createLexeme ).toHaveBeenCalledWith( 'foo', 'en', 'Q123', 'Q456' );
+		expect( goToTitle ).toHaveBeenCalledWith( 'Special:EntityPage/L123' );
+	} );
 } );
