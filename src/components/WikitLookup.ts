@@ -16,4 +16,5 @@ export default defineComponent( {
 	render() {
 		return h( RealWikitLookup, this.$props, this.$slots );
 	},
+	compatConfig: { MODE: 3 },
 } );
