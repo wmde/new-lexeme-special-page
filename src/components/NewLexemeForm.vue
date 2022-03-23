@@ -12,7 +12,7 @@ import {
 	SET_LEMMA,
 	SET_LEXICAL_CATEGORY,
 } from '@/store/mutations';
-import { useWikiRouter } from '@/plugins/WikiRouterPlugin/MediaWikiRouter';
+import { useWikiRouter } from '@/plugins/WikiRouterPlugin/WikiRouter';
 
 const $messages = useMessages();
 const store = useStore();

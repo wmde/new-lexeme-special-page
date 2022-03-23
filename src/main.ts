@@ -9,7 +9,7 @@ import initStore from './store';
 import App from './App.vue';
 import Messages, { MessagesKey } from './plugins/MessagesPlugin/Messages';
 import MessagesRepository from './plugins/MessagesPlugin/MessagesRepository';
-import { WikiRouterKey } from './plugins/WikiRouterPlugin/MediaWikiRouter';
+import { WikiRouterKey } from './plugins/WikiRouterPlugin/WikiRouter';
 import WikiRouter from './plugins/WikiRouterPlugin/WikiRouter';
 
 export interface Config {

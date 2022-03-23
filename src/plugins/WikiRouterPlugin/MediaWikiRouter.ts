@@ -1,9 +1,5 @@
 import WikiRouter from './WikiRouter';
 import { MwUtilGetUrl } from '@/@types/mediawiki';
-import {
-	inject,
-	InjectionKey,
-} from 'vue';
 
 export default class MediaWikiRouter implements WikiRouter {
 
@@ -33,12 +29,4 @@ export default class MediaWikiRouter implements WikiRouter {
 		return this.getUrl( title );
 	}
 
-}
-
-export const WikiRouterKey: InjectionKey<WikiRouter> = Symbol( 'WikiRouter' );
-
-export function useWikiRouter(): WikiRouter {
-	return inject( WikiRouterKey, () => {
-		throw new Error( 'No WikiRouter provided!' );
-	}, true );
 }
