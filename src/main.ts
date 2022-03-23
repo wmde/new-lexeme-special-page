@@ -1,6 +1,7 @@
 import ItemSearcher from '@/data-access/ItemSearcher';
 import LexemeCreator from '@/data-access/LexemeCreator';
 import { ItemSearchKey } from '@/plugins/ItemSearchPlugin/ItemSearch';
+import { Config, ConfigKey } from '@/plugins/ConfigPlugin/Config';
 import {
 	ComponentPublicInstance,
 	createApp,
@@ -12,10 +13,8 @@ import MessagesRepository from './plugins/MessagesPlugin/MessagesRepository';
 import { WikiRouterKey } from './plugins/WikiRouterPlugin/WikiRouter';
 import WikiRouter from './plugins/WikiRouterPlugin/WikiRouter';
 
-export interface Config {
+export interface CreateAndMountConfig extends Config {
 	rootSelector: string;
-	licenseUrl?: string;
-	licenseName?: string;
 }
 
 export interface Services {
@@ -26,13 +25,14 @@ export interface Services {
 }
 
 export default function createAndMount(
-	config: Config,
+	config: CreateAndMountConfig,
 	services: Services,
 ): ComponentPublicInstance {
 	const app = createApp( App );
-	const store = initStore( config, services );
+	const store = initStore( services );
 	app.use( store );
 
+	app.provide( ConfigKey, config );
 	app.provide( MessagesKey, new Messages( services.messagesRepository ) );
 	app.provide( ItemSearchKey, services.itemSearcher );
 	app.provide( WikiRouterKey, services.wikiRouter );
