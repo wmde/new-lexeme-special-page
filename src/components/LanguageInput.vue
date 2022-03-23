@@ -29,8 +29,8 @@ export default {
 <template>
 	<div class="wbl-snl-language-lookup">
 		<item-lookup
-			:label="messages.get( 'wikibaselexeme-newlexeme-language' )"
-			:placeholder="messages.get( 'wikibaselexeme-newlexeme-language-placeholder' )"
+			:label="messages.getUnescaped( 'wikibaselexeme-newlexeme-language' )"
+			:placeholder="messages.getUnescaped( 'wikibaselexeme-newlexeme-language-placeholder' )"
 			:value="modelValue"
 			:search-for-items="searchForItems"
 			@update:model-value="$emit( 'update:modelValue', $event )"

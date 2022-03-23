@@ -104,7 +104,7 @@ const messages = useMessages();
 		@input="onOptionSelected"
 	>
 		<template #no-results>
-			{{ messages.get( 'wikibaselexeme-newlexeme-no-results' ) }}
+			{{ messages.getUnescaped( 'wikibaselexeme-newlexeme-no-results' ) }}
 		</template>
 	</wikit-lookup>
 </template>

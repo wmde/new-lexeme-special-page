@@ -20,9 +20,16 @@ const messages: Record<MessageKeys, string> = {
 export default class DevMessagesRepository implements MessagesRepository {
 
 	public get( key: MessageKeys ): string {
-		return messages[ key ] !== undefined ? messages[ key ] : `⧼${key}⧽`;
+		return messages[ key ] !== undefined ? this.escape( messages[ key ] ) : `⧼${key}⧽`;
 	}
 	public getText( key: MessageKeys ): string {
 		return messages[ key ] !== undefined ? messages[ key ] : `⧼${key}⧽`;
+	}
+
+	private escape( s: string ) {
+		return s.replace(
+			/[^0-9A-Za-z,.: ]/g,
+			( c ) => '&#' + c.charCodeAt( 0 ) + ';',
+		);
 	}
 }

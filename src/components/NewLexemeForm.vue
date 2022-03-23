@@ -39,7 +39,7 @@ const lexicalCategory = computed( {
 		store.commit( SET_LEXICAL_CATEGORY, newLexicalCategory );
 	},
 } );
-const submitMsg = $messages.get( 'wikibaselexeme-newlexeme-submit' );
+const submitMsg = $messages.getUnescaped( 'wikibaselexeme-newlexeme-submit' );
 const termsOfUseTitle = $messages.get( 'copyrightpage' );
 const copyrightText = $messages.get(
 	'wikibase-shortcopyrightwarning',

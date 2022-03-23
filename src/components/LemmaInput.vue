@@ -17,13 +17,13 @@ function buildError( errorKey: Props['error'] ) {
 	if ( errorKey === 'ERROR_LEMMA_TOO_LONG' ) {
 		return {
 			type: 'error',
-			message: messages.get( 'wikibaselexeme-newlexeme-error-lemma-is-too-long' ),
+			message: messages.getUnescaped( 'wikibaselexeme-newlexeme-error-lemma-is-too-long' ),
 		};
 	}
 	if ( errorKey === 'ERROR_NO_LEMMA' ) {
 		return {
 			type: 'error',
-			message: messages.get( 'wikibaselexeme-newlexeme-error-no-lemma' ),
+			message: messages.getUnescaped( 'wikibaselexeme-newlexeme-error-no-lemma' ),
 		};
 	}
 	return null;
@@ -41,8 +41,8 @@ export default {
 <template>
 	<text-input
 		class="wbl-snl-lemma-input"
-		:label="messages.get( 'wikibaselexeme-newlexeme-lemma' )"
-		:placeholder="messages.get( 'wikibaselexeme-newlexeme-lemma-placeholder' )"
+		:label="messages.getUnescaped( 'wikibaselexeme-newlexeme-lemma' )"
+		:placeholder="messages.getUnescaped( 'wikibaselexeme-newlexeme-lemma-placeholder' )"
 		name="lemma"
 		required
 		:error="buildError( error )"
