@@ -1,4 +1,5 @@
 import createAndMount from '@/main';
+import unusedWikiRouter from '../mocks/unusedWikiRouter';
 import unusedItemSearcher from '../mocks/unusedItemSearcher';
 import unusedLexemeCreator from '../mocks/unusedLexemeCreator';
 
@@ -16,6 +17,7 @@ describe( 'createAndMount', () => {
 		}, {
 			itemSearcher: unusedItemSearcher,
 			lexemeCreator: unusedLexemeCreator,
+			wikiRouter: unusedWikiRouter,
 		} );
 
 		expect( rootElement.firstChild ).toBe( instance.$el );

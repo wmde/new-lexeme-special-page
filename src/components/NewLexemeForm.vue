@@ -12,6 +12,7 @@ import {
 	SET_LEMMA,
 	SET_LEXICAL_CATEGORY,
 } from '@/store/mutations';
+import { useWikiRouter } from '@/plugins/WikiRouterPlugin/WikiRouter';
 
 const $messages = useMessages();
 const store = useStore();
@@ -49,9 +50,11 @@ const copyrightText = $messages.get(
 	store.state.config.licenseName,
 );
 
-const onSubmit = () => {
-	store.dispatch( CREATE_LEXEME );
-	// TODO redirect to created lexeme
+const wikiRouter = useWikiRouter();
+const onSubmit = async () => {
+	const lexemeId = await store.dispatch( CREATE_LEXEME );
+	// TODO: deal with errors during Lexeme creation, see T303393
+	wikiRouter.goToTitle( `Special:EntityPage/${lexemeId}` );
 };
 </script>
 

@@ -4,6 +4,7 @@ import initStore from '@/store';
 import unusedLexemeCreator from '../mocks/unusedLexemeCreator';
 import { ItemSearchKey } from '@/plugins/ItemSearchPlugin/ItemSearch';
 import DevItemSearcher from '@/data-access/DevItemSearcher';
+import { WikiRouterKey } from '@/plugins/WikiRouterPlugin/WikiRouter';
 
 jest.mock( 'lodash/debounce', () => jest.fn( ( fn ) => fn ) );
 
@@ -19,6 +20,7 @@ describe( 'NewLexemeForm', () => {
 				plugins: [ store ],
 				provide: {
 					[ ItemSearchKey as symbol ]: new DevItemSearcher(),
+					[ WikiRouterKey as symbol ]: null,
 				},
 			},
 		} );
@@ -50,5 +52,35 @@ describe( 'NewLexemeForm', () => {
 		await lexicalCategoryInput.setValue( 'foo' );
 
 		expect( store.state.lexicalCategory ).toBe( 'foo' );
+	} );
+
+	it( 'calls the API to create the Lexeme and then redirects to it', async () => {
+		const createLexeme = jest.fn().mockReturnValue( 'L123' );
+		const goToTitle = jest.fn();
+		const testStore = initStore( {}, { lexemeCreator: { createLexeme } } );
+		const wrapper = mount( NewLexemeForm, {
+			global: {
+				plugins: [ testStore ],
+				provide: {
+					[ ItemSearchKey as symbol ]: new DevItemSearcher(),
+					[ WikiRouterKey as symbol ]: { goToTitle },
+				},
+			},
+		} );
+
+		const lemmaInput = wrapper.find( '.wbl-snl-lemma-input input' );
+		await lemmaInput.setValue( 'foo' );
+
+		const languageInput = wrapper.find( '.wbl-snl-language-lookup input' );
+		await languageInput.setValue( '=Q123' );
+		await wrapper.find( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
+
+		const lexicalCategoryInput = wrapper.find( '.wbl-snl-lexical-category-input input' );
+		await lexicalCategoryInput.setValue( 'Q456' );
+
+		await wrapper.trigger( 'submit' );
+
+		expect( createLexeme ).toHaveBeenCalledWith( 'foo', 'en', 'Q123', 'Q456' );
+		expect( goToTitle ).toHaveBeenCalledWith( 'Special:EntityPage/L123' );
 	} );
 } );
