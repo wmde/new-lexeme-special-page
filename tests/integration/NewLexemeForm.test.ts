@@ -76,8 +76,9 @@ describe( 'NewLexemeForm', () => {
 		await languageInput.setValue( '=Q123' );
 		await wrapper.find( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
 
-		const lexicalCategoryInput = wrapper.find( '.wbl-snl-lexical-category-input input' );
-		await lexicalCategoryInput.setValue( 'Q456' );
+		const lexicalCategoryInput = wrapper.find( '.wbl-snl-lexical-category-lookup input' );
+		await lexicalCategoryInput.setValue( '=Q456' );
+		await wrapper.find( '.wbl-snl-lexical-category-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
 
 		await wrapper.trigger( 'submit' );
 
