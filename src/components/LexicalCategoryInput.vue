@@ -28,7 +28,9 @@ export default {
 	<div class="wbl-snl-lexical-category-lookup">
 		<item-lookup
 			:label="messages.getUnescaped( 'wikibaselexeme-newlexeme-lexicalcategory' )"
-			:placeholder="messages.getUnescaped( 'wikibaselexeme-newlexeme-lexicalcategory-placeholder' )"
+			:placeholder="messages.getUnescaped(
+				'wikibaselexeme-newlexeme-lexicalcategory-placeholder'
+			)"
 			:value="modelValue"
 			:search-for-items="searchForItems"
 			@update:model-value="$emit( 'update:modelValue', $event )"
