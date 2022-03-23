@@ -47,11 +47,12 @@ describe( 'NewLexemeForm', () => {
 
 	it( 'updates the store if something is entered into the lexical category input', async () => {
 		const wrapper = mountForm();
-		const lexicalCategoryInput = wrapper.find( '.wbl-snl-lexical-category-input input' );
+		const lexicalCategoryInput = wrapper.find( '.wbl-snl-lexical-category-lookup input' );
 
-		await lexicalCategoryInput.setValue( 'foo' );
+		await lexicalCategoryInput.setValue( '=Q456' );
+		await wrapper.find( '.wbl-snl-lexical-category-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
 
-		expect( store.state.lexicalCategory ).toBe( 'foo' );
+		expect( store.state.lexicalCategory ).toBe( 'Q456' );
 	} );
 
 	it( 'calls the API to create the Lexeme and then redirects to it', async () => {

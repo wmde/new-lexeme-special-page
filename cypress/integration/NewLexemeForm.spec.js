@@ -10,11 +10,11 @@ describe( 'NewLexemeForm', () => {
 
 		cy.get( '.wbl-snl-language-lookup input' )
 			.type( '=Q123', { delay: 0 } );
-
 		cy.get( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).click();
 
-		cy.get( 'input[name=lexicalcategory]' )
-			.type( 'Q456' );
+		cy.get( '.wbl-snl-lexical-category-lookup input' )
+			.type( '=Q456', { delay: 0 } );
+		cy.get( '.wbl-snl-lexical-category-lookup .wikit-OptionsMenu__item' ).click();
 
 		cy.get( '.wbl-snl-form' )
 			.submit();
