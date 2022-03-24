@@ -1,9 +1,10 @@
 <script setup lang="ts">
-import { TextInput } from '@wmde/wikit-vue-components';
+import ItemLookup from '@/components/ItemLookup.vue';
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
+import { useItemSearch } from '@/plugins/ItemSearchPlugin/ItemSearch';
 
 interface Props {
-	modelValue: string;
+	modelValue: string | null;
 }
 
 defineProps<Props>();
@@ -11,6 +12,8 @@ defineProps<Props>();
 defineEmits( [ 'update:modelValue' ] );
 
 const messages = useMessages();
+const searcher = useItemSearch();
+const searchForItems = searcher.searchItems.bind( searcher );
 </script>
 
 <script lang="ts">
@@ -22,16 +25,15 @@ export default {
 </script>
 
 <template>
-	<text-input
-		class="wbl-snl-lexical-category-input"
-		:label="messages.getUnescaped( 'wikibaselexeme-newlexeme-lexicalcategory' )"
-		:placeholder="messages.getUnescaped(
-			'wikibaselexeme-newlexeme-lexicalcategory-placeholder'
-		)"
-		name="lexicalcategory"
-		required
-		pattern="Q[1-9][0-9]*"
-		:value="modelValue"
-		@input="$emit( 'update:modelValue', $event )"
-	/>
+	<div class="wbl-snl-lexical-category-lookup">
+		<item-lookup
+			:label="messages.getUnescaped( 'wikibaselexeme-newlexeme-lexicalcategory' )"
+			:placeholder="messages.getUnescaped(
+				'wikibaselexeme-newlexeme-lexicalcategory-placeholder'
+			)"
+			:value="modelValue"
+			:search-for-items="searchForItems"
+			@update:model-value="$emit( 'update:modelValue', $event )"
+		/>
+	</div>
 </template>
