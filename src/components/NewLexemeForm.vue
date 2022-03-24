@@ -3,6 +3,7 @@ import { CREATE_LEXEME } from '@/store/actions';
 import { computed } from 'vue';
 import { useStore } from 'vuex';
 import { Button as WikitButton } from '@wmde/wikit-vue-components';
+import { useConfig } from '@/plugins/ConfigPlugin/Config';
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
 import LemmaInput from '@/components/LemmaInput.vue';
 import LanguageInput from '@/components/LanguageInput.vue';
@@ -14,6 +15,7 @@ import {
 } from '@/store/mutations';
 import { useWikiRouter } from '@/plugins/WikiRouterPlugin/WikiRouter';
 
+const config = useConfig();
 const $messages = useMessages();
 const store = useStore();
 const lemma = computed( {
@@ -46,8 +48,8 @@ const copyrightText = $messages.get(
 	'wikibase-shortcopyrightwarning',
 	submitMsg,
 	termsOfUseTitle,
-	store.state.config.licenseUrl,
-	store.state.config.licenseName,
+	config.licenseUrl,
+	config.licenseName,
 );
 
 const wikiRouter = useWikiRouter();

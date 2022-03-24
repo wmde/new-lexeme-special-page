@@ -14,34 +14,19 @@ import createActions from './actions';
 import mutations from './mutations';
 import RootState from './RootState';
 
-interface StoreParams {
-	licenseUrl?: string;
-	licenseName?: string;
-}
-
 interface StoreServices {
 	lexemeCreator: LexemeCreator;
 }
 
-export default function initStore(
-	{
-		licenseUrl = '',
-		licenseName = '',
-	}: StoreParams,
-	{
-		lexemeCreator,
-	}: StoreServices,
-): Store<RootState> {
+export default function initStore( {
+	lexemeCreator,
+}: StoreServices ): Store<RootState> {
 	return createStore( {
 		state(): RootState {
 			return {
 				lemma: '',
 				language: '',
 				lexicalCategory: '',
-				config: {
-					licenseUrl,
-					licenseName,
-				},
 			};
 		},
 		mutations,

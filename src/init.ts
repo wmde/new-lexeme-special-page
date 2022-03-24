@@ -1,6 +1,6 @@
 import MwApiItemSearcher from '@/data-access/MwApiItemSearcher';
 import createAndMount, {
-	Config,
+	CreateAndMountConfig,
 	Services,
 } from './main';
 import MwApiLexemeCreator from './data-access/MwApiLexemeCreator';
@@ -9,7 +9,7 @@ import { MediaWiki } from './@types/mediawiki';
 import { ComponentPublicInstance } from 'vue';
 import MediaWikiRouter from './plugins/WikiRouterPlugin/MediaWikiRouter';
 
-interface InitConfig extends Config {
+interface InitConfig extends CreateAndMountConfig {
 	tags: string[];
 }
 

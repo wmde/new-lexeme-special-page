@@ -1,3 +1,4 @@
+import { ConfigKey } from '@/plugins/ConfigPlugin/Config';
 import { mount } from '@vue/test-utils';
 import NewLexemeForm from '@/components/NewLexemeForm.vue';
 import initStore from '@/store';
@@ -11,7 +12,7 @@ jest.mock( 'lodash/debounce', () => jest.fn( ( fn ) => fn ) );
 describe( 'NewLexemeForm', () => {
 	let store: ReturnType<typeof initStore>;
 	beforeEach( () => {
-		store = initStore( {}, { lexemeCreator: unusedLexemeCreator } );
+		store = initStore( { lexemeCreator: unusedLexemeCreator } );
 	} );
 
 	function mountForm() {
@@ -19,6 +20,7 @@ describe( 'NewLexemeForm', () => {
 			global: {
 				plugins: [ store ],
 				provide: {
+					[ ConfigKey as symbol ]: {},
 					[ ItemSearchKey as symbol ]: new DevItemSearcher(),
 					[ WikiRouterKey as symbol ]: null,
 				},
@@ -58,11 +60,12 @@ describe( 'NewLexemeForm', () => {
 	it( 'calls the API to create the Lexeme and then redirects to it', async () => {
 		const createLexeme = jest.fn().mockReturnValue( 'L123' );
 		const goToTitle = jest.fn();
-		const testStore = initStore( {}, { lexemeCreator: { createLexeme } } );
+		const testStore = initStore( { lexemeCreator: { createLexeme } } );
 		const wrapper = mount( NewLexemeForm, {
 			global: {
 				plugins: [ testStore ],
 				provide: {
+					[ ConfigKey as symbol ]: {},
 					[ ItemSearchKey as symbol ]: new DevItemSearcher(),
 					[ WikiRouterKey as symbol ]: { goToTitle },
 				},

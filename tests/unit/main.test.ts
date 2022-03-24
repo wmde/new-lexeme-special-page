@@ -14,6 +14,8 @@ describe( 'createAndMount', () => {
 
 		const instance = createAndMount( {
 			rootSelector: '#test-app',
+			licenseUrl: '',
+			licenseName: '',
 		}, {
 			itemSearcher: unusedItemSearcher,
 			lexemeCreator: unusedLexemeCreator,
