@@ -27,6 +27,7 @@ export default function initStore( {
 				lemma: '',
 				language: '',
 				lexicalCategory: '',
+				globalErrors: [],
 			};
 		},
 		mutations,

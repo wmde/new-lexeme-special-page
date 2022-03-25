@@ -6,11 +6,13 @@
  * @see https://vuex.vuejs.org/guide/structure.html
  */
 
-import RootState from './RootState';
+import RootState, { SubmitError } from './RootState';
 
 export const SET_LEMMA = 'setLemma';
 export const SET_LANGUAGE = 'setLanguage';
 export const SET_LEXICAL_CATEGORY = 'setLexicalCategory';
+export const ADD_ERRORS = 'addErrors';
+export const CLEAR_ERRORS = 'clearErrors';
 
 export default {
 	[ SET_LEMMA ]( state: RootState, lemma: string ): void {
@@ -21,5 +23,11 @@ export default {
 	},
 	[ SET_LEXICAL_CATEGORY ]( state: RootState, lexicalCategory: string ): void {
 		state.lexicalCategory = lexicalCategory;
+	},
+	[ ADD_ERRORS ]( state: RootState, errors: SubmitError[] ): void {
+		state.globalErrors.push( ...errors );
+	},
+	[ CLEAR_ERRORS ]( state: RootState ): void {
+		state.globalErrors = [];
 	},
 };
