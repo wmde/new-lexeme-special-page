@@ -9,9 +9,10 @@ export default class DevLexemeCreator implements LexemeCreator {
 		lexemeLanguageItemId: string,
 		lexicalCategoryItemId: string,
 	): Promise<string> {
-		// eslint-disable-next-line no-alert
-		alert( `Create Lexeme "${lemma}"@${lemmaLanguageCode} as ${lexemeLanguageItemId} ${lexicalCategoryItemId}` );
+
+		await new Promise( ( resolve ) => setTimeout( resolve, 0 ) );
+		alert( `Create Lexeqme "${lemma}"@${lemmaLanguageCode} as ${lexemeLanguageItemId} ${lexicalCategoryItemId}` );
+		return Promise.reject( [ { type: 'dev', message: '<em>dev error message</em>' } ] );
 		return 'L1';
 	}
-
 }

@@ -38,8 +38,11 @@ export default class MwApiLexemeCreator implements LexemeCreator {
 				lexicalCategory: lexicalCategoryItemId,
 			} ),
 		} );
-		// TODO handle errors
-		const response = await this.api.postWithEditToken( params );
+		const response = await this.api.postWithEditToken( params )
+			.catch( () => {
+				return Promise.reject( [ { type: 'unknown' } ] );
+			} );
+
 		return ( response as WbEditEntityResponse ).entity.id;
 	}
 
