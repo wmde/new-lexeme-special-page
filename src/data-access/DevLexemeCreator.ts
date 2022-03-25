@@ -1,3 +1,4 @@
+import { nextTick } from 'vue';
 import LexemeCreator from './LexemeCreator';
 
 /** Lexeme creator for the dev entry point. */
@@ -10,9 +11,7 @@ export default class DevLexemeCreator implements LexemeCreator {
 		lexicalCategoryItemId: string,
 	): Promise<string> {
 
-		await new Promise( ( resolve ) => {
-			setTimeout( resolve, 1000 );
-		} );
+		await nextTick(); // let Vue update the DOM before blocking alert()
 		// eslint-disable-next-line no-alert
 		alert( `Create Lexeqme "${lemma}"@${lemmaLanguageCode} as ${lexemeLanguageItemId} ${lexicalCategoryItemId}` );
 		// for testing, enter 'error' in the lemma
@@ -21,4 +20,5 @@ export default class DevLexemeCreator implements LexemeCreator {
 		}
 		return 'L1';
 	}
+
 }
