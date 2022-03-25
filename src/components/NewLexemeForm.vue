@@ -98,6 +98,7 @@ export default {
 		<!-- eslint-disable-next-line vue/no-v-html -->
 		<p class="wbl-snl-copyright" v-html="copyrightText" />
 		<error-message v-if="error">
+			<!-- eslint-disable-next-line vue/no-v-html -->
 			<span v-html="error" />
 		</error-message>
 		<div>
