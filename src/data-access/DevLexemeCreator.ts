@@ -1,3 +1,4 @@
+import { SubmitError } from '@/store/RootState';
 import { nextTick } from 'vue';
 import LexemeCreator from './LexemeCreator';
 
@@ -16,7 +17,11 @@ export default class DevLexemeCreator implements LexemeCreator {
 		alert( `Create Lexeqme "${lemma}"@${lemmaLanguageCode} as ${lexemeLanguageItemId} ${lexicalCategoryItemId}` );
 		// for testing, enter 'error' in the lemma
 		if ( lemma === 'error' ) {
-			return Promise.reject( [ { type: 'dev', message: '<em>dev error message</em>' } ] );
+			const errors: SubmitError[] = [ {
+				type: 'dev',
+				message: '<em>dev error message</em>',
+			} ];
+			return Promise.reject( errors );
 		}
 		return 'L1';
 	}
