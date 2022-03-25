@@ -16,6 +16,7 @@ import {
 	ActionContext,
 	ActionTree,
 } from 'vuex';
+import { ADD_ERRORS, CLEAR_ERRORS } from './mutations';
 import RootState from './RootState';
 /*
 import {
@@ -30,14 +31,20 @@ export const CREATE_LEXEME = 'createLexeme';
 
 export default function createActions( lexemeCreator: LexemeCreator ): RootActions {
 	return {
-		async [ CREATE_LEXEME ]( { state }: RootContext ): Promise<string> {
-			const lexemeId = await lexemeCreator.createLexeme(
-				state.lemma,
-				'en', // TODO
-				state.language,
-				state.lexicalCategory,
-			);
-			return lexemeId;
+		async [ CREATE_LEXEME ]( { state, commit }: RootContext ): Promise<string> {
+			commit( CLEAR_ERRORS );
+			try {
+				const lexemeId = await lexemeCreator.createLexeme(
+					state.lemma,
+					'en', // TODO
+					state.language,
+					state.lexicalCategory,
+				);
+				return lexemeId;
+			} catch ( errors ) {
+				commit( ADD_ERRORS, errors );
+				return Promise.reject( null );
+			}
 		},
 	};
 }
