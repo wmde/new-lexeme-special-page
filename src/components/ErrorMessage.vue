@@ -5,6 +5,6 @@ import { Message as WikitMessage } from '@wmde/wikit-vue-components';
 
 <template>
 	<wikit-message type="error">
-		<slot></slot>
+		<slot />
 	</wikit-message>
 </template>

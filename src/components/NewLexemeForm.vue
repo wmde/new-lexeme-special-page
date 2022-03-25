@@ -8,6 +8,7 @@ import { useMessages } from '@/plugins/MessagesPlugin/Messages';
 import LemmaInput from '@/components/LemmaInput.vue';
 import LanguageInput from '@/components/LanguageInput.vue';
 import LexicalCategoryInput from '@/components/LexicalCategoryInput.vue';
+import ErrorMessage from '@/components/ErrorMessage.vue';
 import {
 	SET_LANGUAGE,
 	SET_LEMMA,
@@ -52,11 +53,26 @@ const copyrightText = $messages.get(
 	config.licenseName,
 );
 
+const error = computed( () => {
+	if ( store.state.globalErrors.length > 0 ) {
+		const firstError = store.state.globalErrors[ 0 ];
+		if ( firstError.message ) {
+			return firstError.message;
+		}
+
+		return 'TODO - generic error message';
+	}
+
+	return null;
+} );
 const wikiRouter = useWikiRouter();
 const onSubmit = async () => {
-	const lexemeId = await store.dispatch( CREATE_LEXEME );
-	// TODO: deal with errors during Lexeme creation, see T303393
-	wikiRouter.goToTitle( `Special:EntityPage/${lexemeId}` );
+	try {
+		const lexemeId = await store.dispatch( CREATE_LEXEME );
+		wikiRouter.goToTitle( `Special:EntityPage/${lexemeId}` );
+	} catch {
+		// Error is already in store and handled by ErrorMessage component
+	}
 };
 </script>
 
@@ -81,6 +97,9 @@ export default {
 		/>
 		<!-- eslint-disable-next-line vue/no-v-html -->
 		<p class="wbl-snl-copyright" v-html="copyrightText" />
+		<error-message v-if="error">
+			<span v-html="error" />
+		</error-message>
 		<div>
 			<wikit-button
 				class="form-button-submit"
