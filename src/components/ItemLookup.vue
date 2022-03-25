@@ -92,6 +92,14 @@ function searchResultToMonolingualOption( searchResult: SearchedItemOption ): Mo
 const messages = useMessages();
 </script>
 
+<script lang="ts">
+export default {
+	compatConfig: {
+		MODE: 3,
+	},
+};
+</script>
+
 <template>
 	<wikit-lookup
 		:label="label"
