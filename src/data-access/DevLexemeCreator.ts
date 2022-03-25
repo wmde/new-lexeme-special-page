@@ -14,7 +14,7 @@ export default class DevLexemeCreator implements LexemeCreator {
 
 		await nextTick(); // let Vue update the DOM before blocking alert()
 		// eslint-disable-next-line no-alert
-		alert( `Create Lexeqme "${lemma}"@${lemmaLanguageCode} as ${lexemeLanguageItemId} ${lexicalCategoryItemId}` );
+		alert( `Create Lexeme "${lemma}"@${lemmaLanguageCode} as ${lexemeLanguageItemId} ${lexicalCategoryItemId}` );
 		// for testing, enter 'error' in the lemma
 		if ( lemma === 'error' ) {
 			const errors: SubmitError[] = [ {
