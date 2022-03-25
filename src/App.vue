@@ -4,6 +4,14 @@ import { Message as WikitMessage } from '@wmde/wikit-vue-components';
 import '@wmde/wikit-vue-components/dist/wikit-vue-components.css';
 </script>
 
+<script lang="ts">
+export default {
+	compatConfig: {
+		MODE: 3,
+	},
+};
+</script>
+
 <template>
 	<p class="wbl-snl-intro-text">
 		To Be Done
