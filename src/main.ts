@@ -15,7 +15,6 @@ import WikiRouter from './plugins/WikiRouterPlugin/WikiRouter';
 
 export interface CreateAndMountConfig extends Config {
 	rootSelector: string;
-	wikibaseLexemeTermLanguages: string[];
 }
 
 export interface Services {

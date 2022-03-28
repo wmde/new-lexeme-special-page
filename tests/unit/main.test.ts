@@ -16,7 +16,7 @@ describe( 'createAndMount', () => {
 			rootSelector: '#test-app',
 			licenseUrl: '',
 			licenseName: '',
-			wikibaseLexemeTermLanguages: [ 'test' ],
+			wikibaseLexemeTermLanguages: [ 'en' ],
 		}, {
 			itemSearcher: unusedItemSearcher,
 			lexemeCreator: unusedLexemeCreator,
