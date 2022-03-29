@@ -60,7 +60,7 @@ const error = computed( () => {
 			return firstError.message;
 		}
 
-		return 'TODO - generic error message';
+		return $messages.getUnescaped( 'wikibaselexeme-newlexeme-submit-error' );
 	}
 
 	return null;

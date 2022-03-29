@@ -9,6 +9,7 @@ const messages: Record<MessageKeys, string> = {
 	'wikibaselexeme-newlexeme-lexicalcategory': 'Lexical category',
 	'wikibaselexeme-newlexeme-lexicalcategory-placeholder': 'The Lexeme\'s category, e.g. \'numeral\'',
 	'wikibaselexeme-newlexeme-submit': 'Create Lexeme',
+	'wikibaselexeme-newlexeme-submit-error': 'The server encountered a temporary error and could not complete your request. Please try again.',
 	'wikibaselexeme-newlexeme-error-no-lemma': 'Lemma field is empty, please make an entry.',
 	'wikibaselexeme-newlexeme-error-lemma-is-too-long': 'FIXME (copy is missing!)',
 	'wikibaselexeme-newlexeme-no-results': 'FIXME (copy is missing!)',
