@@ -6,6 +6,7 @@ type MessageKeys
  | 'wikibaselexeme-newlexeme-lexicalcategory'
  | 'wikibaselexeme-newlexeme-lexicalcategory-placeholder'
  | 'wikibaselexeme-newlexeme-submit'
+ | 'wikibaselexeme-newlexeme-submit-error'
  | 'wikibaselexeme-newlexeme-error-no-lemma'
  | 'wikibaselexeme-newlexeme-error-lemma-is-too-long'
  | 'wikibaselexeme-newlexeme-no-results'
