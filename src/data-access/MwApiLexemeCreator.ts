@@ -54,16 +54,21 @@ export default class MwApiLexemeCreator implements LexemeCreator {
 			.catch( ( code: string, _?: unknown, result?: ApiResult ): Promise<never> => {
 				let errors: SubmitError[];
 				try {
-					// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-					errors = result!.errors.map( ( apiError ) => {
-						const submitError: SubmitError = { type: apiError.code };
-						if ( apiError.html ) {
-							submitError.message = apiError.html;
-						}
-						return submitError;
-					} );
-				} catch {
-					errors = [ { type: code } ];
+					if ( result && Array.isArray( result.errors ) ) {
+						errors = result.errors.map( ( apiError ) => {
+							const submitError: SubmitError = { type: apiError.code };
+							if ( apiError.html ) {
+								submitError.message = apiError.html;
+							}
+							return submitError;
+						} );
+					} else {
+						errors = [ { type: code } ];
+					}
+				} catch ( e ) {
+					// eslint-disable-next-line no-console
+					console.error( 'Unexpected API result', result, e );
+					errors = [ { type: 'assertionerror' } ];
 				}
 				return Promise.reject( errors );
 			} );
