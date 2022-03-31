@@ -8,13 +8,21 @@ interface Props {
 	modelValue: string | null;
 }
 
+interface WikitMenuItem {
+	label: string;
+	description: string;
+}
+
 const props = defineProps<Props>();
 
 const config = useConfig();
 
-const wbLexemeTermLanguages = config.wikibaseLexemeTermLanguages;
+const wbLexemeTermLanguages = config.wikibaseLexemeTermLanguages.map( ( lang ) => ( {
+	label: lang,
+	description: '',
+} ) );
 
-const menuItems = ref( [] as string[] );
+const menuItems = ref( [] as WikitMenuItem[] );
 
 const emit = defineEmits( {
 	'update:modelValue': ( selectedLang: string | null ) => {
@@ -29,33 +37,23 @@ const onSearchInput = ( inputValue: string ) => {
 		return;
 	}
 
-	// TODO: menuItems printed as a Proxy
-	// console.log( 'onSearchInput', 'inputValue', inputValue, 'menuItems.value', menuItems.value )
-
 	menuItems.value = wbLexemeTermLanguages.filter(
-		( lang ) => lang.includes( searchInput.value ) );
+		// eslint-disable-next-line no-restricted-syntax
+		( lang ) => lang.label.includes( inputValue ) );
 
 	searchInput.value = inputValue;
 };
 
 const selectedOption = computed( () => {
-	// if ( searchInput.value === null ) {
-	// 	return null;
-	// }
-	// return menuItems.value.find( ( lang ) => lang === searchInput.value );
-	
+
 	if ( props.modelValue === null ) {
 		return null;
 	}
-	return menuItems.value.find( ( item ) => item === props.modelValue );
+	return menuItems.value.find( ( item ) => item.label === props.modelValue );
 } );
 
-// const menuItems = ( () => {
-// return wbLexemeTermLanguages.filter( ( lang ) => lang.includes( searchInput.value ) );
-// });
-
-const onOptionSelected = ( value: string ) => {
-	emit( 'update:modelValue', value );
+const onOptionSelected = ( value: WikitMenuItem ) => {
+	emit( 'update:modelValue', value.label );
 };
 
 const onScroll = async () => {
@@ -63,6 +61,14 @@ const onScroll = async () => {
 };
 
 const messages = useMessages();
+</script>
+
+<script lang="ts">
+export default {
+	compatConfig: {
+		MODE: 3,
+	},
+};
 </script>
 
 <template>
