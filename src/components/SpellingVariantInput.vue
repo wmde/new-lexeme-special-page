@@ -53,11 +53,8 @@ const selectedOption = computed( () => {
 } );
 
 const onOptionSelected = ( value: WikitMenuItem ) => {
-	emit( 'update:modelValue', value.label );
-};
-
-const onScroll = async () => {
-	// TODO
+	const selectedValue = value === null ? null : ( value as WikitMenuItem ).label;
+	emit( 'update:modelValue', selectedValue );
 };
 
 const messages = useMessages();
@@ -79,7 +76,6 @@ export default {
 		:search-input="searchInput"
 		:menu-items="menuItems"
 		:value="selectedOption"
-		@scroll="onScroll"
 		@update:search-input="onSearchInput"
 		@input="onOptionSelected"
 	>
