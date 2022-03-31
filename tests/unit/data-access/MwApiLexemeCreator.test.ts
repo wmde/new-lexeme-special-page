@@ -2,7 +2,15 @@ import { MwApi } from '@/@types/mediawiki';
 import MwApiLexemeCreator from '@/data-access/MwApiLexemeCreator';
 import { SubmitError } from '@/store/RootState';
 import unusedApi from '../../mocks/unusedApi';
-import $ from 'jquery';
+
+/* Return an object that works a bit like a jQuery.Deferred() rejected with the given args. */
+function mockRejectedDeferred( ...args: unknown[] ): unknown {
+	return {
+		catch<T>( callback: ( ..._: unknown[] ) => PromiseLike<T> ): Promise<T> {
+			return Promise.resolve( callback( ...args ) );
+		},
+	};
+}
 
 describe( 'MwApiLexemeCreator', () => {
 
@@ -46,13 +54,12 @@ describe( 'MwApiLexemeCreator', () => {
 	describe( 'error handling', () => {
 
 		it( 'maps API errors', () => {
-			const deferred = $.Deferred();
 			const result = { errors: [
 				{ code: 'error1', html: 'error one' },
 				{ code: 'error2', html: 'error two' },
 				{ code: 'error3' },
 			] };
-			deferred.reject( 'error1', result, result );
+			const deferred = mockRejectedDeferred( 'error1', result, result );
 			const api: MwApi = {
 				...unusedApi,
 				assertCurrentUser: ( params: object ) => ( { assert: 'user', ...params } ),
@@ -73,8 +80,7 @@ describe( 'MwApiLexemeCreator', () => {
 		} );
 
 		it( 'handles HTTP errors', () => {
-			const deferred = $.Deferred();
-			deferred.reject( 'http', {
+			const deferred = mockRejectedDeferred( 'http', {
 				xhr: undefined,
 				textStatus: undefined,
 				exception: undefined,
