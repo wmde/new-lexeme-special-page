@@ -20,7 +20,7 @@ describe( 'NewLexemeForm', () => {
 			global: {
 				plugins: [ store ],
 				provide: {
-					[ ConfigKey as symbol ]: {},
+					[ ConfigKey as symbol ]: { wikibaseLexemeTermLanguages: [ 'en' ] },
 					[ ItemSearchKey as symbol ]: new DevItemSearcher(),
 					[ WikiRouterKey as symbol ]: null,
 				},
@@ -65,7 +65,7 @@ describe( 'NewLexemeForm', () => {
 			global: {
 				plugins: [ testStore ],
 				provide: {
-					[ ConfigKey as symbol ]: {},
+					[ ConfigKey as symbol ]: { wikibaseLexemeTermLanguages: [ 'en' ] },
 					[ ItemSearchKey as symbol ]: new DevItemSearcher(),
 					[ WikiRouterKey as symbol ]: { goToTitle },
 				},
