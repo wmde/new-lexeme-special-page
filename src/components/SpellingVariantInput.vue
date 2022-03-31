@@ -1,39 +1,84 @@
 <script setup lang="ts">
+import { ref, computed } from 'vue';
+import WikitLookup from './WikitLookup';
+import { useConfig } from '@/plugins/ConfigPlugin/Config';
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
-import ItemLookup from '@/components/ItemLookup.vue';
-import { useItemSearch } from '@/plugins/ItemSearchPlugin/ItemSearch';
 
 interface Props {
 	modelValue: string | null;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
 
-defineEmits( [ 'update:modelValue' ] );
+const config = useConfig();
+
+const wbLexemeTermLanguages = config.wikibaseLexemeTermLanguages;
+
+const menuItems = ref( [] as string[] );
+
+const emit = defineEmits( {
+	'update:modelValue': ( selectedLang: string | null ) => {
+		return selectedLang;
+	},
+} );
+
+const searchInput = ref( '' );
+const onSearchInput = ( inputValue: string ) => {
+	if ( inputValue.trim() === '' ) {
+		menuItems.value = [];
+		return;
+	}
+
+	// TODO: menuItems printed as a Proxy
+	// console.log( 'onSearchInput', 'inputValue', inputValue, 'menuItems.value', menuItems.value )
+
+	menuItems.value = wbLexemeTermLanguages.filter(
+		( lang ) => lang.includes( searchInput.value ) );
+
+	searchInput.value = inputValue;
+};
+
+const selectedOption = computed( () => {
+	// if ( searchInput.value === null ) {
+	// 	return null;
+	// }
+	// return menuItems.value.find( ( lang ) => lang === searchInput.value );
+	
+	if ( props.modelValue === null ) {
+		return null;
+	}
+	return menuItems.value.find( ( item ) => item === props.modelValue );
+} );
+
+// const menuItems = ( () => {
+// return wbLexemeTermLanguages.filter( ( lang ) => lang.includes( searchInput.value ) );
+// });
+
+const onOptionSelected = ( value: string ) => {
+	emit( 'update:modelValue', value );
+};
+
+const onScroll = async () => {
+	// TODO
+};
 
 const messages = useMessages();
-
-const searcher = useItemSearch();
-const searchForItems = searcher.searchItems.bind( searcher );
-
-</script>
-
-<script lang="ts">
-export default {
-	compatConfig: {
-		MODE: 3,
-	},
-};
 </script>
 
 <template>
-	<div class="wbl-snl-spelling-variant-lookup">
-		<item-lookup
-			:label="messages.getUnescaped( 'wikibaselexeme-newlexeme-lemma-language' )"
-			:placeholder="messages.getUnescaped( 'wikibaselexeme-newlexeme-lemma-language-placeholder' )"
-			:value="modelValue"
-			:search-for-items="searchForItems"
-			@update:model-value="$emit( 'update:modelValue', $event )"
-		/>
-	</div>
+	<wikit-lookup
+		:label="messages.getUnescaped( 'wikibaselexeme-newlexeme-lemma-language' )"
+		:placeholder="messages.getUnescaped(
+			'wikibaselexeme-newlexeme-lemma-language-placeholder' )"
+		:search-input="searchInput"
+		:menu-items="menuItems"
+		:value="selectedOption"
+		@scroll="onScroll"
+		@update:search-input="onSearchInput"
+		@input="onOptionSelected"
+	>
+		<template #no-results>
+			{{ messages.getUnescaped( 'wikibaselexeme-newlexeme-no-results' ) }}
+		</template>
+	</wikit-lookup>
 </template>
