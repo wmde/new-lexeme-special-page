@@ -54,7 +54,7 @@ export default class MwApiLexemeCreator implements LexemeCreator {
 			.catch( ( code: string, _?: unknown, result?: ApiResult ): Promise<never> => {
 				let errors: SubmitError[];
 				try {
-					if ( result && Array.isArray( result.errors ) ) {
+					if ( result && result.errors ) {
 						errors = result.errors.map( ( apiError ) => {
 							const submitError: SubmitError = { type: apiError.code };
 							if ( apiError.html ) {
