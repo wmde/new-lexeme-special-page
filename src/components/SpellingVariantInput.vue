@@ -52,7 +52,7 @@ const selectedOption = computed( () => {
 	return menuItems.value.find( ( item ) => item.label === props.modelValue );
 } );
 
-const onOptionSelected = ( value: WikitMenuItem ) => {
+const onOptionSelected = ( value: unknown ) => {
 	const selectedValue = value === null ? null : ( value as WikitMenuItem ).label;
 	emit( 'update:modelValue', selectedValue );
 };
