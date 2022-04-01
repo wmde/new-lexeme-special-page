@@ -32,6 +32,7 @@ const emit = defineEmits( {
 
 const searchInput = ref( '' );
 const onSearchInput = ( inputValue: string ) => {
+	const lowerCaseInputValue = inputValue.toLowerCase();
 	if ( inputValue.trim() === '' ) {
 		menuItems.value = [];
 		return;
@@ -39,7 +40,7 @@ const onSearchInput = ( inputValue: string ) => {
 
 	menuItems.value = wbLexemeTermLanguages.filter(
 		// eslint-disable-next-line no-restricted-syntax
-		( lang ) => lang.label.includes( inputValue ) );
+		( lang ) => lang.label.includes( lowerCaseInputValue ) );
 
 	searchInput.value = inputValue;
 };
