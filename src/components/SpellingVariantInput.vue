@@ -40,7 +40,7 @@ const onSearchInput = ( inputValue: string ) => {
 
 	menuItems.value = wbLexemeTermLanguages.filter(
 		// eslint-disable-next-line no-restricted-syntax
-		( lang ) => lang.label.includes( lowerCaseInputValue ) );
+		( lang ) => lang.label.startsWith( lowerCaseInputValue ) );
 
 	searchInput.value = inputValue;
 };
