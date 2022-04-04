@@ -20,7 +20,7 @@ describe( 'NewLexemeForm', () => {
 			global: {
 				plugins: [ store ],
 				provide: {
-					[ ConfigKey as symbol ]: { wikibaseLexemeTermLanguages: [ 'en' ] },
+					[ ConfigKey as symbol ]: { wikibaseLexemeTermLanguages: [ 'en', 'en-ca', 'de' ] },
 					[ ItemSearchKey as symbol ]: new DevItemSearcher(),
 					[ WikiRouterKey as symbol ]: null,
 				},
@@ -55,6 +55,17 @@ describe( 'NewLexemeForm', () => {
 		await wrapper.find( '.wbl-snl-lexical-category-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
 
 		expect( store.state.lexicalCategory ).toBe( 'Q456' );
+	} );
+
+	it( 'updates the store if a language is selected in the spelling variant input', async () => {
+		const wrapper = mountForm();
+		const SpellingVariantLookup = wrapper.find( '.wbl-snl-spelling-variant-lookup input' );
+
+		await SpellingVariantLookup.setValue( 'de' );
+
+		await wrapper.find( '.wbl-snl-spelling-variant-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
+
+		expect( store.state.spellingVariant ).toBe( 'de' );
 	} );
 
 	it( 'calls the API to create the Lexeme and then redirects to it', async () => {
