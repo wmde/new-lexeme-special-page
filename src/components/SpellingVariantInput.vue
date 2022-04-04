@@ -70,20 +70,19 @@ export default {
 </script>
 
 <template>
-	<div class="wbl-snl-spelling-variant-lookup">
-		<wikit-lookup
-			:label="messages.getUnescaped( 'wikibaselexeme-newlexeme-lemma-language' )"
-			:placeholder="messages.getUnescaped(
-				'wikibaselexeme-newlexeme-lemma-language-placeholder' )"
-			:search-input="searchInput"
-			:menu-items="menuItems"
-			:value="selectedOption"
-			@update:search-input="onSearchInput"
-			@input="onOptionSelected"
-		>
-			<template #no-results>
-				{{ messages.getUnescaped( 'wikibaselexeme-newlexeme-no-results' ) }}
-			</template>
-		</wikit-lookup>
-	</div>
+	<wikit-lookup
+		class="wbl-snl-spelling-variant-lookup"
+		:label="messages.getUnescaped( 'wikibaselexeme-newlexeme-lemma-language' )"
+		:placeholder="messages.getUnescaped(
+			'wikibaselexeme-newlexeme-lemma-language-placeholder' )"
+		:search-input="searchInput"
+		:menu-items="menuItems"
+		:value="selectedOption"
+		@update:search-input="onSearchInput"
+		@input="onOptionSelected"
+	>
+		<template #no-results>
+			{{ messages.getUnescaped( 'wikibaselexeme-newlexeme-no-results' ) }}
+		</template>
+	</wikit-lookup>
 </template>
