@@ -3,6 +3,8 @@ type MessageKeys
  | 'wikibaselexeme-newlexeme-lemma-placeholder'
  | 'wikibaselexeme-newlexeme-language'
  | 'wikibaselexeme-newlexeme-language-placeholder'
+ | 'wikibaselexeme-newlexeme-lemma-language'
+ | 'wikibaselexeme-newlexeme-lemma-language-placeholder'
  | 'wikibaselexeme-newlexeme-lexicalcategory'
  | 'wikibaselexeme-newlexeme-lexicalcategory-placeholder'
  | 'wikibaselexeme-newlexeme-submit'

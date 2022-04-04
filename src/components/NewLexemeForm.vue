@@ -7,12 +7,14 @@ import { useConfig } from '@/plugins/ConfigPlugin/Config';
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
 import LemmaInput from '@/components/LemmaInput.vue';
 import LanguageInput from '@/components/LanguageInput.vue';
+import SpellingVariantInput from '@/components/SpellingVariantInput.vue';
 import LexicalCategoryInput from '@/components/LexicalCategoryInput.vue';
 import ErrorMessage from '@/components/ErrorMessage.vue';
 import {
 	SET_LANGUAGE,
 	SET_LEMMA,
 	SET_LEXICAL_CATEGORY,
+	SET_SPELLING_VARIANT,
 } from '@/store/mutations';
 import { useWikiRouter } from '@/plugins/WikiRouterPlugin/WikiRouter';
 
@@ -41,6 +43,14 @@ const lexicalCategory = computed( {
 	},
 	set( newLexicalCategory: string ): void {
 		store.commit( SET_LEXICAL_CATEGORY, newLexicalCategory );
+	},
+} );
+const spellingVariant = computed( {
+	get(): string {
+		return store.state.spellingVariant;
+	},
+	set( newSpellingVariant: string ): void {
+		store.commit( SET_SPELLING_VARIANT, newSpellingVariant );
 	},
 } );
 const submitMsg = $messages.getUnescaped( 'wikibaselexeme-newlexeme-submit' );
@@ -91,6 +101,9 @@ export default {
 		/>
 		<language-input
 			v-model="language"
+		/>
+		<spelling-variant-input
+			v-model="spellingVariant"
 		/>
 		<lexical-category-input
 			v-model="lexicalCategory"
