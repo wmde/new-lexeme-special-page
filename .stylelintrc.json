@@ -4,17 +4,15 @@
 		"stylelint-config-standard-scss",
 		"stylelint-config-recommended-vue/scss"
 	],
-	"plugins": ["stylelint-use-logical-spec"],
+	"plugins": ["stylelint-use-logical-spec", "@namics/stylelint-bem"],
 	"rules": {
+		"plugin/stylelint-bem-namics": {
+			"patternPrefixes": [],
+			"helperPrefixes": [],
+			"namespaces": ["wbl-snl-"]
+		},
 		"indentation": "tab",
 		"selector-max-id": 1,
-		"liberty/use-logical-spec": true,
-		"selector-class-pattern": [
-			"^wbl-snl-[-_a-z0-9]+$",
-			{
-				"resolveNestedSelectors": true,
-				"message": "Selector class names should be lowercase and prefixed with wbl-snl-*."
-			}
-		]
+		"liberty/use-logical-spec": true
 	}
 }
