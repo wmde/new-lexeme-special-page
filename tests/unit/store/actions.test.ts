@@ -19,6 +19,7 @@ describe( CREATE_LEXEME, () => {
 			state(): RootState {
 				return {
 					lemma: 'foo',
+					spellingVariant: 'de',
 					language: 'Q123',
 					lexicalCategory: 'Q234',
 				} as RootState;
@@ -34,7 +35,7 @@ describe( CREATE_LEXEME, () => {
 		expect( lexemeId ).toBe( 'L123' );
 		expect( lexemeCreator.createLexeme ).toHaveBeenCalledWith(
 			'foo',
-			'en',
+			'de',
 			'Q123',
 			'Q234',
 		);
