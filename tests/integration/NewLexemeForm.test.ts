@@ -76,7 +76,7 @@ describe( 'NewLexemeForm', () => {
 			global: {
 				plugins: [ testStore ],
 				provide: {
-					[ ConfigKey as symbol ]: { wikibaseLexemeTermLanguages: [ 'en' ] },
+					[ ConfigKey as symbol ]: { wikibaseLexemeTermLanguages: [ 'en-gb' ] },
 					[ ItemSearchKey as symbol ]: new DevItemSearcher(),
 					[ WikiRouterKey as symbol ]: { goToTitle },
 				},
@@ -90,13 +90,18 @@ describe( 'NewLexemeForm', () => {
 		await languageInput.setValue( '=Q123' );
 		await wrapper.find( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
 
+		// will actually select en-gb, en is not in wikibaseLexemeTermLanguages
+		const spellingVariantInput = wrapper.find( '.wbl-snl-spelling-variant-lookup input' );
+		await spellingVariantInput.setValue( 'en' );
+		await wrapper.find( '.wbl-snl-spelling-variant-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
+
 		const lexicalCategoryInput = wrapper.find( '.wbl-snl-lexical-category-lookup input' );
 		await lexicalCategoryInput.setValue( '=Q456' );
 		await wrapper.find( '.wbl-snl-lexical-category-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
 
 		await wrapper.trigger( 'submit' );
 
-		expect( createLexeme ).toHaveBeenCalledWith( 'foo', 'en', 'Q123', 'Q456' );
+		expect( createLexeme ).toHaveBeenCalledWith( 'foo', 'en-gb', 'Q123', 'Q456' );
 		expect( goToTitle ).toHaveBeenCalledWith( 'Special:EntityPage/L123' );
 	} );
 } );

@@ -36,7 +36,7 @@ export default function createActions( lexemeCreator: LexemeCreator ): RootActio
 			try {
 				const lexemeId = await lexemeCreator.createLexeme(
 					state.lemma,
-					'en', // TODO
+					state.spellingVariant,
 					state.language,
 					state.lexicalCategory,
 				);
