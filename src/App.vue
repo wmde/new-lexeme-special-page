@@ -1,6 +1,6 @@
 <script setup lang="ts">
+import InfoMessage from '@/components/InfoMessage.vue';
 import NewLexemeForm from '@/components/NewLexemeForm.vue';
-import { Message as WikitMessage } from '@wmde/wikit-vue-components';
 import '@wmde/wikit-vue-components/dist/wikit-vue-components.css';
 </script>
 
@@ -10,9 +10,7 @@ import '@wmde/wikit-vue-components/dist/wikit-vue-components.css';
 	</p>
 	<div class="wbl-snl-app">
 		<new-lexeme-form />
-		<wikit-message type="notice">
-			To Be Done
-		</wikit-message>
+		<info-message />
 	</div>
 </template>
 

@@ -5,30 +5,48 @@ import { BuildOptions, defineConfig } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import banner from 'vite-plugin-banner';
 
-function getBuildConfig( isAppBuild: boolean ): BuildOptions {
-	if ( isAppBuild ) {
-		return {
-			target: 'es2015',
-		};
-	}
+function getBuildConfig( buildType = 'app' ): BuildOptions {
+	const target = 'es2015';
 
-	return {
-		target: 'es2015',
-		lib: {
-			entry: resolve( __dirname, 'src/init.ts' ),
-			name: 'main',
-			fileName: ( format ) => `SpecialNewLexeme.${format}.js`,
-			formats: [ 'cjs' ],
-		},
-		rollupOptions: {
-			external: [ 'vue', 'vuex' ],
-		},
-	};
+	switch ( buildType ) {
+		case 'preview':
+			return {
+				target,
+			};
+		case 'app':
+			return {
+				target,
+				lib: {
+					entry: resolve( __dirname, 'src/init.ts' ),
+					name: 'main',
+					fileName: ( format ) => `SpecialNewLexeme.${format}.js`,
+					formats: [ 'cjs' ],
+				},
+				rollupOptions: {
+					external: [ 'vue', 'vuex' ],
+				},
+			};
+		case 'info':
+			return {
+				target,
+				lib: {
+					entry: resolve( __dirname, 'src/components/InfoMessage.vue' ),
+					name: 'info',
+					fileName: ( format ) => `info.${format}.js`,
+					formats: [ 'cjs' ],
+				},
+				rollupOptions: {
+					external: [ 'vue', 'vuex' ],
+				},
+			};
+		default:
+			throw new Error( `Unknown build type ${buildType}` );
+	}
 }
 
 // https://vitejs.dev/config/
 export default defineConfig( {
-	build: getBuildConfig( !!process.env.BUILD_AS_APP ),
+	build: getBuildConfig( process.env.BUILD_TYPE ),
 	resolve: {
 		alias: {
 			'@wmde/wikit-tokens/variables': resolve(
