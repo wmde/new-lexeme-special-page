@@ -6,13 +6,17 @@ import unusedLexemeCreator from '../mocks/unusedLexemeCreator';
 import { ItemSearchKey } from '@/plugins/ItemSearchPlugin/ItemSearch';
 import DevItemSearcher from '@/data-access/DevItemSearcher';
 import { WikiRouterKey } from '@/plugins/WikiRouterPlugin/WikiRouter';
+import unusedLangCodeRetriever from '../mocks/unusedLangCodeRetriever';
 
 jest.mock( 'lodash/debounce', () => jest.fn( ( fn ) => fn ) );
 
 describe( 'NewLexemeForm', () => {
 	let store: ReturnType<typeof initStore>;
 	beforeEach( () => {
-		store = initStore( { lexemeCreator: unusedLexemeCreator } );
+		store = initStore( {
+			lexemeCreator: unusedLexemeCreator,
+			langCodeRetriever: unusedLangCodeRetriever,
+		} );
 	} );
 
 	function mountForm() {
@@ -71,7 +75,10 @@ describe( 'NewLexemeForm', () => {
 	it( 'calls the API to create the Lexeme and then redirects to it', async () => {
 		const createLexeme = jest.fn().mockReturnValue( 'L123' );
 		const goToTitle = jest.fn();
-		const testStore = initStore( { lexemeCreator: { createLexeme } } );
+		const testStore = initStore( {
+			lexemeCreator: { createLexeme },
+			langCodeRetriever: unusedLangCodeRetriever,
+		} );
 		const wrapper = mount( NewLexemeForm, {
 			global: {
 				plugins: [ testStore ],

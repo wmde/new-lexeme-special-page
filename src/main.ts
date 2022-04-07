@@ -12,6 +12,7 @@ import Messages, { MessagesKey } from './plugins/MessagesPlugin/Messages';
 import MessagesRepository from './plugins/MessagesPlugin/MessagesRepository';
 import { WikiRouterKey } from './plugins/WikiRouterPlugin/WikiRouter';
 import WikiRouter from './plugins/WikiRouterPlugin/WikiRouter';
+import LangCodeRetriever from './data-access/LangCodeRetriever';
 
 export interface CreateAndMountConfig extends Config {
 	rootSelector: string;
@@ -20,6 +21,7 @@ export interface CreateAndMountConfig extends Config {
 export interface Services {
 	itemSearcher: ItemSearcher;
 	messagesRepository?: MessagesRepository;
+	langCodeRetriever: LangCodeRetriever;
 	lexemeCreator: LexemeCreator;
 	wikiRouter: WikiRouter;
 }

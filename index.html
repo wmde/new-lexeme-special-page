@@ -12,6 +12,7 @@
 			import DevMessagesRepository from './src/plugins/MessagesPlugin/DevMessagesRepository';
 			import DevItemSearcher from './src/data-access/DevItemSearcher';
 			import DevLexemeCreator from './src/data-access/DevLexemeCreator';
+			import DevLangCodeRetriever from './src/data-access/DevLangCodeRetriever';
 
 			const config = {
 				rootSelector: '#app',
@@ -21,6 +22,7 @@
 			};
 			const services = {
 				itemSearcher: new DevItemSearcher(),
+				langCodeRetriever: new DevLangCodeRetriever(),
 				messagesRepository: new DevMessagesRepository(),
 				lexemeCreator: new DevLexemeCreator(),
 				wikiRouter: { goToTitle( title ) { alert( `Navigating to: ${title}` ); } },
