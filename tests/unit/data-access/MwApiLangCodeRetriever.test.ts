@@ -15,7 +15,7 @@ describe( 'MwApiLangCodeRetriever', () => {
 		expect( await sut.getLanguageCodeFromItem( 'Q5' ) ).toBe( null );
 	} );
 
-	it( 'picks the preffered rank statement if available', async () => {
+	it( 'picks the preferred rank statement if available', async () => {
 		const api = unusedApi;
 
 		api.get = jest.fn().mockResolvedValue( {
