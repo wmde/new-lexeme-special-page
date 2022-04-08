@@ -4,16 +4,16 @@ export type WbGetClaimsResponse = {
 	claims: StatementMap;
 };
 
-function getStringFromClaim( claim: Statement ): string | false {
-	if ( claim.mainsnak.snaktype !== 'value' ) {
+function getStringValueFromStatement( statement: Statement ): string | false {
+	if ( statement.mainsnak.snaktype !== 'value' ) {
 		return false;
 	}
 
-	if ( claim.mainsnak.datavalue?.type !== 'string' ) {
-		throw new Error( `Expected ${claim.mainsnak.property} to have DataValueType "string" but got "${claim.mainsnak.datavalue?.type}"!` );
+	if ( statement.mainsnak.datavalue?.type !== 'string' ) {
+		throw new Error( `Expected ${statement.mainsnak.property} to have DataValueType "string" but got "${statement.mainsnak.datavalue?.type}"!` );
 	}
 
-	return ( claim.mainsnak.datavalue as DataValue ).value;
+	return ( statement.mainsnak.datavalue as DataValue ).value;
 }
 
 export function processWbGetClaimsResponse(
@@ -24,14 +24,14 @@ export function processWbGetClaimsResponse(
 		return null;
 	}
 
-	const preferredRankStatements = response.claims[ languageCodeProperty ].filter( ( claim ) => claim.rank === 'preferred' );
+	const preferredRankStatements = response.claims[ languageCodeProperty ].filter( ( statement ) => statement.rank === 'preferred' );
 	if ( preferredRankStatements.length !== 0 ) {
-		return getStringFromClaim( preferredRankStatements[ 0 ] );
+		return getStringValueFromStatement( preferredRankStatements[ 0 ] );
 	}
 
-	const normalRankStatements = response.claims[ languageCodeProperty ].filter( ( claim ) => claim.rank === 'normal' );
+	const normalRankStatements = response.claims[ languageCodeProperty ].filter( ( statement ) => statement.rank === 'normal' );
 	if ( normalRankStatements.length !== 0 ) {
-		return getStringFromClaim( normalRankStatements[ 0 ] );
+		return getStringValueFromStatement( normalRankStatements[ 0 ] );
 	}
 
 	return null;
