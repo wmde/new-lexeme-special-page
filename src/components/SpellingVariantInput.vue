@@ -15,9 +15,9 @@ interface WikitMenuItem {
 
 const props = defineProps<Props>();
 
-const languageCodesProivder = useLanguageCodesProvider();
+const languageCodesProvider = useLanguageCodesProvider();
 
-const wbLexemeTermLanguages = languageCodesProivder.getLanguageCodes().map( ( lang ) => ( {
+const wbLexemeTermLanguages = languageCodesProvider.getLanguageCodes().map( ( lang ) => ( {
 	label: lang,
 	description: '',
 } ) );
