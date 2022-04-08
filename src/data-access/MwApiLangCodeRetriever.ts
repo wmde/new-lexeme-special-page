@@ -16,14 +16,25 @@ export default class MwApiLangCodeRetriever implements LangCodeRetriever {
 	}
 
 	public async getLanguageCodeFromItem( itemId: string ): Promise<string | null | false> {
-		// TODO handle errors
 		const response = await this.api.get( {
 			action: 'wbgetclaims',
 			entity: itemId,
 			property: this.languageCodeProperty,
 			props: '',
-		} ) as WbGetClaimsResponse;
+		} ).catch( ( code: string, _?: unknown, result?: unknown ) => {
+			// eslint-disable-next-line no-console
+			console.warn( `Error while retrieving language code in ${this.languageCodeProperty} for item ${itemId}: ${code}`, result );
 
-		return processWbGetClaimsResponse( response, this.languageCodeProperty );
+			return false;
+		} );
+
+		if ( response === false ) {
+			return false;
+		}
+
+		return processWbGetClaimsResponse(
+			response as WbGetClaimsResponse,
+			this.languageCodeProperty,
+		);
 	}
 }
