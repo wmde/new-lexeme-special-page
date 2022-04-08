@@ -39,6 +39,8 @@ import { Icon as WikitIcon } from '@wmde/wikit-vue-components';
 	border-color: $border-color-base-subtle;
 	background-color: $background-color-base-default;
 	padding: $dimension-layout-small;
+	block-size: 100%;
+	box-sizing: border-box;
 
 	& > :not(:first-child) {
 		margin-block-start: $dimension-layout-xsmall;

@@ -2,6 +2,9 @@
 import InfoMessage from '@/components/InfoMessage.vue';
 import NewLexemeForm from '@/components/NewLexemeForm.vue';
 import '@wmde/wikit-vue-components/dist/wikit-vue-components.css';
+import { inject } from 'vue';
+
+const infoHtml: string|undefined = inject( 'infoHtml', undefined );
 </script>
 
 <template>
@@ -10,7 +13,8 @@ import '@wmde/wikit-vue-components/dist/wikit-vue-components.css';
 	</p>
 	<div class="wbl-snl-app">
 		<new-lexeme-form />
-		<info-message />
+		<div v-if="infoHtml" v-html="infoHtml" />
+		<div v-else><info-message /></div>
 	</div>
 </template>
 

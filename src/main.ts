@@ -15,6 +15,7 @@ import WikiRouter from './plugins/WikiRouterPlugin/WikiRouter';
 
 export interface CreateAndMountConfig extends Config {
 	rootSelector: string;
+	infoHtml?: string;
 }
 
 export interface Services {
@@ -36,6 +37,7 @@ export default function createAndMount(
 	app.provide( MessagesKey, new Messages( services.messagesRepository ) );
 	app.provide( ItemSearchKey, services.itemSearcher );
 	app.provide( WikiRouterKey, services.wikiRouter );
+	app.provide( 'infoHtml', config.infoHtml ); // TODO proper key
 
 	return app.mount( config.rootSelector );
 }
