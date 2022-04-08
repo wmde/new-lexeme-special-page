@@ -1,4 +1,4 @@
-import { processWbGetClaimsResponse, WbGetClaimsResponse } from './apiBaseLangCodeRetriever';
+import { processWbGetClaimsResponse, WbGetClaimsResponse } from './apiBasedLangCodeRetriever';
 import LangCodeRetriever from './LangCodeRetriever';
 
 export default class DevLangCodeRetriever implements LangCodeRetriever {

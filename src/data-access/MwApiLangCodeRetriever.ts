@@ -1,6 +1,6 @@
 import { MwApi } from '@/@types/mediawiki';
 import LangCodeRetriever from './LangCodeRetriever';
-import { processWbGetClaimsResponse, WbGetClaimsResponse } from './apiBaseLangCodeRetriever';
+import { processWbGetClaimsResponse, WbGetClaimsResponse } from './apiBasedLangCodeRetriever';
 
 export default class MwApiLangCodeRetriever implements LangCodeRetriever {
 
