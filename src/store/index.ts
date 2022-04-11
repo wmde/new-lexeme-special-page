@@ -4,6 +4,7 @@
  * @see https://vuex.vuejs.org/guide/structure.html
  */
 
+import LangCodeRetriever from '@/data-access/LangCodeRetriever';
 import LexemeCreator from '@/data-access/LexemeCreator';
 import {
 	createStore,
@@ -16,6 +17,7 @@ import RootState from './RootState';
 
 interface StoreServices {
 	lexemeCreator: LexemeCreator;
+	langCodeRetriever: LangCodeRetriever;
 }
 
 export default function initStore( {
