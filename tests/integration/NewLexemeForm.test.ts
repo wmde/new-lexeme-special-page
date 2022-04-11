@@ -1,4 +1,5 @@
 import { ConfigKey } from '@/plugins/ConfigPlugin/Config';
+import { LanguageCodesProviderKey } from '@/plugins/LanguageCodesProviderPlugin/LanguageCodesProvider';
 import { mount } from '@vue/test-utils';
 import NewLexemeForm from '@/components/NewLexemeForm.vue';
 import initStore from '@/store';
@@ -24,8 +25,11 @@ describe( 'NewLexemeForm', () => {
 			global: {
 				plugins: [ store ],
 				provide: {
-					[ ConfigKey as symbol ]: { wikibaseLexemeTermLanguages: [ 'en', 'en-ca', 'de' ] },
+					[ ConfigKey as symbol ]: {},
 					[ ItemSearchKey as symbol ]: new DevItemSearcher(),
+					[ LanguageCodesProviderKey as symbol ]: {
+						getLanguageCodes: () => [ 'en', 'en-ca', 'de' ],
+					},
 					[ WikiRouterKey as symbol ]: null,
 				},
 			},
@@ -83,8 +87,11 @@ describe( 'NewLexemeForm', () => {
 			global: {
 				plugins: [ testStore ],
 				provide: {
-					[ ConfigKey as symbol ]: { wikibaseLexemeTermLanguages: [ 'en-gb' ] },
+					[ ConfigKey as symbol ]: {},
 					[ ItemSearchKey as symbol ]: new DevItemSearcher(),
+					[ LanguageCodesProviderKey as symbol ]: {
+						getLanguageCodes: () => [ 'en-gb' ],
+					},
 					[ WikiRouterKey as symbol ]: { goToTitle },
 				},
 			},
