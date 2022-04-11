@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
 import WikitLookup from './WikitLookup';
-import { useConfig } from '@/plugins/ConfigPlugin/Config';
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
+import { useLanguageCodesProvider } from '@/plugins/LanguageCodesProviderPlugin/LanguageCodesProvider';
 
 interface Props {
 	modelValue: string | null;
@@ -15,9 +15,9 @@ interface WikitMenuItem {
 
 const props = defineProps<Props>();
 
-const config = useConfig();
+const languageCodesProivder = useLanguageCodesProvider();
 
-const wbLexemeTermLanguages = config.wikibaseLexemeTermLanguages.map( ( lang ) => ( {
+const wbLexemeTermLanguages = languageCodesProivder.getLanguageCodes().map( ( lang ) => ( {
 	label: lang,
 	description: '',
 } ) );
