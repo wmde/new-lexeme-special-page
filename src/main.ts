@@ -13,6 +13,8 @@ import MessagesRepository from './plugins/MessagesPlugin/MessagesRepository';
 import { WikiRouterKey } from './plugins/WikiRouterPlugin/WikiRouter';
 import WikiRouter from './plugins/WikiRouterPlugin/WikiRouter';
 import LangCodeRetriever from './data-access/LangCodeRetriever';
+import { LanguageCodesProviderKey } from './plugins/LanguageCodesProviderPlugin/LanguageCodesProvider';
+import LanguageCodesProvider from './data-access/LanguageCodesProvider';
 
 export interface CreateAndMountConfig extends Config {
 	rootSelector: string;
@@ -38,6 +40,10 @@ export default function createAndMount(
 	app.provide( MessagesKey, new Messages( services.messagesRepository ) );
 	app.provide( ItemSearchKey, services.itemSearcher );
 	app.provide( WikiRouterKey, services.wikiRouter );
+	app.provide(
+		LanguageCodesProviderKey,
+		new LanguageCodesProvider( config.wikibaseLexemeTermLanguages ),
+	);
 
 	return app.mount( config.rootSelector );
 }
