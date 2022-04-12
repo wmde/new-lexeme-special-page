@@ -4,9 +4,16 @@ export type WbGetClaimsResponse = {
 	claims: StatementMap;
 };
 
-function getStringValueFromStatement( statement: Statement ): string | false {
-	if ( statement.mainsnak.snaktype !== 'value' ) {
-		return false;
+function getStringValueFromStatement( statement: Statement ): string | false | null {
+	switch ( statement.mainsnak.snaktype ) {
+		case 'value':
+			break;
+		case 'somevalue':
+			return false;
+		case 'novalue':
+			return null;
+		default:
+			throw new Error( `Unexpected snak type ${statement.mainsnak.snaktype}!` );
 	}
 
 	if ( statement.mainsnak.datavalue?.type !== 'string' ) {
