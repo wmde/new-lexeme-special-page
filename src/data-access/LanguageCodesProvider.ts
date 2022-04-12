@@ -1,4 +1,9 @@
-export default class LanguageCodesProvider {
+export default interface LanguageCodesProvider {
+	getLanguageCodes(): readonly string[];
+	isValid( languageCode: string ): boolean;
+}
+
+export class ListLanguageCodesProvider implements LanguageCodesProvider {
 	public constructor(
 		private readonly validLanguageCodes: string[],
 	) {}
