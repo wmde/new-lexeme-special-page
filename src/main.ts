@@ -33,7 +33,10 @@ export default function createAndMount(
 	services: Services,
 ): ComponentPublicInstance {
 	const app = createApp( App );
-	const store = initStore( services );
+	const languageCodesProvider = new ListLanguageCodesProvider(
+		config.wikibaseLexemeTermLanguages,
+	);
+	const store = initStore( { ...services, languageCodesProvider } );
 	app.use( store );
 
 	app.provide( ConfigKey, config );
@@ -42,7 +45,7 @@ export default function createAndMount(
 	app.provide( WikiRouterKey, services.wikiRouter );
 	app.provide(
 		LanguageCodesProviderKey,
-		new ListLanguageCodesProvider( config.wikibaseLexemeTermLanguages ),
+		languageCodesProvider,
 	);
 
 	return app.mount( config.rootSelector );

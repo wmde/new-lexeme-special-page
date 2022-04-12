@@ -5,6 +5,7 @@
  */
 
 import LangCodeRetriever from '@/data-access/LangCodeRetriever';
+import LanguageCodesProvider from '@/data-access/LanguageCodesProvider';
 import LexemeCreator from '@/data-access/LexemeCreator';
 import {
 	createStore,
@@ -18,22 +19,24 @@ import RootState from './RootState';
 interface StoreServices {
 	lexemeCreator: LexemeCreator;
 	langCodeRetriever: LangCodeRetriever;
+	languageCodesProvider: LanguageCodesProvider;
 }
 
 export default function initStore( {
-	lexemeCreator,
+	lexemeCreator, langCodeRetriever, languageCodesProvider,
 }: StoreServices ): Store<RootState> {
 	return createStore( {
 		state(): RootState {
 			return {
 				lemma: '',
 				language: '',
+				languageCodeFromLanguageItem: undefined,
 				lexicalCategory: '',
 				spellingVariant: '',
 				globalErrors: [],
 			};
 		},
 		mutations,
-		actions: createActions( lexemeCreator ),
+		actions: createActions( lexemeCreator, langCodeRetriever, languageCodesProvider ),
 	} );
 }
