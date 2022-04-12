@@ -14,6 +14,7 @@ const messages: Record<MessageKeys, string> = {
 	'wikibaselexeme-newlexeme-submit-error': 'The server encountered a temporary error and could not complete your request. Please try again.',
 	'wikibaselexeme-newlexeme-error-no-lemma': 'Lemma field is empty, please make an entry.',
 	'wikibaselexeme-newlexeme-error-lemma-is-too-long': 'FIXME (copy is missing!)',
+	'wikibaselexeme-newlexeme-invalid-language-code-warning': 'This Item has an unrecognized language code. Please select one below.',
 	'wikibaselexeme-newlexeme-no-results': 'FIXME (copy is missing!)',
 	'wikibase-shortcopyrightwarning': 'By clicking "$1", you agree to the [[$2|terms of use]], and you irrevocably agree to release your contribution under the [$3 $4].',
 	copyrightpage: '{{ns:project}}:Copyrights',

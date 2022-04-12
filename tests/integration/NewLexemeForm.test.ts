@@ -82,6 +82,40 @@ describe( 'NewLexemeForm', () => {
 		expect( testStore.state.languageCodeFromLanguageItem ).toBe( 'de' );
 	} );
 
+	it( 'shows warning message if language code is not valid', async () => {
+		const languageCodesProvider: LanguageCodesProvider = {
+			isValid: jest.fn().mockReturnValue( false ),
+			getLanguageCodes: jest.fn().mockReturnValue( [ 'de' ] ),
+		};
+		const testStore = initStore( {
+			lexemeCreator: unusedLexemeCreator,
+			langCodeRetriever: { getLanguageCodeFromItem: jest.fn().mockResolvedValue( 'invalid' ) },
+			languageCodesProvider: languageCodesProvider,
+		} );
+
+		const wrapper = mount( NewLexemeForm, {
+			global: {
+				plugins: [ testStore ],
+				provide: {
+					[ ConfigKey as symbol ]: {},
+					[ ItemSearchKey as symbol ]: new DevItemSearcher(),
+					[ LanguageCodesProviderKey as symbol ]: languageCodesProvider,
+					[ WikiRouterKey as symbol ]: null,
+				},
+			},
+		} );
+
+		const languageLookup = wrapper.find( '.wbl-snl-language-lookup input' );
+		await languageLookup.setValue( '=Q123' );
+		await wrapper.find( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
+		await nextTick();
+
+		expect( testStore.state.languageCodeFromLanguageItem ).toBe( false );
+
+		const warning = wrapper.find( '.wikit-ValidationMessage--warning' );
+		expect( warning.exists() ).toBe( true );
+	} );
+
 	it( 'updates the store if something is entered into the lexical category input', async () => {
 		const wrapper = mountForm();
 		const lexicalCategoryInput = wrapper.find( '.wbl-snl-lexical-category-lookup input' );
@@ -119,6 +153,9 @@ describe( 'NewLexemeForm', () => {
 		await languageLookup.setValue( '=Q123' );
 		await wrapper.find( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
 		await nextTick();
+
+		const warning = wrapper.find( '.wikit-ValidationMessage--warning' );
+		expect( warning.exists() ).toBe( false );
 
 		const spellingVariantLookup = wrapper.find( '.wbl-snl-spelling-variant-lookup input' );
 

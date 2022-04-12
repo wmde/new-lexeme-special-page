@@ -11,6 +11,7 @@ interface Props {
 	placeholder: string;
 	value: string | null;
 	searchForItems: ( searchTerm: string, offset?: number ) => Promise<SearchedItemOption[]>;
+	error?: { type: 'error'|'warning'; message: string };
 }
 const props = defineProps<Props>();
 
@@ -99,6 +100,7 @@ const messages = useMessages();
 		:search-input="searchInput"
 		:menu-items="searchSuggestions"
 		:value="selectedOption"
+		:error="error"
 		@update:search-input="onSearchInput"
 		@scroll="onScroll"
 		@input="onOptionSelected"
