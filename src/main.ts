@@ -14,7 +14,7 @@ import { WikiRouterKey } from './plugins/WikiRouterPlugin/WikiRouter';
 import WikiRouter from './plugins/WikiRouterPlugin/WikiRouter';
 import LangCodeRetriever from './data-access/LangCodeRetriever';
 import { LanguageCodesProviderKey } from './plugins/LanguageCodesProviderPlugin/LanguageCodesProvider';
-import LanguageCodesProvider from './data-access/LanguageCodesProvider';
+import { ListLanguageCodesProvider } from './data-access/LanguageCodesProvider';
 
 export interface CreateAndMountConfig extends Config {
 	rootSelector: string;
@@ -42,7 +42,7 @@ export default function createAndMount(
 	app.provide( WikiRouterKey, services.wikiRouter );
 	app.provide(
 		LanguageCodesProviderKey,
-		new LanguageCodesProvider( config.wikibaseLexemeTermLanguages ),
+		new ListLanguageCodesProvider( config.wikibaseLexemeTermLanguages ),
 	);
 
 	return app.mount( config.rootSelector );
