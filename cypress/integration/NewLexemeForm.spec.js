@@ -19,7 +19,7 @@ describe( 'NewLexemeForm', () => {
 						datatype: 'external-id',
 					},
 					type: 'statement',
-					id: 'Q9301$6e2ffdaf-4ec3-055f-7165-4849df92ffde',
+					id: 'Q123$c5c5b451-38a0-4d7c-99b9-af4fdf893d08',
 					rank: 'normal',
 				} ],
 			},
