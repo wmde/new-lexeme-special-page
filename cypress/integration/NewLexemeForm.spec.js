@@ -1,9 +1,64 @@
 describe( 'NewLexemeForm', () => {
 
-	it( 'submits form data', () => {
+	it( 'submits form data with inferred language code', () => {
 		cy.visit( '/' );
 
 		cy.on( 'window:alert', cy.stub().as( 'alert' ) );
+
+		cy.intercept( { query: { action: 'wbgetclaims' } }, {
+			claims: {
+				P218: [ {
+					mainsnak: {
+						snaktype: 'value',
+						property: 'P218',
+						hash: 'faa942355921695b9fa30805f0bb66bc7ed5a433',
+						datavalue: {
+							value: 'en-gb',
+							type: 'string',
+						},
+						datatype: 'external-id',
+					},
+					type: 'statement',
+					id: 'Q9301$6e2ffdaf-4ec3-055f-7165-4849df92ffde',
+					rank: 'normal',
+				} ],
+			},
+		} ).as( 'LanguageCodeRetrieval' );
+
+		cy.get( 'input[name=lemma]' )
+			.type( 'test lemma' );
+
+		cy.get( '.wbl-snl-language-lookup input' )
+			.type( '=Q123', { delay: 0 } );
+		cy.get( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).click();
+
+		cy.wait( '@LanguageCodeRetrieval' );
+
+		cy.get( '.wbl-snl-lexical-category-lookup input' )
+			.type( '=Q456', { delay: 0 } );
+		cy.get( '.wbl-snl-lexical-category-lookup .wikit-OptionsMenu__item' ).click();
+
+		cy.get( '.wbl-snl-form' )
+			.submit();
+
+		cy.get( '@alert' ).then( ( spy ) => {
+			expect( spy ).to.have.been.calledWith(
+				'Create Lexeme "test lemma"@en-gb as Q123 Q456',
+			);
+			expect( spy ).to.have.been.calledWith(
+				'Navigating to: Special:EntityPage/L1',
+			);
+		} );
+	} );
+
+	it( 'submits form data with explicitly set spelling variant', () => {
+		cy.visit( '/' );
+
+		cy.on( 'window:alert', cy.stub().as( 'alert' ) );
+
+		cy.intercept( { query: { action: 'wbgetclaims' } }, {
+			claims: {},
+		} ).as( 'LanguageCodeRetrieval' );
 
 		cy.get( 'input[name=lemma]' )
 			.type( 'test lemma' );
@@ -15,6 +70,8 @@ describe( 'NewLexemeForm', () => {
 		cy.get( '.wbl-snl-lexical-category-lookup input' )
 			.type( '=Q456', { delay: 0 } );
 		cy.get( '.wbl-snl-lexical-category-lookup .wikit-OptionsMenu__item' ).click();
+
+		cy.wait( '@LanguageCodeRetrieval' );
 
 		cy.get( '.wbl-snl-spelling-variant-lookup input' )
 			.type( 'en-ca', { delay: 0 } );
