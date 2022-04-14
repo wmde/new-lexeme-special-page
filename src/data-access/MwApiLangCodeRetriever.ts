@@ -5,17 +5,18 @@ import { processWbGetClaimsResponse, WbGetClaimsResponse } from './apiBasedLangC
 export default class MwApiLangCodeRetriever implements LangCodeRetriever {
 
 	private readonly api: MwApi;
-	private readonly languageCodeProperty: string;
+	private readonly languageCodeProperty: string | null;
 
-	public constructor( api: MwApi, languageCodeProperty: string ) {
-		if ( typeof languageCodeProperty !== 'string' ) {
-			throw new Error( `Expected languageCodeProperty to be propertyId but received ${languageCodeProperty} instead!` );
-		}
+	public constructor( api: MwApi, languageCodeProperty: string | null ) {
 		this.api = api;
 		this.languageCodeProperty = languageCodeProperty;
 	}
 
 	public async getLanguageCodeFromItem( itemId: string ): Promise<string | null | false> {
+		if ( !this.languageCodeProperty ) {
+			return null;
+		}
+
 		const response = await this.api.get( {
 			action: 'wbgetclaims',
 			entity: itemId,
