@@ -56,6 +56,61 @@ describe( 'SpellingVariantInput', () => {
 			] );
 		} );
 	} );
+
+	describe( 'suggested options', () => {
+		it.each( [
+			[
+				'Tun would open Tunisia',
+				[ [ 'en', 'English' ], [ 'aeb-latn', 'Tunisian Arabic (Latin script)' ], [ 'de', 'German' ] ],
+				'Tun',
+				[ 'aeb-latn' ],
+			],
+			[
+				'matching is not fuzzy - tsa does not match Tunisia',
+				[ [ 'en', 'English' ], [ 'aeb-latn', 'Tunisian Arabic (Latin script)' ], [ 'de', 'German' ] ],
+				'tsa',
+				[],
+			],
+			[
+				'Matching looks at each word in the list, i.e. Tunisian Arabic would display if arabic entered',
+				[ [ 'en', 'English' ], [ 'aeb-latn', 'Tunisian Arabic (Latin script)' ], [ 'de', 'German' ] ],
+				'arabic',
+				[ 'aeb-latn' ],
+			],
+			[
+				'Matching looks at each word in the list, i.e. Tunisian Arabic would display if arabic entered',
+				[ [ 'en', 'English' ], [ 'aeb-latn', 'Tunisian Arabic (Latin script)' ], [ 'de', 'German' ] ],
+				'aeb',
+				[ 'aeb-latn' ],
+			],
+			[
+				'shows all the languages that match the input',
+				[ [ 'en', 'English' ], [ 'en-gb', 'British English' ], [ 'de', 'German' ] ],
+				'Engl',
+				[ 'en', 'en-gb' ],
+			],
+		] )( '%s', async ( _, totalOptions, userInput, expectedOptionValues ) => {
+			const lookup = mount( SpellingVariantInput, {
+				props: {
+					modelValue: '',
+				},
+				global: {
+					provide: {
+						[ LanguageCodesProviderKey as symbol ]: {
+							getLanguageCodes: () => totalOptions,
+						},
+					},
+				},
+			} );
+
+			await lookup.find( 'input' ).setValue( userInput );
+
+			const wikitLookup = lookup.getComponent( WikitLookup );
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			expect( wikitLookup.props( 'menuItems' ).map( ( option: any ) => option.value ) ).toStrictEqual( expectedOptionValues );
+		} );
+	} );
+
 	describe( '@events', () => {
 		it( '@update:modelValue - emits null when the input is changed', async () => {
 			const lookup = createLookup();
