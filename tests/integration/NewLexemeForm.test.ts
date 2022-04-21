@@ -80,6 +80,12 @@ describe( 'NewLexemeForm', () => {
 
 		expect( testStore.state.language ).toBe( 'Q123' );
 		expect( testStore.state.languageCodeFromLanguageItem ).toBe( 'de' );
+
+		await languageLookup.setValue( '=Q12' );
+
+		expect( wrapper.find( '.wbl-snl-spelling-variant-lookup' ).exists() ).toBe( false );
+		expect( testStore.state.language ).toBe( null );
+		expect( testStore.state.languageCodeFromLanguageItem ).toBe( undefined );
 	} );
 
 	it( 'shows warning message if language code is not valid', async () => {

@@ -90,9 +90,7 @@ const onSubmit = async () => {
 };
 
 const onLanguageSelect = async ( newLanguageId: string | null ) => {
-	if ( newLanguageId ) {
-		await store.dispatch( HANDLE_LANGUAGE_CHANGE, newLanguageId );
-	}
+	await store.dispatch( HANDLE_LANGUAGE_CHANGE, newLanguageId );
 };
 
 </script>
