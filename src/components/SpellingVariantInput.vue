@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import { escapeRegExp } from 'lodash';
 import WikitLookup from './WikitLookup';
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
 import { useLanguageCodesProvider } from '@/plugins/LanguageCodesProviderPlugin/LanguageCodesProvider';
@@ -43,7 +44,7 @@ const onSearchInput = ( inputValue: string ) => {
 	}
 
 	menuItems.value = wbLexemeTermLanguages.filter(
-		( lang ) => ( new RegExp( `\\b${inputValue}`, 'i' ) ).test( lang.label ),
+		( lang ) => ( new RegExp( `\\b${escapeRegExp( inputValue )}`, 'i' ) ).test( lang.label ),
 	);
 
 	searchInput.value = inputValue;
