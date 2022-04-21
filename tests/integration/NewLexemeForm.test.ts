@@ -77,11 +77,11 @@ describe( 'NewLexemeForm', () => {
 		await wrapper.find( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
 
 		expect( wrapper.find( '.wbl-snl-spelling-variant-lookup' ).exists() ).toBe( false );
-
 		expect( testStore.state.language ).toBe( 'Q123' );
 		expect( testStore.state.languageCodeFromLanguageItem ).toBe( 'de' );
 
 		await languageLookup.setValue( '=Q12' );
+		// don’t click any option ⇒ nothing actually selected
 
 		expect( wrapper.find( '.wbl-snl-spelling-variant-lookup' ).exists() ).toBe( false );
 		expect( testStore.state.language ).toBe( null );
