@@ -11,16 +11,20 @@ interface Props {
 interface WikitMenuItem {
 	label: string;
 	description: string;
+	value: string;
 }
 
 const props = defineProps<Props>();
 
 const languageCodesProvider = useLanguageCodesProvider();
 
-const wbLexemeTermLanguages = languageCodesProvider.getLanguageCodes().map( ( lang ) => ( {
-	label: lang,
-	description: '',
-} ) );
+const wbLexemeTermLanguages = languageCodesProvider.getLanguageCodes().map(
+	( [ code, name ]: [ string, string ] ) => ( {
+		label: `${name} (${code})`,
+		value: code,
+		description: '',
+	} ),
+);
 
 const menuItems = ref( [] as WikitMenuItem[] );
 
@@ -39,7 +43,8 @@ const onSearchInput = ( inputValue: string ) => {
 	}
 
 	menuItems.value = wbLexemeTermLanguages.filter(
-		( lang ) => lang.label.startsWith( lowerCaseInputValue ) );
+		( lang ) => ( new RegExp( `\\b${inputValue}`, 'i' ) ).test( lang.label ),
+	);
 
 	searchInput.value = inputValue;
 };
@@ -53,7 +58,7 @@ const selectedOption = computed( () => {
 } );
 
 const onOptionSelected = ( value: unknown ) => {
-	const selectedValue = value === null ? null : ( value as WikitMenuItem ).label;
+	const selectedValue = value === null ? null : ( value as WikitMenuItem ).value;
 	emit( 'update:modelValue', selectedValue );
 };
 

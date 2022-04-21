@@ -3,7 +3,7 @@ import SpellingVariantInput from '@/components/SpellingVariantInput.vue';
 import { Lookup as WikitLookup } from '@wmde/wikit-vue-components';
 import { LanguageCodesProviderKey } from '@/plugins/LanguageCodesProviderPlugin/LanguageCodesProvider';
 
-const exampleWikibaseLexemeTermLanguagesConfig = [ 'en', 'en-ca', 'es', 'hi' ];
+const exampleWikibaseLexemeTermLanguagesConfig = [ [ 'en', 'English' ], [ 'en-gb', 'British English' ], [ 'de', 'German' ] ];
 
 function createLookup( config: Record<string, unknown> = {} ) {
 	return mount( SpellingVariantInput, {
@@ -33,7 +33,7 @@ describe( 'SpellingVariantInput', () => {
 			} );
 
 			expect( lookup.findComponent( WikitLookup ).props().value )
-				.toBe( exampleWikibaseLexemeTermLanguagesConfig[ selectedItemId ] );
+				.toStrictEqual( exampleWikibaseLexemeTermLanguagesConfig[ selectedItemId ] );
 		} );
 
 		it( ':menuItems - returned suggestions are provided to Wikit Lookup', async () => {
@@ -45,11 +45,13 @@ describe( 'SpellingVariantInput', () => {
 			expect( wikitLookup.props( 'menuItems' ) ).toStrictEqual( [
 				{
 					description: '',
-					label: 'en',
+					label: 'English (en)',
+					value: 'en',
 				},
 				{
 					description: '',
-					label: 'en-ca',
+					label: 'British English (en-gb)',
+					value: 'en-gb',
 				},
 			] );
 		} );
@@ -75,13 +77,14 @@ describe( 'SpellingVariantInput', () => {
 				{
 					label: exampleWikibaseLexemeTermLanguagesConfig[ selectedItemId ],
 					description: '',
+					value: 'en',
 				},
 			);
 
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-ignore
 			expect( lookup.emitted( 'update:modelValue' )[ 1 ][ 0 ] )
-				.toBe( exampleWikibaseLexemeTermLanguagesConfig[ selectedItemId ] );
+				.toBe( 'en' );
 
 		} );
 	} );

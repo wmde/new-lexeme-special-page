@@ -1,18 +1,23 @@
 export default interface LanguageCodesProvider {
-	getLanguageCodes(): readonly string[];
+	getLanguageCodes(): [string, string][];
 	isValid( languageCode: string ): boolean;
 }
 
 export class ListLanguageCodesProvider implements LanguageCodesProvider {
-	public constructor(
-		private readonly validLanguageCodes: string[],
-	) {}
 
-	public getLanguageCodes(): readonly string[] {
-		return this.validLanguageCodes;
+	private readonly validLanguageCodes: Map<string, string>;
+
+	public constructor(
+		validLanguageCodes: Record<string, string>,
+	) {
+		this.validLanguageCodes = new Map( Object.entries( validLanguageCodes ) );
+	}
+
+	public getLanguageCodes(): [string, string][] {
+		return Array.from( this.validLanguageCodes.entries() );
 	}
 
 	public isValid( langCode: string ): boolean {
-		return this.validLanguageCodes.includes( langCode );
+		return this.validLanguageCodes.has( langCode );
 	}
 }

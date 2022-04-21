@@ -135,7 +135,7 @@ describe( 'NewLexemeForm', () => {
 	it( 'updates the store if a language is selected in the spelling variant input', async () => {
 		const languageCodesProvider: LanguageCodesProvider = {
 			isValid: jest.fn().mockReturnValue( true ),
-			getLanguageCodes: jest.fn().mockReturnValue( [ 'de' ] ),
+			getLanguageCodes: jest.fn().mockReturnValue( [ [ 'de', 'German' ] ] ),
 		};
 		const testStore = initStore( {
 			lexemeCreator: unusedLexemeCreator,
@@ -230,7 +230,7 @@ describe( 'NewLexemeForm', () => {
 					[ ConfigKey as symbol ]: {},
 					[ ItemSearchKey as symbol ]: new DevItemSearcher(),
 					[ LanguageCodesProviderKey as symbol ]: {
-						getLanguageCodes: () => [ 'en-gb' ],
+						getLanguageCodes: () => [ [ 'en-gb', 'British English' ] ],
 					},
 					[ WikiRouterKey as symbol ]: { goToTitle },
 				},
