@@ -14,7 +14,7 @@ export class ListLanguageCodesProvider implements LanguageCodesProvider {
 	}
 
 	public getLanguageCodes(): [string, string][] {
-		return Array.from( this.validLanguageCodes.entries() );
+		return [ ...this.validLanguageCodes ];
 	}
 
 	public isValid( langCode: string ): boolean {
