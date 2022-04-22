@@ -23,11 +23,18 @@ const messages: Record<MessageKeys, string> = {
 /** Messages repository for the dev entry point. */
 export default class DevMessagesRepository implements MessagesRepository {
 
-	public get( key: MessageKeys ): string {
-		return messages[ key ] !== undefined ? this.escape( messages[ key ] ) : `⧼${key}⧽`;
+	public get( key: MessageKeys, ...params: string[] ): string {
+		return messages[ key ] !== undefined ? this.escape( this.replace( messages[ key ], ...params ) ) : `⧼${key}⧽`;
 	}
-	public getText( key: MessageKeys ): string {
-		return messages[ key ] !== undefined ? messages[ key ] : `⧼${key}⧽`;
+	public getText( key: MessageKeys, ...params: string[] ): string {
+		return messages[ key ] !== undefined ? this.replace( messages[ key ], ...params ) : `⧼${key}⧽`;
+	}
+
+	private replace( message: string, ...args: string[] ) {
+		return message.replace(
+			/\$(\d+)/g,
+			( _, i ) => args[ i - 1 ],
+		);
 	}
 
 	private escape( s: string ) {
