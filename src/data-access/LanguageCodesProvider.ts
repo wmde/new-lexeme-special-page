@@ -1,5 +1,5 @@
 export default interface LanguageCodesProvider {
-	getLanguageCodes(): [string, string][];
+	getLanguages(): Map<string, string>;
 	isValid( languageCode: string ): boolean;
 }
 
@@ -13,8 +13,8 @@ export class ListLanguageCodesProvider implements LanguageCodesProvider {
 		this.validLanguageCodes = new Map( Object.entries( validLanguageCodes ) );
 	}
 
-	public getLanguageCodes(): [string, string][] {
-		return [ ...this.validLanguageCodes ];
+	public getLanguages(): Map<string, string> {
+		return this.validLanguageCodes;
 	}
 
 	public isValid( langCode: string ): boolean {

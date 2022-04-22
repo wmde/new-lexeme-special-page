@@ -58,7 +58,7 @@ describe( 'NewLexemeForm', () => {
 			langCodeRetriever: { getLanguageCodeFromItem: jest.fn().mockResolvedValue( 'de' ) },
 			languageCodesProvider: {
 				isValid: jest.fn().mockReturnValue( true ),
-				getLanguageCodes: jest.fn(),
+				getLanguages: jest.fn(),
 			},
 		} );
 
@@ -94,7 +94,7 @@ describe( 'NewLexemeForm', () => {
 	it( 'shows warning message if language code is not valid', async () => {
 		const languageCodesProvider: LanguageCodesProvider = {
 			isValid: jest.fn().mockReturnValue( false ),
-			getLanguageCodes: jest.fn().mockReturnValue( [ 'de' ] ),
+			getLanguages: jest.fn().mockReturnValue( new Map() ),
 		};
 		const testStore = initStore( {
 			lexemeCreator: unusedLexemeCreator,
@@ -138,7 +138,7 @@ describe( 'NewLexemeForm', () => {
 	it( 'updates the store if a language is selected in the spelling variant input', async () => {
 		const languageCodesProvider: LanguageCodesProvider = {
 			isValid: jest.fn().mockReturnValue( true ),
-			getLanguageCodes: jest.fn().mockReturnValue( [ [ 'de', 'German' ] ] ),
+			getLanguages: jest.fn().mockReturnValue( new Map( [ [ 'de', 'German' ] ] ) ),
 		};
 		const testStore = initStore( {
 			lexemeCreator: unusedLexemeCreator,
@@ -184,7 +184,7 @@ describe( 'NewLexemeForm', () => {
 			langCodeRetriever: { getLanguageCodeFromItem: jest.fn().mockResolvedValue( 'de' ) },
 			languageCodesProvider: {
 				isValid: jest.fn().mockReturnValue( true ),
-				getLanguageCodes: jest.fn(),
+				getLanguages: jest.fn(),
 			},
 		} );
 		const wrapper = mount( NewLexemeForm, {
@@ -234,7 +234,7 @@ describe( 'NewLexemeForm', () => {
 					[ ConfigKey as symbol ]: {},
 					[ ItemSearchKey as symbol ]: new DevItemSearcher(),
 					[ LanguageCodesProviderKey as symbol ]: {
-						getLanguageCodes: () => [ [ 'en-gb', 'British English' ] ],
+						getLanguages: () => new Map( [ [ 'en-gb', 'British English' ] ] ),
 					},
 					[ WikiRouterKey as symbol ]: { goToTitle },
 					[ MessagesKey as symbol ]: new Messages( new DevMessagesRepository() ),

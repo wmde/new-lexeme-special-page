@@ -25,9 +25,9 @@ describe( 'LanguageCodesProvider', () => {
 			const listOfValidCodes = { en: 'English', 'en-gb': 'British English', de: 'German' };
 			const sut = new ListLanguageCodesProvider( listOfValidCodes );
 
-			const actual = sut.getLanguageCodes();
+			const actual = sut.getLanguages();
 
-			expect( actual ).toStrictEqual( [ [ 'en', 'English' ], [ 'en-gb', 'British English' ], [ 'de', 'German' ] ] );
+			expect( actual ).toStrictEqual( new Map( [ [ 'en', 'English' ], [ 'en-gb', 'British English' ], [ 'de', 'German' ] ] ) );
 		} );
 	} );
 } );

@@ -20,12 +20,15 @@ const props = defineProps<Props>();
 const languageCodesProvider = useLanguageCodesProvider();
 const messages = useMessages();
 
-const wbLexemeTermLanguages = languageCodesProvider.getLanguageCodes().map(
-	( [ code, name ]: [ string, string ] ) => ( {
-		label: messages.getUnescaped( 'wikibase-lexeme-lemma-language-option', name, code ),
-		value: code,
-		description: '',
-	} ),
+const wbLexemeTermLanguages: WikitMenuItem[] = [];
+languageCodesProvider.getLanguages().forEach(
+	( name, code ) => {
+		wbLexemeTermLanguages.push( {
+			label: messages.getUnescaped( 'wikibase-lexeme-lemma-language-option', name, code ),
+			value: code,
+			description: '',
+		} );
+	},
 );
 
 const menuItems = ref( [] as WikitMenuItem[] );

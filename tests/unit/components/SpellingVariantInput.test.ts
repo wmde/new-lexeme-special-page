@@ -4,8 +4,9 @@ import { Lookup as WikitLookup } from '@wmde/wikit-vue-components';
 import { LanguageCodesProviderKey } from '@/plugins/LanguageCodesProviderPlugin/LanguageCodesProvider';
 import DevMessagesRepository from '@/plugins/MessagesPlugin/DevMessagesRepository';
 import Messages, { MessagesKey } from '@/plugins/MessagesPlugin/Messages';
+import { ListLanguageCodesProvider } from '@/data-access/LanguageCodesProvider';
 
-const exampleWikibaseLexemeTermLanguagesConfig = [ [ 'en', 'English' ], [ 'en-gb', 'British English' ], [ 'de', 'German' ] ];
+const termLanguagesConfig = { en: 'English', 'en-gb': 'British English', de: 'German' };
 
 function createLookup( config: Record<string, unknown> = {} ) {
 	return mount( SpellingVariantInput, {
@@ -14,9 +15,8 @@ function createLookup( config: Record<string, unknown> = {} ) {
 		},
 		global: {
 			provide: {
-				[ LanguageCodesProviderKey as symbol ]: {
-					getLanguageCodes: () => exampleWikibaseLexemeTermLanguagesConfig,
-				},
+				[ LanguageCodesProviderKey as symbol ]:
+					new ListLanguageCodesProvider( termLanguagesConfig ),
 				[ MessagesKey as symbol ]: new Messages( new DevMessagesRepository() ),
 			},
 		},
@@ -29,14 +29,13 @@ describe( 'SpellingVariantInput', () => {
 		it( ':value - selects the selected language', async () => {
 			const lookup = createLookup();
 			await lookup.find( 'input' ).setValue( 'foo' );
-			const selectedItemId = 1;
 
 			await lookup.setProps( {
-				value: exampleWikibaseLexemeTermLanguagesConfig[ selectedItemId ],
+				value: 'en',
 			} );
 
 			expect( lookup.findComponent( WikitLookup ).props().value )
-				.toStrictEqual( exampleWikibaseLexemeTermLanguagesConfig[ selectedItemId ] );
+				.toStrictEqual( 'en' );
 		} );
 
 		it( ':menuItems - returned suggestions are provided to Wikit Lookup', async () => {
@@ -64,44 +63,43 @@ describe( 'SpellingVariantInput', () => {
 		it.each( [
 			[
 				'Tun would open Tunisian',
-				[ [ 'en', 'English' ], [ 'aeb-latn', 'Tunisian Arabic (Latin script)' ], [ 'de', 'German' ] ],
+				{ en: 'English', 'aeb-latn': 'Tunisian Arabic (Latin script)', de: 'German' },
 				'Tun',
 				[ 'aeb-latn' ],
 			],
 			[
 				'matching is not fuzzy - tsa does not match Tunisian',
-				[ [ 'en', 'English' ], [ 'aeb-latn', 'Tunisian Arabic (Latin script)' ], [ 'de', 'German' ] ],
+				{ en: 'English', 'aeb-latn': 'Tunisian Arabic (Latin script)', de: 'German' },
 				'tsa',
 				[],
 			],
 			[
 				'Matching looks at each word in the list, i.e. Tunisian Arabic would display if arabic entered',
-				[ [ 'en', 'English' ], [ 'aeb-latn', 'Tunisian Arabic (Latin script)' ], [ 'de', 'German' ] ],
+				{ en: 'English', 'aeb-latn': 'Tunisian Arabic (Latin script)', de: 'German' },
 				'arabic',
 				[ 'aeb-latn' ],
 			],
 			[
 				'Treats the language code as a word or words for the sake of matching',
-				[ [ 'en', 'English' ], [ 'aeb-latn', 'Tunisian Arabic (Latin script)' ], [ 'de', 'German' ] ],
+				{ en: 'English', 'aeb-latn': 'Tunisian Arabic (Latin script)', de: 'German' },
 				'aeb',
 				[ 'aeb-latn' ],
 			],
 			[
 				'shows all the languages that match the input',
-				[ [ 'en', 'English' ], [ 'en-gb', 'British English' ], [ 'de', 'German' ] ],
+				{ en: 'English', 'en-gb': 'British English', de: 'German' },
 				'Engl',
 				[ 'en', 'en-gb' ],
 			],
-		] )( '%s', async ( _, totalOptions, userInput, expectedOptionValues ) => {
+		] )( '%s', async ( _, termLanguages: Record<string, string>, userInput, expectedOptionValues ) => {
 			const lookup = mount( SpellingVariantInput, {
 				props: {
 					modelValue: '',
 				},
 				global: {
 					provide: {
-						[ LanguageCodesProviderKey as symbol ]: {
-							getLanguageCodes: () => totalOptions,
-						},
+						[ LanguageCodesProviderKey as symbol ]:
+							new ListLanguageCodesProvider( termLanguages ),
 						[ MessagesKey as symbol ]: new Messages( new DevMessagesRepository() ),
 					},
 				},
@@ -129,12 +127,11 @@ describe( 'SpellingVariantInput', () => {
 		it( '@update:modelValue - emits the value of the selected option', async () => {
 			const lookup = createLookup();
 			await lookup.find( 'input' ).setValue( 'en' );
-			const selectedItemId = 0;
 
 			await lookup.findComponent( WikitLookup ).vm.$emit(
 				'input',
 				{
-					label: exampleWikibaseLexemeTermLanguagesConfig[ selectedItemId ],
+					label: 'foo',
 					description: '',
 					value: 'en',
 				},
