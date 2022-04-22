@@ -17,7 +17,10 @@ describe( 'createAndMount', () => {
 			rootSelector: '#test-app',
 			licenseUrl: '',
 			licenseName: '',
-			wikibaseLexemeTermLanguages: { en: 'English', de: 'German' },
+			wikibaseLexemeTermLanguages: new Map( [
+				[ 'en', 'English' ],
+				[ 'de', 'German' ],
+			] ),
 		}, {
 			itemSearcher: unusedItemSearcher,
 			lexemeCreator: unusedLexemeCreator,
