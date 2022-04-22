@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CREATE_LEXEME } from '@/store/actions';
+import { CREATE_LEXEME, HANDLE_LANGUAGE_CHANGE } from '@/store/actions';
 import { computed } from 'vue';
 import { useStore } from 'vuex';
 import { Button as WikitButton } from '@wmde/wikit-vue-components';
@@ -45,6 +45,10 @@ const lexicalCategory = computed( {
 		store.commit( SET_LEXICAL_CATEGORY, newLexicalCategory );
 	},
 } );
+const showSpellingVariantInput = computed( () => {
+	return store.state.languageCodeFromLanguageItem === null ||
+		store.state.languageCodeFromLanguageItem === false;
+} );
 const spellingVariant = computed( {
 	get(): string {
 		return store.state.spellingVariant;
@@ -84,6 +88,11 @@ const onSubmit = async () => {
 		// Error is already in store and handled by ErrorMessage component
 	}
 };
+
+const onLanguageSelect = async ( newLanguageId: string | null ) => {
+	await store.dispatch( HANDLE_LANGUAGE_CHANGE, newLanguageId );
+};
+
 </script>
 
 <script lang="ts">
@@ -100,9 +109,11 @@ export default {
 			v-model="lemma"
 		/>
 		<language-input
-			v-model="language"
+			:model-value="language"
+			@update:model-value="onLanguageSelect"
 		/>
 		<spelling-variant-input
+			v-if="showSpellingVariantInput"
 			v-model="spellingVariant"
 		/>
 		<lexical-category-input

@@ -13,6 +13,8 @@ import MessagesRepository from './plugins/MessagesPlugin/MessagesRepository';
 import { WikiRouterKey } from './plugins/WikiRouterPlugin/WikiRouter';
 import WikiRouter from './plugins/WikiRouterPlugin/WikiRouter';
 import LangCodeRetriever from './data-access/LangCodeRetriever';
+import { LanguageCodesProviderKey } from './plugins/LanguageCodesProviderPlugin/LanguageCodesProvider';
+import { ListLanguageCodesProvider } from './data-access/LanguageCodesProvider';
 
 export interface CreateAndMountConfig extends Config {
 	rootSelector: string;
@@ -31,13 +33,20 @@ export default function createAndMount(
 	services: Services,
 ): ComponentPublicInstance {
 	const app = createApp( App );
-	const store = initStore( services );
+	const languageCodesProvider = new ListLanguageCodesProvider(
+		config.wikibaseLexemeTermLanguages,
+	);
+	const store = initStore( { ...services, languageCodesProvider } );
 	app.use( store );
 
 	app.provide( ConfigKey, config );
 	app.provide( MessagesKey, new Messages( services.messagesRepository ) );
 	app.provide( ItemSearchKey, services.itemSearcher );
 	app.provide( WikiRouterKey, services.wikiRouter );
+	app.provide(
+		LanguageCodesProviderKey,
+		languageCodesProvider,
+	);
 
 	return app.mount( config.rootSelector );
 }
