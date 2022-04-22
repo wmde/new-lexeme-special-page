@@ -60,13 +60,13 @@ describe( 'SpellingVariantInput', () => {
 	describe( 'suggested options', () => {
 		it.each( [
 			[
-				'Tun would open Tunisia',
+				'Tun would open Tunisian',
 				[ [ 'en', 'English' ], [ 'aeb-latn', 'Tunisian Arabic (Latin script)' ], [ 'de', 'German' ] ],
 				'Tun',
 				[ 'aeb-latn' ],
 			],
 			[
-				'matching is not fuzzy - tsa does not match Tunisia',
+				'matching is not fuzzy - tsa does not match Tunisian',
 				[ [ 'en', 'English' ], [ 'aeb-latn', 'Tunisian Arabic (Latin script)' ], [ 'de', 'German' ] ],
 				'tsa',
 				[],
