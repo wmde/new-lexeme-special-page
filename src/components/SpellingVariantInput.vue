@@ -41,7 +41,6 @@ const emit = defineEmits( {
 
 const searchInput = ref( '' );
 const onSearchInput = ( inputValue: string ) => {
-	const lowerCaseInputValue = inputValue.toLowerCase();
 	if ( inputValue.trim() === '' ) {
 		menuItems.value = [];
 		return;
