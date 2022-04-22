@@ -5,19 +5,19 @@ export default interface LanguageCodesProvider {
 
 export class ListLanguageCodesProvider implements LanguageCodesProvider {
 
-	private readonly validLanguageCodes: Map<string, string>;
+	private readonly validLanguages: Map<string, string>;
 
 	public constructor(
-		validLanguageCodes: Record<string, string>,
+		validLanguages: Map<string, string>,
 	) {
-		this.validLanguageCodes = new Map( Object.entries( validLanguageCodes ) );
+		this.validLanguages = validLanguages;
 	}
 
 	public getLanguages(): Map<string, string> {
-		return this.validLanguageCodes;
+		return this.validLanguages;
 	}
 
 	public isValid( langCode: string ): boolean {
-		return this.validLanguageCodes.has( langCode );
+		return this.validLanguages.has( langCode );
 	}
 }

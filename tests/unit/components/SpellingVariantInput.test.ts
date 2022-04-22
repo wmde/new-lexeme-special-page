@@ -6,7 +6,7 @@ import DevMessagesRepository from '@/plugins/MessagesPlugin/DevMessagesRepositor
 import Messages, { MessagesKey } from '@/plugins/MessagesPlugin/Messages';
 import { ListLanguageCodesProvider } from '@/data-access/LanguageCodesProvider';
 
-const termLanguagesConfig = { en: 'English', 'en-gb': 'British English', de: 'German' };
+const termLanguagesConfig = new Map( [ [ 'en', 'English' ], [ 'en-gb', 'British English' ], [ 'de', 'German' ] ] );
 
 function createLookup( config: Record<string, unknown> = {} ) {
 	return mount( SpellingVariantInput, {
@@ -63,35 +63,35 @@ describe( 'SpellingVariantInput', () => {
 		it.each( [
 			[
 				'Tun would open Tunisian',
-				{ en: 'English', 'aeb-latn': 'Tunisian Arabic (Latin script)', de: 'German' },
+				new Map( [ [ 'en', 'English' ], [ 'aeb-latn', 'Tunisian Arabic (Latin script)' ], [ 'de', 'German' ] ] ),
 				'Tun',
 				[ 'aeb-latn' ],
 			],
 			[
 				'matching is not fuzzy - tsa does not match Tunisian',
-				{ en: 'English', 'aeb-latn': 'Tunisian Arabic (Latin script)', de: 'German' },
+				new Map( [ [ 'en', 'English' ], [ 'aeb-latn', 'Tunisian Arabic (Latin script)' ], [ 'de', 'German' ] ] ),
 				'tsa',
 				[],
 			],
 			[
 				'Matching looks at each word in the list, i.e. Tunisian Arabic would display if arabic entered',
-				{ en: 'English', 'aeb-latn': 'Tunisian Arabic (Latin script)', de: 'German' },
+				new Map( [ [ 'en', 'English' ], [ 'aeb-latn', 'Tunisian Arabic (Latin script)' ], [ 'de', 'German' ] ] ),
 				'arabic',
 				[ 'aeb-latn' ],
 			],
 			[
 				'Treats the language code as a word or words for the sake of matching',
-				{ en: 'English', 'aeb-latn': 'Tunisian Arabic (Latin script)', de: 'German' },
+				new Map( [ [ 'en', 'English' ], [ 'aeb-latn', 'Tunisian Arabic (Latin script)' ], [ 'de', 'German' ] ] ),
 				'aeb',
 				[ 'aeb-latn' ],
 			],
 			[
 				'shows all the languages that match the input',
-				{ en: 'English', 'en-gb': 'British English', de: 'German' },
+				new Map( [ [ 'en', 'English' ], [ 'en-gb', 'British English' ], [ 'de', 'German' ] ] ),
 				'Engl',
 				[ 'en', 'en-gb' ],
 			],
-		] )( '%s', async ( _, termLanguages: Record<string, string>, userInput, expectedOptionValues ) => {
+		] )( '%s', async ( _, termLanguages: Map<string, string>, userInput, expectedOptionValues ) => {
 			const lookup = mount( SpellingVariantInput, {
 				props: {
 					modelValue: '',
