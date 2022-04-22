@@ -1,7 +1,7 @@
 import { mount } from '@vue/test-utils';
 import SpellingVariantInput from '@/components/SpellingVariantInput.vue';
 import { Lookup as WikitLookup } from '@wmde/wikit-vue-components';
-import { ConfigKey } from '@/plugins/ConfigPlugin/Config';
+import { LanguageCodesProviderKey } from '@/plugins/LanguageCodesProviderPlugin/LanguageCodesProvider';
 
 const exampleWikibaseLexemeTermLanguagesConfig = [ 'en', 'en-ca', 'es', 'hi' ];
 
@@ -12,8 +12,8 @@ function createLookup( config: Record<string, unknown> = {} ) {
 		},
 		global: {
 			provide: {
-				[ ConfigKey as symbol ]: {
-					wikibaseLexemeTermLanguages: exampleWikibaseLexemeTermLanguagesConfig,
+				[ LanguageCodesProviderKey as symbol ]: {
+					getLanguageCodes: () => exampleWikibaseLexemeTermLanguagesConfig,
 				},
 			},
 		},

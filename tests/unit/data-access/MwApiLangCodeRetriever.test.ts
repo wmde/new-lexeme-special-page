@@ -53,7 +53,7 @@ describe( 'MwApiLangCodeRetriever', () => {
 
 		const sut = new MwApiLangCodeRetriever( api, 'P218' );
 
-		expect( await sut.getLanguageCodeFromItem( 'Q9301' ) ).toBe( false );
+		expect( await sut.getLanguageCodeFromItem( 'Q9301' ) ).toBe( null );
 	} );
 
 	it( 'returns the language code from the normal ranked statement if there is no preferred one', async () => {
