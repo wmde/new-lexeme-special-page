@@ -14,7 +14,7 @@ import { WikiRouterKey } from './plugins/WikiRouterPlugin/WikiRouter';
 import WikiRouter from './plugins/WikiRouterPlugin/WikiRouter';
 import LangCodeRetriever from './data-access/LangCodeRetriever';
 import { LanguageCodesProviderKey } from './plugins/LanguageCodesProviderPlugin/LanguageCodesProvider';
-import { ListLanguageCodesProvider } from './data-access/LanguageCodesProvider';
+import { MapLanguageCodesProvider } from './data-access/LanguageCodesProvider';
 
 export interface CreateAndMountConfig extends Config {
 	rootSelector: string;
@@ -33,7 +33,7 @@ export default function createAndMount(
 	services: Services,
 ): ComponentPublicInstance {
 	const app = createApp( App );
-	const languageCodesProvider = new ListLanguageCodesProvider(
+	const languageCodesProvider = new MapLanguageCodesProvider(
 		config.wikibaseLexemeTermLanguages,
 	);
 	const store = initStore( { ...services, languageCodesProvider } );

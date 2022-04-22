@@ -13,6 +13,7 @@ type MessageKeys
  | 'wikibaselexeme-newlexeme-error-lemma-is-too-long'
  | 'wikibaselexeme-newlexeme-invalid-language-code-warning'
  | 'wikibaselexeme-newlexeme-no-results'
+ | 'wikibase-lexeme-lemma-language-option'
  | 'wikibase-shortcopyrightwarning'
  | 'copyrightpage';
 

@@ -198,7 +198,7 @@ describe( 'HANDLE_LANGUAGE_CHANGE', () => {
 			},
 			{
 				isValid: isValidMock,
-				getLanguageCodes: jest.fn(),
+				getLanguages: jest.fn(),
 			},
 		);
 
@@ -233,7 +233,7 @@ describe( 'HANDLE_LANGUAGE_CHANGE', () => {
 			},
 			{
 				isValid: isValidMock,
-				getLanguageCodes: jest.fn(),
+				getLanguages: jest.fn(),
 			},
 		);
 
@@ -271,7 +271,7 @@ describe( 'HANDLE_LANGUAGE_CHANGE', () => {
 			},
 			{
 				isValid: isValidMock,
-				getLanguageCodes: jest.fn(),
+				getLanguages: jest.fn(),
 			},
 		);
 

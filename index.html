@@ -19,7 +19,18 @@
 				rootSelector: '#app',
 				licenseUrl: '',
 				licenseName: '',
-				wikibaseLexemeTermLanguages: [ 'en', 'en-ca', 'en-gb', 'enm', 'es', 'est', 'esp', 'esk', 'aa', 'bcc', 'ca', 'de', 'ff', 'ga', 'ha-arab' ],
+				wikibaseLexemeTermLanguages: new Map([
+					[ 'en', 'English' ],
+					[ 'en-ca', 'Canadian English' ],
+					[ 'en-gb', 'British English' ],
+					[ 'enm', 'Middle English' ],
+					[ 'es', 'Spanish' ],
+					[ 'de', 'German' ],
+					[ 'aeb', 'Tunisian Arabic' ],
+					[ 'af', 'Afrikaans' ],
+					[ 'eo', 'Esperanto' ],
+					[ 'ha-arab', 'Hausa in Arab script' ]
+				]),
 			};
 			const services = {
 				itemSearcher: new DevItemSearcher(),

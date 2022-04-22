@@ -6,7 +6,7 @@ import {
 export interface Config {
 	readonly licenseUrl: string;
 	readonly licenseName: string;
-	readonly wikibaseLexemeTermLanguages: string[];
+	readonly wikibaseLexemeTermLanguages: Map<string, string>;
 }
 
 export const ConfigKey: InjectionKey<Config> = Symbol( 'Config' );

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
+import { escapeRegExp } from 'lodash';
 import WikitLookup from './WikitLookup';
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
 import { useLanguageCodesProvider } from '@/plugins/LanguageCodesProviderPlugin/LanguageCodesProvider';
@@ -11,16 +12,24 @@ interface Props {
 interface WikitMenuItem {
 	label: string;
 	description: string;
+	value: string;
 }
 
 const props = defineProps<Props>();
 
 const languageCodesProvider = useLanguageCodesProvider();
+const messages = useMessages();
 
-const wbLexemeTermLanguages = languageCodesProvider.getLanguageCodes().map( ( lang ) => ( {
-	label: lang,
-	description: '',
-} ) );
+const wbLexemeTermLanguages: WikitMenuItem[] = [];
+languageCodesProvider.getLanguages().forEach(
+	( name, code ) => {
+		wbLexemeTermLanguages.push( {
+			label: messages.getUnescaped( 'wikibase-lexeme-lemma-language-option', name, code ),
+			value: code,
+			description: '',
+		} );
+	},
+);
 
 const menuItems = ref( [] as WikitMenuItem[] );
 
@@ -32,14 +41,14 @@ const emit = defineEmits( {
 
 const searchInput = ref( '' );
 const onSearchInput = ( inputValue: string ) => {
-	const lowerCaseInputValue = inputValue.toLowerCase();
 	if ( inputValue.trim() === '' ) {
 		menuItems.value = [];
 		return;
 	}
 
 	menuItems.value = wbLexemeTermLanguages.filter(
-		( lang ) => lang.label.startsWith( lowerCaseInputValue ) );
+		( lang ) => ( new RegExp( `\\b${escapeRegExp( inputValue )}`, 'i' ) ).test( lang.label ),
+	);
 
 	searchInput.value = inputValue;
 };
@@ -53,11 +62,10 @@ const selectedOption = computed( () => {
 } );
 
 const onOptionSelected = ( value: unknown ) => {
-	const selectedValue = value === null ? null : ( value as WikitMenuItem ).label;
+	const selectedValue = value === null ? null : ( value as WikitMenuItem ).value;
 	emit( 'update:modelValue', selectedValue );
 };
 
-const messages = useMessages();
 </script>
 
 <script lang="ts">
