@@ -78,7 +78,7 @@ describe( 'SpellingVariantInput', () => {
 				[ 'aeb-latn' ],
 			],
 			[
-				'Matching looks at each word in the list, i.e. Tunisian Arabic would display if arabic entered',
+				'Treats the language code as a word or words for the sake of matching',
 				[ [ 'en', 'English' ], [ 'aeb-latn', 'Tunisian Arabic (Latin script)' ], [ 'de', 'German' ] ],
 				'aeb',
 				[ 'aeb-latn' ],
