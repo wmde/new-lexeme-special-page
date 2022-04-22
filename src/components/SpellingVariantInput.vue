@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { escapeRegExp } from 'lodash';
+import escapeRegExp from 'lodash/escapeRegExp';
 import WikitLookup from './WikitLookup';
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
 import { useLanguageCodesProvider } from '@/plugins/LanguageCodesProviderPlugin/LanguageCodesProvider';
