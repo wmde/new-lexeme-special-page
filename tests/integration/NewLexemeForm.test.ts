@@ -35,7 +35,7 @@ describe( 'NewLexemeForm', () => {
 					[ MessagesKey as symbol ]: new Messages( new DevMessagesRepository() ),
 					[ ItemSearchKey as symbol ]: new DevItemSearcher(),
 					[ LanguageCodesProviderKey as symbol ]: {
-						getLanguageCodes: () => [ 'en', 'en-ca', 'de' ],
+						getLanguages: () => new Map( [ [ 'en', 'English' ] ] ),
 					},
 					[ WikiRouterKey as symbol ]: null,
 				},

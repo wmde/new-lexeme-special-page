@@ -20,8 +20,8 @@ describe( 'LanguageCodesProvider', () => {
 		} );
 	} );
 
-	describe( 'getLanguageCodes', () => {
-		it( 'returns list of language codes and names', () => {
+	describe( 'getLanguages', () => {
+		it( 'returns map of language codes and names', () => {
 			const listOfValidCodes = new Map( [ [ 'en', 'English' ], [ 'en-gb', 'British English' ], [ 'de', 'German' ] ] );
 			const sut = new ListLanguageCodesProvider( listOfValidCodes );
 
