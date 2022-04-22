@@ -2,6 +2,8 @@ import { mount } from '@vue/test-utils';
 import SpellingVariantInput from '@/components/SpellingVariantInput.vue';
 import { Lookup as WikitLookup } from '@wmde/wikit-vue-components';
 import { LanguageCodesProviderKey } from '@/plugins/LanguageCodesProviderPlugin/LanguageCodesProvider';
+import DevMessagesRepository from '@/plugins/MessagesPlugin/DevMessagesRepository';
+import Messages, { MessagesKey } from '@/plugins/MessagesPlugin/Messages';
 
 const exampleWikibaseLexemeTermLanguagesConfig = [ [ 'en', 'English' ], [ 'en-gb', 'British English' ], [ 'de', 'German' ] ];
 
@@ -15,6 +17,7 @@ function createLookup( config: Record<string, unknown> = {} ) {
 				[ LanguageCodesProviderKey as symbol ]: {
 					getLanguageCodes: () => exampleWikibaseLexemeTermLanguagesConfig,
 				},
+				[ MessagesKey as symbol ]: new Messages( new DevMessagesRepository() ),
 			},
 		},
 		...config,
@@ -99,6 +102,7 @@ describe( 'SpellingVariantInput', () => {
 						[ LanguageCodesProviderKey as symbol ]: {
 							getLanguageCodes: () => totalOptions,
 						},
+						[ MessagesKey as symbol ]: new Messages( new DevMessagesRepository() ),
 					},
 				},
 			} );

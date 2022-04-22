@@ -16,6 +16,7 @@ const messages: Record<MessageKeys, string> = {
 	'wikibaselexeme-newlexeme-error-lemma-is-too-long': 'FIXME (copy is missing!)',
 	'wikibaselexeme-newlexeme-invalid-language-code-warning': 'This Item has an unrecognized language code. Please select one below.',
 	'wikibaselexeme-newlexeme-no-results': 'FIXME (copy is missing!)',
+	'wikibase-lexeme-lemma-language-option': '$1 ($2)',
 	'wikibase-shortcopyrightwarning': 'By clicking "$1", you agree to the [[$2|terms of use]], and you irrevocably agree to release your contribution under the [$3 $4].',
 	copyrightpage: '{{ns:project}}:Copyrights',
 };

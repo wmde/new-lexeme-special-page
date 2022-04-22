@@ -18,10 +18,11 @@ interface WikitMenuItem {
 const props = defineProps<Props>();
 
 const languageCodesProvider = useLanguageCodesProvider();
+const messages = useMessages();
 
 const wbLexemeTermLanguages = languageCodesProvider.getLanguageCodes().map(
 	( [ code, name ]: [ string, string ] ) => ( {
-		label: `${name} (${code})`,
+		label: messages.getUnescaped( 'wikibase-lexeme-lemma-language-option', name, code ),
 		value: code,
 		description: '',
 	} ),
@@ -63,7 +64,6 @@ const onOptionSelected = ( value: unknown ) => {
 	emit( 'update:modelValue', selectedValue );
 };
 
-const messages = useMessages();
 </script>
 
 <script lang="ts">

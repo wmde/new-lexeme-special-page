@@ -11,6 +11,8 @@ import { WikiRouterKey } from '@/plugins/WikiRouterPlugin/WikiRouter';
 import unusedLangCodeRetriever from '../mocks/unusedLangCodeRetriever';
 import unusedLanguageCodesProvider from '../mocks/unusedLanguageCodesProvider';
 import { nextTick } from 'vue';
+import Messages, { MessagesKey } from '@/plugins/MessagesPlugin/Messages';
+import DevMessagesRepository from '@/plugins/MessagesPlugin/DevMessagesRepository';
 
 jest.mock( 'lodash/debounce', () => jest.fn( ( fn ) => fn ) );
 
@@ -30,6 +32,7 @@ describe( 'NewLexemeForm', () => {
 				plugins: [ store ],
 				provide: {
 					[ ConfigKey as symbol ]: {},
+					[ MessagesKey as symbol ]: new Messages( new DevMessagesRepository() ),
 					[ ItemSearchKey as symbol ]: new DevItemSearcher(),
 					[ LanguageCodesProviderKey as symbol ]: {
 						getLanguageCodes: () => [ 'en', 'en-ca', 'de' ],
@@ -151,6 +154,7 @@ describe( 'NewLexemeForm', () => {
 					[ ItemSearchKey as symbol ]: new DevItemSearcher(),
 					[ LanguageCodesProviderKey as symbol ]: languageCodesProvider,
 					[ WikiRouterKey as symbol ]: null,
+					[ MessagesKey as symbol ]: new Messages( new DevMessagesRepository() ),
 				},
 			},
 		} );
@@ -233,6 +237,7 @@ describe( 'NewLexemeForm', () => {
 						getLanguageCodes: () => [ [ 'en-gb', 'British English' ] ],
 					},
 					[ WikiRouterKey as symbol ]: { goToTitle },
+					[ MessagesKey as symbol ]: new Messages( new DevMessagesRepository() ),
 				},
 			},
 		} );
