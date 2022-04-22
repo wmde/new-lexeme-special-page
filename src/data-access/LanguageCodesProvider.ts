@@ -3,7 +3,7 @@ export default interface LanguageCodesProvider {
 	isValid( languageCode: string ): boolean;
 }
 
-export class ListLanguageCodesProvider implements LanguageCodesProvider {
+export class MapLanguageCodesProvider implements LanguageCodesProvider {
 
 	private readonly validLanguages: Map<string, string>;
 

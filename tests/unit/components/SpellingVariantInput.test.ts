@@ -4,7 +4,7 @@ import { Lookup as WikitLookup } from '@wmde/wikit-vue-components';
 import { LanguageCodesProviderKey } from '@/plugins/LanguageCodesProviderPlugin/LanguageCodesProvider';
 import DevMessagesRepository from '@/plugins/MessagesPlugin/DevMessagesRepository';
 import Messages, { MessagesKey } from '@/plugins/MessagesPlugin/Messages';
-import { ListLanguageCodesProvider } from '@/data-access/LanguageCodesProvider';
+import { MapLanguageCodesProvider } from '@/data-access/LanguageCodesProvider';
 
 const termLanguagesConfig = new Map( [ [ 'en', 'English' ], [ 'en-gb', 'British English' ], [ 'de', 'German' ] ] );
 
@@ -16,7 +16,7 @@ function createLookup( config: Record<string, unknown> = {} ) {
 		global: {
 			provide: {
 				[ LanguageCodesProviderKey as symbol ]:
-					new ListLanguageCodesProvider( termLanguagesConfig ),
+					new MapLanguageCodesProvider( termLanguagesConfig ),
 				[ MessagesKey as symbol ]: new Messages( new DevMessagesRepository() ),
 			},
 		},
@@ -99,7 +99,7 @@ describe( 'SpellingVariantInput', () => {
 				global: {
 					provide: {
 						[ LanguageCodesProviderKey as symbol ]:
-							new ListLanguageCodesProvider( termLanguages ),
+							new MapLanguageCodesProvider( termLanguages ),
 						[ MessagesKey as symbol ]: new Messages( new DevMessagesRepository() ),
 					},
 				},

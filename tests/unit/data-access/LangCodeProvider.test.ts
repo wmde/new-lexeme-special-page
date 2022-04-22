@@ -1,10 +1,10 @@
-import { ListLanguageCodesProvider } from '@/data-access/LanguageCodesProvider';
+import { MapLanguageCodesProvider } from '@/data-access/LanguageCodesProvider';
 
-describe( 'LanguageCodesProvider', () => {
+describe( 'MapLanguageCodesProvider', () => {
 	describe( 'isValidLangCode', () => {
 		it( 'returns "true" for a valid language code', () => {
 			const listOfValidCodes = new Map( [ [ 'en', 'English' ], [ 'en-gb', 'British English' ], [ 'de', 'German' ] ] );
-			const sut = new ListLanguageCodesProvider( listOfValidCodes );
+			const sut = new MapLanguageCodesProvider( listOfValidCodes );
 
 			const actual = sut.isValid( 'en-gb' );
 
@@ -12,7 +12,7 @@ describe( 'LanguageCodesProvider', () => {
 		} );
 		it( 'returns "false" for an invalid language code', () => {
 			const listOfValidCodes = new Map( [ [ 'en', 'English' ], [ 'en-gb', 'British English' ], [ 'de', 'German' ] ] );
-			const sut = new ListLanguageCodesProvider( listOfValidCodes );
+			const sut = new MapLanguageCodesProvider( listOfValidCodes );
 
 			const actual = sut.isValid( 'raccoon' );
 
@@ -23,7 +23,7 @@ describe( 'LanguageCodesProvider', () => {
 	describe( 'getLanguages', () => {
 		it( 'returns map of language codes and names', () => {
 			const listOfValidCodes = new Map( [ [ 'en', 'English' ], [ 'en-gb', 'British English' ], [ 'de', 'German' ] ] );
-			const sut = new ListLanguageCodesProvider( listOfValidCodes );
+			const sut = new MapLanguageCodesProvider( listOfValidCodes );
 
 			const actual = sut.getLanguages();
 
