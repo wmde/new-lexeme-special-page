@@ -1,13 +1,28 @@
 <script setup lang="ts">
 import NewLexemeForm from '@/components/NewLexemeForm.vue';
+import { useMessages } from '@/plugins/MessagesPlugin/Messages';
+import { useSearchLinker } from '@/plugins/SearchLinkerPlugin/SearchLinker';
 import '@wmde/wikit-vue-components/dist/wikit-vue-components.css';
+import { computed } from 'vue';
+import { useStore } from 'vuex';
+
+const messages = useMessages();
+const searchLinker = useSearchLinker();
+const store = useStore();
+const searchUrl = computed( () => {
+	const searchTerm = store.state.lemma;
+	return searchLinker.getSearchUrlForLexeme( searchTerm );
+} );
+const searchMessage = computed( () => messages.get(
+	'wikibaselexeme-newlexeme-search-existing',
+	searchUrl.value,
+) );
 </script>
 
 <template>
 	<teleport to="#wbl-snl-intro-text-wrapper">
-		<p class="wbl-snl-intro-text">
-			To Be Done
-		</p>
+		<!-- eslint-disable-next-line vue/no-v-html -->
+		<p class="wbl-snl-intro-text" v-html="searchMessage" />
 	</teleport>
 	<div class="wbl-snl-app">
 		<new-lexeme-form />

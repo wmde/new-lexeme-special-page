@@ -37,6 +37,12 @@
 				langCodeRetriever: new DevLangCodeRetriever(),
 				messagesRepository: new DevMessagesRepository(),
 				lexemeCreator: new DevLexemeCreator(),
+				searchLinker: {
+					getSearchUrlForLexeme( searchTerm ) {
+						const search = encodeURIComponent( searchTerm );
+						return `https://www.wikidata.org/w/index.php?search=${search}&ns146=1`;
+					},
+				},
 				wikiRouter: { goToTitle( title ) { alert( `Navigating to: ${title}` ); } },
 			};
 
