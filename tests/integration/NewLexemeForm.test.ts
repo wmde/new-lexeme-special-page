@@ -1,5 +1,5 @@
 import LanguageCodesProvider from '@/data-access/LanguageCodesProvider';
-import { ConfigKey } from '@/plugins/ConfigPlugin/Config';
+import { Config, ConfigKey } from '@/plugins/ConfigPlugin/Config';
 import { LanguageCodesProviderKey } from '@/plugins/LanguageCodesProviderPlugin/LanguageCodesProvider';
 import { mount } from '@vue/test-utils';
 import NewLexemeForm from '@/components/NewLexemeForm.vue';
@@ -26,12 +26,18 @@ describe( 'NewLexemeForm', () => {
 		} );
 	} );
 
+	const emptyConfig: Config = {
+		licenseUrl: '',
+		licenseName: '',
+		wikibaseLexemeTermLanguages: new Map(),
+	};
+
 	function mountForm() {
 		return mount( NewLexemeForm, {
 			global: {
 				plugins: [ store ],
 				provide: {
-					[ ConfigKey as symbol ]: {},
+					[ ConfigKey as symbol ]: emptyConfig,
 					[ MessagesKey as symbol ]: new Messages( new DevMessagesRepository() ),
 					[ ItemSearchKey as symbol ]: new DevItemSearcher(),
 					[ LanguageCodesProviderKey as symbol ]: unusedLanguageCodesProvider,
@@ -64,7 +70,7 @@ describe( 'NewLexemeForm', () => {
 			global: {
 				plugins: [ testStore ],
 				provide: {
-					[ ConfigKey as symbol ]: {},
+					[ ConfigKey as symbol ]: emptyConfig,
 					[ ItemSearchKey as symbol ]: new DevItemSearcher(),
 					[ LanguageCodesProviderKey as symbol ]: {},
 					[ WikiRouterKey as symbol ]: null,
@@ -104,7 +110,7 @@ describe( 'NewLexemeForm', () => {
 			global: {
 				plugins: [ testStore ],
 				provide: {
-					[ ConfigKey as symbol ]: {},
+					[ ConfigKey as symbol ]: emptyConfig,
 					[ ItemSearchKey as symbol ]: new DevItemSearcher(),
 					[ LanguageCodesProviderKey as symbol ]: languageCodesProvider,
 					[ WikiRouterKey as symbol ]: null,
@@ -148,7 +154,7 @@ describe( 'NewLexemeForm', () => {
 			global: {
 				plugins: [ testStore ],
 				provide: {
-					[ ConfigKey as symbol ]: {},
+					[ ConfigKey as symbol ]: emptyConfig,
 					[ ItemSearchKey as symbol ]: new DevItemSearcher(),
 					[ LanguageCodesProviderKey as symbol ]: languageCodesProvider,
 					[ WikiRouterKey as symbol ]: null,
@@ -189,7 +195,7 @@ describe( 'NewLexemeForm', () => {
 			global: {
 				plugins: [ testStore ],
 				provide: {
-					[ ConfigKey as symbol ]: {},
+					[ ConfigKey as symbol ]: emptyConfig,
 					[ ItemSearchKey as symbol ]: new DevItemSearcher(),
 					[ LanguageCodesProviderKey as symbol ]: {},
 					[ WikiRouterKey as symbol ]: { goToTitle },
@@ -229,7 +235,7 @@ describe( 'NewLexemeForm', () => {
 			global: {
 				plugins: [ testStore ],
 				provide: {
-					[ ConfigKey as symbol ]: {},
+					[ ConfigKey as symbol ]: emptyConfig,
 					[ ItemSearchKey as symbol ]: new DevItemSearcher(),
 					[ LanguageCodesProviderKey as symbol ]: {
 						getLanguages: () => new Map( [ [ 'en-gb', 'British English' ] ] ),
