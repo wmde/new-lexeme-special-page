@@ -17,7 +17,7 @@ const messages: Record<MessageKeys, string> = {
 	'wikibaselexeme-newlexeme-invalid-language-code-warning': 'This Item has an unrecognized language code. Please select one below.',
 	'wikibaselexeme-newlexeme-no-results': 'FIXME (copy is missing!)',
 	'wikibase-lexeme-lemma-language-option': '$1 ($2)',
-	'wikibase-shortcopyrightwarning': 'By clicking "$1", you agree to the [[$2|terms of use]], and you irrevocably agree to release your contribution under the [$3 $4].',
+	'wikibase-shortcopyrightwarning': 'By clicking "$1", you agree to the <a href="./$2">terms of use</a>, and you irrevocably agree to release your contribution under the <a href="$3">$4</a>.',
 	copyrightpage: 'Project:Copyrights',
 };
 
@@ -25,7 +25,7 @@ const messages: Record<MessageKeys, string> = {
 export default class DevMessagesRepository implements MessagesRepository {
 
 	public get( key: MessageKeys, ...params: string[] ): string {
-		return messages[ key ] !== undefined ? this.escape( this.replace( messages[ key ], ...params ) ) : `⧼${key}⧽`;
+		return messages[ key ] !== undefined ? this.replace( messages[ key ], ...params.map( this.escape ) ) : `⧼${key}⧽`;
 	}
 	public getText( key: MessageKeys, ...params: string[] ): string {
 		return messages[ key ] !== undefined ? this.replace( messages[ key ], ...params ) : `⧼${key}⧽`;
