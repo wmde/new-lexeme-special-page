@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import NewLexemeForm from '@/components/NewLexemeForm.vue';
+import SearchExisting from '@/components/SearchExisting.vue';
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
 import { useSearchLinker } from '@/plugins/SearchLinkerPlugin/SearchLinker';
 import '@wmde/wikit-vue-components/dist/wikit-vue-components.css';
@@ -21,8 +22,7 @@ const searchMessage = computed( () => messages.get(
 
 <template>
 	<teleport to="#wbl-snl-intro-text-wrapper">
-		<!-- eslint-disable-next-line vue/no-v-html -->
-		<p class="wbl-snl-intro-text" v-html="searchMessage" />
+		<search-existing :search-message="searchMessage" />
 	</teleport>
 	<div class="wbl-snl-app">
 		<new-lexeme-form />

@@ -1,5 +1,6 @@
 import { mount } from '@vue/test-utils';
 import App from '@/App.vue';
+import SearchExisting from '@/components/SearchExisting.vue';
 import initStore from '@/store';
 import unusedLexemeCreator from '../mocks/unusedLexemeCreator';
 import unusedLangCodeRetriever from '../mocks/unusedLangCodeRetriever';
@@ -44,5 +45,6 @@ describe( 'App.vue', () => {
 		await lemmaInput.setValue( 'foo' );
 
 		expect( store.state.lemma ).toBe( 'foo' );
+		expect( wrapper.getComponent( SearchExisting ).html() ).toBe( '' );
 	} );
 } );
