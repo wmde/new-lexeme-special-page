@@ -20,14 +20,14 @@ const searchMessage = computed( () => messages.get(
 
 <template>
 	<!-- eslint-disable-next-line vue/no-v-html -->
-	<p class="wbl-snl-intro-text" v-html="searchMessage" />
+	<p class="wbl-snl-search-existing" v-html="searchMessage" />
 </template>
 
 <style lang="scss" scoped>
 @import "@wmde/wikit-tokens/variables";
 @import "@wmde/wikit-vue-components/src/styles/mixins/Typography";
 
-.wbl-snl-intro-text {
+.wbl-snl-search-existing {
 	@include body;
 }
 </style>
