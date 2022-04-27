@@ -7,6 +7,7 @@ type MessageKeys
  | 'wikibaselexeme-newlexeme-lemma-language-placeholder'
  | 'wikibaselexeme-newlexeme-lexicalcategory'
  | 'wikibaselexeme-newlexeme-lexicalcategory-placeholder'
+ | 'wikibaselexeme-newlexeme-search-existing'
  | 'wikibaselexeme-newlexeme-submit'
  | 'wikibaselexeme-newlexeme-submit-error'
  | 'wikibaselexeme-newlexeme-error-no-lemma'

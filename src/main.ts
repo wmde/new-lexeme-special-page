@@ -2,6 +2,7 @@ import ItemSearcher from '@/data-access/ItemSearcher';
 import LexemeCreator from '@/data-access/LexemeCreator';
 import { ItemSearchKey } from '@/plugins/ItemSearchPlugin/ItemSearch';
 import { Config, ConfigKey } from '@/plugins/ConfigPlugin/Config';
+import SearchLinker, { SearchLinkerKey } from '@/plugins/SearchLinkerPlugin/SearchLinker';
 import {
 	ComponentPublicInstance,
 	createApp,
@@ -25,6 +26,7 @@ export interface Services {
 	messagesRepository?: MessagesRepository;
 	langCodeRetriever: LangCodeRetriever;
 	lexemeCreator: LexemeCreator;
+	searchLinker: SearchLinker;
 	wikiRouter: WikiRouter;
 }
 
@@ -42,6 +44,7 @@ export default function createAndMount(
 	app.provide( ConfigKey, config );
 	app.provide( MessagesKey, new Messages( services.messagesRepository ) );
 	app.provide( ItemSearchKey, services.itemSearcher );
+	app.provide( SearchLinkerKey, services.searchLinker );
 	app.provide( WikiRouterKey, services.wikiRouter );
 	app.provide(
 		LanguageCodesProviderKey,

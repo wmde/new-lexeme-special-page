@@ -24,6 +24,9 @@ describe( 'createAndMount', () => {
 		}, {
 			itemSearcher: unusedItemSearcher,
 			lexemeCreator: unusedLexemeCreator,
+			searchLinker: {
+				getSearchUrlForLexeme: jest.fn().mockReturnValue( 'https://example.com' ),
+			},
 			wikiRouter: unusedWikiRouter,
 			langCodeRetriever: unusedLangCodeRetriever,
 		} );

@@ -1,4 +1,5 @@
 import MwApiItemSearcher from '@/data-access/MwApiItemSearcher';
+import MediaWikiSearchLinker from '@/plugins/SearchLinkerPlugin/MediaWikiSearchLinker';
 import createAndMount, {
 	CreateAndMountConfig,
 	Services,
@@ -28,6 +29,10 @@ export default function init( config: InitConfig, mw: MediaWiki ): ComponentPubl
 	const langCodeRetriever = new MwApiLangCodeRetriever( api, mw.config.get( 'LexemeLanguageCodePropertyId' ) as string );
 	const messagesRepository = new MwMessagesRepository( mw.message );
 	const lexemeCreator = new MwApiLexemeCreator( api, config.tags );
+	const searchLinker = new MediaWikiSearchLinker(
+		mw.util.getUrl,
+		( mw.config.get( 'wgNamespaceIds' ) as Record<string, number> ).lexeme,
+	);
 	const wikiRouter = new MediaWikiRouter( mw.util.getUrl );
 
 	const services: Services = {
@@ -35,6 +40,7 @@ export default function init( config: InitConfig, mw: MediaWiki ): ComponentPubl
 		langCodeRetriever,
 		messagesRepository,
 		lexemeCreator,
+		searchLinker,
 		wikiRouter,
 	};
 

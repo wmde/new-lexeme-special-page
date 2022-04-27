@@ -10,6 +10,7 @@ const messages: Record<MessageKeys, string> = {
 	'wikibaselexeme-newlexeme-lexicalcategory-placeholder': 'The Lexeme\'s category, e.g. \'numeral\'',
 	'wikibaselexeme-newlexeme-lemma-language': 'Spelling variant of the Lemma',
 	'wikibaselexeme-newlexeme-lemma-language-placeholder': 'Language code for the Lemma\'s spelling variant, e.g., \'en\'',
+	'wikibaselexeme-newlexeme-search-existing': 'You can check whether a Lexeme already exists by using <a href="$1">the search</a>. You can also learn more about Lexemes in the help box below.',
 	'wikibaselexeme-newlexeme-submit': 'Create Lexeme',
 	'wikibaselexeme-newlexeme-submit-error': 'The server encountered a temporary error and could not complete your request. Please try again.',
 	'wikibaselexeme-newlexeme-error-no-lemma': 'Lemma field is empty, please make an entry.',
