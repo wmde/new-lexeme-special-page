@@ -8,7 +8,7 @@ Please report bugs on [phabricator](https://phabricator.wikimedia.org/project/vi
 
 _**Prerequisites: This repository requires node v14+ and npm v7+**_
 
-### One-time setup
+### Initial setup
 
 1. Clone this repository
 2. Install dependecies with `npm i`
