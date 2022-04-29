@@ -12,7 +12,6 @@
 		"fix:prettier": "prettier --write '**/*.{json,yml,yaml}'",
 		"fix:eslint": "eslint --fix --ext .js,.ts,.vue --ignore-path .gitignore .",
 		"fix:stylelint": "stylelint --fix '**/*.{css,scss,vue}'",
-		"deployCommit": "npm run buildPreview && npx -p netlify-cli netlify deploy --dir='./dist'",
 		"lint": "run-s lint:*",
 		"lint:prettier": "prettier --check '**/*.{json,yml,yaml}'",
 		"lint:eslint": "eslint --ext .js,.ts,.vue --ignore-path .gitignore .",
