@@ -6,7 +6,7 @@ Please report bugs on [phabricator](https://phabricator.wikimedia.org/project/vi
 
 ## Local Development
 
-_**Prerequisites: This repository requires node v16 and up**_
+_**Prerequisites: This repository requires node v14+ and npm v7+**_
 
 1. Clone this repository
 2. Install dependecies with `npm i`
