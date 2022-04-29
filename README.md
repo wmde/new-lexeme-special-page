@@ -18,13 +18,27 @@ This will also install some Git pre-commit hooks that check any modified files a
 
 ### Regular development
 
-Run `npm t` to run all tests and linters.
-Other npm scripts are also available to run a subset of these,
-e.g. `npm run test-only` to run only the tests without the linters,
-or `npm run test:unit` to run only the unit tests.
-Use `npm run fix` to have the linters fix any fixable errors.
+To run all tests and linters:
+```sh
+npm t
+```
 
-Run `npm run dev` to run the dev entry point, then visit it at <http://localhost:3000/>.
+Several npm scripts are available to only run a subset of these, such as:
+```sh
+npm run test-only # only tests without linters
+npm run test:unit # only unit tests
+```
+
+Many linter errors can be fixed automatically:
+```sh
+npm run fix
+```
+
+To run the development entry point:
+```sh
+npm run dev
+```
+You can visit the dev entry point at <http://localhost:3000/>.
 Changes to the source files will be applied automatically,
 so you can start this once and then leave it running in the background.
 
