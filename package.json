@@ -41,7 +41,7 @@
 	},
 	"homepage": "https://github.com/wmde/new-lexeme-special-page#readme",
 	"engines": {
-		"node": ">=16"
+		"node": ">=14"
 	},
 	"dependencies": {
 		"@wmde/wikibase-datamodel-types": "^0.2.0",
