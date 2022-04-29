@@ -44,16 +44,3 @@ so you can start this once and then leave it running in the background.
 
 For instructions to see the form in the context of the special page,
 see the [WikibaseLexeme readme](https://gerrit.wikimedia.org/g/mediawiki/extensions/WikibaseLexeme/+/master/README.md).
-
-## Deploy Local Commits
-
-### The first time you run a deploy
-
-To be able to run the netlify commands locally you will need to run `npx netlify login` once after `npm install` to authenticate and obtain a token.
-
-### Every time when doing a deploy
-
-To create a deploy of the current commit, run `npm run deployCommit`. This will create a build in the `./dist` folder and create a manual deployment to a unique address that will be generated at the time of deploy. 
-
-
-[Development on this project powered by Netlify](https://www.netlify.com/)
