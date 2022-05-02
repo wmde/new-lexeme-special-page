@@ -5,6 +5,7 @@ import initStore from '@/store';
 import unusedLexemeCreator from '../mocks/unusedLexemeCreator';
 import unusedLangCodeRetriever from '../mocks/unusedLangCodeRetriever';
 import unusedLanguageCodesProvider from '../mocks/unusedLanguageCodesProvider';
+import unusedTracker from '../mocks/unusedTracker';
 import { SearchLinkerKey } from '@/plugins/SearchLinkerPlugin/SearchLinker';
 import { Config, ConfigKey } from '@/plugins/ConfigPlugin/Config';
 import { WikiRouterKey } from '@/plugins/WikiRouterPlugin/WikiRouter';
@@ -33,6 +34,7 @@ describe( 'App.vue', () => {
 			lexemeCreator: unusedLexemeCreator,
 			langCodeRetriever: unusedLangCodeRetriever,
 			languageCodesProvider: unusedLanguageCodesProvider,
+			tracker: unusedTracker,
 		} );
 		const emptyConfig: Config = {
 			licenseUrl: '',

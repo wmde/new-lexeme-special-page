@@ -3,6 +3,7 @@ import LexemeCreator from '@/data-access/LexemeCreator';
 import { ItemSearchKey } from '@/plugins/ItemSearchPlugin/ItemSearch';
 import { Config, ConfigKey } from '@/plugins/ConfigPlugin/Config';
 import SearchLinker, { SearchLinkerKey } from '@/plugins/SearchLinkerPlugin/SearchLinker';
+import Tracker from '@/data-access/tracking/Tracker';
 import {
 	ComponentPublicInstance,
 	createApp,
@@ -27,6 +28,7 @@ export interface Services {
 	langCodeRetriever: LangCodeRetriever;
 	lexemeCreator: LexemeCreator;
 	searchLinker: SearchLinker;
+	tracker: Tracker;
 	wikiRouter: WikiRouter;
 }
 

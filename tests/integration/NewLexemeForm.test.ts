@@ -10,6 +10,7 @@ import DevItemSearcher from '@/data-access/DevItemSearcher';
 import { WikiRouterKey } from '@/plugins/WikiRouterPlugin/WikiRouter';
 import unusedLangCodeRetriever from '../mocks/unusedLangCodeRetriever';
 import unusedLanguageCodesProvider from '../mocks/unusedLanguageCodesProvider';
+import unusedTracker from '../mocks/unusedTracker';
 import { nextTick } from 'vue';
 import Messages, { MessagesKey } from '@/plugins/MessagesPlugin/Messages';
 import DevMessagesRepository from '@/plugins/MessagesPlugin/DevMessagesRepository';
@@ -23,6 +24,7 @@ describe( 'NewLexemeForm', () => {
 			lexemeCreator: unusedLexemeCreator,
 			langCodeRetriever: unusedLangCodeRetriever,
 			languageCodesProvider: unusedLanguageCodesProvider,
+			tracker: unusedTracker,
 		} );
 	} );
 
@@ -64,6 +66,7 @@ describe( 'NewLexemeForm', () => {
 				isValid: jest.fn().mockReturnValue( true ),
 				getLanguages: jest.fn(),
 			},
+			tracker: unusedTracker,
 		} );
 
 		const wrapper = mount( NewLexemeForm, {
@@ -104,6 +107,7 @@ describe( 'NewLexemeForm', () => {
 			lexemeCreator: unusedLexemeCreator,
 			langCodeRetriever: { getLanguageCodeFromItem: jest.fn().mockResolvedValue( 'invalid' ) },
 			languageCodesProvider: languageCodesProvider,
+			tracker: unusedTracker,
 		} );
 
 		const wrapper = mount( NewLexemeForm, {
@@ -148,6 +152,7 @@ describe( 'NewLexemeForm', () => {
 			lexemeCreator: unusedLexemeCreator,
 			langCodeRetriever: { getLanguageCodeFromItem: jest.fn().mockResolvedValue( null ) },
 			languageCodesProvider: languageCodesProvider,
+			tracker: unusedTracker,
 		} );
 
 		const wrapper = mount( NewLexemeForm, {
@@ -190,6 +195,7 @@ describe( 'NewLexemeForm', () => {
 				isValid: jest.fn().mockReturnValue( true ),
 				getLanguages: jest.fn(),
 			},
+			tracker: { increment: jest.fn() },
 		} );
 		const wrapper = mount( NewLexemeForm, {
 			global: {
@@ -230,6 +236,7 @@ describe( 'NewLexemeForm', () => {
 			lexemeCreator: { createLexeme },
 			langCodeRetriever: { getLanguageCodeFromItem: jest.fn().mockResolvedValue( null ) },
 			languageCodesProvider: unusedLanguageCodesProvider,
+			tracker: { increment: jest.fn() },
 		} );
 		const wrapper = mount( NewLexemeForm, {
 			global: {

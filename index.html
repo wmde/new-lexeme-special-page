@@ -43,6 +43,11 @@
 						return `https://www.wikidata.org/w/index.php?search=${search}&ns146=1`;
 					},
 				},
+				tracker: {
+					increment( name ) {
+						console.log( `TRACK: increment ${name}` );
+					},
+				},
 				wikiRouter: { goToTitle( title ) { alert( `Navigating to: ${title}` ); } },
 			};
 
