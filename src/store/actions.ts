@@ -14,6 +14,7 @@
 import LangCodeRetriever from '@/data-access/LangCodeRetriever';
 import LanguageCodesProvider from '@/data-access/LanguageCodesProvider';
 import LexemeCreator from '@/data-access/LexemeCreator';
+import Tracker from '@/data-access/tracking/Tracker';
 import {
 	ActionContext,
 	ActionTree,
@@ -36,6 +37,7 @@ export default function createActions(
 	lexemeCreator: LexemeCreator,
 	langCodeRetriever: LangCodeRetriever,
 	languageCodesProvider: LanguageCodesProvider,
+	tracker: Tracker,
 ): RootActions {
 	return {
 		async [ CREATE_LEXEME ]( { state, commit }: RootContext ): Promise<string> {
@@ -48,6 +50,7 @@ export default function createActions(
 					state.language,
 					state.lexicalCategory,
 				);
+				tracker.increment( 'wikibase.lexeme.special.NewLexeme.js.create' );
 				return lexemeId;
 			} catch ( errors ) {
 				commit( ADD_ERRORS, errors );

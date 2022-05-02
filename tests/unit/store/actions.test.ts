@@ -1,3 +1,4 @@
+import Tracker from '@/data-access/tracking/Tracker';
 import createActions, { CREATE_LEXEME, HANDLE_LANGUAGE_CHANGE } from '@/store/actions';
 import LexemeCreator from '@/data-access/LexemeCreator';
 import {
@@ -10,6 +11,7 @@ import unusedLangCodeRetriever from '../../mocks/unusedLangCodeRetriever';
 import unusedLanguageCodesProvider from '../../mocks/unusedLanguageCodesProvider';
 import unusedLexemeCreator from '../../mocks/unusedLexemeCreator';
 import mutations from '@/store/mutations';
+import unusedTracker from '../../mocks/unusedTracker';
 
 describe( CREATE_LEXEME, () => {
 
@@ -17,11 +19,15 @@ describe( CREATE_LEXEME, () => {
 		const lexemeCreator: LexemeCreator = {
 			createLexeme: jest.fn().mockResolvedValue( 'L123' ),
 		};
+		const tracker: Tracker = {
+			increment: jest.fn(),
+		};
 
 		const actions = createActions(
 			lexemeCreator,
 			unusedLangCodeRetriever,
 			unusedLanguageCodesProvider,
+			tracker,
 		);
 		const store = createStore( {
 			state(): RootState {
@@ -48,6 +54,9 @@ describe( CREATE_LEXEME, () => {
 			'Q123',
 			'Q234',
 		);
+		expect( tracker.increment ).toHaveBeenCalledWith(
+			'wikibase.lexeme.special.NewLexeme.js.create',
+		);
 	} );
 
 	it( 'calls lexemeCreator with the language variant selected by the user', async () => {
@@ -59,6 +68,7 @@ describe( CREATE_LEXEME, () => {
 			lexemeCreator,
 			unusedLangCodeRetriever,
 			unusedLanguageCodesProvider,
+			{ increment: jest.fn() },
 		);
 		const store = createStore( {
 			state(): RootState {
@@ -96,8 +106,11 @@ describe( CREATE_LEXEME, () => {
 			createLexeme: jest.fn().mockRejectedValue( errors ),
 		};
 
-		const actions = createActions( lexemeCreator, unusedLangCodeRetriever,
+		const actions = createActions(
+			lexemeCreator,
+			unusedLangCodeRetriever,
 			unusedLanguageCodesProvider,
+			unusedTracker,
 		);
 		const mockMutations = {
 			[ CLEAR_ERRORS ]: jest.fn(),
@@ -135,6 +148,7 @@ describe( 'HANDLE_LANGUAGE_CHANGE', () => {
 				getLanguageCodeFromItem: jest.fn().mockResolvedValue( null ),
 			},
 			unusedLanguageCodesProvider,
+			unusedTracker,
 		);
 
 		const store = createStore( {
@@ -168,6 +182,7 @@ describe( 'HANDLE_LANGUAGE_CHANGE', () => {
 				getLanguageCodeFromItem: retrieveMethod,
 			},
 			unusedLanguageCodesProvider,
+			unusedTracker,
 		);
 
 		const store = createStore( {
@@ -200,6 +215,7 @@ describe( 'HANDLE_LANGUAGE_CHANGE', () => {
 				isValid: isValidMock,
 				getLanguages: jest.fn(),
 			},
+			unusedTracker,
 		);
 
 		const store = createStore( {
@@ -235,6 +251,7 @@ describe( 'HANDLE_LANGUAGE_CHANGE', () => {
 				isValid: isValidMock,
 				getLanguages: jest.fn(),
 			},
+			unusedTracker,
 		);
 
 		const store = createStore( {
@@ -273,6 +290,7 @@ describe( 'HANDLE_LANGUAGE_CHANGE', () => {
 				isValid: isValidMock,
 				getLanguages: jest.fn(),
 			},
+			unusedTracker,
 		);
 
 		const store = createStore( {

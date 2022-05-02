@@ -1,4 +1,5 @@
 import createAndMount from '@/main';
+import unusedTracker from '../mocks/unusedTracker';
 import unusedWikiRouter from '../mocks/unusedWikiRouter';
 import unusedItemSearcher from '../mocks/unusedItemSearcher';
 import unusedLexemeCreator from '../mocks/unusedLexemeCreator';
@@ -27,6 +28,7 @@ describe( 'createAndMount', () => {
 			searchLinker: {
 				getSearchUrlForLexeme: jest.fn().mockReturnValue( 'https://example.com' ),
 			},
+			tracker: unusedTracker,
 			wikiRouter: unusedWikiRouter,
 			langCodeRetriever: unusedLangCodeRetriever,
 		} );

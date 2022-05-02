@@ -1,5 +1,6 @@
 import MwApiItemSearcher from '@/data-access/MwApiItemSearcher';
 import MediaWikiSearchLinker from '@/plugins/SearchLinkerPlugin/MediaWikiSearchLinker';
+import MwTracker from '@/data-access/tracking/MwTracker';
 import createAndMount, {
 	CreateAndMountConfig,
 	Services,
@@ -33,6 +34,7 @@ export default function init( config: InitConfig, mw: MediaWiki ): ComponentPubl
 		mw.util.getUrl,
 		( mw.config.get( 'wgNamespaceIds' ) as Record<string, number> ).lexeme,
 	);
+	const tracker = new MwTracker( mw.track );
 	const wikiRouter = new MediaWikiRouter( mw.util.getUrl );
 
 	const services: Services = {
@@ -41,6 +43,7 @@ export default function init( config: InitConfig, mw: MediaWiki ): ComponentPubl
 		messagesRepository,
 		lexemeCreator,
 		searchLinker,
+		tracker,
 		wikiRouter,
 	};
 

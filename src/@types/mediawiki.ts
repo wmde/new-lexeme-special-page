@@ -18,12 +18,15 @@ interface MwConfig {
 	get( key: string ): unknown;
 }
 
+export type MwTrack = ( topic: `${'timing' | 'counter'}.${string}`, data?: object | number | string ) => void;
+
 export type MwUtilGetUrl = ( pageName: string|null, params?: Record<string, unknown> ) => string;
 
 export interface MediaWiki {
 	config: MwConfig;
 	message: MwMessages;
 	Api: new( defaultOptions?: MwApiOptions ) => MwApi;
+	track: MwTrack;
 	util: {
 		getUrl: MwUtilGetUrl;
 	};
