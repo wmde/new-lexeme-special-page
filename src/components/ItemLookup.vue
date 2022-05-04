@@ -51,9 +51,10 @@ const onOptionSelected = ( value: unknown ) => {
 	emit( 'update:modelValue', itemId );
 };
 
-const debouncedSearchForItems = ref(
-	null as null | DebouncedFunc<( debouncedInputValue: string ) => Promise<void>>,
-);
+const debouncedSearchForItems = debounce( async ( debouncedInputValue: string ) => {
+	const searchResults = await props.searchForItems( debouncedInputValue );
+	searchSuggestions.value = searchResults.map( searchResultToMonolingualOption );
+}, 150 );
 const searchInput = ref( '' );
 const onSearchInput = async ( inputValue: string ) => {
 	searchInput.value = inputValue;
@@ -65,13 +66,7 @@ const onSearchInput = async ( inputValue: string ) => {
 	if ( inputValue === lastSelectedOption.value?.label ) {
 		return;
 	}
-	if ( debouncedSearchForItems.value === null ) {
-		debouncedSearchForItems.value = debounce( async ( debouncedInputValue: string ) => {
-			const searchResults = await props.searchForItems( debouncedInputValue );
-			searchSuggestions.value = searchResults.map( searchResultToMonolingualOption );
-		}, 150 );
-	}
-	debouncedSearchForItems.value( inputValue );
+	debouncedSearchForItems( inputValue );
 };
 
 const onScroll = async () => {
