@@ -46,8 +46,9 @@ const onSearchInput = ( inputValue: string ) => {
 		return;
 	}
 
+	const regExp = new RegExp( `\\b${escapeRegExp( inputValue )}`, 'i' );
 	menuItems.value = wbLexemeTermLanguages.filter(
-		( lang ) => ( new RegExp( `\\b${escapeRegExp( inputValue )}`, 'i' ) ).test( lang.label ),
+		( lang ) => regExp.test( lang.label ),
 	);
 
 	searchInput.value = inputValue;
