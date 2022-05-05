@@ -42,7 +42,7 @@ export default class DevItemSearcher implements ItemSearcher {
 			origin: '*',
 		} ) ).then( ( r ) => r.json() ) as WbSearchEntitiesResponse;
 
-		return processResponse( response, 'en' );
+		return processResponse( response );
 	}
 
 }

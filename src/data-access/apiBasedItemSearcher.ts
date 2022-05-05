@@ -13,35 +13,26 @@ export const commonParams: Record<string, string> = {
 export type WbSearchEntitiesResponse = {
 	search: {
 		id: string;
-		label?: string;
-		description?: string;
+		display: {
+			label?: {
+				language: string;
+				value: string;
+			};
+			description?: {
+				language: string;
+				value: string;
+			};
+		};
 	}[];
 };
 
 export function processResponse(
 	response: WbSearchEntitiesResponse,
-	defaultLanguageCode: string,
 ): SearchedItemOption[] {
-	return response.search.map( ( result ) => {
-		const option: SearchedItemOption = {
+	return response.search.map( ( result ): SearchedItemOption => {
+		return {
 			itemId: result.id,
-			display: {},
+			display: result.display,
 		};
-
-		if ( result.label ) {
-			option.display.label = {
-				language: defaultLanguageCode, // TODO T104344
-				value: result.label,
-			};
-		}
-
-		if ( result.description ) {
-			option.display.description = {
-				language: defaultLanguageCode, // TODO T104344
-				value: result.description,
-			};
-		}
-
-		return option;
 	} );
 }
