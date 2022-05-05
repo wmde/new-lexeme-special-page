@@ -3,7 +3,6 @@ import { ref, computed } from 'vue';
 import { SearchedItemOption } from '@/data-access/ItemSearcher';
 import WikitLookup from './WikitLookup';
 import debounce from 'lodash/debounce';
-import { DebouncedFunc } from 'lodash';
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
 
 interface Props {
