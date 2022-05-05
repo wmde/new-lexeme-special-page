@@ -3,7 +3,6 @@ import { ref, computed } from 'vue';
 import { SearchedItemOption } from '@/data-access/ItemSearcher';
 import WikitLookup from './WikitLookup';
 import debounce from 'lodash/debounce';
-import { DebouncedFunc } from 'lodash';
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
 
 interface Props {
@@ -51,9 +50,10 @@ const onOptionSelected = ( value: unknown ) => {
 	emit( 'update:modelValue', itemId );
 };
 
-const debouncedSearchForItems = ref(
-	null as null | DebouncedFunc<( debouncedInputValue: string ) => Promise<void>>,
-);
+const debouncedSearchForItems = debounce( async ( debouncedInputValue: string ) => {
+	const searchResults = await props.searchForItems( debouncedInputValue );
+	searchSuggestions.value = searchResults.map( searchResultToMonolingualOption );
+}, 150 );
 const searchInput = ref( '' );
 const onSearchInput = async ( inputValue: string ) => {
 	searchInput.value = inputValue;
@@ -65,13 +65,7 @@ const onSearchInput = async ( inputValue: string ) => {
 	if ( inputValue === lastSelectedOption.value?.label ) {
 		return;
 	}
-	if ( debouncedSearchForItems.value === null ) {
-		debouncedSearchForItems.value = debounce( async ( debouncedInputValue: string ) => {
-			const searchResults = await props.searchForItems( debouncedInputValue );
-			searchSuggestions.value = searchResults.map( searchResultToMonolingualOption );
-		}, 150 );
-	}
-	debouncedSearchForItems.value( inputValue );
+	debouncedSearchForItems( inputValue );
 };
 
 const onScroll = async () => {
