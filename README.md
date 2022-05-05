@@ -18,21 +18,11 @@ This will also install some Git pre-commit hooks that check any modified files a
 
 ### Regular development
 
-To run all tests and linters:
+TL;DR: All checks are run with:
 ```sh
 npm t
 ```
-
-Several npm scripts are available to only run a subset of these, such as:
-```sh
-npm run test-only # only tests without linters
-npm run test:unit # only unit tests
-```
-
-Many linter errors can be fixed automatically:
-```sh
-npm run fix
-```
+#### Dev Entry point
 
 To run the development entry point:
 ```sh
@@ -44,3 +34,18 @@ so you can start this once and then leave it running in the background.
 
 For instructions to see the form in the context of the special page,
 see the [WikibaseLexeme readme](https://gerrit.wikimedia.org/g/mediawiki/extensions/WikibaseLexeme/+/master/README.md).
+
+#### Linting
+
+Many linter errors can be fixed automatically:
+```sh
+npm run fix
+```
+
+#### Testing
+
+Several npm scripts are available to only run a subset of these, such as:
+```sh
+npm run test-only # only tests without linters
+npm run test:unit # only unit tests
+```
