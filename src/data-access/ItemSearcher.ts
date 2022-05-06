@@ -1,5 +1,5 @@
 export interface SearchedItemOption {
-	itemId: string;
+	id: string;
 	display: {
 		label?: {
 			language: string;

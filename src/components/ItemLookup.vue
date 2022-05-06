@@ -78,9 +78,9 @@ const onScroll = async () => {
 
 function searchResultToMonolingualOption( searchResult: SearchedItemOption ): MonolingualOption {
 	return {
-		label: searchResult.display.label?.value || searchResult.itemId,
+		label: searchResult.display.label?.value || searchResult.id,
 		description: searchResult.display.description?.value || '',
-		value: searchResult.itemId,
+		value: searchResult.id,
 	};
 }
 
