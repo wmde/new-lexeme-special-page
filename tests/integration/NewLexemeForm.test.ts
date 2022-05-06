@@ -32,6 +32,7 @@ describe( 'NewLexemeForm', () => {
 		licenseUrl: '',
 		licenseName: '',
 		wikibaseLexemeTermLanguages: new Map(),
+		lexicalCategorySuggestions: [],
 	};
 
 	function mountForm() {
