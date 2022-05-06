@@ -29,7 +29,7 @@ const exampleSearchResults = [
 				value: 'bar',
 			},
 		},
-		itemId: 'Q123',
+		id: 'Q123',
 	},
 	{
 		display: {
@@ -42,7 +42,7 @@ const exampleSearchResults = [
 				value: 'Edible summer squash, typically green in colour',
 			},
 		},
-		itemId: 'Q7533',
+		id: 'Q7533',
 	},
 	{
 		display: {
@@ -55,7 +55,7 @@ const exampleSearchResults = [
 				value: 'edible green plant in the cabbage family',
 			},
 		},
-		itemId: 'Q47722',
+		id: 'Q47722',
 	},
 	{
 		display: {
@@ -64,7 +64,7 @@ const exampleSearchResults = [
 				value: 'heated beverage of chocolate',
 			},
 		},
-		itemId: 'Q13261',
+		id: 'Q13261',
 	},
 ];
 
@@ -106,7 +106,7 @@ describe( 'ItemLookup', () => {
 			await lookup.find( 'input' ).setValue( 'foo' );
 			const selectedItemId = 1;
 
-			await lookup.setProps( { value: exampleSearchResults[ selectedItemId ].itemId } );
+			await lookup.setProps( { value: exampleSearchResults[ selectedItemId ].id } );
 
 			expect( lookup.findComponent( WikitLookup ).props().value.label )
 				.toBe( exampleSearchResults[ selectedItemId ].display.label?.value );
@@ -166,13 +166,13 @@ describe( 'ItemLookup', () => {
 				{
 					label: exampleSearchResults[ selectedItemId ].display.label?.value,
 					description: exampleSearchResults[ selectedItemId ].display.description.value,
-					value: exampleSearchResults[ selectedItemId ].itemId,
+					value: exampleSearchResults[ selectedItemId ].id,
 				},
 			);
 
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-ignore
-			expect( lookup.emitted( 'update:modelValue' )[ 1 ][ 0 ] ).toBe( exampleSearchResults[ selectedItemId ].itemId );
+			expect( lookup.emitted( 'update:modelValue' )[ 1 ][ 0 ] ).toBe( exampleSearchResults[ selectedItemId ].id );
 
 		} );
 	} );
