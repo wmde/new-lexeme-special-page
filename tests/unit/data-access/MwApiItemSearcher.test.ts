@@ -41,20 +41,20 @@ describe( 'MwApiItemSearcher', () => {
 
 		expect( results ).toStrictEqual( [
 			{
-				itemId: 'Q1',
+				id: 'Q1',
 				display: {
 					label: { value: 'Q1 label', language: 'en' },
 					description: { value: 'Q1 description', language: 'en' },
 				},
 			},
 			{
-				itemId: 'Q2',
+				id: 'Q2',
 				display: {
 					label: { value: 'Q2 label', language: 'en' },
 				},
 			},
 			{
-				itemId: 'Q3',
+				id: 'Q3',
 				display: {
 					description: { value: 'Q3 description', language: 'en' },
 				},
@@ -86,7 +86,7 @@ describe( 'MwApiItemSearcher', () => {
 		const results = await itemSearcher.searchItems( 'search term', 3 );
 
 		expect( results ).toStrictEqual( [
-			{ itemId: 'Q4', display: {} },
+			{ id: 'Q4', display: {} },
 		] as SearchedItemOption[] );
 		expect( api.get ).toHaveBeenCalledTimes( 1 );
 		expect( api.get ).toHaveBeenCalledWith( {
