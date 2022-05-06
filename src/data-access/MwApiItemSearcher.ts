@@ -25,7 +25,7 @@ export default class MwApiItemSearcher implements ItemSearcher {
 			continue: offset,
 		} ) as WbSearchEntitiesResponse;
 
-		return processResponse( response, this.languageCode );
+		return processResponse( response );
 	}
 
 }
