@@ -31,7 +31,7 @@ export function processResponse(
 ): SearchedItemOption[] {
 	return response.search.map( ( result ): SearchedItemOption => {
 		return {
-			itemId: result.id,
+			id: result.id,
 			display: result.display,
 		};
 	} );

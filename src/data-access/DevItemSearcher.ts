@@ -19,7 +19,7 @@ export default class DevItemSearcher implements ItemSearcher {
 		if ( match ) {
 			const itemId = match[ 1 ];
 			return [ {
-				itemId: itemId,
+				id: itemId,
 				display: {
 					label: {
 						language: 'en',
