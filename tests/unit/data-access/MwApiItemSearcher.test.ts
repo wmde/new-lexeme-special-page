@@ -13,18 +13,24 @@ describe( 'MwApiItemSearcher', () => {
 				search: [
 					{
 						id: 'Q1',
-						label: 'Q1 label',
-						description: 'Q1 description',
+						display: {
+							label: { value: 'Q1 label', language: 'en' },
+							description: { value: 'Q1 description', language: 'en' },
+						},
 					},
 					{
 						id: 'Q2',
-						label: 'Q2 label',
-						// no description
+						display: {
+							label: { value: 'Q2 label', language: 'en' },
+							// no description
+						},
 					},
 					{
 						id: 'Q3',
-						// no label
-						description: 'Q3 description',
+						display: {
+							// no label
+							description: { value: 'Q3 description', language: 'en' },
+						},
 					},
 				],
 			} as WbSearchEntitiesResponse ),
@@ -71,6 +77,7 @@ describe( 'MwApiItemSearcher', () => {
 			get: jest.fn().mockResolvedValue( {
 				search: [ {
 					id: 'Q4',
+					display: {},
 				} ],
 			} ),
 		};
