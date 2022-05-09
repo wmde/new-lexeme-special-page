@@ -144,7 +144,7 @@ describe( 'ItemLookup', () => {
 		} );
 
 		it( ':itemSuggestions - shows matching suggestions before search results', async () => {
-			const suggestedItems = [
+			const itemSuggestions = [
 				{
 					display: {
 						label: {
@@ -193,7 +193,7 @@ describe( 'ItemLookup', () => {
 					id: 'Q4',
 				},
 			] );
-			const lookup = createLookup( { searchForItems, suggestedItems } );
+			const lookup = createLookup( { searchForItems, itemSuggestions } );
 
 			await lookup.find( 'input' ).setValue( 'foo' );
 
