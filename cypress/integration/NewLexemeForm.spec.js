@@ -1,3 +1,5 @@
+import 'cypress-axe';
+
 describe( 'NewLexemeForm', () => {
 
 	it( 'submits form data with inferred language code', () => {
@@ -88,6 +90,12 @@ describe( 'NewLexemeForm', () => {
 				'Navigating to: Special:EntityPage/L1',
 			);
 		} );
+	} );
+
+	it( 'should be accessible', () => {
+		cy.visit( '/' );
+		cy.injectAxe();
+		cy.checkA11y();
 	} );
 
 } );
