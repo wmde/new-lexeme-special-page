@@ -11,9 +11,12 @@ interface Props {
 	value: string | null;
 	searchForItems: ( searchTerm: string, offset?: number ) => Promise<SearchedItemOption[]>;
 	error: { type: 'error'|'warning'; message: string } | null;
+	// eslint-disable-next-line vue/no-unused-properties
+	itemSuggestions?: SearchedItemOption[];
 }
 const props = withDefaults( defineProps<Props>(), {
 	error: null,
+	itemSuggestions: () => [],
 } );
 
 const emit = defineEmits( {

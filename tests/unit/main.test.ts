@@ -22,6 +22,7 @@ describe( 'createAndMount', () => {
 				[ 'en', 'English' ],
 				[ 'de', 'German' ],
 			] ),
+			lexicalCategorySuggestions: [],
 		}, {
 			itemSearcher: unusedItemSearcher,
 			lexemeCreator: unusedLexemeCreator,
