@@ -10,9 +10,11 @@ interface Props {
 	placeholder: string;
 	value: string | null;
 	searchForItems: ( searchTerm: string, offset?: number ) => Promise<SearchedItemOption[]>;
-	error?: { type: 'error'|'warning'; message: string };
+	error: { type: 'error'|'warning'; message: string } | null;
 }
-const props = defineProps<Props>();
+const props = withDefaults( defineProps<Props>(), {
+	error: null,
+} );
 
 const emit = defineEmits( {
 	'update:modelValue': ( selectedItemId: string | null ) => {

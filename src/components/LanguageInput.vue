@@ -22,7 +22,7 @@ const store = useStore();
 
 const error = computed( () => {
 	if ( store.state.languageCodeFromLanguageItem !== false ) {
-		return undefined;
+		return null;
 	}
 	return {
 		type: 'warning' as const,
