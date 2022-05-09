@@ -142,6 +142,85 @@ describe( 'ItemLookup', () => {
 				},
 			] );
 		} );
+
+		it( ':itemSuggestions - shows matching suggestions before search results', async () => {
+			const suggestedItems = [
+				{
+					display: {
+						label: {
+							value: 'fool',
+							language: 'en',
+						},
+					},
+					id: 'Q1',
+				},
+				{
+					display: {
+						label: {
+							value: 'bamboozle',
+							language: 'en',
+						},
+					},
+					id: 'Q11',
+				},
+				{
+					display: {
+						label: {
+							value: 'FOOD',
+							language: 'en',
+						},
+					},
+					id: 'Q2',
+				},
+			];
+			const searchForItems = jest.fn().mockReturnValue( [
+				{
+					display: {
+						label: {
+							value: 'foo',
+							language: 'en',
+						},
+					},
+					id: 'Q3',
+				},
+				{
+					display: {
+						label: {
+							value: 'bar',
+							language: 'en',
+						},
+					},
+					id: 'Q4',
+				},
+			] );
+			const lookup = createLookup( { searchForItems, suggestedItems } );
+
+			await lookup.find( 'input' ).setValue( 'foo' );
+
+			const wikitLookup = lookup.getComponent( WikitLookup );
+			expect( wikitLookup.props( 'menuItems' ) ).toStrictEqual( [
+				{
+					description: '',
+					label: 'fool',
+					value: 'Q1',
+				},
+				{
+					description: '',
+					label: 'FOOD',
+					value: 'Q2',
+				},
+				{
+					description: '',
+					label: 'foo',
+					value: 'Q3',
+				},
+				{
+					description: '',
+					label: 'bar',
+					value: 'Q4',
+				},
+			] );
+		} );
 	} );
 	describe( '@events', () => {
 		it( '@update:modelValue - emits null when the input is changed', async () => {
