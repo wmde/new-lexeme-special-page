@@ -148,7 +148,7 @@ describe( 'ItemLookup', () => {
 				{
 					display: {
 						label: {
-							value: 'fool',
+							value: 'fool', // match
 							language: 'en',
 						},
 					},
@@ -157,7 +157,7 @@ describe( 'ItemLookup', () => {
 				{
 					display: {
 						label: {
-							value: 'bamboozle',
+							value: 'bamboozle', // does not match, should not be shown
 							language: 'en',
 						},
 					},
@@ -166,7 +166,7 @@ describe( 'ItemLookup', () => {
 				{
 					display: {
 						label: {
-							value: 'FOOD',
+							value: 'FOOD', // case-insensitive match
 							language: 'en',
 						},
 					},
@@ -192,6 +192,15 @@ describe( 'ItemLookup', () => {
 					},
 					id: 'Q4',
 				},
+				{
+					display: {
+						label: {
+							value: 'fool', // already in itemSuggestions, should not be shown again
+							language: 'en',
+						},
+					},
+					id: 'Q1',
+				},
 			] );
 			const lookup = createLookup( { searchForItems, itemSuggestions } );
 
@@ -199,6 +208,7 @@ describe( 'ItemLookup', () => {
 
 			const wikitLookup = lookup.getComponent( WikitLookup );
 			expect( wikitLookup.props( 'menuItems' ) ).toStrictEqual( [
+				// suggestions
 				{
 					description: '',
 					label: 'fool',
@@ -209,6 +219,7 @@ describe( 'ItemLookup', () => {
 					label: 'FOOD',
 					value: 'Q2',
 				},
+				// search results
 				{
 					description: '',
 					label: 'foo',
@@ -222,6 +233,7 @@ describe( 'ItemLookup', () => {
 			] );
 		} );
 	} );
+
 	describe( '@events', () => {
 		it( '@update:modelValue - emits null when the input is changed', async () => {
 			const searchForItems = jest.fn().mockReturnValue( exampleSearchResults );
