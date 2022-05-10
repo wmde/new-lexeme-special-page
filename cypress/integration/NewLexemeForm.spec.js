@@ -20,6 +20,10 @@ function terminalLog( violations ) {
 	cy.task( 'table', violationData );
 }
 
+function checkA11y() {
+	cy.checkA11y( null, null, terminalLog );
+}
+
 describe( 'NewLexemeForm', () => {
 
 	beforeEach( () => {
@@ -28,7 +32,7 @@ describe( 'NewLexemeForm', () => {
 	} );
 
 	afterEach( () => {
-		cy.checkA11y( null, null, terminalLog );
+		checkA11y();
 	} );
 
 	it( 'submits form data with inferred language code', () => {
@@ -54,11 +58,14 @@ describe( 'NewLexemeForm', () => {
 			},
 		} ).as( 'LanguageCodeRetrieval' );
 
+		checkA11y();
+
 		cy.get( 'input[name=lemma]' )
 			.type( 'test lemma' );
 
 		cy.get( '.wbl-snl-language-lookup input' )
 			.type( '=Q123', { delay: 0 } );
+		checkA11y();
 		cy.get( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).click();
 
 		cy.wait( '@LanguageCodeRetrieval' );
