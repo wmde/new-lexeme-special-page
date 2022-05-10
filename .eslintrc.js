@@ -14,6 +14,7 @@ module.exports = {
 		'@wmde/wikimedia-typescript',
 		'@vue/typescript/recommended',
 		'plugin:cypress/recommended',
+		'plugin:vuejs-accessibility/recommended',
 	],
 	rules: {
 		'comma-dangle': [ 'error', 'always-multiline' ],
