@@ -20,8 +20,8 @@ function terminalLog( violations ) {
 	cy.task( 'table', violationData );
 }
 
-function checkA11y() {
-	cy.checkA11y( null, null, terminalLog );
+function checkA11y( context = null ) {
+	cy.checkA11y( context, null, terminalLog );
 }
 
 describe( 'NewLexemeForm', () => {
@@ -65,7 +65,7 @@ describe( 'NewLexemeForm', () => {
 
 		cy.get( '.wbl-snl-language-lookup input' )
 			.type( '=Q123', { delay: 0 } );
-		checkA11y();
+		checkA11y( '.wbl-snl-language-lookup' );
 		cy.get( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).click();
 
 		cy.wait( '@LanguageCodeRetrieval' );
