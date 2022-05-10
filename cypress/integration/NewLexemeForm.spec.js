@@ -22,9 +22,16 @@ function terminalLog( violations ) {
 
 describe( 'NewLexemeForm', () => {
 
-	it( 'submits form data with inferred language code', () => {
+	beforeEach( () => {
 		cy.visit( '/' );
+		cy.injectAxe();
+	} );
 
+	afterEach( () => {
+		cy.checkA11y( null, null, terminalLog );
+	} );
+
+	it( 'submits form data with inferred language code', () => {
 		cy.on( 'window:alert', cy.stub().as( 'alert' ) );
 
 		cy.intercept( { query: { action: 'wbgetclaims' } }, {
@@ -74,8 +81,6 @@ describe( 'NewLexemeForm', () => {
 	} );
 
 	it( 'submits form data with explicitly set spelling variant', () => {
-		cy.visit( '/' );
-
 		cy.on( 'window:alert', cy.stub().as( 'alert' ) );
 
 		cy.intercept( { query: { action: 'wbgetclaims' } }, {
@@ -110,12 +115,6 @@ describe( 'NewLexemeForm', () => {
 				'Navigating to: Special:EntityPage/L1',
 			);
 		} );
-	} );
-
-	it( 'should be accessible', () => {
-		cy.visit( '/' );
-		cy.injectAxe();
-		cy.checkA11y( null, null, terminalLog );
 	} );
 
 } );
