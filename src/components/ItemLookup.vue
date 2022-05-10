@@ -3,6 +3,7 @@ import { ref, computed } from 'vue';
 import { SearchedItemOption } from '@/data-access/ItemSearcher';
 import WikitLookup from './WikitLookup';
 import debounce from 'lodash/debounce';
+import escapeRegExp from 'lodash/escapeRegExp';
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
 
 interface Props {
@@ -11,7 +12,6 @@ interface Props {
 	value: string | null;
 	searchForItems: ( searchTerm: string, offset?: number ) => Promise<SearchedItemOption[]>;
 	error: { type: 'error'|'warning'; message: string } | null;
-	// eslint-disable-next-line vue/no-unused-properties
 	itemSuggestions?: SearchedItemOption[];
 }
 const props = withDefaults( defineProps<Props>(), {
@@ -56,8 +56,20 @@ const onOptionSelected = ( value: unknown ) => {
 };
 
 const debouncedSearchForItems = debounce( async ( debouncedInputValue: string ) => {
+	const regExp = new RegExp( `\\b${escapeRegExp( debouncedInputValue )}`, 'i' );
+	const matchingItemSuggestions = props.itemSuggestions.filter(
+		( suggestion ) => regExp.test( suggestion.display.label?.value || '' ),
+	);
+	searchSuggestions.value = matchingItemSuggestions.map( searchResultToMonolingualOption );
+
 	const searchResults = await props.searchForItems( debouncedInputValue );
-	searchSuggestions.value = searchResults.map( searchResultToMonolingualOption );
+	const additionalSearchResults = searchResults.filter(
+		( result ) => !matchingItemSuggestions.some(
+			( suggestion ) => suggestion.id === result.id,
+		),
+	);
+	searchSuggestions.value = matchingItemSuggestions.concat( additionalSearchResults )
+		.map( searchResultToMonolingualOption );
 }, 150 );
 const searchInput = ref( '' );
 const onSearchInput = async ( inputValue: string ) => {
