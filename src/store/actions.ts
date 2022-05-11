@@ -21,11 +21,6 @@ import {
 } from 'vuex';
 import { ADD_ERRORS, CLEAR_ERRORS, SET_LANGUAGE, SET_LANGUAGE_CODE_FROM_LANGUAGE_ITEM, SET_SPELLING_VARIANT } from './mutations';
 import RootState from './RootState';
-/*
-import {
-	MUTATION_NAME,
-} from './mutations';
-*/
 
 type RootContext = ActionContext<RootState, RootState>;
 type RootActions = ActionTree<RootState, RootState>;
