@@ -25,22 +25,13 @@ const emit = defineEmits( {
 	},
 } );
 
-interface WikitMenuItem {
-	label: string;
-	description: string;
-	tag?: string;
-}
-
-interface MonolingualOption extends WikitMenuItem {
-	value: string;
-}
-const searchSuggestions = ref( [] as MonolingualOption[] );
+const searchSuggestions = ref( [] as SearchedItemOption[] );
 
 const selectedOption = computed( () => {
 	if ( props.value === null ) {
 		return null;
 	}
-	return searchSuggestions.value.find( ( item ) => item.value === props.value );
+	return searchSuggestions.value.find( ( item ) => item.id === props.value ) ?? null;
 } );
 
 // `lastSelectedOption` is needed to prevent search for new suggestions when one was just selected
@@ -48,10 +39,10 @@ const selectedOption = computed( () => {
 // be identical to the `selectedOption` computed above, but that is too "slow" because it only
 // updates after the parent component tree has finished processing the `'update:modelValue'` event
 // emitted here and updated this component's value prop.
-const lastSelectedOption = ref( null as MonolingualOption | null );
-const onOptionSelected = ( value: unknown ) => {
-	lastSelectedOption.value = value as MonolingualOption;
-	const itemId = value === null ? null : ( value as MonolingualOption ).value;
+const lastSelectedOption = ref( null as SearchedItemOption | null );
+const onOptionSelected = ( value: SearchedItemOption | null ) => {
+	lastSelectedOption.value = value;
+	const itemId = value === null ? null : value.id;
 	emit( 'update:modelValue', itemId );
 };
 
@@ -60,7 +51,7 @@ const debouncedSearchForItems = debounce( async ( debouncedInputValue: string ) 
 	const matchingItemSuggestions = props.itemSuggestions.filter(
 		( suggestion ) => regExp.test( suggestion.display.label?.value || '' ),
 	);
-	searchSuggestions.value = matchingItemSuggestions.map( searchResultToMonolingualOption );
+	searchSuggestions.value = matchingItemSuggestions;
 
 	const searchResults = await props.searchForItems( debouncedInputValue );
 	const additionalSearchResults = searchResults.filter(
@@ -68,8 +59,7 @@ const debouncedSearchForItems = debounce( async ( debouncedInputValue: string ) 
 			( suggestion ) => suggestion.id === result.id,
 		),
 	);
-	searchSuggestions.value = matchingItemSuggestions.concat( additionalSearchResults )
-		.map( searchResultToMonolingualOption );
+	searchSuggestions.value = [ ...matchingItemSuggestions, ...additionalSearchResults ];
 }, 150 );
 const searchInput = ref( '' );
 const onSearchInput = async ( inputValue: string ) => {
@@ -79,7 +69,10 @@ const onSearchInput = async ( inputValue: string ) => {
 		return;
 	}
 
-	if ( inputValue === lastSelectedOption.value?.label ) {
+	if (
+		inputValue === lastSelectedOption.value?.display.label?.value ||
+		inputValue === lastSelectedOption.value?.id
+	) {
 		return;
 	}
 	debouncedSearchForItems( inputValue );
@@ -90,16 +83,44 @@ const onScroll = async () => {
 		searchInput.value,
 		searchSuggestions.value.length,
 	);
-	searchSuggestions.value.push( ...searchReults.map( searchResultToMonolingualOption ) );
+	searchSuggestions.value.push( ...searchReults );
 };
 
-function searchResultToMonolingualOption( searchResult: SearchedItemOption ): MonolingualOption {
+// the remaining setup translates multilingual SearchedItemOptions to monolingual WikitItemOptions
+
+interface WikitMenuItem {
+	label: string;
+	description: string;
+	tag?: string;
+}
+interface WikitItemOption extends WikitMenuItem {
+	value: string;
+}
+
+function searchResultToMonolingualOption( searchResult: SearchedItemOption ): WikitItemOption {
 	return {
 		label: searchResult.display.label?.value || searchResult.id,
 		description: searchResult.display.description?.value || '',
 		value: searchResult.id,
 	};
 }
+
+const wikitMenuItems = computed( () => {
+	return searchSuggestions.value.map( searchResultToMonolingualOption );
+} );
+
+const selectedWikitOption = computed( () => {
+	if ( selectedOption.value === null ) {
+		return null;
+	}
+	return searchResultToMonolingualOption( selectedOption.value );
+} );
+
+const onWikitOptionSelected = ( value: unknown ) => {
+	const wikitOption = value as WikitItemOption | null;
+	const searchOption = searchSuggestions.value.find( ( item ) => item.id === wikitOption?.value );
+	return onOptionSelected( searchOption ?? null );
+};
 
 const messages = useMessages();
 </script>
@@ -109,12 +130,12 @@ const messages = useMessages();
 		:label="label"
 		:placeholder="placeholder"
 		:search-input="searchInput"
-		:menu-items="searchSuggestions"
-		:value="selectedOption"
+		:menu-items="wikitMenuItems"
+		:value="selectedWikitOption"
 		:error="error"
 		@update:search-input="onSearchInput"
 		@scroll="onScroll"
-		@input="onOptionSelected"
+		@input="onWikitOptionSelected"
 	>
 		<template #no-results>
 			{{ messages.getUnescaped( 'wikibaselexeme-newlexeme-no-results' ) }}
