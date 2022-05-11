@@ -72,7 +72,7 @@ const debouncedSearchForItems = debounce( async ( debouncedInputValue: string ) 
 		.map( searchResultToMonolingualOption );
 }, 150 );
 const searchInput = ref( '' );
-const onSearchInput = async ( inputValue: string ) => {
+const onSearchInput = ( inputValue: string ) => {
 	searchInput.value = inputValue;
 	if ( inputValue.trim() === '' ) {
 		searchSuggestions.value = [];
