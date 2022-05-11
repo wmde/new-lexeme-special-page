@@ -25,16 +25,24 @@ const emit = defineEmits( {
 	},
 } );
 
-const searchSuggestions = ref( [] as SearchedItemOption[] );
+// itemSuggestions matching the current searchInput
+const suggestedOptions = ref( [] as SearchedItemOption[] );
+// searchForItems() results for the current searchInput
+const searchedOptions = ref( [] as SearchedItemOption[] );
+
+const menuItems = computed( (): SearchedItemOption[] => [
+	...suggestedOptions.value,
+	...searchedOptions.value,
+] );
 
 const selectedOption = computed( () => {
 	if ( props.value === null ) {
 		return null;
 	}
-	return searchSuggestions.value.find( ( item ) => item.id === props.value ) ?? null;
+	return menuItems.value.find( ( item ) => item.id === props.value ) ?? null;
 } );
 
-// `lastSelectedOption` is needed to prevent search for new suggestions when one was just selected
+// `lastSelectedOption` is needed to prevent search for new options when one was just selected
 // by the user and thus the input updated to display the label of the selected option. This should
 // be identical to the `selectedOption` computed above, but that is too "slow" because it only
 // updates after the parent component tree has finished processing the `'update:modelValue'` event
@@ -48,24 +56,23 @@ const onOptionSelected = ( value: SearchedItemOption | null ) => {
 
 const debouncedSearchForItems = debounce( async ( debouncedInputValue: string ) => {
 	const regExp = new RegExp( `\\b${escapeRegExp( debouncedInputValue )}`, 'i' );
-	const matchingItemSuggestions = props.itemSuggestions.filter(
+	suggestedOptions.value = props.itemSuggestions.filter(
 		( suggestion ) => regExp.test( suggestion.display.label?.value || '' ),
 	);
-	searchSuggestions.value = matchingItemSuggestions;
 
 	const searchResults = await props.searchForItems( debouncedInputValue );
-	const additionalSearchResults = searchResults.filter(
-		( result ) => !matchingItemSuggestions.some(
+	searchedOptions.value = searchResults.filter(
+		( result ) => !suggestedOptions.value.some(
 			( suggestion ) => suggestion.id === result.id,
 		),
 	);
-	searchSuggestions.value = [ ...matchingItemSuggestions, ...additionalSearchResults ];
 }, 150 );
 const searchInput = ref( '' );
 const onSearchInput = ( inputValue: string ) => {
 	searchInput.value = inputValue;
 	if ( inputValue.trim() === '' ) {
-		searchSuggestions.value = [];
+		searchedOptions.value = [];
+		suggestedOptions.value = [];
 		return;
 	}
 
@@ -81,9 +88,9 @@ const onSearchInput = ( inputValue: string ) => {
 const onScroll = async () => {
 	const searchReults = await props.searchForItems(
 		searchInput.value,
-		searchSuggestions.value.length,
+		searchedOptions.value.length,
 	);
-	searchSuggestions.value.push( ...searchReults );
+	searchedOptions.value.push( ...searchReults );
 };
 
 // the remaining setup translates multilingual SearchedItemOptions to monolingual WikitItemOptions
@@ -106,7 +113,7 @@ function searchResultToMonolingualOption( searchResult: SearchedItemOption ): Wi
 }
 
 const wikitMenuItems = computed( () => {
-	return searchSuggestions.value.map( searchResultToMonolingualOption );
+	return menuItems.value.map( searchResultToMonolingualOption );
 } );
 
 const selectedWikitOption = computed( () => {
@@ -118,7 +125,7 @@ const selectedWikitOption = computed( () => {
 
 const onWikitOptionSelected = ( value: unknown ) => {
 	const wikitOption = value as WikitItemOption | null;
-	const searchOption = searchSuggestions.value.find( ( item ) => item.id === wikitOption?.value );
+	const searchOption = menuItems.value.find( ( item ) => item.id === wikitOption?.value );
 	return onOptionSelected( searchOption ?? null );
 };
 
