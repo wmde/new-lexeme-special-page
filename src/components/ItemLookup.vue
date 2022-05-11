@@ -25,14 +25,25 @@ const emit = defineEmits( {
 	},
 } );
 
+const searchInput = ref( '' );
+
 // itemSuggestions matching the current searchInput
-const suggestedOptions = ref( [] as SearchedItemOption[] );
+const suggestedOptions = computed( () => {
+	const regExp = new RegExp( `\\b${escapeRegExp( searchInput.value )}`, 'i' );
+	return props.itemSuggestions.filter(
+		( suggestion ) => regExp.test( suggestion.display.label?.value || '' ),
+	);
+} );
 // searchForItems() results for the current searchInput
 const searchedOptions = ref( [] as SearchedItemOption[] );
 
 const menuItems = computed( (): SearchedItemOption[] => [
 	...suggestedOptions.value,
-	...searchedOptions.value,
+	...searchedOptions.value.filter(
+		( searchedOption ) => !suggestedOptions.value.some(
+			( suggestedOption ) => suggestedOption.id === searchedOption.id,
+		),
+	),
 ] );
 
 const selectedOption = computed( () => {
@@ -55,24 +66,12 @@ const onOptionSelected = ( value: SearchedItemOption | null ) => {
 };
 
 const debouncedSearchForItems = debounce( async ( debouncedInputValue: string ) => {
-	const regExp = new RegExp( `\\b${escapeRegExp( debouncedInputValue )}`, 'i' );
-	suggestedOptions.value = props.itemSuggestions.filter(
-		( suggestion ) => regExp.test( suggestion.display.label?.value || '' ),
-	);
-
-	const searchResults = await props.searchForItems( debouncedInputValue );
-	searchedOptions.value = searchResults.filter(
-		( result ) => !suggestedOptions.value.some(
-			( suggestion ) => suggestion.id === result.id,
-		),
-	);
+	searchedOptions.value = await props.searchForItems( debouncedInputValue );
 }, 150 );
-const searchInput = ref( '' );
 const onSearchInput = async ( inputValue: string ) => {
 	searchInput.value = inputValue;
 	if ( inputValue.trim() === '' ) {
 		searchedOptions.value = [];
-		suggestedOptions.value = [];
 		return;
 	}
 
