@@ -112,6 +112,43 @@ describe( 'ItemLookup', () => {
 				.toBe( exampleSearchResults[ selectedItemId ].display.label?.value );
 		} );
 
+		it( ':value - sets the search input', async () => {
+			const lookup = createLookup( { value: {
+				id: 'Q1',
+				display: {
+					label: { language: 'en', value: 'some label' },
+				},
+			} } );
+			expect( lookup.findComponent( WikitLookup ).props().searchInput )
+				.toBe( 'some label' );
+
+			await lookup.setProps( { value: { id: 'Q2', display: {} } } );
+			expect( lookup.findComponent( WikitLookup ).props().searchInput )
+				.toBe( 'Q2' );
+		} );
+
+		it( ':value - provides a menu item', async () => {
+			const searchForItems = jest.fn();
+			const lookup = createLookup( {
+				value: {
+					id: 'Q1',
+					display: {
+						label: { language: 'en', value: 'some label' },
+						description: { language: 'en', value: 'some description' },
+					},
+				},
+				searchForItems,
+			} );
+
+			expect( lookup.findComponent( WikitLookup ).props().menuItems )
+				.toStrictEqual( [ {
+					value: 'Q1',
+					label: 'some label',
+					description: 'some description',
+				} ] );
+			expect( searchForItems ).not.toHaveBeenCalled();
+		} );
+
 		it( ':searchForItems - returned suggestions are provided to Wikit Lookup', async () => {
 			const searchForItems = jest.fn().mockReturnValue( exampleSearchResults );
 			const lookup = createLookup( { searchForItems } );
