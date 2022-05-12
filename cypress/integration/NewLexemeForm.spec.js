@@ -1,8 +1,41 @@
+import 'cypress-axe';
+
+function terminalLog( violations ) {
+	cy.task(
+		'log',
+		`${violations.length} accessibility violation${
+			violations.length === 1 ? '' : 's'
+		} ${violations.length === 1 ? 'was' : 'were'} detected`,
+	);
+	// pluck specific keys to keep the table readable
+	const violationData = violations.map(
+		( { id, impact, description, nodes } ) => ( {
+			id,
+			impact,
+			description,
+			nodes: nodes.length,
+		} ),
+	);
+
+	cy.task( 'table', violationData );
+}
+
+function checkA11y( context = null ) {
+	cy.checkA11y( context, null, terminalLog );
+}
+
 describe( 'NewLexemeForm', () => {
 
-	it( 'submits form data with inferred language code', () => {
+	beforeEach( () => {
 		cy.visit( '/' );
+		cy.injectAxe();
+	} );
 
+	afterEach( () => {
+		checkA11y();
+	} );
+
+	it( 'submits form data with inferred language code', () => {
 		cy.on( 'window:alert', cy.stub().as( 'alert' ) );
 
 		cy.intercept( { query: { action: 'wbgetclaims' } }, {
@@ -25,11 +58,14 @@ describe( 'NewLexemeForm', () => {
 			},
 		} ).as( 'LanguageCodeRetrieval' );
 
+		checkA11y();
+
 		cy.get( 'input[name=lemma]' )
 			.type( 'test lemma' );
 
 		cy.get( '.wbl-snl-language-lookup input' )
 			.type( '=Q123', { delay: 0 } );
+		checkA11y( '.wbl-snl-language-lookup' );
 		cy.get( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).click();
 
 		cy.wait( '@LanguageCodeRetrieval' );
@@ -52,8 +88,6 @@ describe( 'NewLexemeForm', () => {
 	} );
 
 	it( 'submits form data with explicitly set spelling variant', () => {
-		cy.visit( '/' );
-
 		cy.on( 'window:alert', cy.stub().as( 'alert' ) );
 
 		cy.intercept( { query: { action: 'wbgetclaims' } }, {

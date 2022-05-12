@@ -6,106 +6,109 @@
 		<title>New Lexeme</title>
 	</head>
 	<body>
-		<div id="wbl-snl-intro-text-wrapper"></div>
-		<div id="app"></div>
-		<script type="module">
-			import createAndMount from './src/main.ts';
-			import DevMessagesRepository from './src/plugins/MessagesPlugin/DevMessagesRepository';
-			import DevItemSearcher from './src/data-access/DevItemSearcher';
-			import DevLexemeCreator from './src/data-access/DevLexemeCreator';
-			import DevLangCodeRetriever from './src/data-access/DevLangCodeRetriever';
+		<main>
+			<h1>New Lexeme</h1>
+			<div id="wbl-snl-intro-text-wrapper"></div>
+			<div id="app"></div>
+			<script type="module">
+				import createAndMount from './src/main.ts';
+				import DevMessagesRepository from './src/plugins/MessagesPlugin/DevMessagesRepository';
+				import DevItemSearcher from './src/data-access/DevItemSearcher';
+				import DevLexemeCreator from './src/data-access/DevLexemeCreator';
+				import DevLangCodeRetriever from './src/data-access/DevLangCodeRetriever';
 
-			const config = {
-				rootSelector: '#app',
-				licenseUrl: 'https://creativecommons.org/publicdomain/zero/1.0/',
-				licenseName: 'Creative Commons CC0',
-				wikibaseLexemeTermLanguages: new Map([
-					[ 'en', 'English' ],
-					[ 'en-ca', 'Canadian English' ],
-					[ 'en-gb', 'British English' ],
-					[ 'enm', 'Middle English' ],
-					[ 'es', 'Spanish' ],
-					[ 'de', 'German' ],
-					[ 'aeb', 'Tunisian Arabic' ],
-					[ 'af', 'Afrikaans' ],
-					[ 'eo', 'Esperanto' ],
-					[ 'ha-arab', 'Hausa in Arab script' ]
-				]),
-				lexicalCategorySuggestions: [
-					{
-						id: 'Q1084',
-						display: {
-							label: {
-								language: 'en',
-								value: 'noun',
-							},
-							description: {
-								language: 'en',
-								value: 'part of speech in grammar denoting a figurative or real thing or person',
-							},
-						},
-					},
-					{
-						id: 'Q34698',
-						display: {
-							label: {
-								language: 'en',
-								value: 'adjective',
-							},
-							description: {
-								language: 'en',
-								value: 'part of speech that describes a noun or pronoun',
+				const config = {
+					rootSelector: '#app',
+					licenseUrl: 'https://creativecommons.org/publicdomain/zero/1.0/',
+					licenseName: 'Creative Commons CC0',
+					wikibaseLexemeTermLanguages: new Map([
+						[ 'en', 'English' ],
+						[ 'en-ca', 'Canadian English' ],
+						[ 'en-gb', 'British English' ],
+						[ 'enm', 'Middle English' ],
+						[ 'es', 'Spanish' ],
+						[ 'de', 'German' ],
+						[ 'aeb', 'Tunisian Arabic' ],
+						[ 'af', 'Afrikaans' ],
+						[ 'eo', 'Esperanto' ],
+						[ 'ha-arab', 'Hausa in Arab script' ]
+					]),
+					lexicalCategorySuggestions: [
+						{
+							id: 'Q1084',
+							display: {
+								label: {
+									language: 'en',
+									value: 'noun',
+								},
+								description: {
+									language: 'en',
+									value: 'part of speech in grammar denoting a figurative or real thing or person',
+								},
 							},
 						},
-					},
-					{
-						id: 'Q24905',
-						display: {
-							label: {
-								language: 'en',
-								value: 'verb',
-							},
-							description: {
-								language: 'en',
-								value: 'Lexical Category',
-							},
-						},
-					},
-					{
-						id: 'Q380057',
-						display: {
-							label: {
-								language: 'en',
-								value: 'adverb',
-							},
-							description: {
-								language: 'en',
-								value: 'word that modifies a verb, adjective, or another adverb',
+						{
+							id: 'Q34698',
+							display: {
+								label: {
+									language: 'en',
+									value: 'adjective',
+								},
+								description: {
+									language: 'en',
+									value: 'part of speech that describes a noun or pronoun',
+								},
 							},
 						},
+						{
+							id: 'Q24905',
+							display: {
+								label: {
+									language: 'en',
+									value: 'verb',
+								},
+								description: {
+									language: 'en',
+									value: 'Lexical Category',
+								},
+							},
+						},
+						{
+							id: 'Q380057',
+							display: {
+								label: {
+									language: 'en',
+									value: 'adverb',
+								},
+								description: {
+									language: 'en',
+									value: 'word that modifies a verb, adjective, or another adverb',
+								},
+							},
+						},
+					],
+				};
+				const services = {
+					itemSearcher: new DevItemSearcher(),
+					langCodeRetriever: new DevLangCodeRetriever(),
+					messagesRepository: new DevMessagesRepository(),
+					lexemeCreator: new DevLexemeCreator(),
+					searchLinker: {
+						getSearchUrlForLexeme( searchTerm ) {
+							const search = encodeURIComponent( searchTerm );
+							return `https://www.wikidata.org/w/index.php?search=${search}&ns146=1`;
+						},
 					},
-				],
-			};
-			const services = {
-				itemSearcher: new DevItemSearcher(),
-				langCodeRetriever: new DevLangCodeRetriever(),
-				messagesRepository: new DevMessagesRepository(),
-				lexemeCreator: new DevLexemeCreator(),
-				searchLinker: {
-					getSearchUrlForLexeme( searchTerm ) {
-						const search = encodeURIComponent( searchTerm );
-						return `https://www.wikidata.org/w/index.php?search=${search}&ns146=1`;
+					tracker: {
+						increment( name ) {
+							console.log( `TRACK: increment ${name}` );
+						},
 					},
-				},
-				tracker: {
-					increment( name ) {
-						console.log( `TRACK: increment ${name}` );
-					},
-				},
-				wikiRouter: { goToTitle( title ) { alert( `Navigating to: ${title}` ); } },
-			};
+					wikiRouter: { goToTitle( title ) { alert( `Navigating to: ${title}` ); } },
+				};
 
-			createAndMount( config, services );
-		</script>
+				createAndMount( config, services );
+			</script>
+		</main>
 	</body>
 </html>
