@@ -9,7 +9,7 @@ import { useMessages } from '@/plugins/MessagesPlugin/Messages';
 interface Props {
 	label: string;
 	placeholder: string;
-	value: string | null;
+	value: SearchedItemOption | null;
 	searchForItems: ( searchTerm: string, offset?: number ) => Promise<SearchedItemOption[]>;
 	error: { type: 'error'|'warning'; message: string } | null;
 	itemSuggestions?: SearchedItemOption[];
@@ -20,8 +20,8 @@ const props = withDefaults( defineProps<Props>(), {
 } );
 
 const emit = defineEmits( {
-	'update:modelValue': ( selectedItemId: string | null ) => {
-		return selectedItemId === null || /^Q\d+$/.test( selectedItemId );
+	'update:modelValue': ( value: Props['value'] ) => {
+		return value === null || /^Q\d+$/.test( value.id );
 	},
 } );
 
@@ -46,23 +46,14 @@ const menuItems = computed( (): SearchedItemOption[] => [
 	),
 ] );
 
-const selectedOption = computed( () => {
-	if ( props.value === null ) {
-		return null;
-	}
-	return menuItems.value.find( ( item ) => item.id === props.value ) ?? null;
-} );
-
 // `lastSelectedOption` is needed to prevent search for new options when one was just selected
 // by the user and thus the input updated to display the label of the selected option. This should
-// be identical to the `selectedOption` computed above, but that is too "slow" because it only
-// updates after the parent component tree has finished processing the `'update:modelValue'` event
-// emitted here and updated this component's value prop.
+// be identical to the `value` prop above, but that is too "slow" because it only updates after
+// the parent component tree has finished processing the `'update:modelValue'` event emitted here.
 const lastSelectedOption = ref( null as SearchedItemOption | null );
 const onOptionSelected = ( value: SearchedItemOption | null ) => {
 	lastSelectedOption.value = value;
-	const itemId = value === null ? null : value.id;
-	emit( 'update:modelValue', itemId );
+	emit( 'update:modelValue', value );
 };
 
 const debouncedSearchForItems = debounce( async ( debouncedInputValue: string ) => {
@@ -115,11 +106,11 @@ const wikitMenuItems = computed( () => {
 	return menuItems.value.map( searchResultToMonolingualOption );
 } );
 
-const selectedWikitOption = computed( () => {
-	if ( selectedOption.value === null ) {
+const wikitValue = computed( () => {
+	if ( props.value === null ) {
 		return null;
 	}
-	return searchResultToMonolingualOption( selectedOption.value );
+	return searchResultToMonolingualOption( props.value );
 } );
 
 const onWikitOptionSelected = ( value: unknown ) => {
@@ -137,7 +128,7 @@ const messages = useMessages();
 		:placeholder="placeholder"
 		:search-input="searchInput"
 		:menu-items="wikitMenuItems"
-		:value="selectedWikitOption"
+		:value="wikitValue"
 		:error="error"
 		@update:search-input="onSearchInput"
 		@scroll="onScroll"

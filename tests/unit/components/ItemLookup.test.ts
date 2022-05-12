@@ -100,13 +100,13 @@ describe( 'ItemLookup', () => {
 			expect( searchForItems ).toHaveBeenNthCalledWith( 2, 'foo', 4 );
 		} );
 
-		it( ':value - selects the selected Item with this QID', async () => {
+		it( ':value - selects the given Item', async () => {
 			const searchForItems = jest.fn().mockReturnValue( exampleSearchResults );
 			const lookup = createLookup( { searchForItems } );
 			await lookup.find( 'input' ).setValue( 'foo' );
 			const selectedItemId = 1;
 
-			await lookup.setProps( { value: exampleSearchResults[ selectedItemId ].id } );
+			await lookup.setProps( { value: exampleSearchResults[ selectedItemId ] } );
 
 			expect( lookup.findComponent( WikitLookup ).props().value.label )
 				.toBe( exampleSearchResults[ selectedItemId ].display.label?.value );
@@ -246,7 +246,7 @@ describe( 'ItemLookup', () => {
 			expect( lookup.emitted( 'update:modelValue' )[ 0 ][ 0 ] ).toBe( null );
 		} );
 
-		it( '@update:modelValue - emits the itemId of the selected option', async () => {
+		it( '@update:modelValue - emits the search result of the selected option', async () => {
 			const searchForItems = jest.fn().mockReturnValue( exampleSearchResults );
 			const lookup = createLookup( { searchForItems } );
 			await lookup.find( 'input' ).setValue( 'foo' );
@@ -263,7 +263,7 @@ describe( 'ItemLookup', () => {
 
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-ignore
-			expect( lookup.emitted( 'update:modelValue' )[ 1 ][ 0 ] ).toBe( exampleSearchResults[ selectedItemId ].id );
+			expect( lookup.emitted( 'update:modelValue' )[ 1 ][ 0 ] ).toStrictEqual( exampleSearchResults[ selectedItemId ] );
 
 		} );
 	} );
