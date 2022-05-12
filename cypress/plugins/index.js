@@ -7,10 +7,10 @@
  * @type {Cypress.PluginConfig}
  */
 
-module.exports = ( _on, _config ) => {
+module.exports = ( on, config ) => {
 	// `on` is used to hook into various events Cypress emits
 	// `config` is the resolved Cypress config
-	_on( 'task', {
+	on( 'task', {
 		log( message ) {
 			// eslint-disable-next-line no-console
 			console.log( message );
