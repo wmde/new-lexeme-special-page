@@ -20,7 +20,15 @@ import {
 	ActionContext,
 	ActionTree,
 } from 'vuex';
-import { ADD_ERRORS, CLEAR_ERRORS, SET_LANGUAGE, SET_LANGUAGE_CODE_FROM_LANGUAGE_ITEM, SET_SPELLING_VARIANT } from './mutations';
+import {
+	ADD_ERRORS,
+	CLEAR_ERRORS,
+	SET_LANGUAGE,
+	SET_LANGUAGE_CODE_FROM_LANGUAGE_ITEM,
+	SET_LEMMA,
+	SET_LEXICAL_CATEGORY,
+	SET_SPELLING_VARIANT,
+} from './mutations';
 import RootState from './RootState';
 
 type RootContext = ActionContext<RootState, RootState>;
@@ -28,6 +36,19 @@ type RootActions = ActionTree<RootState, RootState>;
 
 export const CREATE_LEXEME = 'createLexeme';
 export const HANDLE_LANGUAGE_CHANGE = 'handleLanguageChange';
+export const HANDLE_INIT_PARAMS = 'initFromParams';
+
+// internal actions (used by other actions), not exported
+const HANDLE_ITEM_LANGUAGE_CODE = 'handleItemLanguageCode';
+
+export type InitParams = {
+	lemma?: string;
+	spellVarCode?: string;
+	language?: SearchedItemOption & {
+		languageCode: string | null | false;
+	};
+	lexicalCategory?: SearchedItemOption;
+};
 
 export default function createActions(
 	lexemeCreator: LexemeCreator,
@@ -57,7 +78,7 @@ export default function createActions(
 			}
 		},
 		async [ HANDLE_LANGUAGE_CHANGE ](
-			{ commit }: RootContext,
+			{ commit, dispatch }: RootContext,
 			newLanguageItem: SearchedItemOption | null,
 		): Promise<void> {
 			commit( SET_LANGUAGE, newLanguageItem );
@@ -68,13 +89,41 @@ export default function createActions(
 				return;
 			}
 
-			let langCode = await langCodeRetriever.getLanguageCodeFromItem( newLanguageItem.id );
+			const langCode = await langCodeRetriever.getLanguageCodeFromItem( newLanguageItem.id );
 
-			if ( typeof langCode === 'string' && !languageCodesProvider.isValid( langCode ) ) {
-				langCode = false;
+			await dispatch( HANDLE_ITEM_LANGUAGE_CODE, langCode );
+		},
+		async [ HANDLE_INIT_PARAMS ](
+			{ commit, dispatch }: RootContext,
+			params: InitParams,
+		): Promise<void> {
+			if ( params.lemma !== undefined ) {
+				commit( SET_LEMMA, params.lemma );
+			}
+			if ( params.spellVarCode !== undefined ) {
+				commit( SET_SPELLING_VARIANT, params.spellVarCode );
+			}
+			if ( params.language !== undefined ) {
+				commit( SET_LANGUAGE, {
+					id: params.language.id,
+					display: params.language.display,
+					// don’t copy params.language.languageCode here
+				} );
+				await dispatch( HANDLE_ITEM_LANGUAGE_CODE, params.language.languageCode );
+			}
+			if ( params.lexicalCategory !== undefined ) {
+				commit( SET_LEXICAL_CATEGORY, params.lexicalCategory );
+			}
+		},
+		async [ HANDLE_ITEM_LANGUAGE_CODE ](
+			{ commit }: RootContext,
+			languageCode: string | undefined | null | false,
+		) {
+			if ( typeof languageCode === 'string' && !languageCodesProvider.isValid( languageCode ) ) {
+				languageCode = false;
 			}
 
-			commit( SET_LANGUAGE_CODE_FROM_LANGUAGE_ITEM, langCode );
+			commit( SET_LANGUAGE_CODE_FROM_LANGUAGE_ITEM, languageCode );
 		},
 	};
 }

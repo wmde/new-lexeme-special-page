@@ -1,5 +1,9 @@
 import Tracker from '@/data-access/tracking/Tracker';
-import createActions, { CREATE_LEXEME, HANDLE_LANGUAGE_CHANGE } from '@/store/actions';
+import createActions, {
+	CREATE_LEXEME,
+	HANDLE_LANGUAGE_CHANGE,
+	HANDLE_INIT_PARAMS,
+} from '@/store/actions';
 import LexemeCreator from '@/data-access/LexemeCreator';
 import {
 	ADD_ERRORS,
@@ -316,4 +320,129 @@ describe( 'HANDLE_LANGUAGE_CHANGE', () => {
 		expect( store.state.languageCodeFromLanguageItem ).toBe( retrievedLangCodeResult );
 		expect( isValidMock ).not.toHaveBeenCalled();
 	} );
+} );
+
+describe( HANDLE_INIT_PARAMS, () => {
+
+	it( 'does nothing given empty params', async () => {
+		const state = (): RootState => ( {
+			lemma: 'lemma',
+			language: { id: 'Q123', display: {} },
+			lexicalCategory: { id: 'Q234', display: {} },
+			spellingVariant: 'bar',
+			languageCodeFromLanguageItem: false,
+			globalErrors: [],
+		} );
+		const actions = createActions(
+			unusedLexemeCreator,
+			unusedLangCodeRetriever,
+			unusedLanguageCodesProvider,
+			unusedTracker,
+		);
+		const store = createStore( {
+			state,
+			actions,
+		} );
+
+		await store.dispatch( HANDLE_INIT_PARAMS, {} );
+
+		expect( store.state ).toStrictEqual( state() );
+	} );
+
+	it( 'sets state from all params', async () => {
+		const actions = createActions(
+			unusedLexemeCreator,
+			unusedLangCodeRetriever,
+			{
+				isValid: jest.fn().mockReturnValue( true ),
+				getLanguages: jest.fn(),
+			},
+			unusedTracker,
+		);
+		const store = createStore( {
+			state(): RootState {
+				return {
+					lemma: '',
+					language: null,
+					lexicalCategory: null,
+					spellingVariant: '',
+					languageCodeFromLanguageItem: undefined,
+					globalErrors: [],
+				};
+			},
+			actions,
+			mutations,
+		} );
+		const language = {
+			id: 'Q1860',
+			display: {
+				label: { language: 'en', value: 'English' },
+			},
+		};
+		const lexicalCategory = {
+			id: 'Q1064',
+			display: {
+				label: { language: 'en', value: 'noun' },
+			},
+		};
+
+		await store.dispatch( HANDLE_INIT_PARAMS, {
+			lemma: 'lemma',
+			spellVarCode: 'en-gb',
+			language: { ...language, languageCode: 'en' },
+			lexicalCategory,
+		} );
+
+		expect( store.state ).toStrictEqual( {
+			lemma: 'lemma',
+			language,
+			lexicalCategory,
+			spellingVariant: 'en-gb',
+			languageCodeFromLanguageItem: 'en',
+			globalErrors: [],
+		} );
+	} );
+
+	it( 'validates language code from language item', async () => {
+		const isValidMock = jest.fn().mockReturnValue( false );
+		const actions = createActions(
+			unusedLexemeCreator,
+			unusedLangCodeRetriever,
+			{
+				isValid: isValidMock,
+				getLanguages: jest.fn(),
+			},
+			unusedTracker,
+		);
+		const store = createStore( {
+			state(): RootState {
+				return {
+					lemma: '',
+					language: null,
+					lexicalCategory: null,
+					spellingVariant: '',
+					languageCodeFromLanguageItem: undefined,
+					globalErrors: [],
+				};
+			},
+			actions,
+			mutations,
+		} );
+
+		await store.dispatch( HANDLE_INIT_PARAMS, {
+			language: {
+				id: 'Q1860',
+				display: {},
+				languageCode: 'invalid',
+			},
+		} );
+
+		expect( store.state.language ).toStrictEqual( {
+			id: 'Q1860',
+			display: {},
+		} );
+		expect( store.state.languageCodeFromLanguageItem ).toBe( false );
+		expect( isValidMock ).toHaveBeenCalledWith( 'invalid' );
+	} );
+
 } );

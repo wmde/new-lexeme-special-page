@@ -5,6 +5,10 @@ import { Config, ConfigKey } from '@/plugins/ConfigPlugin/Config';
 import SearchLinker, { SearchLinkerKey } from '@/plugins/SearchLinkerPlugin/SearchLinker';
 import Tracker from '@/data-access/tracking/Tracker';
 import {
+	HANDLE_INIT_PARAMS,
+	InitParams,
+} from '@/store/actions';
+import {
 	ComponentPublicInstance,
 	createApp,
 } from 'vue';
@@ -20,6 +24,7 @@ import { MapLanguageCodesProvider } from './data-access/LanguageCodesProvider';
 
 export interface CreateAndMountConfig extends Config {
 	rootSelector: string;
+	initParams?: InitParams;
 }
 
 export interface Services {
@@ -42,6 +47,10 @@ export default function createAndMount(
 	);
 	const store = initStore( { ...services, languageCodesProvider } );
 	app.use( store );
+
+	if ( config.initParams !== undefined ) {
+		store.dispatch( HANDLE_INIT_PARAMS, config.initParams ); // without await
+	}
 
 	app.provide( ConfigKey, config );
 	app.provide( MessagesKey, new Messages( services.messagesRepository ) );

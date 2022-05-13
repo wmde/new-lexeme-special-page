@@ -124,4 +124,58 @@ describe( 'NewLexemeForm', () => {
 		} );
 	} );
 
+	it( 'submits form data from URL params', () => {
+		cy.visit( '/?' + new URLSearchParams( { initParams: JSON.stringify( {
+			lemma: 'test lemma',
+			language: {
+				id: 'Q123',
+				display: {
+					label: { language: 'en', value: 'test language' },
+					description: { language: 'en', value: 'test language description' },
+				},
+				languageCode: 'en-gb',
+			},
+			lexicalCategory: {
+				id: 'Q456',
+				display: {},
+			},
+		} ) } ) );
+		cy.injectAxe();
+
+		cy.on( 'window:alert', cy.stub().as( 'alert' ) );
+
+		cy.get( '.wbl-snl-language-lookup input' )
+			.then( ( $input ) => {
+				expect( $input ).to.have.value( 'test language' );
+			} )
+			.click()
+			.then( () => {
+				cy.get( '.wbl-snl-language-lookup .wikit-OptionsMenu__item__label' )
+					.then( ( $element ) => {
+						expect( $element ).to.have.text( 'test language' );
+					} );
+				cy.get( '.wbl-snl-language-lookup .wikit-OptionsMenu__item__description' )
+					.then( ( $element ) => {
+						expect( $element ).to.have.text( 'test language description' );
+					} );
+			} );
+
+		cy.get( '.wbl-snl-lexical-category-lookup input' )
+			.then( ( $input ) => {
+				expect( $input ).to.have.value( 'Q456' );
+			} );
+
+		cy.get( '.wbl-snl-form' )
+			.submit();
+
+		cy.get( '@alert' ).then( ( spy ) => {
+			expect( spy ).to.have.been.calledWith(
+				'Create Lexeme "test lemma"@en-gb as Q123 Q456',
+			);
+			expect( spy ).to.have.been.calledWith(
+				'Navigating to: Special:EntityPage/L1',
+			);
+		} );
+	} );
+
 } );

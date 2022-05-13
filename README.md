@@ -35,6 +35,18 @@ so you can start this once and then leave it running in the background.
 For instructions to see the form in the context of the special page,
 see the [WikibaseLexeme readme](https://gerrit.wikimedia.org/g/mediawiki/extensions/WikibaseLexeme/+/master/README.md).
 
+The dev entry point can also read some parameters from the URL,
+as a single JSON-serialized `initParams` object in the same format as the special page passes to the app.
+Here are some useful links:
+- [no params](http://localhost:3000/)
+- [empty params](http://localhost:3000/?initParams=%7B%7D)
+- [full params](http://localhost:3000/?initParams=%7B%22lemma%22%3A%22lemma%22%2C%22spellVarCode%22%3A%22en%22%2C%22language%22%3A%7B%22id%22%3A%22Q1860%22%2C%22display%22%3A%7B%22label%22%3A%7B%22language%22%3A%22en%22%2C%22value%22%3A%22English%22%7D%2C%22description%22%3A%7B%22language%22%3A%22en%22%2C%22value%22%3A%22language%22%7D%7D%2C%22languageCode%22%3A%22en%22%7D%2C%22lexicalCategory%22%3A%7B%22id%22%3A%22Q1064%22%2C%22display%22%3A%7B%22label%22%3A%7B%22language%22%3A%22en%22%2C%22value%22%3A%22noun%22%7D%2C%22description%22%3A%7B%22language%22%3A%22en%22%2C%22value%22%3A%22lexical%20category%22%7D%7D%7D%7D)
+- [lemma](http://localhost:3000/?initParams=%7B%22lemma%22%3A%22lemma%22%7D)
+- [language item with language code](http://localhost:3000/?initParams=%7B%22language%22%3A%7B%22id%22%3A%22Q1860%22%2C%22display%22%3A%7B%22label%22%3A%7B%22language%22%3A%22en%22%2C%22value%22%3A%22English%22%7D%2C%22description%22%3A%7B%22language%22%3A%22en%22%2C%22value%22%3A%22language%22%7D%7D%2C%22languageCode%22%3A%22en%22%7D%7D)
+- [language item without language code](http://localhost:3000/?initParams=%7B%22language%22%3A%7B%22id%22%3A%22Q1860%22%2C%22display%22%3A%7B%22label%22%3A%7B%22language%22%3A%22en%22%2C%22value%22%3A%22English%22%7D%2C%22description%22%3A%7B%22language%22%3A%22en%22%2C%22value%22%3A%22language%22%7D%7D%2C%22languageCode%22%3Anull%7D%7D)
+- [language item with invalid language code](http://localhost:3000/?initParams=%7B%22language%22%3A%7B%22id%22%3A%22Q1860%22%2C%22display%22%3A%7B%22label%22%3A%7B%22language%22%3A%22en%22%2C%22value%22%3A%22English%22%7D%2C%22description%22%3A%7B%22language%22%3A%22en%22%2C%22value%22%3A%22language%22%7D%7D%2C%22languageCode%22%3Afalse%7D%7D)
+- [lexical category](http://localhost:3000/?initParams=%7B%22lexicalCategory%22%3A%7B%22id%22%3A%22Q1064%22%2C%22display%22%3A%7B%22label%22%3A%7B%22language%22%3A%22en%22%2C%22value%22%3A%22noun%22%7D%2C%22description%22%3A%7B%22language%22%3A%22en%22%2C%22value%22%3A%22lexical%20category%22%7D%7D%7D%7D)
+
 #### Linting
 The linters, except for TypeScript type checking, can be run with:
 ```sh

@@ -107,6 +107,11 @@
 					wikiRouter: { goToTitle( title ) { alert( `Navigating to: ${title}` ); } },
 				};
 
+				const params = new URLSearchParams( location.search );
+				if ( params.has( 'initParams' ) ) {
+					config.initParams = JSON.parse( params.get( 'initParams' ) );
+				}
+
 				createAndMount( config, services );
 			</script>
 		</main>
