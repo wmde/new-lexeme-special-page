@@ -2,7 +2,7 @@ import Tracker from '@/data-access/tracking/Tracker';
 import createActions, {
 	CREATE_LEXEME,
 	HANDLE_LANGUAGE_CHANGE,
-	INIT_FROM_PARAMS,
+	HANDLE_INIT_PARAMS,
 } from '@/store/actions';
 import LexemeCreator from '@/data-access/LexemeCreator';
 import {
@@ -322,7 +322,7 @@ describe( 'HANDLE_LANGUAGE_CHANGE', () => {
 	} );
 } );
 
-describe( INIT_FROM_PARAMS, () => {
+describe( HANDLE_INIT_PARAMS, () => {
 
 	it( 'does nothing given empty params', async () => {
 		const state = (): RootState => ( {
@@ -344,7 +344,7 @@ describe( INIT_FROM_PARAMS, () => {
 			actions,
 		} );
 
-		await store.dispatch( INIT_FROM_PARAMS, {} );
+		await store.dispatch( HANDLE_INIT_PARAMS, {} );
 
 		expect( store.state ).toStrictEqual( state() );
 	} );
@@ -386,7 +386,7 @@ describe( INIT_FROM_PARAMS, () => {
 			},
 		};
 
-		await store.dispatch( INIT_FROM_PARAMS, {
+		await store.dispatch( HANDLE_INIT_PARAMS, {
 			lemma: 'lemma',
 			spellVarCode: 'en-gb',
 			language: { ...language, languageCode: 'en' },
@@ -429,7 +429,7 @@ describe( INIT_FROM_PARAMS, () => {
 			mutations,
 		} );
 
-		await store.dispatch( INIT_FROM_PARAMS, {
+		await store.dispatch( HANDLE_INIT_PARAMS, {
 			language: {
 				id: 'Q1860',
 				display: {},

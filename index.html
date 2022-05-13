@@ -108,8 +108,8 @@
 				};
 
 				const params = new URLSearchParams( location.search );
-				if ( params.has( 'params' ) ) {
-					config.params = JSON.parse( params.get( 'params' ) );
+				if ( params.has( 'initParams' ) ) {
+					config.initParams = JSON.parse( params.get( 'initParams' ) );
 				}
 
 				createAndMount( config, services );

@@ -5,7 +5,7 @@ import { Config, ConfigKey } from '@/plugins/ConfigPlugin/Config';
 import SearchLinker, { SearchLinkerKey } from '@/plugins/SearchLinkerPlugin/SearchLinker';
 import Tracker from '@/data-access/tracking/Tracker';
 import {
-	INIT_FROM_PARAMS,
+	HANDLE_INIT_PARAMS,
 	InitParams,
 } from '@/store/actions';
 import {
@@ -24,7 +24,7 @@ import { MapLanguageCodesProvider } from './data-access/LanguageCodesProvider';
 
 export interface CreateAndMountConfig extends Config {
 	rootSelector: string;
-	params?: InitParams;
+	initParams?: InitParams;
 }
 
 export interface Services {
@@ -48,8 +48,8 @@ export default function createAndMount(
 	const store = initStore( { ...services, languageCodesProvider } );
 	app.use( store );
 
-	if ( config.params !== undefined ) {
-		store.dispatch( INIT_FROM_PARAMS, config.params ); // without await
+	if ( config.initParams !== undefined ) {
+		store.dispatch( HANDLE_INIT_PARAMS, config.initParams ); // without await
 	}
 
 	app.provide( ConfigKey, config );

@@ -125,7 +125,7 @@ describe( 'NewLexemeForm', () => {
 	} );
 
 	it( 'submits form data from URL params', () => {
-		cy.visit( '/?' + new URLSearchParams( { params: JSON.stringify( {
+		cy.visit( '/?' + new URLSearchParams( { initParams: JSON.stringify( {
 			lemma: 'test lemma',
 			language: {
 				id: 'Q123',

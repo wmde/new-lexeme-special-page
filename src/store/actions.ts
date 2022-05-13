@@ -36,7 +36,7 @@ type RootActions = ActionTree<RootState, RootState>;
 
 export const CREATE_LEXEME = 'createLexeme';
 export const HANDLE_LANGUAGE_CHANGE = 'handleLanguageChange';
-export const INIT_FROM_PARAMS = 'initFromParams';
+export const HANDLE_INIT_PARAMS = 'initFromParams';
 
 // internal actions (used by other actions), not exported
 const HANDLE_ITEM_LANGUAGE_CODE = 'handleItemLanguageCode';
@@ -93,7 +93,7 @@ export default function createActions(
 
 			await dispatch( HANDLE_ITEM_LANGUAGE_CODE, langCode );
 		},
-		async [ INIT_FROM_PARAMS ](
+		async [ HANDLE_INIT_PARAMS ](
 			{ commit, dispatch }: RootContext,
 			params: InitParams,
 		): Promise<void> {
