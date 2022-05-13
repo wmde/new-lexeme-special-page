@@ -45,7 +45,7 @@ export type InitParams = {
 	lemma?: string;
 	spellVarCode?: string;
 	language?: SearchedItemOption & {
-		languageCode?: string;
+		languageCode: string | null | false;
 	};
 	lexicalCategory?: SearchedItemOption;
 };
