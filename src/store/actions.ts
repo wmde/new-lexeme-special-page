@@ -63,7 +63,7 @@ export default function createActions(
 			}
 			commit( CLEAR_ERRORS );
 			try {
-				const spellingVariant = state.languageCodeFromLanguageItem || state.spellingVariant;
+				const spellingVariant = state.spellingVariant || state.languageCodeFromLanguageItem || '';
 				const lexemeId = await lexemeCreator.createLexeme(
 					state.lemma,
 					spellingVariant,

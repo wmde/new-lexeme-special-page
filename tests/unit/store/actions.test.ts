@@ -78,10 +78,10 @@ describe( CREATE_LEXEME, () => {
 			state(): RootState {
 				return {
 					lemma: 'foo',
-					spellingVariant: 'de',
+					spellingVariant: 'de-formal',
 					language: { id: 'Q123', display: {} },
 					lexicalCategory: { id: 'Q234', display: {} },
-					languageCodeFromLanguageItem: null,
+					languageCodeFromLanguageItem: 'de',
 				} as RootState;
 			},
 			actions,
@@ -89,13 +89,16 @@ describe( CREATE_LEXEME, () => {
 				[ CLEAR_ERRORS ]: jest.fn(),
 			},
 		} );
+		// normally, spellingVariant would only be set if languageCodeFromLanguageItem is null;
+		// however, via the URL parameters one can set both at the same time,
+		// in which case the spellingVariant should take precedence
 
 		const lexemeId = await store.dispatch( CREATE_LEXEME );
 
 		expect( lexemeId ).toBe( 'L123' );
 		expect( lexemeCreator.createLexeme ).toHaveBeenCalledWith(
 			'foo',
-			'de',
+			'de-formal',
 			'Q123',
 			'Q234',
 		);
