@@ -49,7 +49,7 @@ export default function createAndMount(
 	app.use( store );
 
 	if ( config.params !== undefined ) {
-		store.dispatch( INIT_FROM_PARAMS, config.params ); // TODO await?
+		store.dispatch( INIT_FROM_PARAMS, config.params ); // without await
 	}
 
 	app.provide( ConfigKey, config );
