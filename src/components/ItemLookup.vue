@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import {
+	computed,
+	ref,
+	watchEffect,
+} from 'vue';
 import { SearchedItemOption } from '@/data-access/ItemSearcher';
 import WikitLookup from './WikitLookup';
 import debounce from 'lodash/debounce';
@@ -26,6 +30,11 @@ const emit = defineEmits( {
 } );
 
 const searchInput = ref( '' );
+watchEffect( () => {
+	if ( props.value ) {
+		searchInput.value = props.value.display.label?.value ?? props.value.id;
+	}
+} );
 
 // itemSuggestions matching the current searchInput
 const suggestedOptions = computed( () => {
@@ -37,14 +46,20 @@ const suggestedOptions = computed( () => {
 // searchForItems() results for the current searchInput
 const searchedOptions = ref( [] as SearchedItemOption[] );
 
-const menuItems = computed( (): SearchedItemOption[] => [
-	...suggestedOptions.value,
-	...searchedOptions.value.filter(
-		( searchedOption ) => !suggestedOptions.value.some(
-			( suggestedOption ) => suggestedOption.id === searchedOption.id,
+const menuItems = computed( (): SearchedItemOption[] => {
+	const items = [
+		...suggestedOptions.value,
+		...searchedOptions.value.filter(
+			( searchedOption ) => !suggestedOptions.value.some(
+				( suggestedOption ) => suggestedOption.id === searchedOption.id,
+			),
 		),
-	),
-] );
+	];
+	if ( !items.length && props.value ) {
+		items.push( props.value );
+	}
+	return items;
+} );
 
 // `lastSelectedOption` is needed to prevent search for new options when one was just selected
 // by the user and thus the input updated to display the label of the selected option. This should
