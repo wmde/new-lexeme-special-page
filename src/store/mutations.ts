@@ -21,10 +21,10 @@ export default {
 	[ SET_LEMMA ]( state: RootState, lemma: string ): void {
 		state.lemma = lemma;
 	},
-	[ SET_LANGUAGE ]( state: RootState, language: SearchedItemOption ): void {
+	[ SET_LANGUAGE ]( state: RootState, language: SearchedItemOption | null ): void {
 		state.language = language;
 	},
-	[ SET_LEXICAL_CATEGORY ]( state: RootState, lexicalCategory: SearchedItemOption ): void {
+	[ SET_LEXICAL_CATEGORY ]( state: RootState, lexicalCategory: SearchedItemOption | null ): void {
 		state.lexicalCategory = lexicalCategory;
 	},
 	[ SET_SPELLING_VARIANT ]( state: RootState, spellingVariant: string ): void {
