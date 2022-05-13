@@ -31,9 +31,9 @@ export default function initStore( {
 		state(): RootState {
 			return {
 				lemma: '',
-				language: '',
+				language: null,
 				languageCodeFromLanguageItem: undefined,
-				lexicalCategory: '',
+				lexicalCategory: null,
 				spellingVariant: '',
 				globalErrors: [],
 			};

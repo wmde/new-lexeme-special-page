@@ -1,11 +1,12 @@
 <script setup lang="ts">
 import ItemLookup from '@/components/ItemLookup.vue';
+import { SearchedItemOption } from '@/data-access/ItemSearcher';
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
 import { useItemSearch } from '@/plugins/ItemSearchPlugin/ItemSearch';
 import { useConfig } from '@/plugins/ConfigPlugin/Config';
 
 interface Props {
-	modelValue: string | null;
+	modelValue: SearchedItemOption | null;
 }
 
 defineProps<Props>();

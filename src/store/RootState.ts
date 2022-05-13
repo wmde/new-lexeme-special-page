@@ -1,3 +1,5 @@
+import { SearchedItemOption } from '@/data-access/ItemSearcher';
+
 export interface SubmitError {
 	type: string;
 	message?: string;
@@ -5,9 +7,9 @@ export interface SubmitError {
 
 export default interface RootState {
 	lemma: string;
-	language: string;
+	language: SearchedItemOption | null;
 	languageCodeFromLanguageItem: string | undefined | null | false;
-	lexicalCategory: string;
+	lexicalCategory: SearchedItemOption | null;
 	spellingVariant: string;
 	globalErrors: SubmitError[];
 }

@@ -34,8 +34,8 @@ describe( CREATE_LEXEME, () => {
 				return {
 					lemma: 'foo',
 					spellingVariant: '',
-					language: 'Q123',
-					lexicalCategory: 'Q234',
+					language: { id: 'Q123', display: {} },
+					lexicalCategory: { id: 'Q234', display: {} },
 					languageCodeFromLanguageItem: 'fr',
 				} as RootState;
 			},
@@ -75,8 +75,8 @@ describe( CREATE_LEXEME, () => {
 				return {
 					lemma: 'foo',
 					spellingVariant: 'de',
-					language: 'Q123',
-					lexicalCategory: 'Q234',
+					language: { id: 'Q123', display: {} },
+					lexicalCategory: { id: 'Q234', display: {} },
 					languageCodeFromLanguageItem: null,
 				} as RootState;
 			},
@@ -120,8 +120,8 @@ describe( CREATE_LEXEME, () => {
 			state(): RootState {
 				return {
 					lemma: 'foo',
-					language: 'Q123',
-					lexicalCategory: 'Q234',
+					language: { id: 'Q123', display: {} },
+					lexicalCategory: { id: 'Q234', display: {} },
 					spellingVariant: 'en',
 				} as RootState;
 			},
@@ -155,8 +155,8 @@ describe( 'HANDLE_LANGUAGE_CHANGE', () => {
 			state(): RootState {
 				return {
 					lemma: 'foo',
-					language: 'Q123',
-					lexicalCategory: 'Q234',
+					language: { id: 'Q123', display: {} },
+					lexicalCategory: { id: 'Q234', display: {} },
 					spellingVariant: 'bar',
 					languageCodeFromLanguageItem: false,
 				} as RootState;
@@ -165,9 +165,9 @@ describe( 'HANDLE_LANGUAGE_CHANGE', () => {
 			mutations,
 		} );
 
-		const actionPromise = store.dispatch( HANDLE_LANGUAGE_CHANGE, 'Q456' );
+		const actionPromise = store.dispatch( HANDLE_LANGUAGE_CHANGE, { id: 'Q456' } );
 
-		expect( store.state.language ).toBe( 'Q456' );
+		expect( store.state.language ).toStrictEqual( { id: 'Q456' } );
 		expect( store.state.spellingVariant ).toBe( '' );
 		expect( store.state.languageCodeFromLanguageItem ).toBe( undefined );
 
@@ -189,8 +189,8 @@ describe( 'HANDLE_LANGUAGE_CHANGE', () => {
 			state(): RootState {
 				return {
 					lemma: 'foo',
-					language: 'Q123',
-					lexicalCategory: 'Q234',
+					language: { id: 'Q123', display: {} },
+					lexicalCategory: { id: 'Q234', display: {} },
 					spellingVariant: 'bar',
 					languageCodeFromLanguageItem: false,
 				} as RootState;
@@ -205,11 +205,12 @@ describe( 'HANDLE_LANGUAGE_CHANGE', () => {
 	} );
 
 	it( 'validates and sets to state if valid lang code was returned', async () => {
+		const getLanguageCodeFromItemMock = jest.fn().mockResolvedValue( 'de' );
 		const isValidMock = jest.fn().mockReturnValue( true );
 		const actions = createActions(
 			unusedLexemeCreator,
 			{
-				getLanguageCodeFromItem: jest.fn().mockResolvedValue( 'de' ),
+				getLanguageCodeFromItem: getLanguageCodeFromItemMock,
 			},
 			{
 				isValid: isValidMock,
@@ -222,8 +223,8 @@ describe( 'HANDLE_LANGUAGE_CHANGE', () => {
 			state(): RootState {
 				return {
 					lemma: 'foo',
-					language: 'Q123',
-					lexicalCategory: 'Q234',
+					language: { id: 'Q123', display: {} },
+					lexicalCategory: { id: 'Q234', display: {} },
 					spellingVariant: 'bar',
 					languageCodeFromLanguageItem: false,
 				} as RootState;
@@ -232,11 +233,12 @@ describe( 'HANDLE_LANGUAGE_CHANGE', () => {
 			mutations,
 		} );
 
-		await store.dispatch( HANDLE_LANGUAGE_CHANGE, 'Q456' );
+		await store.dispatch( HANDLE_LANGUAGE_CHANGE, { id: 'Q456' } );
 
-		expect( store.state.language ).toBe( 'Q456' );
+		expect( store.state.language ).toStrictEqual( { id: 'Q456' } );
 		expect( store.state.spellingVariant ).toBe( '' );
 		expect( store.state.languageCodeFromLanguageItem ).toBe( 'de' );
+		expect( getLanguageCodeFromItemMock ).toHaveBeenCalledWith( 'Q456' );
 		expect( isValidMock ).toHaveBeenCalledWith( 'de' );
 	} );
 
@@ -258,8 +260,8 @@ describe( 'HANDLE_LANGUAGE_CHANGE', () => {
 			state(): RootState {
 				return {
 					lemma: 'foo',
-					language: 'Q123',
-					lexicalCategory: 'Q234',
+					language: { id: 'Q123', display: {} },
+					lexicalCategory: { id: 'Q234', display: {} },
 					spellingVariant: 'bar',
 					languageCodeFromLanguageItem: false,
 				} as RootState;
@@ -268,9 +270,9 @@ describe( 'HANDLE_LANGUAGE_CHANGE', () => {
 			mutations,
 		} );
 
-		await store.dispatch( HANDLE_LANGUAGE_CHANGE, 'Q456' );
+		await store.dispatch( HANDLE_LANGUAGE_CHANGE, { id: 'Q456' } );
 
-		expect( store.state.language ).toBe( 'Q456' );
+		expect( store.state.language ).toStrictEqual( { id: 'Q456' } );
 		expect( store.state.spellingVariant ).toBe( '' );
 		expect( store.state.languageCodeFromLanguageItem ).toBe( false );
 		expect( isValidMock ).toHaveBeenCalledWith( 'vandalism' );
@@ -297,8 +299,8 @@ describe( 'HANDLE_LANGUAGE_CHANGE', () => {
 			state(): RootState {
 				return {
 					lemma: 'foo',
-					language: 'Q123',
-					lexicalCategory: 'Q234',
+					language: { id: 'Q123', display: {} },
+					lexicalCategory: { id: 'Q234', display: {} },
 					spellingVariant: 'bar',
 					languageCodeFromLanguageItem: false,
 				} as RootState;
@@ -307,9 +309,9 @@ describe( 'HANDLE_LANGUAGE_CHANGE', () => {
 			mutations,
 		} );
 
-		await store.dispatch( HANDLE_LANGUAGE_CHANGE, 'Q456' );
+		await store.dispatch( HANDLE_LANGUAGE_CHANGE, { id: 'Q456' } );
 
-		expect( store.state.language ).toBe( 'Q456' );
+		expect( store.state.language ).toStrictEqual( { id: 'Q456' } );
 		expect( store.state.spellingVariant ).toBe( '' );
 		expect( store.state.languageCodeFromLanguageItem ).toBe( retrievedLangCodeResult );
 		expect( isValidMock ).not.toHaveBeenCalled();

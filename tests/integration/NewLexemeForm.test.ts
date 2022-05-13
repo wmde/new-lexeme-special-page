@@ -88,7 +88,7 @@ describe( 'NewLexemeForm', () => {
 		await wrapper.find( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
 
 		expect( wrapper.find( '.wbl-snl-spelling-variant-lookup' ).exists() ).toBe( false );
-		expect( testStore.state.language ).toBe( 'Q123' );
+		expect( testStore.state.language?.id ).toBe( 'Q123' );
 		expect( testStore.state.languageCodeFromLanguageItem ).toBe( 'de' );
 
 		await languageLookup.setValue( '=Q12' );
@@ -141,7 +141,7 @@ describe( 'NewLexemeForm', () => {
 		await lexicalCategoryInput.setValue( '=Q456' );
 		await wrapper.find( '.wbl-snl-lexical-category-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
 
-		expect( store.state.lexicalCategory ).toBe( 'Q456' );
+		expect( store.state.lexicalCategory?.id ).toBe( 'Q456' );
 	} );
 
 	it( 'updates the store if a language is selected in the spelling variant input', async () => {

@@ -6,6 +6,7 @@
  * @see https://vuex.vuejs.org/guide/structure.html
  */
 
+import { SearchedItemOption } from '@/data-access/ItemSearcher';
 import RootState, { SubmitError } from './RootState';
 
 export const SET_LEMMA = 'setLemma';
@@ -20,10 +21,10 @@ export default {
 	[ SET_LEMMA ]( state: RootState, lemma: string ): void {
 		state.lemma = lemma;
 	},
-	[ SET_LANGUAGE ]( state: RootState, language: string ): void {
+	[ SET_LANGUAGE ]( state: RootState, language: SearchedItemOption | null ): void {
 		state.language = language;
 	},
-	[ SET_LEXICAL_CATEGORY ]( state: RootState, lexicalCategory: string ): void {
+	[ SET_LEXICAL_CATEGORY ]( state: RootState, lexicalCategory: SearchedItemOption | null ): void {
 		state.lexicalCategory = lexicalCategory;
 	},
 	[ SET_SPELLING_VARIANT ]( state: RootState, spellingVariant: string ): void {

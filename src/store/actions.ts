@@ -11,6 +11,7 @@
  * otherwise it’s preferred to directly use mutations.
  */
 
+import { SearchedItemOption } from '@/data-access/ItemSearcher';
 import LangCodeRetriever from '@/data-access/LangCodeRetriever';
 import LanguageCodesProvider from '@/data-access/LanguageCodesProvider';
 import LexemeCreator from '@/data-access/LexemeCreator';
@@ -36,14 +37,17 @@ export default function createActions(
 ): RootActions {
 	return {
 		async [ CREATE_LEXEME ]( { state, commit }: RootContext ): Promise<string> {
+			if ( !state.language || !state.lexicalCategory ) {
+				throw new Error( 'No language or lexical category!' ); // TODO
+			}
 			commit( CLEAR_ERRORS );
 			try {
 				const spellingVariant = state.languageCodeFromLanguageItem || state.spellingVariant;
 				const lexemeId = await lexemeCreator.createLexeme(
 					state.lemma,
 					spellingVariant,
-					state.language,
-					state.lexicalCategory,
+					state.language.id,
+					state.lexicalCategory.id,
 				);
 				tracker.increment( 'wikibase.lexeme.special.NewLexeme.js.create' );
 				return lexemeId;
@@ -52,16 +56,19 @@ export default function createActions(
 				return Promise.reject( null );
 			}
 		},
-		async [ HANDLE_LANGUAGE_CHANGE ]( { commit }, newLanguageItemId: string ): Promise<void> {
-			commit( SET_LANGUAGE, newLanguageItemId );
+		async [ HANDLE_LANGUAGE_CHANGE ](
+			{ commit }: RootContext,
+			newLanguageItem: SearchedItemOption | null,
+		): Promise<void> {
+			commit( SET_LANGUAGE, newLanguageItem );
 			commit( SET_LANGUAGE_CODE_FROM_LANGUAGE_ITEM, undefined );
 			commit( SET_SPELLING_VARIANT, '' );
 
-			if ( !newLanguageItemId ) {
+			if ( !newLanguageItem ) {
 				return;
 			}
 
-			let langCode = await langCodeRetriever.getLanguageCodeFromItem( newLanguageItemId );
+			let langCode = await langCodeRetriever.getLanguageCodeFromItem( newLanguageItem.id );
 
 			if ( typeof langCode === 'string' && !languageCodesProvider.isValid( langCode ) ) {
 				langCode = false;

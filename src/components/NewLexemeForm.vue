@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { SearchedItemOption } from '@/data-access/ItemSearcher';
 import { CREATE_LEXEME, HANDLE_LANGUAGE_CHANGE } from '@/store/actions';
 import { computed } from 'vue';
 import { useStore } from 'vuex';
@@ -30,18 +31,18 @@ const lemma = computed( {
 	},
 } );
 const language = computed( {
-	get(): string {
+	get(): SearchedItemOption | null {
 		return store.state.language;
 	},
-	set( newLanguage: string ): void {
+	set( newLanguage: SearchedItemOption | null ): void {
 		store.commit( SET_LANGUAGE, newLanguage );
 	},
 } );
 const lexicalCategory = computed( {
-	get(): string {
+	get(): SearchedItemOption | null {
 		return store.state.lexicalCategory;
 	},
-	set( newLexicalCategory: string ): void {
+	set( newLexicalCategory: SearchedItemOption | null ): void {
 		store.commit( SET_LEXICAL_CATEGORY, newLexicalCategory );
 	},
 } );
@@ -89,8 +90,8 @@ const onSubmit = async () => {
 	}
 };
 
-const onLanguageSelect = async ( newLanguageId: string | null ) => {
-	await store.dispatch( HANDLE_LANGUAGE_CHANGE, newLanguageId );
+const onLanguageSelect = async ( newLanguage: SearchedItemOption | null ) => {
+	await store.dispatch( HANDLE_LANGUAGE_CHANGE, newLanguage );
 };
 
 </script>
