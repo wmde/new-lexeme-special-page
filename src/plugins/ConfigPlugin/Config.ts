@@ -9,6 +9,12 @@ export interface Config {
 	readonly licenseName: string;
 	readonly wikibaseLexemeTermLanguages: Map<string, string>;
 	readonly lexicalCategorySuggestions: SearchedItemOption[];
+	readonly placeholderExampleData: {
+		languageLabel: string;
+		lexicalCategoryLabel: string;
+		lemma: string;
+		spellingVariant: string;
+	};
 }
 
 export const ConfigKey: InjectionKey<Config> = Symbol( 'Config' );

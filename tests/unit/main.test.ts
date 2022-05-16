@@ -23,6 +23,12 @@ describe( 'createAndMount', () => {
 				[ 'de', 'German' ],
 			] ),
 			lexicalCategorySuggestions: [],
+			placeholderExampleData: {
+				languageLabel: '',
+				lemma: '',
+				lexicalCategoryLabel: '',
+				spellingVariant: '',
+			},
 		}, {
 			itemSearcher: unusedItemSearcher,
 			lexemeCreator: unusedLexemeCreator,

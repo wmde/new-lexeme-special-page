@@ -3,13 +3,13 @@ import MessagesRepository from './MessagesRepository';
 
 const messages: Record<MessageKeys, string> = {
 	'wikibaselexeme-newlexeme-lemma': 'Lemma',
-	'wikibaselexeme-newlexeme-lemma-placeholder': 'Short form of a word such as in a dictionary entry, e.g. \'first\'',
+	'wikibaselexeme-newlexeme-lemma-placeholder-with-example': 'Base form of a word, e.g. \'$1\'',
 	'wikibaselexeme-newlexeme-language': 'Lexeme\'s language',
-	'wikibaselexeme-newlexeme-language-placeholder': 'The Lexeme\'s language, e.g. \'English\'',
+	'wikibaselexeme-newlexeme-language-placeholder-with-example': 'The Lexeme\'s language, e.g. \'$1\'',
 	'wikibaselexeme-newlexeme-lexicalcategory': 'Lexical category',
-	'wikibaselexeme-newlexeme-lexicalcategory-placeholder': 'The Lexeme\'s category, e.g. \'numeral\'',
+	'wikibaselexeme-newlexeme-lexicalcategory-placeholder-with-example': 'The Lexeme\'s category, e.g. \'$1\'',
 	'wikibaselexeme-newlexeme-lemma-language': 'Spelling variant of the Lemma',
-	'wikibaselexeme-newlexeme-lemma-language-placeholder': 'Language code for the Lemma\'s spelling variant, e.g., \'en\'',
+	'wikibaselexeme-newlexeme-lemma-language-placeholder-with-example': 'Language code for the Lemma\'s spelling variant, e.g. \'$1\'',
 	'wikibaselexeme-newlexeme-search-existing': 'You can check whether a Lexeme already exists by using <a href="$1">the search</a>. You can also learn more about Lexemes in the help box below.',
 	'wikibaselexeme-newlexeme-submit': 'Create Lexeme',
 	'wikibaselexeme-newlexeme-submit-error': 'The server encountered a temporary error and could not complete your request. Please try again.',

@@ -4,6 +4,7 @@ import escapeRegExp from 'lodash/escapeRegExp';
 import WikitLookup from './WikitLookup';
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
 import { useLanguageCodesProvider } from '@/plugins/LanguageCodesProviderPlugin/LanguageCodesProvider';
+import { useConfig } from '@/plugins/ConfigPlugin/Config';
 
 interface Props {
 	modelValue: string | null;
@@ -67,6 +68,7 @@ const onOptionSelected = ( value: unknown ) => {
 	emit( 'update:modelValue', selectedValue );
 };
 
+const config = useConfig();
 </script>
 
 <script lang="ts">
@@ -82,7 +84,9 @@ export default {
 		class="wbl-snl-spelling-variant-lookup"
 		:label="messages.getUnescaped( 'wikibaselexeme-newlexeme-lemma-language' )"
 		:placeholder="messages.getUnescaped(
-			'wikibaselexeme-newlexeme-lemma-language-placeholder' )"
+			'wikibaselexeme-newlexeme-lemma-language-placeholder-with-example',
+			config.placeholderExampleData.spellingVariant
+		)"
 		:search-input="searchInput"
 		:menu-items="menuItems"
 		:value="selectedOption"

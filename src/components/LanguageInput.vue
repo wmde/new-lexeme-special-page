@@ -5,6 +5,7 @@ import { useMessages } from '@/plugins/MessagesPlugin/Messages';
 import ItemLookup from '@/components/ItemLookup.vue';
 import { useItemSearch } from '@/plugins/ItemSearchPlugin/ItemSearch';
 import { computed } from 'vue';
+import { useConfig } from '@/plugins/ConfigPlugin/Config';
 
 interface Props {
 	modelValue: SearchedItemOption | null;
@@ -30,6 +31,7 @@ const error = computed( () => {
 		message: messages.getUnescaped( 'wikibaselexeme-newlexeme-invalid-language-code-warning' ),
 	};
 } );
+const config = useConfig();
 </script>
 
 <script lang="ts">
@@ -44,7 +46,10 @@ export default {
 	<div class="wbl-snl-language-lookup">
 		<item-lookup
 			:label="messages.getUnescaped( 'wikibaselexeme-newlexeme-language' )"
-			:placeholder="messages.getUnescaped( 'wikibaselexeme-newlexeme-language-placeholder' )"
+			:placeholder="messages.getUnescaped(
+				'wikibaselexeme-newlexeme-language-placeholder-with-example',
+				config.placeholderExampleData.languageLabel
+			)"
 			:value="modelValue"
 			:search-for-items="searchForItems"
 			:error="error"
