@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { TextInput } from '@wmde/wikit-vue-components';
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
+import { useConfig } from '@/plugins/ConfigPlugin/Config';
 
 interface Props {
 	modelValue: string;
@@ -28,6 +29,8 @@ function buildError( errorKey: Props['error'] ) {
 	}
 	return null;
 }
+const config = useConfig();
+const exampleLemma = config.placeholderExampleData.lemma;
 </script>
 
 <script lang="ts">
@@ -42,7 +45,10 @@ export default {
 	<text-input
 		class="wbl-snl-lemma-input"
 		:label="messages.getUnescaped( 'wikibaselexeme-newlexeme-lemma' )"
-		:placeholder="messages.getUnescaped( 'wikibaselexeme-newlexeme-lemma-placeholder' )"
+		:placeholder="messages.getUnescaped(
+			'wikibaselexeme-newlexeme-lemma-placeholder-with-example',
+			exampleLemma
+		)"
 		name="lemma"
 		required
 		:error="buildError( error )"

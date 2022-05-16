@@ -1,5 +1,6 @@
 import { DOMWrapper, mount } from '@vue/test-utils';
 import LemmaInput from '@/components/LemmaInput.vue';
+import { ConfigKey } from '@/plugins/ConfigPlugin/Config';
 
 describe( 'LemmaInput', () => {
 
@@ -7,6 +8,11 @@ describe( 'LemmaInput', () => {
 		return mount( LemmaInput, {
 			props: {
 				modelValue: '',
+			},
+			global: {
+				provide: {
+					[ ConfigKey as symbol ]: { placeholderExampleData: {} },
+				},
 			},
 			...config,
 		} );

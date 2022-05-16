@@ -5,6 +5,7 @@ import { LanguageCodesProviderKey } from '@/plugins/LanguageCodesProviderPlugin/
 import DevMessagesRepository from '@/plugins/MessagesPlugin/DevMessagesRepository';
 import Messages, { MessagesKey } from '@/plugins/MessagesPlugin/Messages';
 import { MapLanguageCodesProvider } from '@/data-access/LanguageCodesProvider';
+import { ConfigKey } from '@/plugins/ConfigPlugin/Config';
 
 const termLanguagesConfig = new Map( [ [ 'en', 'English' ], [ 'en-gb', 'British English' ], [ 'de', 'German' ] ] );
 
@@ -18,6 +19,7 @@ function createLookup( config: Record<string, unknown> = {} ) {
 				[ LanguageCodesProviderKey as symbol ]:
 					new MapLanguageCodesProvider( termLanguagesConfig ),
 				[ MessagesKey as symbol ]: new Messages( new DevMessagesRepository() ),
+				[ ConfigKey as symbol ]: { placeholderExampleData: {} },
 			},
 		},
 		...config,
@@ -101,6 +103,7 @@ describe( 'SpellingVariantInput', () => {
 						[ LanguageCodesProviderKey as symbol ]:
 							new MapLanguageCodesProvider( termLanguages ),
 						[ MessagesKey as symbol ]: new Messages( new DevMessagesRepository() ),
+						[ ConfigKey as symbol ]: { placeholderExampleData: {} },
 					},
 				},
 			} );

@@ -41,6 +41,12 @@ describe( 'App.vue', () => {
 			licenseName: '',
 			wikibaseLexemeTermLanguages: new Map(),
 			lexicalCategorySuggestions: [],
+			placeholderExampleData: {
+				languageLabel: '',
+				lemma: '',
+				lexicalCategoryLabel: '',
+				spellingVariant: '',
+			},
 		};
 		const lexemeNS = 146;
 		const testUrl = 'https://example.com';

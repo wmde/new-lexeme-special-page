@@ -18,6 +18,7 @@ const searcher = useItemSearch();
 const searchForItems = searcher.searchItems.bind( searcher );
 const config = useConfig();
 const lexicalCategorySuggestions = config.lexicalCategorySuggestions;
+const exampleLexCategory = config.placeholderExampleData.lexicalCategoryLabel;
 </script>
 
 <script lang="ts">
@@ -33,7 +34,8 @@ export default {
 		<item-lookup
 			:label="messages.getUnescaped( 'wikibaselexeme-newlexeme-lexicalcategory' )"
 			:placeholder="messages.getUnescaped(
-				'wikibaselexeme-newlexeme-lexicalcategory-placeholder'
+				'wikibaselexeme-newlexeme-lexicalcategory-placeholder-with-example',
+				exampleLexCategory
 			)"
 			:value="modelValue"
 			:search-for-items="searchForItems"
