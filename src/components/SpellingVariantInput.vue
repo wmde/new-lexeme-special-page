@@ -5,6 +5,7 @@ import WikitLookup from './WikitLookup';
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
 import { useLanguageCodesProvider } from '@/plugins/LanguageCodesProviderPlugin/LanguageCodesProvider';
 import { useConfig } from '@/plugins/ConfigPlugin/Config';
+import { useStore } from 'vuex';
 
 interface Props {
 	modelValue: string | null;
@@ -69,6 +70,7 @@ const onOptionSelected = ( value: unknown ) => {
 };
 
 const config = useConfig();
+const store = useStore();
 </script>
 
 <script lang="ts">
@@ -90,6 +92,7 @@ export default {
 		:search-input="searchInput"
 		:menu-items="menuItems"
 		:value="selectedOption"
+		:error="store.state.perFieldErrors.spellingVariantErrors[0]"
 		@update:search-input="onSearchInput"
 		@input="onOptionSelected"
 	>

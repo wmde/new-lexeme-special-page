@@ -23,6 +23,9 @@ const searchForItems = searcher.searchItems.bind( searcher );
 const store = useStore();
 
 const error = computed( () => {
+	if ( store.state.perFieldErrors.languageErrors.length ) {
+		return store.state.perFieldErrors.languageErrors[ 0 ];
+	}
 	if ( store.state.languageCodeFromLanguageItem !== false ) {
 		return null;
 	}

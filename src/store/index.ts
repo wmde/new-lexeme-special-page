@@ -36,6 +36,12 @@ export default function initStore( {
 				lexicalCategory: null,
 				spellingVariant: '',
 				globalErrors: [],
+				perFieldErrors: {
+					lemmaErrors: [],
+					languageErrors: [],
+					lexicalCategoryErrors: [],
+					spellingVariantErrors: [],
+				},
 			};
 		},
 		mutations,

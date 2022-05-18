@@ -335,6 +335,12 @@ describe( HANDLE_INIT_PARAMS, () => {
 			spellingVariant: 'bar',
 			languageCodeFromLanguageItem: false,
 			globalErrors: [],
+			perFieldErrors: {
+				lemmaErrors: [],
+				languageErrors: [],
+				lexicalCategoryErrors: [],
+				spellingVariantErrors: [],
+			},
 		} );
 		const actions = createActions(
 			unusedLexemeCreator,
@@ -371,6 +377,12 @@ describe( HANDLE_INIT_PARAMS, () => {
 					spellingVariant: '',
 					languageCodeFromLanguageItem: undefined,
 					globalErrors: [],
+					perFieldErrors: {
+						lemmaErrors: [],
+						languageErrors: [],
+						lexicalCategoryErrors: [],
+						spellingVariantErrors: [],
+					},
 				};
 			},
 			actions,
@@ -403,6 +415,12 @@ describe( HANDLE_INIT_PARAMS, () => {
 			spellingVariant: 'en-gb',
 			languageCodeFromLanguageItem: 'en',
 			globalErrors: [],
+			perFieldErrors: {
+				lemmaErrors: [],
+				languageErrors: [],
+				lexicalCategoryErrors: [],
+				spellingVariantErrors: [],
+			},
 		} );
 	} );
 
@@ -426,6 +444,12 @@ describe( HANDLE_INIT_PARAMS, () => {
 					spellingVariant: '',
 					languageCodeFromLanguageItem: undefined,
 					globalErrors: [],
+					perFieldErrors: {
+						lemmaErrors: [],
+						languageErrors: [],
+						lexicalCategoryErrors: [],
+						spellingVariantErrors: [],
+					},
 				};
 			},
 			actions,

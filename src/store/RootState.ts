@@ -5,6 +5,11 @@ export interface SubmitError {
 	message?: string;
 }
 
+interface PerFieldError {
+	type: string;
+	message: string;
+}
+
 export default interface RootState {
 	lemma: string;
 	language: SearchedItemOption | null;
@@ -12,4 +17,10 @@ export default interface RootState {
 	lexicalCategory: SearchedItemOption | null;
 	spellingVariant: string;
 	globalErrors: SubmitError[];
+	perFieldErrors: {
+		lemmaErrors: PerFieldError[];
+		languageErrors: PerFieldError[];
+		lexicalCategoryErrors: PerFieldError[];
+		spellingVariantErrors: PerFieldError[];
+	};
 }
