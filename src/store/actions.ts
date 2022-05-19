@@ -40,6 +40,7 @@ export const HANDLE_INIT_PARAMS = 'initFromParams';
 
 // internal actions (used by other actions), not exported
 const HANDLE_ITEM_LANGUAGE_CODE = 'handleItemLanguageCode';
+const VALIDATE_INPUTS = 'validateInputs';
 
 export type InitParams = {
 	lemma?: string;
@@ -57,7 +58,32 @@ export default function createActions(
 	tracker: Tracker,
 ): RootActions {
 	return {
-		async [ CREATE_LEXEME ]( { state, commit }: RootContext ): Promise<string> {
+		[ VALIDATE_INPUTS ]( { state, commit }: RootContext ): boolean {
+			let everythingIsValid = true;
+			if ( !state.lemma ) {
+				// FIXME: use mutations everywhere
+				state.perFieldErrors.lemmaErrors.push( { type: 'error', message: 'meh' } );
+				everythingIsValid = false;
+			}
+			if ( !state.language ) {
+				state.perFieldErrors.languageErrors.push( { type: 'error', message: 'meh' } );
+				everythingIsValid = false;
+			}
+			if ( !state.lexicalCategory ) {
+				state.perFieldErrors.lexicalCategoryErrors.push( { type: 'error', message: 'meh' } );
+				everythingIsValid = false;
+			}
+			if ( state.language && !state.languageCodeFromLanguageItem && !state.spellingVariant ) {
+				state.perFieldErrors.spellingVariantErrors.push( { type: 'error', message: 'meh' } );
+				everythingIsValid = false;
+			}
+
+			return everythingIsValid;
+		},
+		async [ CREATE_LEXEME ]( { state, commit, dispatch }: RootContext ): Promise<string> {
+			if ( !await dispatch( VALIDATE_INPUTS ) ) {
+				throw new Error( 'No language or lexical category!' ); // TODO
+			}
 			if ( !state.language || !state.lexicalCategory ) {
 				throw new Error( 'No language or lexical category!' ); // TODO
 			}
