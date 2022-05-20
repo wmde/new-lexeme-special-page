@@ -5,6 +5,7 @@ import { useMessages } from '@/plugins/MessagesPlugin/Messages';
 import { useItemSearch } from '@/plugins/ItemSearchPlugin/ItemSearch';
 import { useConfig } from '@/plugins/ConfigPlugin/Config';
 import { useStore } from 'vuex';
+import { computed } from 'vue';
 
 interface Props {
 	modelValue: SearchedItemOption | null;
@@ -21,6 +22,17 @@ const config = useConfig();
 const lexicalCategorySuggestions = config.lexicalCategorySuggestions;
 const exampleLexCategory = config.placeholderExampleData.lexicalCategoryLabel;
 const store = useStore();
+const error = computed( () => {
+	if ( !store.state.perFieldErrors.lexicalCategoryErrors.length ) {
+		return null;
+	}
+	return {
+		type: store.state.perFieldErrors.lexicalCategoryErrors[ 0 ].type,
+		message: messages.getUnescaped(
+			store.state.perFieldErrors.lexicalCategoryErrors[ 0 ].message,
+		),
+	};
+} );
 </script>
 
 <script lang="ts">
@@ -42,7 +54,7 @@ export default {
 			:value="modelValue"
 			:search-for-items="searchForItems"
 			:item-suggestions="lexicalCategorySuggestions"
-			:error="store.state.perFieldErrors.lexicalCategoryErrors[0]"
+			:error="error"
 			@update:model-value="$emit( 'update:modelValue', $event )"
 		/>
 	</div>

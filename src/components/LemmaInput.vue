@@ -3,6 +3,7 @@ import { TextInput } from '@wmde/wikit-vue-components';
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
 import { useConfig } from '@/plugins/ConfigPlugin/Config';
 import { useStore } from 'vuex';
+import { computed } from 'vue';
 
 interface Props {
 	modelValue: string;
@@ -17,6 +18,15 @@ const messages = useMessages();
 const config = useConfig();
 const exampleLemma = config.placeholderExampleData.lemma;
 const store = useStore();
+const error = computed( () => {
+	if ( !store.state.perFieldErrors.lemmaErrors.length ) {
+		return null;
+	}
+	return {
+		type: store.state.perFieldErrors.lemmaErrors[ 0 ].type,
+		message: messages.getUnescaped( store.state.perFieldErrors.lemmaErrors[ 0 ].message ),
+	};
+} );
 </script>
 
 <script lang="ts">
@@ -37,7 +47,7 @@ export default {
 		)"
 		name="lemma"
 		aria-required="true"
-		:error="store.state.perFieldErrors.lemmaErrors[0]"
+		:error="error"
 		:value="modelValue"
 		@input="$emit( 'update:modelValue', $event )"
 	/>

@@ -71,6 +71,17 @@ const onOptionSelected = ( value: unknown ) => {
 
 const config = useConfig();
 const store = useStore();
+const error = computed( () => {
+	if ( !store.state.perFieldErrors.spellingVariantErrors.length ) {
+		return null;
+	}
+	return {
+		type: store.state.perFieldErrors.spellingVariantErrors[ 0 ].type,
+		message: messages.getUnescaped(
+			store.state.perFieldErrors.spellingVariantErrors[ 0 ].message,
+		),
+	};
+} );
 </script>
 
 <script lang="ts">
@@ -92,7 +103,7 @@ export default {
 		:search-input="searchInput"
 		:menu-items="menuItems"
 		:value="selectedOption"
-		:error="store.state.perFieldErrors.spellingVariantErrors[0]"
+		:error="error"
 		@update:search-input="onSearchInput"
 		@input="onOptionSelected"
 	>
