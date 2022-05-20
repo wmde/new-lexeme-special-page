@@ -96,10 +96,7 @@ export default function createActions(
 		},
 		async [ CREATE_LEXEME ]( { state, commit, dispatch }: RootContext ): Promise<string> {
 			if ( !await dispatch( VALIDATE_INPUTS ) ) {
-				throw new Error( 'No language or lexical category!' ); // TODO
-			}
-			if ( !state.language || !state.lexicalCategory ) {
-				throw new Error( 'No language or lexical category!' ); // TODO
+				throw new Error( 'Not all fields are valid' ); // TODO
 			}
 			commit( CLEAR_ERRORS );
 			try {
