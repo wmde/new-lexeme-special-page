@@ -22,6 +22,7 @@ import {
 } from 'vuex';
 import {
 	ADD_ERRORS,
+	ADD_PER_FIELD_ERROR,
 	CLEAR_ERRORS,
 	SET_LANGUAGE,
 	SET_LANGUAGE_CODE_FROM_LANGUAGE_ITEM,
@@ -62,19 +63,32 @@ export default function createActions(
 			let everythingIsValid = true;
 			if ( !state.lemma ) {
 				// FIXME: use mutations everywhere
-				state.perFieldErrors.lemmaErrors.push( { type: 'error', message: 'meh' } );
+				commit(
+					ADD_PER_FIELD_ERROR,
+					// FIXME: message should be code here and transformed it i18n in the component
+					{ field: 'lemmaErrors', error: { type: 'error', message: 'wikibaselexeme-newlexeme-error-no-lemma' } },
+				);
 				everythingIsValid = false;
 			}
 			if ( !state.language ) {
-				state.perFieldErrors.languageErrors.push( { type: 'error', message: 'meh' } );
+				commit(
+					ADD_PER_FIELD_ERROR,
+					{ field: 'languageErrors', error: { type: 'error', message: 'wikibaselexeme-newlexeme-error-no-language' } },
+				);
 				everythingIsValid = false;
 			}
 			if ( !state.lexicalCategory ) {
-				state.perFieldErrors.lexicalCategoryErrors.push( { type: 'error', message: 'meh' } );
+				commit(
+					ADD_PER_FIELD_ERROR,
+					{ field: 'lexicalCategoryErrors', error: { type: 'error', message: 'wikibaselexeme-newlexeme-error-no-lexical-category' } },
+				);
 				everythingIsValid = false;
 			}
 			if ( state.language && !state.languageCodeFromLanguageItem && !state.spellingVariant ) {
-				state.perFieldErrors.spellingVariantErrors.push( { type: 'error', message: 'meh' } );
+				commit(
+					ADD_PER_FIELD_ERROR,
+					{ field: 'spellingVariantErrors', error: { type: 'error', message: 'wikibaselexeme-newlexeme-error-no-spelling-variant' } },
+				);
 				everythingIsValid = false;
 			}
 
