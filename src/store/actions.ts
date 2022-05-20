@@ -41,7 +41,7 @@ export const HANDLE_INIT_PARAMS = 'initFromParams';
 
 // internal actions (used by other actions), not exported
 const HANDLE_ITEM_LANGUAGE_CODE = 'handleItemLanguageCode';
-const VALIDATE_INPUTS = 'validateInputs';
+const GET_VALID_INPUTS = 'getValidInputs';
 
 export type InitParams = {
 	lemma?: string;
@@ -52,6 +52,13 @@ export type InitParams = {
 	lexicalCategory?: SearchedItemOption;
 };
 
+interface ValidLexemeData {
+	validLemma: string;
+	validLanguageId: string;
+	validLexicalCategoryId: string;
+	validSpellingVariant: string;
+}
+
 export default function createActions(
 	lexemeCreator: LexemeCreator,
 	langCodeRetriever: LangCodeRetriever,
@@ -59,53 +66,65 @@ export default function createActions(
 	tracker: Tracker,
 ): RootActions {
 	return {
-		[ VALIDATE_INPUTS ]( { state, commit }: RootContext ): boolean {
-			let everythingIsValid = true;
+		[ GET_VALID_INPUTS ]( { state, commit }: RootContext ): ValidLexemeData {
+			const validData: Partial<ValidLexemeData> = {};
+
 			if ( !state.lemma ) {
-				// FIXME: use mutations everywhere
 				commit(
 					ADD_PER_FIELD_ERROR,
-					// FIXME: message should be code here and transformed it i18n in the component
 					{ field: 'lemmaErrors', error: { type: 'error', message: 'wikibaselexeme-newlexeme-error-no-lemma' } },
 				);
-				everythingIsValid = false;
+			} else {
+				validData.validLemma = state.lemma;
 			}
 			if ( !state.language ) {
 				commit(
 					ADD_PER_FIELD_ERROR,
 					{ field: 'languageErrors', error: { type: 'error', message: 'wikibaselexeme-newlexeme-error-no-language' } },
 				);
-				everythingIsValid = false;
+			} else {
+				validData.validLanguageId = state.language.id;
 			}
 			if ( !state.lexicalCategory ) {
 				commit(
 					ADD_PER_FIELD_ERROR,
 					{ field: 'lexicalCategoryErrors', error: { type: 'error', message: 'wikibaselexeme-newlexeme-error-no-lexical-category' } },
 				);
-				everythingIsValid = false;
+			} else {
+				validData.validLexicalCategoryId = state.lexicalCategory.id;
 			}
 			if ( state.language && !state.languageCodeFromLanguageItem && !state.spellingVariant ) {
 				commit(
 					ADD_PER_FIELD_ERROR,
 					{ field: 'spellingVariantErrors', error: { type: 'error', message: 'wikibaselexeme-newlexeme-error-no-spelling-variant' } },
 				);
-				everythingIsValid = false;
+			} else {
+				validData.validSpellingVariant = state.languageCodeFromLanguageItem ||
+					state.spellingVariant;
 			}
 
-			return everythingIsValid;
-		},
-		async [ CREATE_LEXEME ]( { state, commit, dispatch }: RootContext ): Promise<string> {
-			if ( !await dispatch( VALIDATE_INPUTS ) ) {
-				throw new Error( 'Not all fields are valid' ); // TODO
+			if (
+				!validData.validLemma ||
+				!validData.validLanguageId ||
+				!validData.validLexicalCategoryId ||
+				!validData.validSpellingVariant
+			) {
+				throw new Error( 'Not all fields are valid' );
 			}
+			// FIXME: is there a way to make this work without type cast?
+			return validData as ValidLexemeData;
+		},
+		async [ CREATE_LEXEME ]( { commit, dispatch }: RootContext ): Promise<string> {
+			const {
+				validLemma, validLanguageId, validLexicalCategoryId, validSpellingVariant,
+			} = await dispatch( GET_VALID_INPUTS );
 			commit( CLEAR_ERRORS );
 			try {
-				const spellingVariant = state.spellingVariant || state.languageCodeFromLanguageItem || '';
 				const lexemeId = await lexemeCreator.createLexeme(
-					state.lemma,
-					spellingVariant,
-					state.language.id,
-					state.lexicalCategory.id,
+					validLemma,
+					validSpellingVariant,
+					validLanguageId,
+					validLexicalCategoryId,
 				);
 				tracker.increment( 'wikibase.lexeme.special.NewLexeme.js.create' );
 				return lexemeId;
