@@ -7,6 +7,7 @@ import createActions, {
 import LexemeCreator from '@/data-access/LexemeCreator';
 import {
 	ADD_ERRORS,
+	ADD_PER_FIELD_ERROR,
 	CLEAR_ERRORS,
 } from '@/store/mutations';
 import RootState, { SubmitError } from '@/store/RootState';
@@ -143,6 +144,35 @@ describe( CREATE_LEXEME, () => {
 			expect.anything(), // state
 			errors, // payload
 		);
+	} );
+
+	it( 'shows an error for missing lemmas and rejects', async () => {
+		const actions = createActions(
+			unusedLexemeCreator,
+			unusedLangCodeRetriever,
+			unusedLanguageCodesProvider,
+			unusedTracker,
+		);
+		const mockMutations = {
+			[ ADD_PER_FIELD_ERROR ]: jest.fn(),
+		};
+		const store = createStore( {
+			state(): RootState {
+				return {
+					lemma: '',
+					language: { id: 'Q123', display: {} },
+					lexicalCategory: { id: 'Q234', display: {} },
+					spellingVariant: 'en',
+				} as RootState;
+			},
+			actions,
+			mutations: mockMutations,
+		} );
+
+		await expect( store.dispatch( CREATE_LEXEME ) ).rejects.toBe( null );
+
+		expect( mockMutations[ ADD_PER_FIELD_ERROR ] ).toHaveBeenCalled();
+
 	} );
 
 } );
