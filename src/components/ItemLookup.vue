@@ -15,7 +15,7 @@ interface Props {
 	placeholder: string;
 	value: SearchedItemOption | null;
 	searchForItems: ( searchTerm: string, offset?: number ) => Promise<SearchedItemOption[]>;
-	error: { type: 'error'|'warning'; message: string } | null;
+	error?: { type: 'error'|'warning'; message: string } | null;
 	itemSuggestions?: SearchedItemOption[];
 }
 const props = withDefaults( defineProps<Props>(), {
