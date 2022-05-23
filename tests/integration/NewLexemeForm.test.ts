@@ -1,7 +1,7 @@
 import LanguageCodesProvider from '@/data-access/LanguageCodesProvider';
 import { Config, ConfigKey } from '@/plugins/ConfigPlugin/Config';
 import { LanguageCodesProviderKey } from '@/plugins/LanguageCodesProviderPlugin/LanguageCodesProvider';
-import { mount } from '@vue/test-utils';
+import { flushPromises, mount } from '@vue/test-utils';
 import NewLexemeForm from '@/components/NewLexemeForm.vue';
 import initStore from '@/store';
 import unusedLexemeCreator from '../mocks/unusedLexemeCreator';
@@ -336,12 +336,7 @@ describe( 'NewLexemeForm', () => {
 			expect( submitButton.text() ).toBe( 'Creating Lexeme...' );
 
 			reject( [ { type: 'test', message: 'error' } ] );
-			await wrapper.vm.$nextTick();
-			await wrapper.vm.$nextTick();
-			await wrapper.vm.$nextTick();
-			await wrapper.vm.$nextTick();
-			await wrapper.vm.$nextTick();
-			await wrapper.vm.$nextTick();
+			await flushPromises();
 
 			expect( submitButton.attributes( 'disabled' ) ).toBe( undefined );
 			expect( submitButton.text() ).toBe( 'Create Lexeme' );
