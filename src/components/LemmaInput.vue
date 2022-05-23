@@ -50,7 +50,7 @@ export default {
 			exampleLemma
 		)"
 		name="lemma"
-		required
+		aria-required="true"
 		:error="buildError( error )"
 		:value="modelValue"
 		@input="$emit( 'update:modelValue', $event )"
