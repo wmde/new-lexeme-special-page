@@ -93,14 +93,16 @@ export default function createActions(
 			} else {
 				formData.validLexicalCategoryId = state.lexicalCategory.id;
 			}
-			if ( state.language && !state.languageCodeFromLanguageItem && !state.spellingVariant ) {
-				commit(
-					ADD_PER_FIELD_ERROR,
-					{ field: 'spellingVariantErrors', error: { messageKey: 'wikibaselexeme-newlexeme-error-no-spelling-variant' } },
-				);
-			} else {
-				formData.validSpellingVariant = state.languageCodeFromLanguageItem ||
-					state.spellingVariant;
+			if ( state.language ) {
+				if ( !state.languageCodeFromLanguageItem && !state.spellingVariant ) {
+					commit(
+						ADD_PER_FIELD_ERROR,
+						{ field: 'spellingVariantErrors', error: { messageKey: 'wikibaselexeme-newlexeme-error-no-spelling-variant' } },
+					);
+				} else {
+					formData.validSpellingVariant = state.spellingVariant ||
+						state.languageCodeFromLanguageItem as string;
+				}
 			}
 
 			const isFormDataValid = (

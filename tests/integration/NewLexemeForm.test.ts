@@ -235,6 +235,10 @@ describe( 'NewLexemeForm', () => {
 			await wrapper.trigger( 'submit' );
 
 			expect( createLexeme ).toHaveBeenCalledWith( 'foo', 'de', 'Q123', 'Q456' );
+
+			await nextTick();
+			await nextTick();
+
 			expect( goToTitle ).toHaveBeenCalledWith( 'Special:EntityPage/L123' );
 		} );
 
@@ -283,6 +287,10 @@ describe( 'NewLexemeForm', () => {
 			await wrapper.trigger( 'submit' );
 
 			expect( createLexeme ).toHaveBeenCalledWith( 'foo', 'en-gb', 'Q123', 'Q456' );
+
+			await nextTick();
+			await nextTick();
+
 			expect( goToTitle ).toHaveBeenCalledWith( 'Special:EntityPage/L123' );
 		} );
 
