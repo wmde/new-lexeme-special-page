@@ -286,6 +286,68 @@ describe( 'NewLexemeForm', () => {
 			expect( goToTitle ).toHaveBeenCalledWith( 'Special:EntityPage/L123' );
 		} );
 
+		it( 'disables button when submitting and reenables on error', async () => {
+			let reject = undefined as unknown as ( reason: any ) => void;
+			const promise = new Promise( ( _, reject_ ) => {
+				reject = reject_;
+			} );
+			const createLexeme = jest.fn().mockReturnValue( promise );
+			const goToTitle = jest.fn();
+			const testStore = initStore( {
+				lexemeCreator: { createLexeme },
+				langCodeRetriever: { getLanguageCodeFromItem: jest.fn().mockResolvedValue( 'de' ) },
+				languageCodesProvider: {
+					isValid: jest.fn().mockReturnValue( true ),
+					getLanguages: jest.fn(),
+				},
+				tracker: { increment: jest.fn() },
+			} );
+			const wrapper = mount( NewLexemeForm, {
+				global: {
+					plugins: [ testStore ],
+					provide: {
+						[ ConfigKey as symbol ]: emptyConfig,
+						[ ItemSearchKey as symbol ]: new DevItemSearcher(),
+						[ LanguageCodesProviderKey as symbol ]: {},
+						[ WikiRouterKey as symbol ]: { goToTitle },
+						[ MessagesKey as symbol ]: new Messages( new DevMessagesRepository() ),
+					},
+				},
+			} );
+
+			const lemmaInput = wrapper.find( '.wbl-snl-lemma-input input' );
+			await lemmaInput.setValue( 'foo' );
+
+			const languageInput = wrapper.find( '.wbl-snl-language-lookup input' );
+			await languageInput.setValue( '=Q123' );
+			await wrapper.find( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
+
+			const spellingVariantInput = wrapper.find( '.wbl-snl-spelling-variant-lookup input' );
+			expect( spellingVariantInput.exists() ).toBe( false );
+
+			const lexicalCategoryInput = wrapper.find( '.wbl-snl-lexical-category-lookup input' );
+			await lexicalCategoryInput.setValue( '=Q456' );
+			await wrapper.find( '.wbl-snl-lexical-category-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
+
+			await wrapper.trigger( 'submit' );
+
+			const submitButton = wrapper.find( '.wikit-Button' );
+			expect( submitButton.attributes( 'disabled' ) ).toBe( '' );
+			expect( submitButton.text() ).toBe( 'Creating Lexeme...' );
+
+			reject( [ { type: 'test', message: 'error' } ] );
+			await wrapper.vm.$nextTick();
+			await wrapper.vm.$nextTick();
+			await wrapper.vm.$nextTick();
+			await wrapper.vm.$nextTick();
+			await wrapper.vm.$nextTick();
+			await wrapper.vm.$nextTick();
+
+			expect( submitButton.attributes( 'disabled' ) ).toBe( undefined );
+			expect( submitButton.text() ).toBe( 'Create Lexeme' );
+			expect( goToTitle ).not.toHaveBeenCalled();
+		} );
+
 	} );
 
 } );
