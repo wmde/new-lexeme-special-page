@@ -192,95 +192,100 @@ describe( 'NewLexemeForm', () => {
 		expect( testStore.state.spellingVariant ).toBe( 'de' );
 	} );
 
-	it( 'calls the API to create the Lexeme and then redirects to it', async () => {
-		const createLexeme = jest.fn().mockReturnValue( 'L123' );
-		const goToTitle = jest.fn();
-		const testStore = initStore( {
-			lexemeCreator: { createLexeme },
-			langCodeRetriever: { getLanguageCodeFromItem: jest.fn().mockResolvedValue( 'de' ) },
-			languageCodesProvider: {
-				isValid: jest.fn().mockReturnValue( true ),
-				getLanguages: jest.fn(),
-			},
-			tracker: { increment: jest.fn() },
-		} );
-		const wrapper = mount( NewLexemeForm, {
-			global: {
-				plugins: [ testStore ],
-				provide: {
-					[ ConfigKey as symbol ]: emptyConfig,
-					[ ItemSearchKey as symbol ]: new DevItemSearcher(),
-					[ LanguageCodesProviderKey as symbol ]: {},
-					[ WikiRouterKey as symbol ]: { goToTitle },
+	describe( 'calls the API to create the Lexeme and then redirects to it', () => {
+
+		it( 'with language code from language item', async () => {
+			const createLexeme = jest.fn().mockReturnValue( 'L123' );
+			const goToTitle = jest.fn();
+			const testStore = initStore( {
+				lexemeCreator: { createLexeme },
+				langCodeRetriever: { getLanguageCodeFromItem: jest.fn().mockResolvedValue( 'de' ) },
+				languageCodesProvider: {
+					isValid: jest.fn().mockReturnValue( true ),
+					getLanguages: jest.fn(),
 				},
-			},
-		} );
-
-		const lemmaInput = wrapper.find( '.wbl-snl-lemma-input input' );
-		await lemmaInput.setValue( 'foo' );
-
-		const languageInput = wrapper.find( '.wbl-snl-language-lookup input' );
-		await languageInput.setValue( '=Q123' );
-		await wrapper.find( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
-
-		const spellingVariantInput = wrapper.find( '.wbl-snl-spelling-variant-lookup input' );
-		expect( spellingVariantInput.exists() ).toBe( false );
-
-		const lexicalCategoryInput = wrapper.find( '.wbl-snl-lexical-category-lookup input' );
-		await lexicalCategoryInput.setValue( '=Q456' );
-		await wrapper.find( '.wbl-snl-lexical-category-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
-
-		await wrapper.trigger( 'submit' );
-
-		expect( createLexeme ).toHaveBeenCalledWith( 'foo', 'de', 'Q123', 'Q456' );
-		expect( goToTitle ).toHaveBeenCalledWith( 'Special:EntityPage/L123' );
-	} );
-
-	it( 'calls the API to create the Lexeme and then redirects to it', async () => {
-		const createLexeme = jest.fn().mockReturnValue( 'L123' );
-		const goToTitle = jest.fn();
-		const testStore = initStore( {
-			lexemeCreator: { createLexeme },
-			langCodeRetriever: { getLanguageCodeFromItem: jest.fn().mockResolvedValue( null ) },
-			languageCodesProvider: unusedLanguageCodesProvider,
-			tracker: { increment: jest.fn() },
-		} );
-		const wrapper = mount( NewLexemeForm, {
-			global: {
-				plugins: [ testStore ],
-				provide: {
-					[ ConfigKey as symbol ]: emptyConfig,
-					[ ItemSearchKey as symbol ]: new DevItemSearcher(),
-					[ LanguageCodesProviderKey as symbol ]: {
-						getLanguages: () => new Map( [ [ 'en-gb', 'British English' ] ] ),
+				tracker: { increment: jest.fn() },
+			} );
+			const wrapper = mount( NewLexemeForm, {
+				global: {
+					plugins: [ testStore ],
+					provide: {
+						[ ConfigKey as symbol ]: emptyConfig,
+						[ ItemSearchKey as symbol ]: new DevItemSearcher(),
+						[ LanguageCodesProviderKey as symbol ]: {},
+						[ WikiRouterKey as symbol ]: { goToTitle },
 					},
-					[ WikiRouterKey as symbol ]: { goToTitle },
-					[ MessagesKey as symbol ]: new Messages( new DevMessagesRepository() ),
 				},
-			},
+			} );
+
+			const lemmaInput = wrapper.find( '.wbl-snl-lemma-input input' );
+			await lemmaInput.setValue( 'foo' );
+
+			const languageInput = wrapper.find( '.wbl-snl-language-lookup input' );
+			await languageInput.setValue( '=Q123' );
+			await wrapper.find( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
+
+			const spellingVariantInput = wrapper.find( '.wbl-snl-spelling-variant-lookup input' );
+			expect( spellingVariantInput.exists() ).toBe( false );
+
+			const lexicalCategoryInput = wrapper.find( '.wbl-snl-lexical-category-lookup input' );
+			await lexicalCategoryInput.setValue( '=Q456' );
+			await wrapper.find( '.wbl-snl-lexical-category-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
+
+			await wrapper.trigger( 'submit' );
+
+			expect( createLexeme ).toHaveBeenCalledWith( 'foo', 'de', 'Q123', 'Q456' );
+			expect( goToTitle ).toHaveBeenCalledWith( 'Special:EntityPage/L123' );
 		} );
 
-		const lemmaInput = wrapper.find( '.wbl-snl-lemma-input input' );
-		await lemmaInput.setValue( 'foo' );
+		it( 'with spelling variant', async () => {
+			const createLexeme = jest.fn().mockReturnValue( 'L123' );
+			const goToTitle = jest.fn();
+			const testStore = initStore( {
+				lexemeCreator: { createLexeme },
+				langCodeRetriever: { getLanguageCodeFromItem: jest.fn().mockResolvedValue( null ) },
+				languageCodesProvider: unusedLanguageCodesProvider,
+				tracker: { increment: jest.fn() },
+			} );
+			const wrapper = mount( NewLexemeForm, {
+				global: {
+					plugins: [ testStore ],
+					provide: {
+						[ ConfigKey as symbol ]: emptyConfig,
+						[ ItemSearchKey as symbol ]: new DevItemSearcher(),
+						[ LanguageCodesProviderKey as symbol ]: {
+							getLanguages: () => new Map( [ [ 'en-gb', 'British English' ] ] ),
+						},
+						[ WikiRouterKey as symbol ]: { goToTitle },
+						[ MessagesKey as symbol ]: new Messages( new DevMessagesRepository() ),
+					},
+				},
+			} );
 
-		const languageInput = wrapper.find( '.wbl-snl-language-lookup input' );
-		await languageInput.setValue( '=Q123' );
-		await wrapper.find( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
+			const lemmaInput = wrapper.find( '.wbl-snl-lemma-input input' );
+			await lemmaInput.setValue( 'foo' );
 
-		await nextTick();
+			const languageInput = wrapper.find( '.wbl-snl-language-lookup input' );
+			await languageInput.setValue( '=Q123' );
+			await wrapper.find( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
 
-		// will actually select en-gb, en is not in wikibaseLexemeTermLanguages
-		const spellingVariantInput = wrapper.find( '.wbl-snl-spelling-variant-lookup input' );
-		await spellingVariantInput.setValue( 'en' );
-		await wrapper.find( '.wbl-snl-spelling-variant-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
+			await nextTick();
 
-		const lexicalCategoryInput = wrapper.find( '.wbl-snl-lexical-category-lookup input' );
-		await lexicalCategoryInput.setValue( '=Q456' );
-		await wrapper.find( '.wbl-snl-lexical-category-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
+			// will actually select en-gb, en is not in wikibaseLexemeTermLanguages
+			const spellingVariantInput = wrapper.find( '.wbl-snl-spelling-variant-lookup input' );
+			await spellingVariantInput.setValue( 'en' );
+			await wrapper.find( '.wbl-snl-spelling-variant-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
 
-		await wrapper.trigger( 'submit' );
+			const lexicalCategoryInput = wrapper.find( '.wbl-snl-lexical-category-lookup input' );
+			await lexicalCategoryInput.setValue( '=Q456' );
+			await wrapper.find( '.wbl-snl-lexical-category-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
 
-		expect( createLexeme ).toHaveBeenCalledWith( 'foo', 'en-gb', 'Q123', 'Q456' );
-		expect( goToTitle ).toHaveBeenCalledWith( 'Special:EntityPage/L123' );
+			await wrapper.trigger( 'submit' );
+
+			expect( createLexeme ).toHaveBeenCalledWith( 'foo', 'en-gb', 'Q123', 'Q456' );
+			expect( goToTitle ).toHaveBeenCalledWith( 'Special:EntityPage/L123' );
+		} );
+
 	} );
+
 } );
