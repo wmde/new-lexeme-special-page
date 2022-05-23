@@ -6,8 +6,7 @@ export interface SubmitError {
 }
 
 interface PerFieldError {
-	type: string;
-	message: string;
+	messageKey: string;
 }
 
 export default interface RootState {

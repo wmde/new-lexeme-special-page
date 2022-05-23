@@ -72,7 +72,7 @@ export default function createActions(
 			if ( !state.lemma ) {
 				commit(
 					ADD_PER_FIELD_ERROR,
-					{ field: 'lemmaErrors', error: { type: 'error', message: 'wikibaselexeme-newlexeme-error-no-lemma' } },
+					{ field: 'lemmaErrors', error: { messageKey: 'wikibaselexeme-newlexeme-error-no-lemma' } },
 				);
 			} else {
 				validData.validLemma = state.lemma;
@@ -80,7 +80,7 @@ export default function createActions(
 			if ( !state.language ) {
 				commit(
 					ADD_PER_FIELD_ERROR,
-					{ field: 'languageErrors', error: { type: 'error', message: 'wikibaselexeme-newlexeme-error-no-language' } },
+					{ field: 'languageErrors', error: { messageKey: 'wikibaselexeme-newlexeme-error-no-language' } },
 				);
 			} else {
 				validData.validLanguageId = state.language.id;
@@ -88,7 +88,7 @@ export default function createActions(
 			if ( !state.lexicalCategory ) {
 				commit(
 					ADD_PER_FIELD_ERROR,
-					{ field: 'lexicalCategoryErrors', error: { type: 'error', message: 'wikibaselexeme-newlexeme-error-no-lexical-category' } },
+					{ field: 'lexicalCategoryErrors', error: { messageKey: 'wikibaselexeme-newlexeme-error-no-lexical-category' } },
 				);
 			} else {
 				validData.validLexicalCategoryId = state.lexicalCategory.id;
@@ -96,7 +96,7 @@ export default function createActions(
 			if ( state.language && !state.languageCodeFromLanguageItem && !state.spellingVariant ) {
 				commit(
 					ADD_PER_FIELD_ERROR,
-					{ field: 'spellingVariantErrors', error: { type: 'error', message: 'wikibaselexeme-newlexeme-error-no-spelling-variant' } },
+					{ field: 'spellingVariantErrors', error: { messageKey: 'wikibaselexeme-newlexeme-error-no-spelling-variant' } },
 				);
 			} else {
 				validData.validSpellingVariant = state.languageCodeFromLanguageItem ||

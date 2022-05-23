@@ -25,9 +25,9 @@ const store = useStore();
 const error = computed( () => {
 	if ( store.state.perFieldErrors.languageErrors.length ) {
 		return {
-			type: store.state.perFieldErrors.languageErrors[ 0 ].type,
+			type: 'error' as const,
 			message: messages.getUnescaped(
-				store.state.perFieldErrors.languageErrors[ 0 ].message,
+				store.state.perFieldErrors.languageErrors[ 0 ].messageKey,
 			),
 		};
 	}

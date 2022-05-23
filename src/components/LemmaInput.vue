@@ -23,8 +23,8 @@ const error = computed( () => {
 		return null;
 	}
 	return {
-		type: store.state.perFieldErrors.lemmaErrors[ 0 ].type,
-		message: messages.getUnescaped( store.state.perFieldErrors.lemmaErrors[ 0 ].message ),
+		type: 'error',
+		message: messages.getUnescaped( store.state.perFieldErrors.lemmaErrors[ 0 ].messageKey ),
 	};
 } );
 </script>

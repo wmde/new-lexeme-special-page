@@ -76,9 +76,9 @@ const error = computed( () => {
 		return null;
 	}
 	return {
-		type: store.state.perFieldErrors.spellingVariantErrors[ 0 ].type,
+		type: 'error',
 		message: messages.getUnescaped(
-			store.state.perFieldErrors.spellingVariantErrors[ 0 ].message,
+			store.state.perFieldErrors.spellingVariantErrors[ 0 ].messageKey,
 		),
 	};
 } );

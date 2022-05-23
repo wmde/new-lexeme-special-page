@@ -27,9 +27,9 @@ const error = computed( () => {
 		return null;
 	}
 	return {
-		type: store.state.perFieldErrors.lexicalCategoryErrors[ 0 ].type,
+		type: 'error' as const,
 		message: messages.getUnescaped(
-			store.state.perFieldErrors.lexicalCategoryErrors[ 0 ].message,
+			store.state.perFieldErrors.lexicalCategoryErrors[ 0 ].messageKey,
 		),
 	};
 } );
