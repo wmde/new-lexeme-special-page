@@ -169,7 +169,7 @@ describe( CREATE_LEXEME, () => {
 			mutations: mockMutations,
 		} );
 
-		await expect( store.dispatch( CREATE_LEXEME ) ).rejects.toBe( null );
+		await expect( store.dispatch( CREATE_LEXEME ) ).rejects.toStrictEqual( new Error( 'Not all fields are valid' ) );
 
 		expect( mockMutations[ ADD_PER_FIELD_ERROR ] ).toHaveBeenCalled();
 
