@@ -67,7 +67,7 @@ export default function createActions(
 ): RootActions {
 	return {
 		[ GET_VALID_INPUTS ]( { state, commit }: RootContext ): ValidLexemeData {
-			const validData: Partial<ValidLexemeData> = {};
+			const formData: Partial<ValidLexemeData> = {};
 
 			if ( !state.lemma ) {
 				commit(
@@ -75,7 +75,7 @@ export default function createActions(
 					{ field: 'lemmaErrors', error: { messageKey: 'wikibaselexeme-newlexeme-error-no-lemma' } },
 				);
 			} else {
-				validData.validLemma = state.lemma;
+				formData.validLemma = state.lemma;
 			}
 			if ( !state.language ) {
 				commit(
@@ -83,7 +83,7 @@ export default function createActions(
 					{ field: 'languageErrors', error: { messageKey: 'wikibaselexeme-newlexeme-error-no-language' } },
 				);
 			} else {
-				validData.validLanguageId = state.language.id;
+				formData.validLanguageId = state.language.id;
 			}
 			if ( !state.lexicalCategory ) {
 				commit(
@@ -91,7 +91,7 @@ export default function createActions(
 					{ field: 'lexicalCategoryErrors', error: { messageKey: 'wikibaselexeme-newlexeme-error-no-lexical-category' } },
 				);
 			} else {
-				validData.validLexicalCategoryId = state.lexicalCategory.id;
+				formData.validLexicalCategoryId = state.lexicalCategory.id;
 			}
 			if ( state.language && !state.languageCodeFromLanguageItem && !state.spellingVariant ) {
 				commit(
@@ -99,20 +99,24 @@ export default function createActions(
 					{ field: 'spellingVariantErrors', error: { messageKey: 'wikibaselexeme-newlexeme-error-no-spelling-variant' } },
 				);
 			} else {
-				validData.validSpellingVariant = state.languageCodeFromLanguageItem ||
+				formData.validSpellingVariant = state.languageCodeFromLanguageItem ||
 					state.spellingVariant;
 			}
 
-			if (
-				!validData.validLemma ||
-				!validData.validLanguageId ||
-				!validData.validLexicalCategoryId ||
-				!validData.validSpellingVariant
-			) {
+			const isFormDataValid = (
+				validData: Partial<ValidLexemeData>,
+			): validData is ValidLexemeData => {
+				return !!validData.validLemma &&
+					!!validData.validLanguageId &&
+					!!validData.validLexicalCategoryId &&
+					!!validData.validSpellingVariant;
+			};
+
+			if ( !isFormDataValid( formData ) ) {
 				throw new Error( 'Not all fields are valid' );
 			}
-			// FIXME: is there a way to make this work without type cast?
-			return validData as ValidLexemeData;
+
+			return formData;
 		},
 		async [ CREATE_LEXEME ]( { commit, dispatch }: RootContext ): Promise<string> {
 			const {
