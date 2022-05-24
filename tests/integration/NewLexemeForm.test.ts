@@ -287,7 +287,7 @@ describe( 'NewLexemeForm', () => {
 		} );
 
 		it( 'disables button when submitting and reenables on error', async () => {
-			let reject = undefined as unknown as ( reason: any ) => void;
+			let reject = undefined as unknown as ( reason: unknown ) => void;
 			const promise = new Promise( ( _, reject_ ) => {
 				reject = reject_;
 			} );
