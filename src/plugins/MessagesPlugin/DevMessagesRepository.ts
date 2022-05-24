@@ -13,6 +13,7 @@ const messages: Record<MessageKeys, string> = {
 	'wikibaselexeme-newlexeme-search-existing': 'You can check whether a Lexeme already exists by using <a href="$1">the search</a>. You can also learn more about Lexemes in the help box below.',
 	'wikibaselexeme-newlexeme-submit': 'Create Lexeme',
 	'wikibaselexeme-newlexeme-submit-error': 'The server encountered a temporary error and could not complete your request. Please try again.',
+	'wikibaselexeme-newlexeme-submitting': 'Creating Lexeme...',
 	'wikibaselexeme-newlexeme-error-no-lemma': 'Lemma field is empty, please make an entry.',
 	'wikibaselexeme-newlexeme-error-lemma-is-too-long': 'FIXME (copy is missing!)',
 	'wikibaselexeme-newlexeme-invalid-language-code-warning': 'This Item has an unrecognized language code. Please select one below.',

@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { SearchedItemOption } from '@/data-access/ItemSearcher';
 import { CREATE_LEXEME, HANDLE_LANGUAGE_CHANGE } from '@/store/actions';
-import { computed } from 'vue';
+import {
+	computed,
+	ref,
+} from 'vue';
 import { useStore } from 'vuex';
 import { Button as WikitButton } from '@wmde/wikit-vue-components';
 import { useConfig } from '@/plugins/ConfigPlugin/Config';
@@ -58,7 +61,11 @@ const spellingVariant = computed( {
 		store.commit( SET_SPELLING_VARIANT, newSpellingVariant );
 	},
 } );
+
+const submitting = ref( false );
+
 const submitMsg = $messages.getUnescaped( 'wikibaselexeme-newlexeme-submit' );
+const submittingMsg = $messages.getUnescaped( 'wikibaselexeme-newlexeme-submitting' );
 const termsOfUseTitle = $messages.get( 'copyrightpage' );
 const copyrightText = $messages.get(
 	'wikibase-shortcopyrightwarning',
@@ -67,6 +74,9 @@ const copyrightText = $messages.get(
 	config.licenseUrl,
 	config.licenseName,
 );
+const submitButtonText = computed( () => {
+	return submitting.value ? submittingMsg : submitMsg;
+} );
 
 const error = computed( () => {
 	if ( store.state.globalErrors.length > 0 ) {
@@ -82,12 +92,14 @@ const error = computed( () => {
 } );
 const wikiRouter = useWikiRouter();
 const onSubmit = async () => {
+	submitting.value = true;
 	try {
 		const lexemeId = await store.dispatch( CREATE_LEXEME );
 		wikiRouter.goToTitle( `Special:EntityPage/${lexemeId}` );
 	} catch {
 		// Error is already in store and handled by ErrorMessage component
 	}
+	submitting.value = false;
 };
 
 const onLanguageSelect = async ( newLanguage: SearchedItemOption | null ) => {
@@ -132,8 +144,9 @@ export default {
 				type="progressive"
 				variant="primary"
 				native-type="submit"
+				:disabled="submitting"
 			>
-				{{ submitMsg }}
+				{{ submitButtonText }}
 			</wikit-button>
 		</div>
 	</form>

@@ -10,6 +10,7 @@ type MessageKeys
  | 'wikibaselexeme-newlexeme-search-existing'
  | 'wikibaselexeme-newlexeme-submit'
  | 'wikibaselexeme-newlexeme-submit-error'
+ | 'wikibaselexeme-newlexeme-submitting'
  | 'wikibaselexeme-newlexeme-error-no-lemma'
  | 'wikibaselexeme-newlexeme-error-lemma-is-too-long'
  | 'wikibaselexeme-newlexeme-invalid-language-code-warning'
