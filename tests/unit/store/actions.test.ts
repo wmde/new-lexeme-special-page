@@ -177,6 +177,37 @@ describe( CREATE_LEXEME, () => {
 			field: 'lemmaErrors',
 		} );
 	} );
+	it( 'shows a per-field error for missing lexical category and rejects', async () => {
+		const actions = createActions(
+			unusedLexemeCreator,
+			unusedLangCodeRetriever,
+			unusedLanguageCodesProvider,
+			unusedTracker,
+		);
+		const mockMutations = {
+			[ ADD_PER_FIELD_ERROR ]: jest.fn(),
+		};
+		const store = createStore( {
+			state(): RootState {
+				return {
+					lemma: 'example lemma',
+					language: { id: 'Q123', display: {} },
+					lexicalCategory: null,
+					spellingVariant: 'en',
+				} as RootState;
+			},
+			actions,
+			mutations: mockMutations,
+		} );
+
+		await expect( store.dispatch( CREATE_LEXEME ) ).rejects.toStrictEqual( new Error( 'Not all fields are valid' ) );
+
+		expect( mockMutations[ ADD_PER_FIELD_ERROR ] ).toHaveBeenCalledTimes( 1 );
+		expect( mockMutations[ ADD_PER_FIELD_ERROR ].mock.calls[ 0 ][ 1 ] ).toStrictEqual( {
+			error: { messageKey: 'wikibaselexeme-newlexeme-lexicalcategory-empty-error' },
+			field: 'lexicalCategoryErrors',
+		} );
+	} );
 
 } );
 
@@ -370,6 +401,7 @@ describe( HANDLE_INIT_PARAMS, () => {
 			globalErrors: [],
 			perFieldErrors: {
 				lemmaErrors: [],
+				lexicalCategoryErrors: [],
 			},
 		} );
 		const actions = createActions(
@@ -409,6 +441,7 @@ describe( HANDLE_INIT_PARAMS, () => {
 					globalErrors: [],
 					perFieldErrors: {
 						lemmaErrors: [],
+						lexicalCategoryErrors: [],
 					},
 				};
 			},
@@ -444,6 +477,7 @@ describe( HANDLE_INIT_PARAMS, () => {
 			globalErrors: [],
 			perFieldErrors: {
 				lemmaErrors: [],
+				lexicalCategoryErrors: [],
 			},
 		} );
 	} );
@@ -470,6 +504,7 @@ describe( HANDLE_INIT_PARAMS, () => {
 					globalErrors: [],
 					perFieldErrors: {
 						lemmaErrors: [],
+						lexicalCategoryErrors: [],
 					},
 				};
 			},

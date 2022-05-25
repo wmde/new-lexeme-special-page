@@ -8,6 +8,7 @@ const messages: Record<MessageKeys, string> = {
 	'wikibaselexeme-newlexeme-language': 'Lexeme\'s language',
 	'wikibaselexeme-newlexeme-language-placeholder-with-example': 'The Lexeme\'s language, e.g. \'$1\'',
 	'wikibaselexeme-newlexeme-lexicalcategory': 'Lexical category',
+	'wikibaselexeme-newlexeme-lexicalcategory-empty-error': 'The Lexical Category field is empty; please make an entry.',
 	'wikibaselexeme-newlexeme-lexicalcategory-placeholder-with-example': 'The Lexeme\'s category, e.g. \'$1\'',
 	'wikibaselexeme-newlexeme-lemma-language': 'Spelling variant of the Lemma',
 	'wikibaselexeme-newlexeme-lemma-language-placeholder-with-example': 'Language code for the Lemma\'s spelling variant, e.g. \'$1\'',
