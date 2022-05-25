@@ -105,7 +105,7 @@ describe( CREATE_LEXEME, () => {
 		);
 	} );
 
-	it( 'clears errors and adds new ones to the store', async () => {
+	it( 'clears global errors and adds new ones to the store', async () => {
 		const errors: SubmitError[] = [
 			{ type: 'error1', message: 'error one' },
 			{ type: 'error2' },
@@ -146,7 +146,7 @@ describe( CREATE_LEXEME, () => {
 		);
 	} );
 
-	it( 'shows an error for missing lemmas and rejects', async () => {
+	it( 'shows a per-field error for missing lemma and spelling variant and rejects', async () => {
 		const actions = createActions(
 			unusedLexemeCreator,
 			unusedLangCodeRetriever,
@@ -162,7 +162,7 @@ describe( CREATE_LEXEME, () => {
 					lemma: '',
 					language: { id: 'Q123', display: {} },
 					lexicalCategory: { id: 'Q234', display: {} },
-					spellingVariant: 'en',
+					spellingVariant: '',
 				} as RootState;
 			},
 			actions,
@@ -171,8 +171,50 @@ describe( CREATE_LEXEME, () => {
 
 		await expect( store.dispatch( CREATE_LEXEME ) ).rejects.toStrictEqual( new Error( 'Not all fields are valid' ) );
 
-		expect( mockMutations[ ADD_PER_FIELD_ERROR ] ).toHaveBeenCalled();
+		expect( mockMutations[ ADD_PER_FIELD_ERROR ] ).toHaveBeenCalledTimes( 2 );
+		expect( mockMutations[ ADD_PER_FIELD_ERROR ].mock.calls[ 0 ][ 1 ] ).toStrictEqual( {
+			error: { messageKey: 'wikibaselexeme-newlexeme-error-no-lemma' },
+			field: 'lemmaErrors',
+		} );
+		expect( mockMutations[ ADD_PER_FIELD_ERROR ].mock.calls[ 1 ][ 1 ] ).toStrictEqual( {
+			error: { messageKey: 'wikibaselexeme-newlexeme-error-no-spelling-variant' },
+			field: 'spellingVariantErrors',
+		} );
+	} );
+	it( 'shows a per-field error for missing lexical category and language and rejects', async () => {
+		const actions = createActions(
+			unusedLexemeCreator,
+			unusedLangCodeRetriever,
+			unusedLanguageCodesProvider,
+			unusedTracker,
+		);
+		const mockMutations = {
+			[ ADD_PER_FIELD_ERROR ]: jest.fn(),
+		};
+		const store = createStore( {
+			state(): RootState {
+				return {
+					lemma: 'example lemma',
+					language: null,
+					lexicalCategory: null,
+					spellingVariant: '',
+				} as RootState;
+			},
+			actions,
+			mutations: mockMutations,
+		} );
 
+		await expect( store.dispatch( CREATE_LEXEME ) ).rejects.toStrictEqual( new Error( 'Not all fields are valid' ) );
+
+		expect( mockMutations[ ADD_PER_FIELD_ERROR ] ).toHaveBeenCalledTimes( 2 );
+		expect( mockMutations[ ADD_PER_FIELD_ERROR ].mock.calls[ 0 ][ 1 ] ).toStrictEqual( {
+			error: { messageKey: 'wikibaselexeme-newlexeme-error-no-language' },
+			field: 'languageErrors',
+		} );
+		expect( mockMutations[ ADD_PER_FIELD_ERROR ].mock.calls[ 1 ][ 1 ] ).toStrictEqual( {
+			error: { messageKey: 'wikibaselexeme-newlexeme-error-no-lexical-category' },
+			field: 'lexicalCategoryErrors',
+		} );
 	} );
 
 } );
