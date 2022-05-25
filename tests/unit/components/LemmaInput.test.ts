@@ -30,18 +30,6 @@ describe( 'LemmaInput', () => {
 
 			expect( findInput( lemmaInputWrapper ).element.value ).toBe( testValue );
 		} );
-
-		it( ':error - displays an error message for value ERROR_LEMMA_TOO_LONG', () => {
-			const lemmaInputWrapper = createComponent( { props: { error: 'ERROR_LEMMA_TOO_LONG' } } );
-
-			expect( lemmaInputWrapper.text() ).toContain( 'wikibaselexeme-newlexeme-error-lemma-is-too-long' );
-		} );
-
-		it( ':error - displays an error message for value ERROR_NO_LEMMA', () => {
-			const lemmaInputWrapper = createComponent( { props: { error: 'ERROR_NO_LEMMA' } } );
-
-			expect( lemmaInputWrapper.text() ).toContain( 'wikibaselexeme-newlexeme-error-no-lemma' );
-		} );
 	} );
 
 	describe( '@events', () => {

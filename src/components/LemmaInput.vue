@@ -5,30 +5,14 @@ import { useConfig } from '@/plugins/ConfigPlugin/Config';
 
 interface Props {
 	modelValue: string;
-	error?: 'ERROR_LEMMA_TOO_LONG' | 'ERROR_NO_LEMMA' | null;
 }
 
-withDefaults( defineProps<Props>(), { error: null } );
+defineProps<Props>();
 
 defineEmits( [ 'update:modelValue' ] );
 
 const messages = useMessages();
 
-function buildError( errorKey: Props['error'] ) {
-	if ( errorKey === 'ERROR_LEMMA_TOO_LONG' ) {
-		return {
-			type: 'error',
-			message: messages.getUnescaped( 'wikibaselexeme-newlexeme-error-lemma-is-too-long' ),
-		};
-	}
-	if ( errorKey === 'ERROR_NO_LEMMA' ) {
-		return {
-			type: 'error',
-			message: messages.getUnescaped( 'wikibaselexeme-newlexeme-error-no-lemma' ),
-		};
-	}
-	return null;
-}
 const config = useConfig();
 const exampleLemma = config.placeholderExampleData.lemma;
 </script>
@@ -51,7 +35,6 @@ export default {
 		)"
 		name="lemma"
 		aria-required="true"
-		:error="buildError( error )"
 		:value="modelValue"
 		@input="$emit( 'update:modelValue', $event )"
 	/>
