@@ -94,14 +94,15 @@ export default function createActions(
 				formData.validLexicalCategoryId = state.lexicalCategory.id;
 			}
 			if ( state.language ) {
-				if ( !state.languageCodeFromLanguageItem && !state.spellingVariant ) {
+				if ( state.spellingVariant ) {
+					formData.validSpellingVariant = state.spellingVariant;
+				} else if ( state.languageCodeFromLanguageItem ) {
+					formData.validSpellingVariant = state.languageCodeFromLanguageItem;
+				} else {
 					commit(
 						ADD_PER_FIELD_ERROR,
 						{ field: 'spellingVariantErrors', error: { messageKey: 'wikibaselexeme-newlexeme-error-no-spelling-variant' } },
 					);
-				} else {
-					formData.validSpellingVariant = state.spellingVariant ||
-						state.languageCodeFromLanguageItem as string;
 				}
 			}
 
