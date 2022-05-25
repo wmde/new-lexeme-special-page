@@ -15,6 +15,7 @@ import SpellingVariantInput from '@/components/SpellingVariantInput.vue';
 import LexicalCategoryInput from '@/components/LexicalCategoryInput.vue';
 import ErrorMessage from '@/components/ErrorMessage.vue';
 import {
+	CLEAR_PER_FIELD_ERRORS,
 	SET_LANGUAGE,
 	SET_LEMMA,
 	SET_LEXICAL_CATEGORY,
@@ -31,6 +32,9 @@ const lemma = computed( {
 	},
 	set( newLemmaValue: string ): void {
 		store.commit( SET_LEMMA, newLemmaValue );
+		if ( newLemmaValue.trim().length > 0 ) {
+			store.commit( CLEAR_PER_FIELD_ERRORS, 'lemmaErrors' );
+		}
 	},
 } );
 const language = computed( {

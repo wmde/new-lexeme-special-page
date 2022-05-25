@@ -233,6 +233,7 @@ describe( 'NewLexemeForm', () => {
 			await wrapper.find( '.wbl-snl-lexical-category-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
 
 			await wrapper.trigger( 'submit' );
+			await flushPromises();
 
 			expect( createLexeme ).toHaveBeenCalledWith( 'foo', 'de', 'Q123', 'Q456' );
 			expect( goToTitle ).toHaveBeenCalledWith( 'Special:EntityPage/L123' );
@@ -281,6 +282,7 @@ describe( 'NewLexemeForm', () => {
 			await wrapper.find( '.wbl-snl-lexical-category-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
 
 			await wrapper.trigger( 'submit' );
+			await flushPromises();
 
 			expect( createLexeme ).toHaveBeenCalledWith( 'foo', 'en-gb', 'Q123', 'Q456' );
 			expect( goToTitle ).toHaveBeenCalledWith( 'Special:EntityPage/L123' );
