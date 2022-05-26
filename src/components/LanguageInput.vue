@@ -23,6 +23,14 @@ const searchForItems = searcher.searchItems.bind( searcher );
 const store = useStore();
 
 const error = computed( () => {
+	if ( store.state.perFieldErrors.languageErrors.length ) {
+		return {
+			type: 'error' as const,
+			message: messages.getUnescaped(
+				store.state.perFieldErrors.languageErrors[ 0 ].messageKey,
+			),
+		};
+	}
 	if ( store.state.languageCodeFromLanguageItem !== false ) {
 		return null;
 	}

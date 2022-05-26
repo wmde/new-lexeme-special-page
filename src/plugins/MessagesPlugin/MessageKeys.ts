@@ -3,6 +3,7 @@ type MessageKeys
  | 'wikibaselexeme-newlexeme-lemma-empty-error'
  | 'wikibaselexeme-newlexeme-lemma-placeholder-with-example'
  | 'wikibaselexeme-newlexeme-language'
+ | 'wikibaselexeme-newlexeme-language-empty-error'
  | 'wikibaselexeme-newlexeme-language-placeholder-with-example'
  | 'wikibaselexeme-newlexeme-lemma-language'
  | 'wikibaselexeme-newlexeme-lemma-language-placeholder-with-example'

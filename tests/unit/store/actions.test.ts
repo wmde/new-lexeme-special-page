@@ -177,7 +177,7 @@ describe( CREATE_LEXEME, () => {
 			field: 'lemmaErrors',
 		} );
 	} );
-	it( 'shows a per-field error for missing lexical category and rejects', async () => {
+	it( 'shows a per-field error for missing lexical category and language and rejects', async () => {
 		const actions = createActions(
 			unusedLexemeCreator,
 			unusedLangCodeRetriever,
@@ -191,7 +191,7 @@ describe( CREATE_LEXEME, () => {
 			state(): RootState {
 				return {
 					lemma: 'example lemma',
-					language: { id: 'Q123', display: {} },
+					language: null,
 					lexicalCategory: null,
 					spellingVariant: 'en',
 				} as RootState;
@@ -202,8 +202,12 @@ describe( CREATE_LEXEME, () => {
 
 		await expect( store.dispatch( CREATE_LEXEME ) ).rejects.toStrictEqual( new Error( 'Not all fields are valid' ) );
 
-		expect( mockMutations[ ADD_PER_FIELD_ERROR ] ).toHaveBeenCalledTimes( 1 );
+		expect( mockMutations[ ADD_PER_FIELD_ERROR ] ).toHaveBeenCalledTimes( 2 );
 		expect( mockMutations[ ADD_PER_FIELD_ERROR ].mock.calls[ 0 ][ 1 ] ).toStrictEqual( {
+			error: { messageKey: 'wikibaselexeme-newlexeme-language-empty-error' },
+			field: 'languageErrors',
+		} );
+		expect( mockMutations[ ADD_PER_FIELD_ERROR ].mock.calls[ 1 ][ 1 ] ).toStrictEqual( {
 			error: { messageKey: 'wikibaselexeme-newlexeme-lexicalcategory-empty-error' },
 			field: 'lexicalCategoryErrors',
 		} );
@@ -401,6 +405,7 @@ describe( HANDLE_INIT_PARAMS, () => {
 			globalErrors: [],
 			perFieldErrors: {
 				lemmaErrors: [],
+				languageErrors: [],
 				lexicalCategoryErrors: [],
 			},
 		} );
@@ -441,6 +446,7 @@ describe( HANDLE_INIT_PARAMS, () => {
 					globalErrors: [],
 					perFieldErrors: {
 						lemmaErrors: [],
+						languageErrors: [],
 						lexicalCategoryErrors: [],
 					},
 				};
@@ -477,6 +483,7 @@ describe( HANDLE_INIT_PARAMS, () => {
 			globalErrors: [],
 			perFieldErrors: {
 				lemmaErrors: [],
+				languageErrors: [],
 				lexicalCategoryErrors: [],
 			},
 		} );
@@ -504,6 +511,7 @@ describe( HANDLE_INIT_PARAMS, () => {
 					globalErrors: [],
 					perFieldErrors: {
 						lemmaErrors: [],
+						languageErrors: [],
 						lexicalCategoryErrors: [],
 					},
 				};

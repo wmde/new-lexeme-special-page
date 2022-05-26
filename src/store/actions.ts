@@ -54,6 +54,7 @@ export type InitParams = {
 
 interface ValidLexemeData {
 	validLemma: string;
+	validLanguageId: string;
 	validLexicalCategoryId: string;
 }
 
@@ -75,6 +76,14 @@ export default function createActions(
 			} else {
 				formData.validLemma = state.lemma;
 			}
+			if ( !state.language ) {
+				commit(
+					ADD_PER_FIELD_ERROR,
+					{ field: 'languageErrors', error: { messageKey: 'wikibaselexeme-newlexeme-language-empty-error' } },
+				);
+			} else {
+				formData.validLanguageId = state.language.id;
+			}
 			if ( !state.lexicalCategory ) {
 				commit(
 					ADD_PER_FIELD_ERROR,
@@ -88,6 +97,7 @@ export default function createActions(
 				validData: Partial<ValidLexemeData>,
 			): validData is ValidLexemeData => {
 				return !!validData.validLemma &&
+					!!validData.validLanguageId &&
 					!!validData.validLexicalCategoryId;
 			};
 
@@ -100,18 +110,16 @@ export default function createActions(
 		async [ CREATE_LEXEME ]( { state, commit, dispatch }: RootContext ): Promise<string> {
 			const {
 				validLemma,
+				validLanguageId,
 				validLexicalCategoryId,
 			} = await dispatch( ASSEMBLE_VALID_INPUTS );
-			if ( !state.language ) {
-				throw new Error( 'No language!' ); // TODO
-			}
 			commit( CLEAR_ERRORS );
 			try {
 				const spellingVariant = state.spellingVariant || state.languageCodeFromLanguageItem || '';
 				const lexemeId = await lexemeCreator.createLexeme(
 					validLemma,
 					spellingVariant,
-					state.language.id,
+					validLanguageId,
 					validLexicalCategoryId,
 				);
 				tracker.increment( 'wikibase.lexeme.special.NewLexeme.js.create' );
