@@ -56,6 +56,7 @@ interface ValidLexemeData {
 	validLemma: string;
 	validLanguageId: string;
 	validLexicalCategoryId: string;
+	validSpellingVariant: string;
 }
 
 export default function createActions(
@@ -92,13 +93,26 @@ export default function createActions(
 			} else {
 				formData.validLexicalCategoryId = state.lexicalCategory.id;
 			}
+			if ( state.language ) {
+				if ( state.spellingVariant ) {
+					formData.validSpellingVariant = state.spellingVariant;
+				} else if ( state.languageCodeFromLanguageItem ) {
+					formData.validSpellingVariant = state.languageCodeFromLanguageItem;
+				} else {
+					commit(
+						ADD_PER_FIELD_ERROR,
+						{ field: 'spellingVariantErrors', error: { messageKey: 'wikibaselexeme-newlexeme-lemma-language-empty-error' } },
+					);
+				}
+			}
 
 			const isFormDataValid = (
 				validData: Partial<ValidLexemeData>,
 			): validData is ValidLexemeData => {
 				return !!validData.validLemma &&
 					!!validData.validLanguageId &&
-					!!validData.validLexicalCategoryId;
+					!!validData.validLexicalCategoryId &&
+					!!validData.validSpellingVariant;
 			};
 
 			if ( !isFormDataValid( formData ) ) {
@@ -107,18 +121,18 @@ export default function createActions(
 
 			return formData;
 		},
-		async [ CREATE_LEXEME ]( { state, commit, dispatch }: RootContext ): Promise<string> {
+		async [ CREATE_LEXEME ]( { commit, dispatch }: RootContext ): Promise<string> {
 			const {
 				validLemma,
 				validLanguageId,
 				validLexicalCategoryId,
+				validSpellingVariant,
 			} = await dispatch( ASSEMBLE_VALID_INPUTS );
 			commit( CLEAR_ERRORS );
 			try {
-				const spellingVariant = state.spellingVariant || state.languageCodeFromLanguageItem || '';
 				const lexemeId = await lexemeCreator.createLexeme(
 					validLemma,
-					spellingVariant,
+					validSpellingVariant,
 					validLanguageId,
 					validLexicalCategoryId,
 				);

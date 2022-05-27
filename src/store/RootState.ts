@@ -20,5 +20,6 @@ export default interface RootState {
 		lemmaErrors: PerFieldError[];
 		languageErrors: PerFieldError[];
 		lexicalCategoryErrors: PerFieldError[];
+		spellingVariantErrors: PerFieldError[];
 	};
 }
