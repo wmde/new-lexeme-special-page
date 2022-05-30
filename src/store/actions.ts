@@ -22,6 +22,7 @@ import {
 } from 'vuex';
 import {
 	ADD_ERRORS,
+	ADD_PER_FIELD_ERROR,
 	CLEAR_ERRORS,
 	SET_LANGUAGE,
 	SET_LANGUAGE_CODE_FROM_LANGUAGE_ITEM,
@@ -40,6 +41,7 @@ export const HANDLE_INIT_PARAMS = 'initFromParams';
 
 // internal actions (used by other actions), not exported
 const HANDLE_ITEM_LANGUAGE_CODE = 'handleItemLanguageCode';
+const ASSEMBLE_VALID_INPUTS = 'assembleValidInputs';
 
 export type InitParams = {
 	lemma?: string;
@@ -50,6 +52,10 @@ export type InitParams = {
 	lexicalCategory?: SearchedItemOption;
 };
 
+interface ValidLexemeData {
+	validLemma: string;
+}
+
 export default function createActions(
 	lexemeCreator: LexemeCreator,
 	langCodeRetriever: LangCodeRetriever,
@@ -57,7 +63,34 @@ export default function createActions(
 	tracker: Tracker,
 ): RootActions {
 	return {
-		async [ CREATE_LEXEME ]( { state, commit }: RootContext ): Promise<string> {
+		[ ASSEMBLE_VALID_INPUTS ]( { state, commit }: RootContext ): ValidLexemeData {
+			const formData: Partial<ValidLexemeData> = {};
+
+			if ( !state.lemma ) {
+				commit(
+					ADD_PER_FIELD_ERROR,
+					{ field: 'lemmaErrors', error: { messageKey: 'wikibaselexeme-newlexeme-lemma-empty-error' } },
+				);
+			} else {
+				formData.validLemma = state.lemma;
+			}
+
+			const isFormDataValid = (
+				validData: Partial<ValidLexemeData>,
+			): validData is ValidLexemeData => {
+				return !!validData.validLemma;
+			};
+
+			if ( !isFormDataValid( formData ) ) {
+				throw new Error( 'Not all fields are valid' );
+			}
+
+			return formData;
+		},
+		async [ CREATE_LEXEME ]( { state, commit, dispatch }: RootContext ): Promise<string> {
+			const {
+				validLemma,
+			} = await dispatch( ASSEMBLE_VALID_INPUTS );
 			if ( !state.language || !state.lexicalCategory ) {
 				throw new Error( 'No language or lexical category!' ); // TODO
 			}
@@ -65,7 +98,7 @@ export default function createActions(
 			try {
 				const spellingVariant = state.spellingVariant || state.languageCodeFromLanguageItem || '';
 				const lexemeId = await lexemeCreator.createLexeme(
-					state.lemma,
+					validLemma,
 					spellingVariant,
 					state.language.id,
 					state.lexicalCategory.id,

@@ -15,6 +15,8 @@ export const SET_LEXICAL_CATEGORY = 'setLexicalCategory';
 export const SET_SPELLING_VARIANT = 'setSpellingVariant';
 export const SET_LANGUAGE_CODE_FROM_LANGUAGE_ITEM = 'setLanguageCodeFromLanguageItem';
 export const ADD_ERRORS = 'addErrors';
+export const ADD_PER_FIELD_ERROR = 'addPerFieldError';
+export const CLEAR_PER_FIELD_ERRORS = 'clearPerFieldErrors';
 export const CLEAR_ERRORS = 'clearErrors';
 
 export default {
@@ -38,6 +40,18 @@ export default {
 	},
 	[ ADD_ERRORS ]( state: RootState, errors: SubmitError[] ): void {
 		state.globalErrors.push( ...errors );
+	},
+	[ ADD_PER_FIELD_ERROR ](
+		state: RootState,
+		payload: { field: keyof RootState['perFieldErrors']; error: { messageKey: string } },
+	): void {
+		state.perFieldErrors[ payload.field ].push( payload.error );
+	},
+	[ CLEAR_PER_FIELD_ERRORS ](
+		state: RootState,
+		payload: keyof RootState['perFieldErrors'],
+	): void {
+		state.perFieldErrors[ payload ] = [];
 	},
 	[ CLEAR_ERRORS ]( state: RootState ): void {
 		state.globalErrors = [];

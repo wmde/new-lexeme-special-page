@@ -1,5 +1,6 @@
 type MessageKeys
  = 'wikibaselexeme-newlexeme-lemma'
+ | 'wikibaselexeme-newlexeme-lemma-empty-error'
  | 'wikibaselexeme-newlexeme-lemma-placeholder-with-example'
  | 'wikibaselexeme-newlexeme-language'
  | 'wikibaselexeme-newlexeme-language-placeholder-with-example'
@@ -11,7 +12,6 @@ type MessageKeys
  | 'wikibaselexeme-newlexeme-submit'
  | 'wikibaselexeme-newlexeme-submit-error'
  | 'wikibaselexeme-newlexeme-submitting'
- | 'wikibaselexeme-newlexeme-error-no-lemma'
  | 'wikibaselexeme-newlexeme-error-lemma-is-too-long'
  | 'wikibaselexeme-newlexeme-invalid-language-code-warning'
  | 'wikibaselexeme-newlexeme-no-results'

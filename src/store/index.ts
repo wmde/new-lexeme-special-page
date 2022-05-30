@@ -36,6 +36,9 @@ export default function initStore( {
 				lexicalCategory: null,
 				spellingVariant: '',
 				globalErrors: [],
+				perFieldErrors: {
+					lemmaErrors: [],
+				},
 			};
 		},
 		mutations,

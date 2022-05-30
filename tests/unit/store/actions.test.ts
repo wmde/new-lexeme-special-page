@@ -7,6 +7,7 @@ import createActions, {
 import LexemeCreator from '@/data-access/LexemeCreator';
 import {
 	ADD_ERRORS,
+	ADD_PER_FIELD_ERROR,
 	CLEAR_ERRORS,
 } from '@/store/mutations';
 import RootState, { SubmitError } from '@/store/RootState';
@@ -104,7 +105,7 @@ describe( CREATE_LEXEME, () => {
 		);
 	} );
 
-	it( 'clears errors and adds new ones to the store', async () => {
+	it( 'clears global errors and adds new ones to the store', async () => {
 		const errors: SubmitError[] = [
 			{ type: 'error1', message: 'error one' },
 			{ type: 'error2' },
@@ -143,6 +144,38 @@ describe( CREATE_LEXEME, () => {
 			expect.anything(), // state
 			errors, // payload
 		);
+	} );
+
+	it( 'shows a per-field error for missing lemma and rejects', async () => {
+		const actions = createActions(
+			unusedLexemeCreator,
+			unusedLangCodeRetriever,
+			unusedLanguageCodesProvider,
+			unusedTracker,
+		);
+		const mockMutations = {
+			[ ADD_PER_FIELD_ERROR ]: jest.fn(),
+		};
+		const store = createStore( {
+			state(): RootState {
+				return {
+					lemma: '',
+					language: { id: 'Q123', display: {} },
+					lexicalCategory: { id: 'Q234', display: {} },
+					spellingVariant: 'en',
+				} as RootState;
+			},
+			actions,
+			mutations: mockMutations,
+		} );
+
+		await expect( store.dispatch( CREATE_LEXEME ) ).rejects.toStrictEqual( new Error( 'Not all fields are valid' ) );
+
+		expect( mockMutations[ ADD_PER_FIELD_ERROR ] ).toHaveBeenCalledTimes( 1 );
+		expect( mockMutations[ ADD_PER_FIELD_ERROR ].mock.calls[ 0 ][ 1 ] ).toStrictEqual( {
+			error: { messageKey: 'wikibaselexeme-newlexeme-lemma-empty-error' },
+			field: 'lemmaErrors',
+		} );
 	} );
 
 } );
@@ -335,6 +368,9 @@ describe( HANDLE_INIT_PARAMS, () => {
 			spellingVariant: 'bar',
 			languageCodeFromLanguageItem: false,
 			globalErrors: [],
+			perFieldErrors: {
+				lemmaErrors: [],
+			},
 		} );
 		const actions = createActions(
 			unusedLexemeCreator,
@@ -371,6 +407,9 @@ describe( HANDLE_INIT_PARAMS, () => {
 					spellingVariant: '',
 					languageCodeFromLanguageItem: undefined,
 					globalErrors: [],
+					perFieldErrors: {
+						lemmaErrors: [],
+					},
 				};
 			},
 			actions,
@@ -403,6 +442,9 @@ describe( HANDLE_INIT_PARAMS, () => {
 			spellingVariant: 'en-gb',
 			languageCodeFromLanguageItem: 'en',
 			globalErrors: [],
+			perFieldErrors: {
+				lemmaErrors: [],
+			},
 		} );
 	} );
 
@@ -426,6 +468,9 @@ describe( HANDLE_INIT_PARAMS, () => {
 					spellingVariant: '',
 					languageCodeFromLanguageItem: undefined,
 					globalErrors: [],
+					perFieldErrors: {
+						lemmaErrors: [],
+					},
 				};
 			},
 			actions,
