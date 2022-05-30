@@ -18,6 +18,7 @@ export default interface RootState {
 	globalErrors: SubmitError[];
 	perFieldErrors: {
 		lemmaErrors: PerFieldError[];
+		languageErrors: PerFieldError[];
 		lexicalCategoryErrors: PerFieldError[];
 	};
 }

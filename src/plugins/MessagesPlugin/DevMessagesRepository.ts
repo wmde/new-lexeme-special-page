@@ -6,6 +6,7 @@ const messages: Record<MessageKeys, string> = {
 	'wikibaselexeme-newlexeme-lemma-empty-error': 'Lemma field is empty; please make an entry.',
 	'wikibaselexeme-newlexeme-lemma-placeholder-with-example': 'Base form of a word, e.g. \'$1\'',
 	'wikibaselexeme-newlexeme-language': 'Lexeme\'s language',
+	'wikibaselexeme-newlexeme-language-empty-error': 'The Lexeme\'s language field is empty; please make an entry.',
 	'wikibaselexeme-newlexeme-language-placeholder-with-example': 'The Lexeme\'s language, e.g. \'$1\'',
 	'wikibaselexeme-newlexeme-lexicalcategory': 'Lexical category',
 	'wikibaselexeme-newlexeme-lexicalcategory-empty-error': 'The Lexical Category field is empty; please make an entry.',

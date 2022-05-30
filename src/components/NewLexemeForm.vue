@@ -111,6 +111,9 @@ const onSubmit = async () => {
 
 const onLanguageSelect = async ( newLanguage: SearchedItemOption | null ) => {
 	await store.dispatch( HANDLE_LANGUAGE_CHANGE, newLanguage );
+	if ( newLanguage ) {
+		store.commit( CLEAR_PER_FIELD_ERRORS, 'languageErrors' );
+	}
 };
 
 </script>
