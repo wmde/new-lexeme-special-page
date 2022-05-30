@@ -51,6 +51,9 @@ const lexicalCategory = computed( {
 	},
 	set( newLexicalCategory: SearchedItemOption | null ): void {
 		store.commit( SET_LEXICAL_CATEGORY, newLexicalCategory );
+		if ( newLexicalCategory ) {
+			store.commit( CLEAR_PER_FIELD_ERRORS, 'lexicalCategoryErrors' );
+		}
 	},
 } );
 const showSpellingVariantInput = computed( () => {

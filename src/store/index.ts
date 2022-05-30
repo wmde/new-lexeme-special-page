@@ -38,6 +38,7 @@ export default function initStore( {
 				globalErrors: [],
 				perFieldErrors: {
 					lemmaErrors: [],
+					lexicalCategoryErrors: [],
 				},
 			};
 		},
