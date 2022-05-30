@@ -64,8 +64,11 @@ const spellingVariant = computed( {
 	get(): string {
 		return store.state.spellingVariant;
 	},
-	set( newSpellingVariant: string ): void {
+	set( newSpellingVariant: string | null ): void {
 		store.commit( SET_SPELLING_VARIANT, newSpellingVariant );
+		if ( newSpellingVariant ) {
+			store.commit( CLEAR_PER_FIELD_ERRORS, 'spellingVariantErrors' );
+		}
 	},
 } );
 

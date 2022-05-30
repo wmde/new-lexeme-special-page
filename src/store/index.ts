@@ -40,6 +40,7 @@ export default function initStore( {
 					lemmaErrors: [],
 					languageErrors: [],
 					lexicalCategoryErrors: [],
+					spellingVariantErrors: [],
 				},
 			};
 		},
