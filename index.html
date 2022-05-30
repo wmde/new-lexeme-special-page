@@ -110,7 +110,7 @@
 							console.log( `TRACK: increment ${name}` );
 						},
 					},
-					wikiRouter: { goToTitle( title ) { alert( `Navigating to: ${title}` ); } },
+					wikiRouter: { async goToTitle( title ) { alert( `Navigating to: ${title}` ); } },
 				};
 
 				const params = new URLSearchParams( location.search );
