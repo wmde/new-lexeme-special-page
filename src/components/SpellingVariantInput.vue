@@ -43,6 +43,7 @@ const emit = defineEmits( {
 
 const searchInput = ref( '' );
 const onSearchInput = ( inputValue: string ) => {
+	searchInput.value = inputValue;
 	if ( inputValue.trim() === '' ) {
 		menuItems.value = [];
 		return;
@@ -52,8 +53,6 @@ const onSearchInput = ( inputValue: string ) => {
 	menuItems.value = wbLexemeTermLanguages.filter(
 		( lang ) => regExp.test( lang.label ),
 	);
-
-	searchInput.value = inputValue;
 };
 
 const selectedOption = computed( () => {
