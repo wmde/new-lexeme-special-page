@@ -29,6 +29,7 @@ describe( 'createAndMount', () => {
 				lexicalCategoryLabel: '',
 				spellingVariant: '',
 			},
+			maxLemmaLength: 1000,
 		}, {
 			itemSearcher: unusedItemSearcher,
 			lexemeCreator: unusedLexemeCreator,

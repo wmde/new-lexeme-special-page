@@ -39,6 +39,7 @@ describe( 'NewLexemeForm', () => {
 			lexicalCategoryLabel: '',
 			spellingVariant: '',
 		},
+		maxLemmaLength: 1000,
 	};
 
 	function mountForm() {
