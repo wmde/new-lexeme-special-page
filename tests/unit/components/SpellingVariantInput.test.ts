@@ -6,15 +6,27 @@ import DevMessagesRepository from '@/plugins/MessagesPlugin/DevMessagesRepositor
 import Messages, { MessagesKey } from '@/plugins/MessagesPlugin/Messages';
 import { MapLanguageCodesProvider } from '@/data-access/LanguageCodesProvider';
 import { ConfigKey } from '@/plugins/ConfigPlugin/Config';
+import initStore from '@/store';
+import unusedLangCodeRetriever from '../../mocks/unusedLangCodeRetriever';
+import unusedLanguageCodesProvider from '../../mocks/unusedLanguageCodesProvider';
+import unusedTracker from '../../mocks/unusedTracker';
+import unusedLexemeCreator from '../../mocks/unusedLexemeCreator';
 
 const termLanguagesConfig = new Map( [ [ 'en', 'English' ], [ 'en-gb', 'British English' ], [ 'de', 'German' ] ] );
 
 function createLookup( config: Record<string, unknown> = {} ) {
+	const store = initStore( {
+		lexemeCreator: unusedLexemeCreator,
+		langCodeRetriever: unusedLangCodeRetriever,
+		languageCodesProvider: unusedLanguageCodesProvider,
+		tracker: unusedTracker,
+	} );
 	return mount( SpellingVariantInput, {
 		props: {
 			modelValue: '',
 		},
 		global: {
+			plugins: [ store ],
 			provide: {
 				[ LanguageCodesProviderKey as symbol ]:
 					new MapLanguageCodesProvider( termLanguagesConfig ),
@@ -94,11 +106,18 @@ describe( 'SpellingVariantInput', () => {
 				[ 'en', 'en-gb' ],
 			],
 		] )( '%s', async ( _, termLanguages: Map<string, string>, userInput, expectedOptionValues ) => {
+			const store = initStore( {
+				lexemeCreator: unusedLexemeCreator,
+				langCodeRetriever: unusedLangCodeRetriever,
+				languageCodesProvider: unusedLanguageCodesProvider,
+				tracker: unusedTracker,
+			} );
 			const lookup = mount( SpellingVariantInput, {
 				props: {
 					modelValue: '',
 				},
 				global: {
+					plugins: [ store ],
 					provide: {
 						[ LanguageCodesProviderKey as symbol ]:
 							new MapLanguageCodesProvider( termLanguages ),

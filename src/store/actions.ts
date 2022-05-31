@@ -54,7 +54,9 @@ export type InitParams = {
 
 interface ValidLexemeData {
 	validLemma: string;
+	validLanguageId: string;
 	validLexicalCategoryId: string;
+	validSpellingVariant: string;
 }
 
 export default function createActions(
@@ -75,6 +77,14 @@ export default function createActions(
 			} else {
 				formData.validLemma = state.lemma;
 			}
+			if ( !state.language ) {
+				commit(
+					ADD_PER_FIELD_ERROR,
+					{ field: 'languageErrors', error: { messageKey: 'wikibaselexeme-newlexeme-language-empty-error' } },
+				);
+			} else {
+				formData.validLanguageId = state.language.id;
+			}
 			if ( !state.lexicalCategory ) {
 				commit(
 					ADD_PER_FIELD_ERROR,
@@ -83,12 +93,26 @@ export default function createActions(
 			} else {
 				formData.validLexicalCategoryId = state.lexicalCategory.id;
 			}
+			if ( state.language ) {
+				if ( state.spellingVariant ) {
+					formData.validSpellingVariant = state.spellingVariant;
+				} else if ( state.languageCodeFromLanguageItem ) {
+					formData.validSpellingVariant = state.languageCodeFromLanguageItem;
+				} else {
+					commit(
+						ADD_PER_FIELD_ERROR,
+						{ field: 'spellingVariantErrors', error: { messageKey: 'wikibaselexeme-newlexeme-lemma-language-empty-error' } },
+					);
+				}
+			}
 
 			const isFormDataValid = (
 				validData: Partial<ValidLexemeData>,
 			): validData is ValidLexemeData => {
 				return !!validData.validLemma &&
-					!!validData.validLexicalCategoryId;
+					!!validData.validLanguageId &&
+					!!validData.validLexicalCategoryId &&
+					!!validData.validSpellingVariant;
 			};
 
 			if ( !isFormDataValid( formData ) ) {
@@ -97,21 +121,19 @@ export default function createActions(
 
 			return formData;
 		},
-		async [ CREATE_LEXEME ]( { state, commit, dispatch }: RootContext ): Promise<string> {
+		async [ CREATE_LEXEME ]( { commit, dispatch }: RootContext ): Promise<string> {
 			const {
 				validLemma,
+				validLanguageId,
 				validLexicalCategoryId,
+				validSpellingVariant,
 			} = await dispatch( ASSEMBLE_VALID_INPUTS );
-			if ( !state.language ) {
-				throw new Error( 'No language!' ); // TODO
-			}
 			commit( CLEAR_ERRORS );
 			try {
-				const spellingVariant = state.spellingVariant || state.languageCodeFromLanguageItem || '';
 				const lexemeId = await lexemeCreator.createLexeme(
 					validLemma,
-					spellingVariant,
-					state.language.id,
+					validSpellingVariant,
+					validLanguageId,
 					validLexicalCategoryId,
 				);
 				tracker.increment( 'wikibase.lexeme.special.NewLexeme.js.create' );

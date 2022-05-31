@@ -38,7 +38,9 @@ export default function initStore( {
 				globalErrors: [],
 				perFieldErrors: {
 					lemmaErrors: [],
+					languageErrors: [],
 					lexicalCategoryErrors: [],
+					spellingVariantErrors: [],
 				},
 			};
 		},

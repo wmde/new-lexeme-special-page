@@ -16,7 +16,6 @@ import LexicalCategoryInput from '@/components/LexicalCategoryInput.vue';
 import ErrorMessage from '@/components/ErrorMessage.vue';
 import {
 	CLEAR_PER_FIELD_ERRORS,
-	SET_LANGUAGE,
 	SET_LEMMA,
 	SET_LEXICAL_CATEGORY,
 	SET_SPELLING_VARIANT,
@@ -41,8 +40,11 @@ const language = computed( {
 	get(): SearchedItemOption | null {
 		return store.state.language;
 	},
-	set( newLanguage: SearchedItemOption | null ): void {
-		store.commit( SET_LANGUAGE, newLanguage );
+	async set( newLanguage: SearchedItemOption | null ): Promise<void> {
+		await store.dispatch( HANDLE_LANGUAGE_CHANGE, newLanguage );
+		if ( newLanguage ) {
+			store.commit( CLEAR_PER_FIELD_ERRORS, 'languageErrors' );
+		}
 	},
 } );
 const lexicalCategory = computed( {
@@ -64,8 +66,11 @@ const spellingVariant = computed( {
 	get(): string {
 		return store.state.spellingVariant;
 	},
-	set( newSpellingVariant: string ): void {
+	set( newSpellingVariant: string | null ): void {
 		store.commit( SET_SPELLING_VARIANT, newSpellingVariant );
+		if ( newSpellingVariant ) {
+			store.commit( CLEAR_PER_FIELD_ERRORS, 'spellingVariantErrors' );
+		}
 	},
 } );
 
@@ -109,10 +114,6 @@ const onSubmit = async () => {
 	submitting.value = false;
 };
 
-const onLanguageSelect = async ( newLanguage: SearchedItemOption | null ) => {
-	await store.dispatch( HANDLE_LANGUAGE_CHANGE, newLanguage );
-};
-
 </script>
 
 <script lang="ts">
@@ -129,8 +130,7 @@ export default {
 			v-model="lemma"
 		/>
 		<language-input
-			:model-value="language"
-			@update:model-value="onLanguageSelect"
+			v-model="language"
 		/>
 		<spelling-variant-input
 			v-if="showSpellingVariantInput"
