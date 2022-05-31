@@ -19,14 +19,14 @@ const config = useConfig();
 const exampleLemma = config.placeholderExampleData.lemma;
 const store = useStore();
 const error = computed( () => {
-	if ( !store.state.perFieldErrors.lemmaErrors.length ) {
-		return null;
-	}
 	if ( props.modelValue.length > config.maxLemmaLength ) {
 		return {
 			type: 'error',
-			message: messages.getUnescaped(	'wikibaselexeme-newlexeme-lemma-too-long-error' ),
+			message: messages.getUnescaped( 'wikibaselexeme-newlexeme-lemma-too-long-error' ),
 		};
+	}
+	if ( !store.state.perFieldErrors.lemmaErrors.length ) {
+		return null;
 	}
 	return {
 		type: 'error',
