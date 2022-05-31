@@ -107,7 +107,7 @@ const onSubmit = async () => {
 	submitting.value = true;
 	try {
 		const lexemeId = await store.dispatch( CREATE_LEXEME );
-		wikiRouter.goToTitle( `Special:EntityPage/${lexemeId}` );
+		await wikiRouter.goToTitle( `Special:EntityPage/${lexemeId}` );
 	} catch {
 		// Error is already in store and handled by ErrorMessage component
 	}

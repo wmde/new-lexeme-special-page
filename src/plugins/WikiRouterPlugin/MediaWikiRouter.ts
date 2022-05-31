@@ -21,8 +21,11 @@ export default class MediaWikiRouter implements WikiRouter {
 		this.getUrl = getUrl;
 	}
 
-	public goToTitle( title: string ): void {
+	public goToTitle( title: string ): Promise<never> {
 		window.location.href = this.getPageUrl( title );
+		return new Promise( ( _resolve ) => {
+			// never resolve
+		} );
 	}
 
 	private getPageUrl( title: string ): string {
