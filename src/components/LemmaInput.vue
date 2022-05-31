@@ -9,7 +9,7 @@ interface Props {
 	modelValue: string;
 }
 
-defineProps<Props>();
+const props = defineProps<Props>();
 
 defineEmits( [ 'update:modelValue' ] );
 
@@ -21,6 +21,12 @@ const store = useStore();
 const error = computed( () => {
 	if ( !store.state.perFieldErrors.lemmaErrors.length ) {
 		return null;
+	}
+	if ( props.modelValue.length > config.maxLemmaLength ) {
+		return {
+			type: 'error',
+			message: messages.getUnescaped(	'wikibaselexeme-newlexeme-lemma-too-long-error' ),
+		};
 	}
 	return {
 		type: 'error',

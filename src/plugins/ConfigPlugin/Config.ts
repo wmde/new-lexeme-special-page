@@ -15,6 +15,7 @@ export interface Config {
 		lemma: string;
 		spellingVariant: string;
 	};
+	readonly maxLemmaLength: number;
 }
 
 export const ConfigKey: InjectionKey<Config> = Symbol( 'Config' );

@@ -15,7 +15,7 @@ type MessageKeys
  | 'wikibaselexeme-newlexeme-submit'
  | 'wikibaselexeme-newlexeme-submit-error'
  | 'wikibaselexeme-newlexeme-submitting'
- | 'wikibaselexeme-newlexeme-error-lemma-is-too-long'
+ | 'wikibaselexeme-newlexeme-lemma-too-long-error'
  | 'wikibaselexeme-newlexeme-invalid-language-code-warning'
  | 'wikibaselexeme-newlexeme-no-results'
  | 'wikibase-lexeme-lemma-language-option'
