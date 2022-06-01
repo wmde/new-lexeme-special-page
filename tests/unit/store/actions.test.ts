@@ -395,6 +395,35 @@ describe( 'HANDLE_LANGUAGE_CHANGE', () => {
 		expect( store.state.languageCodeFromLanguageItem ).toBe( retrievedLangCodeResult );
 		expect( isValidMock ).not.toHaveBeenCalled();
 	} );
+
+	it( 'does nothing when language does not change', async () => {
+		const actions = createActions(
+			unusedLexemeCreator,
+			unusedLangCodeRetriever,
+			unusedLanguageCodesProvider,
+			unusedTracker,
+		);
+
+		const store = createStore( {
+			state(): RootState {
+				return {
+					lemma: 'foo',
+					language: { id: 'Q123', display: {} },
+					lexicalCategory: { id: 'Q234', display: {} },
+					spellingVariant: 'bar',
+					languageCodeFromLanguageItem: null,
+				} as RootState;
+			},
+			actions,
+			mutations,
+		} );
+
+		await store.dispatch( HANDLE_LANGUAGE_CHANGE, { id: 'Q123' } );
+
+		expect( store.state.language ).toStrictEqual( { id: 'Q123' } );
+		expect( store.state.spellingVariant ).toBe( 'bar' );
+		expect( store.state.languageCodeFromLanguageItem ).toBe( null );
+	} );
 } );
 
 describe( HANDLE_INIT_PARAMS, () => {

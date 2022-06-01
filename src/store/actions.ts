@@ -144,10 +144,15 @@ export default function createActions(
 			}
 		},
 		async [ HANDLE_LANGUAGE_CHANGE ](
-			{ commit, dispatch }: RootContext,
+			{ state, commit, dispatch }: RootContext,
 			newLanguageItem: SearchedItemOption | null,
 		): Promise<void> {
+			const oldLanguageItem = state.language;
 			commit( SET_LANGUAGE, newLanguageItem );
+			if ( oldLanguageItem?.id === newLanguageItem?.id ) {
+				return;
+			}
+
 			commit( SET_LANGUAGE_CODE_FROM_LANGUAGE_ITEM, undefined );
 			commit( SET_SPELLING_VARIANT, '' );
 
