@@ -150,7 +150,7 @@ const messages = useMessages();
 		@input="onWikitOptionSelected"
 	>
 		<template #no-results>
-			{{ messages.getUnescaped( 'wikibaselexeme-newlexeme-no-results' ) }}
+			{{ messages.getUnescaped( 'wikibase-entityselector-notfound' ) }}
 		</template>
 	</wikit-lookup>
 </template>
