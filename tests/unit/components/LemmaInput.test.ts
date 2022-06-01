@@ -14,7 +14,7 @@ describe( 'LemmaInput', () => {
 
 	let store: Store<RootState>;
 
-	function createComponent( config: Record<string, unknown> = {} ) {
+	function createComponent( config: Record<string, unknown> = { maxLemmaLength: 8 } ) {
 		store = initStore( {
 			lexemeCreator: unusedLexemeCreator,
 			langCodeRetriever: unusedLangCodeRetriever,
@@ -49,7 +49,10 @@ describe( 'LemmaInput', () => {
 			expect( findInput( lemmaInputWrapper ).element.value ).toBe( testValue );
 		} );
 
-		it( ':error - displays an error message provided by the prop', async () => {
+	} );
+
+	describe( 'input validation', () => {
+		it( 'displays an error message when no input provided', async () => {
 			const lemmaInputWrapper = createComponent();
 
 			store.state.perFieldErrors.lemmaErrors.push( { messageKey: 'wikibaselexeme-newlexeme-error-no-lemma' } );
@@ -58,9 +61,8 @@ describe( 'LemmaInput', () => {
 			expect( lemmaInputWrapper.get( '.wikit-ValidationMessage--error' ).text() ).toContain( '⧼wikibaselexeme-newlexeme-error-no-lemma⧽' );
 		} );
 
-		it( ':error - displays an error message in case input is too long', async () => {
-			const tooLongValue =
-			'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula \neget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium. Integer tincidunt. Cras dapibus. Vivamus elementum semper nisi. Aenean vulputate eleifend tellus. Aenean leo ligula, porttitor eu, consequat vitae, eleifend ac, enim. Aliquam lorem ante, dapibus in, viverra quis, feugiat a, tellus. Phasellus viverra nulla ut metus varius laoreet. Quisque rutrum. Aenean imperdiet. Etiam ultricies nisi vel augue. Curabitur ullamcorper ultricies nisi. Nam eget dui. Etiam rhoncus. Maecenas tempus, tellus eget condimentum rhoncus, sem quam semper libero, sit amet adipiscing sem neque sed ipsum. Nam quam nu';
+		it( 'displays an error message when input is too longer than configured', async () => {
+			const tooLongValue = 'InputShouldBeShorter';
 			const lemmaInputWrapper = createComponent( { props: { modelValue: tooLongValue } } );
 
 			store.state.perFieldErrors.lemmaErrors.push( { messageKey: 'wikibaselexeme-newlexeme-lemma-too-long-error' } );
