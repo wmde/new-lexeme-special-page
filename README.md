@@ -74,6 +74,12 @@ npm run test:integration
 
 Unit tests (in `tests/unit/`) focus on excercising a self-contained piece of code, while integration tests in (`tests/integration/`) are designed to test the interaction between several components and the store.
 
+You can run individual unit or integration tests using `npx jest`, for example:
+```sh
+npx jest tests/unit/store/actions.test.ts
+npx jest tests/integration/App.test.ts
+```
+
 Finally, browser tests in `cypress/integration/` are designed to test this application end-to-end with actual browser interaction.
 They are also the main place for the automated accessiblity tests.
 
