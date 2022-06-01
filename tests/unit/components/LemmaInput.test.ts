@@ -14,7 +14,7 @@ describe( 'LemmaInput', () => {
 
 	let store: Store<RootState>;
 
-	function createComponent( config: Record<string, unknown> = { maxLemmaLength: 8 } ) {
+	function createComponent( config: Record<string, unknown> = {} ) {
 		store = initStore( {
 			lexemeCreator: unusedLexemeCreator,
 			langCodeRetriever: unusedLangCodeRetriever,
@@ -29,7 +29,7 @@ describe( 'LemmaInput', () => {
 			global: {
 				plugins: [ store ],
 				provide: {
-					[ ConfigKey as symbol ]: { placeholderExampleData: {} },
+					[ ConfigKey as symbol ]: { placeholderExampleData: {}, maxLemmaLength: 8 },
 				},
 			},
 			...config,
@@ -65,10 +65,14 @@ describe( 'LemmaInput', () => {
 			const tooLongValue = 'InputShouldBeShorter';
 			const lemmaInputWrapper = createComponent( { props: { modelValue: tooLongValue } } );
 
-			store.state.perFieldErrors.lemmaErrors.push( { messageKey: 'wikibaselexeme-newlexeme-lemma-too-long-error' } );
-			await nextTick();
-
 			expect( lemmaInputWrapper.get( '.wikit-ValidationMessage--error' ).text() ).toContain( '⧼wikibaselexeme-newlexeme-lemma-too-long-error⧽' );
+		} );
+
+		it( 'counts multi-byte characters as code points', async () => {
+			const multiByteInput = '🏳️‍🌈🏳️‍🌈';
+			const lemmaInputWrapper = createComponent( { props: { modelValue: multiByteInput } } );
+
+			expect( findInput( lemmaInputWrapper ).element.value.length ).toBe( 8 );
 		} );
 	} );
 

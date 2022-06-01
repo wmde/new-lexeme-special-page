@@ -18,8 +18,9 @@ const messages = useMessages();
 const config = useConfig();
 const exampleLemma = config.placeholderExampleData.lemma;
 const store = useStore();
+const inputLength = [ ...props.modelValue ].length;
 const error = computed( () => {
-	if ( props.modelValue.length > config.maxLemmaLength ) {
+	if ( inputLength > config.maxLemmaLength ) {
 		return {
 			type: 'error',
 			message: messages.getUnescaped( 'wikibaselexeme-newlexeme-lemma-too-long-error' ),
