@@ -285,4 +285,155 @@ describe( 'NewLexemeForm', () => {
 
 	} );
 
+	describe( 'validates that every input has a value', () => {
+		it( 'shows an error when the lemma input is empty and clears that after something is typed', async () => {
+			const createLexeme = jest.fn();
+
+			const messagesPlugin = new Messages( new DevMessagesRepository() );
+			const wrapper = mountForm( {
+				lexemeCreator: { createLexeme },
+				langCodeRetriever: { getLanguageCodeFromItem: jest.fn().mockResolvedValue( 'en' ) },
+				languageCodesProvider: {
+					isValid: jest.fn().mockReturnValue( true ),
+					getLanguages: jest.fn(),
+				},
+			}, {
+				[ MessagesKey as symbol ]: messagesPlugin,
+			} );
+
+			const languageInput = wrapper.find( '.wbl-snl-language-lookup input' );
+			await languageInput.setValue( '=Q123' );
+			await wrapper.find( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
+
+			const lexicalCategoryInput = wrapper.find( '.wbl-snl-lexical-category-lookup input' );
+			await lexicalCategoryInput.setValue( '=Q456' );
+			await wrapper.find( '.wbl-snl-lexical-category-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
+
+			await wrapper.trigger( 'submit' );
+
+			const lemmaInputWrapper = wrapper.get( '.wbl-snl-lemma-input' );
+			expect( lemmaInputWrapper.get( '.wikit-ValidationMessage--error' ).text() ).toBe( messagesPlugin.get( 'wikibaselexeme-newlexeme-lemma-empty-error' ) );
+
+			await lemmaInputWrapper.get( 'input' ).setValue( 'foo' );
+
+			expect( lemmaInputWrapper.find( '.wikit-ValidationMessage--error' ).exists() ).toBe( false );
+
+			expect( createLexeme ).not.toHaveBeenCalled();
+		} );
+
+		it( 'shows an error when the lexical category input is empty and clears that after something is selected', async () => {
+			const createLexeme = jest.fn();
+			const messagesPlugin = new Messages( new DevMessagesRepository() );
+
+			const wrapper = mountForm( {
+				lexemeCreator: { createLexeme },
+				langCodeRetriever: { getLanguageCodeFromItem: jest.fn().mockResolvedValue( 'en' ) },
+				languageCodesProvider: {
+					isValid: jest.fn().mockReturnValue( true ),
+					getLanguages: jest.fn(),
+				},
+			}, {
+				[ MessagesKey as symbol ]: messagesPlugin,
+			} );
+
+			const lemmaInput = wrapper.get( '.wbl-snl-lemma-input input' );
+			await lemmaInput.setValue( 'foo' );
+
+			const languageInput = wrapper.find( '.wbl-snl-language-lookup input' );
+			await languageInput.setValue( '=Q123' );
+			await wrapper.find( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
+
+			await wrapper.trigger( 'submit' );
+
+			const lexicalCategoryInputWrapper = wrapper.get( '.wbl-snl-lexical-category-lookup' );
+			expect( lexicalCategoryInputWrapper.get( '.wikit-ValidationMessage--error' ).text() )
+				.toBe( messagesPlugin.get( 'wikibaselexeme-newlexeme-lexicalcategory-empty-error' ) );
+			await lexicalCategoryInputWrapper.get( 'input' ).setValue( '=Q456' );
+			await lexicalCategoryInputWrapper.find( '.wikit-OptionsMenu__item' ).trigger( 'click' );
+			expect( lexicalCategoryInputWrapper.find( '.wikit-ValidationMessage--error' ).exists() ).toBe( false );
+
+			expect( createLexeme ).not.toHaveBeenCalled();
+		} );
+
+		it( 'shows an error when the language input is empty and clears that after something is selected', async () => {
+			const createLexeme = jest.fn();
+			const messagesPlugin = new Messages( new DevMessagesRepository() );
+
+			const wrapper = mountForm( {
+				lexemeCreator: { createLexeme },
+				langCodeRetriever: { getLanguageCodeFromItem: jest.fn().mockResolvedValue( 'en' ) },
+				languageCodesProvider: {
+					isValid: jest.fn().mockReturnValue( true ),
+					getLanguages: jest.fn(),
+				},
+			}, {
+				[ MessagesKey as symbol ]: messagesPlugin,
+			} );
+
+			const lemmaInput = wrapper.get( '.wbl-snl-lemma-input input' );
+			await lemmaInput.setValue( 'foo' );
+
+			const lexicalCategoryInput = wrapper.find( '.wbl-snl-lexical-category-lookup input' );
+			await lexicalCategoryInput.setValue( '=Q456' );
+			await wrapper.find( '.wbl-snl-lexical-category-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
+
+			await wrapper.trigger( 'submit' );
+
+			const languageInputWrapper = wrapper.get( '.wbl-snl-language-lookup' );
+			expect( languageInputWrapper.get( '.wikit-ValidationMessage--error' ).text() )
+				.toBe( messagesPlugin.get( 'wikibaselexeme-newlexeme-language-empty-error' ) );
+			await languageInputWrapper.get( 'input' ).setValue( '=Q123' );
+			await languageInputWrapper.find( '.wikit-OptionsMenu__item' ).trigger( 'click' );
+
+			await flushPromises();
+
+			expect( languageInputWrapper.find( '.wikit-ValidationMessage--error' ).exists() ).toBe( false );
+
+			expect( createLexeme ).not.toHaveBeenCalled();
+		} );
+
+		it( 'shows an error when the spelling variant input is empty and clears that after something is selected', async () => {
+			const createLexeme = jest.fn();
+			const messagesPlugin = new Messages( new DevMessagesRepository() );
+
+			const wrapper = mountForm( {
+				lexemeCreator: { createLexeme },
+				langCodeRetriever: { getLanguageCodeFromItem: jest.fn().mockResolvedValue( null ) },
+				languageCodesProvider: {
+					isValid: jest.fn().mockReturnValue( true ),
+					getLanguages: jest.fn(),
+				},
+			}, {
+				[ LanguageCodesProviderKey as symbol ]: {
+					getLanguages: () => new Map( [ [ 'en-gb', 'British English' ] ] ),
+				},
+				[ MessagesKey as symbol ]: messagesPlugin,
+			} );
+
+			const lemmaInput = wrapper.get( '.wbl-snl-lemma-input input' );
+			await lemmaInput.setValue( 'foo' );
+
+			const languageInput = wrapper.find( '.wbl-snl-language-lookup input' );
+			await languageInput.setValue( '=Q123' );
+			await wrapper.find( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
+
+			const lexicalCategoryInput = wrapper.find( '.wbl-snl-lexical-category-lookup input' );
+			await lexicalCategoryInput.setValue( '=Q456' );
+			await wrapper.find( '.wbl-snl-lexical-category-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
+
+			await wrapper.trigger( 'submit' );
+
+			const spellingVariantInputWrapper = wrapper.get( '.wbl-snl-spelling-variant-lookup' );
+			expect( spellingVariantInputWrapper.get( '.wikit-ValidationMessage--error' ).text() )
+				.toBe( messagesPlugin.get( 'wikibaselexeme-newlexeme-lemma-language-empty-error' ) );
+
+			await spellingVariantInputWrapper.get( 'input' ).setValue( 'en' );
+			await spellingVariantInputWrapper.get( '.wikit-OptionsMenu__item' ).trigger( 'click' );
+
+			expect( spellingVariantInputWrapper.find( '.wikit-ValidationMessage--error' ).exists() ).toBe( false );
+
+			expect( createLexeme ).not.toHaveBeenCalled();
+		} );
+	} );
+
 } );
