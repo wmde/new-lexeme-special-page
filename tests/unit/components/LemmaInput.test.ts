@@ -71,8 +71,8 @@ describe( 'LemmaInput', () => {
 		it( 'counts multi-byte characters as code points', async () => {
 			const multiByteInput = '🏳️‍🌈🏳️‍🌈';
 			const lemmaInputWrapper = createComponent( { props: { modelValue: multiByteInput } } );
-
-			expect( findInput( lemmaInputWrapper ).element.value.length ).toBe( 8 );
+			const mbInputString = Array.from( findInput( lemmaInputWrapper ).element.value );
+			expect( mbInputString.length ).toBe( 8 );
 		} );
 	} );
 

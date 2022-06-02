@@ -18,8 +18,8 @@ const messages = useMessages();
 const config = useConfig();
 const exampleLemma = config.placeholderExampleData.lemma;
 const store = useStore();
-const inputLength = [ ...props.modelValue ].length;
 const error = computed( () => {
+	const inputLength = Array.from( props.modelValue ).length;
 	if ( inputLength > config.maxLemmaLength ) {
 		return {
 			type: 'error',
