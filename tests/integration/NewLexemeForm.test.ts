@@ -3,7 +3,7 @@ import { Config, ConfigKey } from '@/plugins/ConfigPlugin/Config';
 import { LanguageCodesProviderKey } from '@/plugins/LanguageCodesProviderPlugin/LanguageCodesProvider';
 import { flushPromises, mount } from '@vue/test-utils';
 import NewLexemeForm from '@/components/NewLexemeForm.vue';
-import initStore from '@/store';
+import initStore, { StoreServices } from '@/store';
 import unusedLexemeCreator from '../mocks/unusedLexemeCreator';
 import { ItemSearchKey } from '@/plugins/ItemSearchPlugin/ItemSearch';
 import DevItemSearcher from '@/data-access/DevItemSearcher';
@@ -19,14 +19,6 @@ jest.mock( 'lodash/debounce', () => jest.fn( ( fn ) => fn ) );
 
 describe( 'NewLexemeForm', () => {
 	let store: ReturnType<typeof initStore>;
-	beforeEach( () => {
-		store = initStore( {
-			lexemeCreator: unusedLexemeCreator,
-			langCodeRetriever: unusedLangCodeRetriever,
-			languageCodesProvider: unusedLanguageCodesProvider,
-			tracker: unusedTracker,
-		} );
-	} );
 
 	const emptyConfig: Config = {
 		licenseUrl: '',
@@ -42,7 +34,14 @@ describe( 'NewLexemeForm', () => {
 		maxLemmaLength: 1000,
 	};
 
-	function mountForm() {
+	function mountForm( storeServices: Partial<StoreServices> = {}, pluginOverrides = {} ) {
+		store = initStore( {
+			lexemeCreator: unusedLexemeCreator,
+			langCodeRetriever: unusedLangCodeRetriever,
+			languageCodesProvider: unusedLanguageCodesProvider,
+			tracker: unusedTracker,
+			...storeServices,
+		} );
 		return mount( NewLexemeForm, {
 			global: {
 				plugins: [ store ],
@@ -52,6 +51,7 @@ describe( 'NewLexemeForm', () => {
 					[ ItemSearchKey as symbol ]: new DevItemSearcher(),
 					[ LanguageCodesProviderKey as symbol ]: unusedLanguageCodesProvider,
 					[ WikiRouterKey as symbol ]: null,
+					...pluginOverrides,
 				},
 			},
 		} );
@@ -67,25 +67,11 @@ describe( 'NewLexemeForm', () => {
 	} );
 
 	it( 'updates the store if something is entered into the language input', async () => {
-		const testStore = initStore( {
-			lexemeCreator: unusedLexemeCreator,
+		const wrapper = mountForm( {
 			langCodeRetriever: { getLanguageCodeFromItem: jest.fn().mockResolvedValue( 'de' ) },
 			languageCodesProvider: {
 				isValid: jest.fn().mockReturnValue( true ),
 				getLanguages: jest.fn(),
-			},
-			tracker: unusedTracker,
-		} );
-
-		const wrapper = mount( NewLexemeForm, {
-			global: {
-				plugins: [ testStore ],
-				provide: {
-					[ ConfigKey as symbol ]: emptyConfig,
-					[ ItemSearchKey as symbol ]: new DevItemSearcher(),
-					[ LanguageCodesProviderKey as symbol ]: {},
-					[ WikiRouterKey as symbol ]: null,
-				},
 			},
 		} );
 
@@ -95,15 +81,15 @@ describe( 'NewLexemeForm', () => {
 		await wrapper.find( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
 
 		expect( wrapper.find( '.wbl-snl-spelling-variant-lookup' ).exists() ).toBe( false );
-		expect( testStore.state.language?.id ).toBe( 'Q123' );
-		expect( testStore.state.languageCodeFromLanguageItem ).toBe( 'de' );
+		expect( store.state.language?.id ).toBe( 'Q123' );
+		expect( store.state.languageCodeFromLanguageItem ).toBe( 'de' );
 
 		await languageLookup.setValue( '=Q12' );
 		// don’t click any option ⇒ nothing actually selected
 
 		expect( wrapper.find( '.wbl-snl-spelling-variant-lookup' ).exists() ).toBe( false );
-		expect( testStore.state.language ).toBe( null );
-		expect( testStore.state.languageCodeFromLanguageItem ).toBe( undefined );
+		expect( store.state.language ).toBe( null );
+		expect( store.state.languageCodeFromLanguageItem ).toBe( undefined );
 	} );
 
 	it( 'shows warning message if language code is not valid', async () => {
@@ -111,23 +97,12 @@ describe( 'NewLexemeForm', () => {
 			isValid: jest.fn().mockReturnValue( false ),
 			getLanguages: jest.fn().mockReturnValue( new Map() ),
 		};
-		const testStore = initStore( {
-			lexemeCreator: unusedLexemeCreator,
+
+		const wrapper = mountForm( {
 			langCodeRetriever: { getLanguageCodeFromItem: jest.fn().mockResolvedValue( 'invalid' ) },
 			languageCodesProvider: languageCodesProvider,
-			tracker: unusedTracker,
-		} );
-
-		const wrapper = mount( NewLexemeForm, {
-			global: {
-				plugins: [ testStore ],
-				provide: {
-					[ ConfigKey as symbol ]: emptyConfig,
-					[ ItemSearchKey as symbol ]: new DevItemSearcher(),
-					[ LanguageCodesProviderKey as symbol ]: languageCodesProvider,
-					[ WikiRouterKey as symbol ]: null,
-				},
-			},
+		}, {
+			[ LanguageCodesProviderKey as symbol ]: languageCodesProvider,
 		} );
 
 		const languageLookup = wrapper.find( '.wbl-snl-language-lookup input' );
@@ -135,7 +110,7 @@ describe( 'NewLexemeForm', () => {
 		await wrapper.find( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
 		await nextTick();
 
-		expect( testStore.state.languageCodeFromLanguageItem ).toBe( false );
+		expect( store.state.languageCodeFromLanguageItem ).toBe( false );
 
 		const warning = wrapper.find( '.wikit-ValidationMessage--warning' );
 		expect( warning.exists() ).toBe( true );
@@ -156,24 +131,12 @@ describe( 'NewLexemeForm', () => {
 			isValid: jest.fn().mockReturnValue( true ),
 			getLanguages: jest.fn().mockReturnValue( new Map( [ [ 'de', 'German' ] ] ) ),
 		};
-		const testStore = initStore( {
-			lexemeCreator: unusedLexemeCreator,
+
+		const wrapper = mountForm( {
 			langCodeRetriever: { getLanguageCodeFromItem: jest.fn().mockResolvedValue( null ) },
 			languageCodesProvider: languageCodesProvider,
-			tracker: unusedTracker,
-		} );
-
-		const wrapper = mount( NewLexemeForm, {
-			global: {
-				plugins: [ testStore ],
-				provide: {
-					[ ConfigKey as symbol ]: emptyConfig,
-					[ ItemSearchKey as symbol ]: new DevItemSearcher(),
-					[ LanguageCodesProviderKey as symbol ]: languageCodesProvider,
-					[ WikiRouterKey as symbol ]: null,
-					[ MessagesKey as symbol ]: new Messages( new DevMessagesRepository() ),
-				},
-			},
+		}, {
+			[ LanguageCodesProviderKey as symbol ]: languageCodesProvider,
 		} );
 
 		const languageLookup = wrapper.find( '.wbl-snl-language-lookup input' );
@@ -190,7 +153,7 @@ describe( 'NewLexemeForm', () => {
 
 		await wrapper.find( '.wbl-snl-spelling-variant-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
 
-		expect( testStore.state.spellingVariant ).toBe( 'de' );
+		expect( store.state.spellingVariant ).toBe( 'de' );
 	} );
 
 	describe( 'calls the API to create the Lexeme and then redirects to it', () => {
@@ -198,7 +161,8 @@ describe( 'NewLexemeForm', () => {
 		it( 'with language code from language item', async () => {
 			const createLexeme = jest.fn().mockReturnValue( 'L123' );
 			const goToTitle = jest.fn();
-			const testStore = initStore( {
+
+			const wrapper = mountForm( {
 				lexemeCreator: { createLexeme },
 				langCodeRetriever: { getLanguageCodeFromItem: jest.fn().mockResolvedValue( 'de' ) },
 				languageCodesProvider: {
@@ -206,17 +170,8 @@ describe( 'NewLexemeForm', () => {
 					getLanguages: jest.fn(),
 				},
 				tracker: { increment: jest.fn() },
-			} );
-			const wrapper = mount( NewLexemeForm, {
-				global: {
-					plugins: [ testStore ],
-					provide: {
-						[ ConfigKey as symbol ]: emptyConfig,
-						[ ItemSearchKey as symbol ]: new DevItemSearcher(),
-						[ LanguageCodesProviderKey as symbol ]: {},
-						[ WikiRouterKey as symbol ]: { goToTitle },
-					},
-				},
+			}, {
+				[ WikiRouterKey as symbol ]: { goToTitle },
 			} );
 
 			const lemmaInput = wrapper.find( '.wbl-snl-lemma-input input' );
@@ -243,25 +198,17 @@ describe( 'NewLexemeForm', () => {
 		it( 'with spelling variant', async () => {
 			const createLexeme = jest.fn().mockReturnValue( 'L123' );
 			const goToTitle = jest.fn();
-			const testStore = initStore( {
+
+			const wrapper = mountForm( {
 				lexemeCreator: { createLexeme },
 				langCodeRetriever: { getLanguageCodeFromItem: jest.fn().mockResolvedValue( null ) },
 				languageCodesProvider: unusedLanguageCodesProvider,
 				tracker: { increment: jest.fn() },
-			} );
-			const wrapper = mount( NewLexemeForm, {
-				global: {
-					plugins: [ testStore ],
-					provide: {
-						[ ConfigKey as symbol ]: emptyConfig,
-						[ ItemSearchKey as symbol ]: new DevItemSearcher(),
-						[ LanguageCodesProviderKey as symbol ]: {
-							getLanguages: () => new Map( [ [ 'en-gb', 'British English' ] ] ),
-						},
-						[ WikiRouterKey as symbol ]: { goToTitle },
-						[ MessagesKey as symbol ]: new Messages( new DevMessagesRepository() ),
-					},
+			}, {
+				[ LanguageCodesProviderKey as symbol ]: {
+					getLanguages: () => new Map( [ [ 'en-gb', 'British English' ] ] ),
 				},
+				[ WikiRouterKey as symbol ]: { goToTitle },
 			} );
 
 			const lemmaInput = wrapper.find( '.wbl-snl-lemma-input input' );
@@ -296,7 +243,8 @@ describe( 'NewLexemeForm', () => {
 			} );
 			const createLexeme = jest.fn().mockReturnValue( promise );
 			const goToTitle = jest.fn();
-			const testStore = initStore( {
+
+			const wrapper = mountForm( {
 				lexemeCreator: { createLexeme },
 				langCodeRetriever: { getLanguageCodeFromItem: jest.fn().mockResolvedValue( 'de' ) },
 				languageCodesProvider: {
@@ -304,18 +252,8 @@ describe( 'NewLexemeForm', () => {
 					getLanguages: jest.fn(),
 				},
 				tracker: { increment: jest.fn() },
-			} );
-			const wrapper = mount( NewLexemeForm, {
-				global: {
-					plugins: [ testStore ],
-					provide: {
-						[ ConfigKey as symbol ]: emptyConfig,
-						[ ItemSearchKey as symbol ]: new DevItemSearcher(),
-						[ LanguageCodesProviderKey as symbol ]: {},
-						[ WikiRouterKey as symbol ]: { goToTitle },
-						[ MessagesKey as symbol ]: new Messages( new DevMessagesRepository() ),
-					},
-				},
+			}, {
+				[ WikiRouterKey as symbol ]: { goToTitle },
 			} );
 
 			const lemmaInput = wrapper.find( '.wbl-snl-lemma-input input' );
@@ -346,6 +284,157 @@ describe( 'NewLexemeForm', () => {
 			expect( goToTitle ).not.toHaveBeenCalled();
 		} );
 
+	} );
+
+	describe( 'validates that every input has a value', () => {
+		it( 'shows an error when the lemma input is empty and clears that after something is typed', async () => {
+			const createLexeme = jest.fn();
+
+			const messagesPlugin = new Messages( new DevMessagesRepository() );
+			const wrapper = mountForm( {
+				lexemeCreator: { createLexeme },
+				langCodeRetriever: { getLanguageCodeFromItem: jest.fn().mockResolvedValue( 'en' ) },
+				languageCodesProvider: {
+					isValid: jest.fn().mockReturnValue( true ),
+					getLanguages: jest.fn(),
+				},
+			}, {
+				[ MessagesKey as symbol ]: messagesPlugin,
+			} );
+
+			const languageInput = wrapper.find( '.wbl-snl-language-lookup input' );
+			await languageInput.setValue( '=Q123' );
+			await wrapper.find( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
+
+			const lexicalCategoryInput = wrapper.find( '.wbl-snl-lexical-category-lookup input' );
+			await lexicalCategoryInput.setValue( '=Q456' );
+			await wrapper.find( '.wbl-snl-lexical-category-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
+
+			await wrapper.trigger( 'submit' );
+
+			const lemmaInputWrapper = wrapper.get( '.wbl-snl-lemma-input' );
+			expect( lemmaInputWrapper.get( '.wikit-ValidationMessage--error' ).text() ).toBe( messagesPlugin.get( 'wikibaselexeme-newlexeme-lemma-empty-error' ) );
+
+			await lemmaInputWrapper.get( 'input' ).setValue( 'foo' );
+
+			expect( lemmaInputWrapper.find( '.wikit-ValidationMessage--error' ).exists() ).toBe( false );
+
+			expect( createLexeme ).not.toHaveBeenCalled();
+		} );
+
+		it( 'shows an error when the lexical category input is empty and clears that after something is selected', async () => {
+			const createLexeme = jest.fn();
+			const messagesPlugin = new Messages( new DevMessagesRepository() );
+
+			const wrapper = mountForm( {
+				lexemeCreator: { createLexeme },
+				langCodeRetriever: { getLanguageCodeFromItem: jest.fn().mockResolvedValue( 'en' ) },
+				languageCodesProvider: {
+					isValid: jest.fn().mockReturnValue( true ),
+					getLanguages: jest.fn(),
+				},
+			}, {
+				[ MessagesKey as symbol ]: messagesPlugin,
+			} );
+
+			const lemmaInput = wrapper.get( '.wbl-snl-lemma-input input' );
+			await lemmaInput.setValue( 'foo' );
+
+			const languageInput = wrapper.find( '.wbl-snl-language-lookup input' );
+			await languageInput.setValue( '=Q123' );
+			await wrapper.find( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
+
+			await wrapper.trigger( 'submit' );
+
+			const lexicalCategoryInputWrapper = wrapper.get( '.wbl-snl-lexical-category-lookup' );
+			expect( lexicalCategoryInputWrapper.get( '.wikit-ValidationMessage--error' ).text() )
+				.toBe( messagesPlugin.get( 'wikibaselexeme-newlexeme-lexicalcategory-empty-error' ) );
+			await lexicalCategoryInputWrapper.get( 'input' ).setValue( '=Q456' );
+			await lexicalCategoryInputWrapper.find( '.wikit-OptionsMenu__item' ).trigger( 'click' );
+			expect( lexicalCategoryInputWrapper.find( '.wikit-ValidationMessage--error' ).exists() ).toBe( false );
+
+			expect( createLexeme ).not.toHaveBeenCalled();
+		} );
+
+		it( 'shows an error when the language input is empty and clears that after something is selected', async () => {
+			const createLexeme = jest.fn();
+			const messagesPlugin = new Messages( new DevMessagesRepository() );
+
+			const wrapper = mountForm( {
+				lexemeCreator: { createLexeme },
+				langCodeRetriever: { getLanguageCodeFromItem: jest.fn().mockResolvedValue( 'en' ) },
+				languageCodesProvider: {
+					isValid: jest.fn().mockReturnValue( true ),
+					getLanguages: jest.fn(),
+				},
+			}, {
+				[ MessagesKey as symbol ]: messagesPlugin,
+			} );
+
+			const lemmaInput = wrapper.get( '.wbl-snl-lemma-input input' );
+			await lemmaInput.setValue( 'foo' );
+
+			const lexicalCategoryInput = wrapper.find( '.wbl-snl-lexical-category-lookup input' );
+			await lexicalCategoryInput.setValue( '=Q456' );
+			await wrapper.find( '.wbl-snl-lexical-category-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
+
+			await wrapper.trigger( 'submit' );
+
+			const languageInputWrapper = wrapper.get( '.wbl-snl-language-lookup' );
+			expect( languageInputWrapper.get( '.wikit-ValidationMessage--error' ).text() )
+				.toBe( messagesPlugin.get( 'wikibaselexeme-newlexeme-language-empty-error' ) );
+			await languageInputWrapper.get( 'input' ).setValue( '=Q123' );
+			await languageInputWrapper.find( '.wikit-OptionsMenu__item' ).trigger( 'click' );
+
+			await flushPromises();
+
+			expect( languageInputWrapper.find( '.wikit-ValidationMessage--error' ).exists() ).toBe( false );
+
+			expect( createLexeme ).not.toHaveBeenCalled();
+		} );
+
+		it( 'shows an error when the spelling variant input is empty and clears that after something is selected', async () => {
+			const createLexeme = jest.fn();
+			const messagesPlugin = new Messages( new DevMessagesRepository() );
+
+			const wrapper = mountForm( {
+				lexemeCreator: { createLexeme },
+				langCodeRetriever: { getLanguageCodeFromItem: jest.fn().mockResolvedValue( null ) },
+				languageCodesProvider: {
+					isValid: jest.fn().mockReturnValue( true ),
+					getLanguages: jest.fn(),
+				},
+			}, {
+				[ LanguageCodesProviderKey as symbol ]: {
+					getLanguages: () => new Map( [ [ 'en-gb', 'British English' ] ] ),
+				},
+				[ MessagesKey as symbol ]: messagesPlugin,
+			} );
+
+			const lemmaInput = wrapper.get( '.wbl-snl-lemma-input input' );
+			await lemmaInput.setValue( 'foo' );
+
+			const languageInput = wrapper.find( '.wbl-snl-language-lookup input' );
+			await languageInput.setValue( '=Q123' );
+			await wrapper.find( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
+
+			const lexicalCategoryInput = wrapper.find( '.wbl-snl-lexical-category-lookup input' );
+			await lexicalCategoryInput.setValue( '=Q456' );
+			await wrapper.find( '.wbl-snl-lexical-category-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
+
+			await wrapper.trigger( 'submit' );
+
+			const spellingVariantInputWrapper = wrapper.get( '.wbl-snl-spelling-variant-lookup' );
+			expect( spellingVariantInputWrapper.get( '.wikit-ValidationMessage--error' ).text() )
+				.toBe( messagesPlugin.get( 'wikibaselexeme-newlexeme-lemma-language-empty-error' ) );
+
+			await spellingVariantInputWrapper.get( 'input' ).setValue( 'en' );
+			await spellingVariantInputWrapper.get( '.wikit-OptionsMenu__item' ).trigger( 'click' );
+
+			expect( spellingVariantInputWrapper.find( '.wikit-ValidationMessage--error' ).exists() ).toBe( false );
+
+			expect( createLexeme ).not.toHaveBeenCalled();
+		} );
 	} );
 
 } );
