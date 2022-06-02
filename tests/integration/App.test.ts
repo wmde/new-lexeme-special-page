@@ -47,6 +47,7 @@ describe( 'App.vue', () => {
 				lexicalCategoryLabel: '',
 				spellingVariant: '',
 			},
+			maxLemmaLength: 1000,
 		};
 		const lexemeNS = 146;
 		const testUrl = 'https://example.com';

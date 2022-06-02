@@ -17,7 +17,7 @@ import createActions from './actions';
 import mutations from './mutations';
 import RootState from './RootState';
 
-interface StoreServices {
+export interface StoreServices {
 	lexemeCreator: LexemeCreator;
 	langCodeRetriever: LangCodeRetriever;
 	languageCodesProvider: LanguageCodesProvider;

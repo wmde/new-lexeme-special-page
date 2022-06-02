@@ -29,7 +29,7 @@ describe( 'LemmaInput', () => {
 			global: {
 				plugins: [ store ],
 				provide: {
-					[ ConfigKey as symbol ]: { placeholderExampleData: {} },
+					[ ConfigKey as symbol ]: { placeholderExampleData: {}, maxLemmaLength: 8 },
 				},
 			},
 			...config,
@@ -49,13 +49,30 @@ describe( 'LemmaInput', () => {
 			expect( findInput( lemmaInputWrapper ).element.value ).toBe( testValue );
 		} );
 
-		it( ':error - displays an error message provided by the prop', async () => {
+	} );
+
+	describe( 'input validation', () => {
+		it( 'displays an error message when no input provided', async () => {
 			const lemmaInputWrapper = createComponent();
 
 			store.state.perFieldErrors.lemmaErrors.push( { messageKey: 'wikibaselexeme-newlexeme-error-no-lemma' } );
 			await nextTick();
 
 			expect( lemmaInputWrapper.get( '.wikit-ValidationMessage--error' ).text() ).toContain( '⧼wikibaselexeme-newlexeme-error-no-lemma⧽' );
+		} );
+
+		it( 'displays an error message when input is too longer than configured', async () => {
+			const tooLongValue = 'InputShouldBeShorter';
+			const lemmaInputWrapper = createComponent( { props: { modelValue: tooLongValue } } );
+
+			expect( lemmaInputWrapper.get( '.wikit-ValidationMessage--error' ).text() ).toContain( '⧼wikibaselexeme-newlexeme-lemma-too-long-error⧽' );
+		} );
+
+		it( 'counts multi-byte characters as code points', async () => {
+			const multiByteInput = '🏳️‍🌈🏳️‍🌈';
+			const lemmaInputWrapper = createComponent( { props: { modelValue: multiByteInput } } );
+			const mbInputString = Array.from( findInput( lemmaInputWrapper ).element.value );
+			expect( mbInputString.length ).toBe( 8 );
 		} );
 	} );
 
