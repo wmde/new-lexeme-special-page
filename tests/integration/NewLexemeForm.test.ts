@@ -57,8 +57,8 @@ describe( 'NewLexemeForm', () => {
 		} );
 	}
 
-	async function setLemmaInput( wrapper: VueWrapper, value = 'default test lemma' ) {
-		const lemmaInput = wrapper.get( '.wbl-snl-lemma-input input' );
+	async function setLemmaInput( formWrapper: VueWrapper, value = 'default test lemma' ) {
+		const lemmaInput = formWrapper.get( '.wbl-snl-lemma-input input' );
 		await lemmaInput.setValue( value );
 	}
 
