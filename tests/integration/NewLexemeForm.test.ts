@@ -1,7 +1,7 @@
 import LanguageCodesProvider from '@/data-access/LanguageCodesProvider';
 import { Config, ConfigKey } from '@/plugins/ConfigPlugin/Config';
 import { LanguageCodesProviderKey } from '@/plugins/LanguageCodesProviderPlugin/LanguageCodesProvider';
-import { flushPromises, mount } from '@vue/test-utils';
+import { flushPromises, mount, VueWrapper } from '@vue/test-utils';
 import NewLexemeForm from '@/components/NewLexemeForm.vue';
 import initStore, { StoreServices } from '@/store';
 import unusedLexemeCreator from '../mocks/unusedLexemeCreator';
@@ -57,6 +57,23 @@ describe( 'NewLexemeForm', () => {
 		} );
 	}
 
+	async function setLemmaInput( wrapper: VueWrapper, value = 'default test lemma' ) {
+		const lemmaInput = wrapper.get( '.wbl-snl-lemma-input input' );
+		await lemmaInput.setValue( value );
+	}
+
+	async function selectLanguage( formWrapper: VueWrapper, input = '=Q123' ): Promise<void> {
+		const languageInput = formWrapper.find( '.wbl-snl-language-lookup input' );
+		await languageInput.setValue( input );
+		await formWrapper.find( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
+	}
+
+	async function selectLexicalCategory( formWrapper: VueWrapper, input = '=Q456' ): Promise<void> {
+		const lexicalCategoryInput = formWrapper.find( '.wbl-snl-lexical-category-lookup input' );
+		await lexicalCategoryInput.setValue( input );
+		await formWrapper.find( '.wbl-snl-lexical-category-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
+	}
+
 	it( 'updates the store if something is entered into the lemma input', async () => {
 		const wrapper = mountForm();
 		const lemmaInput = wrapper.find( '.wbl-snl-lemma-input input' );
@@ -105,9 +122,7 @@ describe( 'NewLexemeForm', () => {
 			[ LanguageCodesProviderKey as symbol ]: languageCodesProvider,
 		} );
 
-		const languageLookup = wrapper.find( '.wbl-snl-language-lookup input' );
-		await languageLookup.setValue( '=Q123' );
-		await wrapper.find( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
+		await selectLanguage( wrapper, '=Q123' );
 		await nextTick();
 
 		expect( store.state.languageCodeFromLanguageItem ).toBe( false );
@@ -139,9 +154,7 @@ describe( 'NewLexemeForm', () => {
 			[ LanguageCodesProviderKey as symbol ]: languageCodesProvider,
 		} );
 
-		const languageLookup = wrapper.find( '.wbl-snl-language-lookup input' );
-		await languageLookup.setValue( '=Q123' );
-		await wrapper.find( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
+		await selectLanguage( wrapper );
 		await nextTick();
 
 		const warning = wrapper.find( '.wikit-ValidationMessage--warning' );
@@ -174,19 +187,12 @@ describe( 'NewLexemeForm', () => {
 				[ WikiRouterKey as symbol ]: { goToTitle },
 			} );
 
-			const lemmaInput = wrapper.find( '.wbl-snl-lemma-input input' );
-			await lemmaInput.setValue( 'foo' );
-
-			const languageInput = wrapper.find( '.wbl-snl-language-lookup input' );
-			await languageInput.setValue( '=Q123' );
-			await wrapper.find( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
+			await setLemmaInput( wrapper, 'foo' );
+			await selectLanguage( wrapper, '=Q123' );
+			await selectLexicalCategory( wrapper, '=Q456' );
 
 			const spellingVariantInput = wrapper.find( '.wbl-snl-spelling-variant-lookup input' );
 			expect( spellingVariantInput.exists() ).toBe( false );
-
-			const lexicalCategoryInput = wrapper.find( '.wbl-snl-lexical-category-lookup input' );
-			await lexicalCategoryInput.setValue( '=Q456' );
-			await wrapper.find( '.wbl-snl-lexical-category-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
 
 			await wrapper.trigger( 'submit' );
 			await flushPromises();
@@ -211,12 +217,9 @@ describe( 'NewLexemeForm', () => {
 				[ WikiRouterKey as symbol ]: { goToTitle },
 			} );
 
-			const lemmaInput = wrapper.find( '.wbl-snl-lemma-input input' );
-			await lemmaInput.setValue( 'foo' );
-
-			const languageInput = wrapper.find( '.wbl-snl-language-lookup input' );
-			await languageInput.setValue( '=Q123' );
-			await wrapper.find( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
+			await setLemmaInput( wrapper, 'foo' );
+			await selectLanguage( wrapper, '=Q123' );
+			await selectLexicalCategory( wrapper, '=Q456' );
 
 			await nextTick();
 
@@ -224,10 +227,6 @@ describe( 'NewLexemeForm', () => {
 			const spellingVariantInput = wrapper.find( '.wbl-snl-spelling-variant-lookup input' );
 			await spellingVariantInput.setValue( 'en' );
 			await wrapper.find( '.wbl-snl-spelling-variant-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
-
-			const lexicalCategoryInput = wrapper.find( '.wbl-snl-lexical-category-lookup input' );
-			await lexicalCategoryInput.setValue( '=Q456' );
-			await wrapper.find( '.wbl-snl-lexical-category-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
 
 			await wrapper.trigger( 'submit' );
 			await flushPromises();
@@ -256,19 +255,12 @@ describe( 'NewLexemeForm', () => {
 				[ WikiRouterKey as symbol ]: { goToTitle },
 			} );
 
-			const lemmaInput = wrapper.find( '.wbl-snl-lemma-input input' );
-			await lemmaInput.setValue( 'foo' );
-
-			const languageInput = wrapper.find( '.wbl-snl-language-lookup input' );
-			await languageInput.setValue( '=Q123' );
-			await wrapper.find( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
+			await setLemmaInput( wrapper, 'foo' );
+			await selectLanguage( wrapper, '=Q123' );
+			await selectLexicalCategory( wrapper, '=Q456' );
 
 			const spellingVariantInput = wrapper.find( '.wbl-snl-spelling-variant-lookup input' );
 			expect( spellingVariantInput.exists() ).toBe( false );
-
-			const lexicalCategoryInput = wrapper.find( '.wbl-snl-lexical-category-lookup input' );
-			await lexicalCategoryInput.setValue( '=Q456' );
-			await wrapper.find( '.wbl-snl-lexical-category-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
 
 			await wrapper.trigger( 'submit' );
 
@@ -302,13 +294,8 @@ describe( 'NewLexemeForm', () => {
 				[ MessagesKey as symbol ]: messagesPlugin,
 			} );
 
-			const languageInput = wrapper.find( '.wbl-snl-language-lookup input' );
-			await languageInput.setValue( '=Q123' );
-			await wrapper.find( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
-
-			const lexicalCategoryInput = wrapper.find( '.wbl-snl-lexical-category-lookup input' );
-			await lexicalCategoryInput.setValue( '=Q456' );
-			await wrapper.find( '.wbl-snl-lexical-category-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
+			await selectLanguage( wrapper, '=Q123' );
+			await selectLexicalCategory( wrapper, '=Q456' );
 
 			await wrapper.trigger( 'submit' );
 
@@ -337,12 +324,8 @@ describe( 'NewLexemeForm', () => {
 				[ MessagesKey as symbol ]: messagesPlugin,
 			} );
 
-			const lemmaInput = wrapper.get( '.wbl-snl-lemma-input input' );
-			await lemmaInput.setValue( 'foo' );
-
-			const languageInput = wrapper.find( '.wbl-snl-language-lookup input' );
-			await languageInput.setValue( '=Q123' );
-			await wrapper.find( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
+			await setLemmaInput( wrapper, 'foo' );
+			await selectLanguage( wrapper, '=Q123' );
 
 			await wrapper.trigger( 'submit' );
 
@@ -371,12 +354,8 @@ describe( 'NewLexemeForm', () => {
 				[ MessagesKey as symbol ]: messagesPlugin,
 			} );
 
-			const lemmaInput = wrapper.get( '.wbl-snl-lemma-input input' );
-			await lemmaInput.setValue( 'foo' );
-
-			const lexicalCategoryInput = wrapper.find( '.wbl-snl-lexical-category-lookup input' );
-			await lexicalCategoryInput.setValue( '=Q456' );
-			await wrapper.find( '.wbl-snl-lexical-category-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
+			await setLemmaInput( wrapper, 'foo' );
+			await selectLexicalCategory( wrapper, '=Q456' );
 
 			await wrapper.trigger( 'submit' );
 
@@ -411,16 +390,9 @@ describe( 'NewLexemeForm', () => {
 				[ MessagesKey as symbol ]: messagesPlugin,
 			} );
 
-			const lemmaInput = wrapper.get( '.wbl-snl-lemma-input input' );
-			await lemmaInput.setValue( 'foo' );
-
-			const languageInput = wrapper.find( '.wbl-snl-language-lookup input' );
-			await languageInput.setValue( '=Q123' );
-			await wrapper.find( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
-
-			const lexicalCategoryInput = wrapper.find( '.wbl-snl-lexical-category-lookup input' );
-			await lexicalCategoryInput.setValue( '=Q456' );
-			await wrapper.find( '.wbl-snl-lexical-category-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
+			await setLemmaInput( wrapper );
+			await selectLanguage( wrapper );
+			await selectLexicalCategory( wrapper );
 
 			await wrapper.trigger( 'submit' );
 
