@@ -18,7 +18,7 @@ const messages: Record<MessageKeys, string> = {
 	'wikibaselexeme-newlexeme-submit': 'Create Lexeme',
 	'wikibaselexeme-newlexeme-submit-error': 'The server encountered a temporary error and could not complete your request. Please try again.',
 	'wikibaselexeme-newlexeme-submitting': 'Creating Lexeme...',
-	'wikibaselexeme-newlexeme-lemma-too-long-error': 'FIXME (copy is missing!)',
+	'wikibaselexeme-newlexeme-lemma-too-long-error': 'The Lemma field is too long; please make an entry no longer than $1 characters.',
 	'wikibaselexeme-newlexeme-invalid-language-code-warning': 'This Item has an unrecognized language code. Please select one below.',
 	'wikibase-lexeme-lemma-language-option': '$1 ($2)',
 	'wikibase-entityselector-notfound': 'No match was found',
