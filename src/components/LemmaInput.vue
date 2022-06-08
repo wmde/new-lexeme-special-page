@@ -23,7 +23,10 @@ const error = computed( () => {
 	if ( inputLength > config.maxLemmaLength ) {
 		return {
 			type: 'error',
-			message: messages.getUnescaped( 'wikibaselexeme-newlexeme-lemma-too-long-error' ),
+			message: messages.getUnescaped(
+				'wikibaselexeme-newlexeme-lemma-too-long-error',
+				config.maxLemmaLength.toString(),
+			),
 		};
 	}
 	if ( !store.state.perFieldErrors.lemmaErrors.length ) {
