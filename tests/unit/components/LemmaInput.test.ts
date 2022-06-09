@@ -1,4 +1,9 @@
-import { DOMWrapper, mount } from '@vue/test-utils';
+import { MessagesKey } from '@/plugins/MessagesPlugin/Messages';
+import {
+	DOMWrapper,
+	mount,
+	MountingOptions,
+} from '@vue/test-utils';
 import LemmaInput from '@/components/LemmaInput.vue';
 import { ConfigKey } from '@/plugins/ConfigPlugin/Config';
 import initStore from '@/store';
@@ -14,7 +19,8 @@ describe( 'LemmaInput', () => {
 
 	let store: Store<RootState>;
 
-	function createComponent( config: Record<string, unknown> = {} ) {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	function createComponent( config: Partial<MountingOptions<any>> = {} ) {
 		store = initStore( {
 			lexemeCreator: unusedLexemeCreator,
 			langCodeRetriever: unusedLangCodeRetriever,
@@ -23,16 +29,18 @@ describe( 'LemmaInput', () => {
 		} );
 
 		return mount( LemmaInput, {
+			...config,
 			props: {
 				modelValue: '',
+				...config.props,
 			},
 			global: {
 				plugins: [ store ],
 				provide: {
 					[ ConfigKey as symbol ]: { placeholderExampleData: {}, maxLemmaLength: 8 },
+					...config.global?.provide,
 				},
 			},
-			...config,
 		} );
 	}
 
@@ -63,9 +71,14 @@ describe( 'LemmaInput', () => {
 
 		it( 'displays an error message when input is too longer than configured', async () => {
 			const tooLongValue = 'InputShouldBeShorter';
-			const lemmaInputWrapper = createComponent( { props: { modelValue: tooLongValue } } );
+			const messageGet = jest.fn().mockImplementation( ( key: string ) => `⧼${key}⧽` );
+			const lemmaInputWrapper = createComponent( {
+				props: { modelValue: tooLongValue },
+				global: { provide: { [ MessagesKey as symbol ]: { getUnescaped: messageGet } } },
+			} );
 
 			expect( lemmaInputWrapper.get( '.wikit-ValidationMessage--error' ).text() ).toContain( '⧼wikibaselexeme-newlexeme-lemma-too-long-error⧽' );
+			expect( messageGet ).toHaveBeenNthCalledWith( 3, 'wikibaselexeme-newlexeme-lemma-too-long-error', '8' );
 		} );
 
 		it( 'counts multi-byte characters as code points', async () => {
