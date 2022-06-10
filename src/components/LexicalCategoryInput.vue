@@ -9,11 +9,12 @@ import { computed } from 'vue';
 
 interface Props {
 	modelValue: SearchedItemOption | null;
+	searchInput: string;
 }
 
 defineProps<Props>();
 
-defineEmits( [ 'update:modelValue' ] );
+defineEmits( [ 'update:modelValue', 'update:searchInput' ] );
 
 const messages = useMessages();
 const searcher = useItemSearch();
@@ -52,10 +53,12 @@ export default {
 				exampleLexCategory
 			)"
 			:value="modelValue"
+			:search-input="searchInput"
 			:search-for-items="searchForItems"
 			:item-suggestions="lexicalCategorySuggestions"
 			:error="error"
 			@update:model-value="$emit( 'update:modelValue', $event )"
+			@update:search-input="$emit( 'update:searchInput', $event )"
 		/>
 	</div>
 </template>

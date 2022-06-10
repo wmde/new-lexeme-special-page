@@ -12,7 +12,9 @@ import RootState, { SubmitError } from './RootState';
 
 export const SET_LEMMA = 'setLemma';
 export const SET_LANGUAGE = 'setLanguage';
+export const SET_LANGUAGE_SEARCH_INPUT = 'setLanguageSearchInput';
 export const SET_LEXICAL_CATEGORY = 'setLexicalCategory';
+export const SET_LEXICAL_CATEGORY_SEARCH_INPUT = 'setLexicalCategorySearchInput';
 export const SET_SPELLING_VARIANT = 'setSpellingVariant';
 export const SET_LANGUAGE_CODE_FROM_LANGUAGE_ITEM = 'setLanguageCodeFromLanguageItem';
 export const ADD_ERRORS = 'addErrors';
@@ -27,8 +29,16 @@ export default {
 	[ SET_LANGUAGE ]( state: RootState, language: SearchedItemOption | null ): void {
 		state.language = language;
 	},
+	[ SET_LANGUAGE_SEARCH_INPUT ](
+		state: RootState, languageSearchInput: string ): void {
+		state.languageSearchInput = languageSearchInput;
+	},
 	[ SET_LEXICAL_CATEGORY ]( state: RootState, lexicalCategory: SearchedItemOption | null ): void {
 		state.lexicalCategory = lexicalCategory;
+	},
+	[ SET_LEXICAL_CATEGORY_SEARCH_INPUT ](
+		state: RootState, lexicalCategorySearchInput: string ): void {
+		state.lexicalCategorySearchInput = lexicalCategorySearchInput;
 	},
 	[ SET_SPELLING_VARIANT ]( state: RootState, spellingVariant: string ): void {
 		state.spellingVariant = spellingVariant;

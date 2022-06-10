@@ -26,8 +26,10 @@ import {
 	CLEAR_ERRORS,
 	SET_LANGUAGE,
 	SET_LANGUAGE_CODE_FROM_LANGUAGE_ITEM,
+	SET_LANGUAGE_SEARCH_INPUT,
 	SET_LEMMA,
 	SET_LEXICAL_CATEGORY,
+	SET_LEXICAL_CATEGORY_SEARCH_INPUT,
 	SET_SPELLING_VARIANT,
 } from './mutations';
 import RootState from './RootState';
@@ -181,9 +183,17 @@ export default function createActions(
 					// don’t copy params.language.languageCode here
 				} );
 				await dispatch( HANDLE_ITEM_LANGUAGE_CODE, params.language.languageCode );
+				commit(
+					SET_LANGUAGE_SEARCH_INPUT,
+					params.language.display.label?.value ?? params.language.id,
+				);
 			}
 			if ( params.lexicalCategory !== undefined ) {
 				commit( SET_LEXICAL_CATEGORY, params.lexicalCategory );
+				commit(
+					SET_LEXICAL_CATEGORY_SEARCH_INPUT,
+					params.lexicalCategory.display.label?.value ?? params.lexicalCategory.id,
+				);
 			}
 		},
 		async [ HANDLE_ITEM_LANGUAGE_CODE ](
