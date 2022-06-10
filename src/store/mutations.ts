@@ -7,6 +7,7 @@
  */
 
 import { SearchedItemOption } from '@/data-access/ItemSearcher';
+import MessageKeys from '@/plugins/MessagesPlugin/MessageKeys';
 import RootState, { SubmitError } from './RootState';
 
 export const SET_LEMMA = 'setLemma';
@@ -43,7 +44,7 @@ export default {
 	},
 	[ ADD_PER_FIELD_ERROR ](
 		state: RootState,
-		payload: { field: keyof RootState['perFieldErrors']; error: { messageKey: string } },
+		payload: { field: keyof RootState['perFieldErrors']; error: { messageKey: MessageKeys } },
 	): void {
 		state.perFieldErrors[ payload.field ].push( payload.error );
 	},

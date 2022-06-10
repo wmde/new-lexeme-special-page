@@ -1,4 +1,5 @@
 import { SearchedItemOption } from '@/data-access/ItemSearcher';
+import MessageKeys from '@/plugins/MessagesPlugin/MessageKeys';
 
 export interface SubmitError {
 	type: string;
@@ -6,7 +7,7 @@ export interface SubmitError {
 }
 
 interface PerFieldError {
-	messageKey: string;
+	messageKey: MessageKeys;
 }
 
 export default interface RootState {
