@@ -23,11 +23,7 @@ const props = withDefaults( defineProps<Props>(), {
 	itemSuggestions: () => [],
 } );
 
-const emit = defineEmits( {
-	'update:modelValue': ( value: Props['value'] ) => {
-		return value === null || /^Q\d+$/.test( value.id );
-	},
-} );
+const emit = defineEmits( [ 'update:modelValue' ] );
 
 const searchInput = ref( '' );
 watchEffect( () => {

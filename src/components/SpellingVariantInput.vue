@@ -35,11 +35,7 @@ languageCodesProvider.getLanguages().forEach(
 
 const menuItems = ref( [] as WikitMenuItem[] );
 
-const emit = defineEmits( {
-	'update:modelValue': ( selectedLang: string | null ) => {
-		return selectedLang;
-	},
-} );
+const emit = defineEmits( [ 'update:modelValue' ] );
 
 const searchInput = ref( '' );
 const onSearchInput = ( inputValue: string ) => {
