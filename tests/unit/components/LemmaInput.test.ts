@@ -63,10 +63,10 @@ describe( 'LemmaInput', () => {
 		it( 'displays an error message when no input provided', async () => {
 			const lemmaInputWrapper = createComponent();
 
-			store.state.perFieldErrors.lemmaErrors.push( { messageKey: 'wikibaselexeme-newlexeme-error-no-lemma' } );
+			store.state.perFieldErrors.lemmaErrors.push( { messageKey: 'wikibaselexeme-newlexeme-lemma-empty-error' } );
 			await nextTick();
 
-			expect( lemmaInputWrapper.get( '.wikit-ValidationMessage--error' ).text() ).toContain( '⧼wikibaselexeme-newlexeme-error-no-lemma⧽' );
+			expect( lemmaInputWrapper.get( '.wikit-ValidationMessage--error' ).text() ).toContain( '⧼wikibaselexeme-newlexeme-lemma-empty-error⧽' );
 		} );
 
 		it( 'displays an error message when input is too longer than configured', async () => {
