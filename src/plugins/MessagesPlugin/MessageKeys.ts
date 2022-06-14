@@ -10,6 +10,8 @@ type MessageKeys
  | 'wikibaselexeme-newlexeme-lemma-language-empty-error'
  | 'wikibaselexeme-newlexeme-lemma-language-invalid-error'
  | 'wikibaselexeme-newlexeme-lemma-language-placeholder-with-example'
+ | 'wikibaselexeme-newlexeme-lemma-language-help-link-target'
+ | 'wikibaselexeme-newlexeme-lemma-language-help-link-text'
  | 'wikibaselexeme-newlexeme-lexicalcategory'
  | 'wikibaselexeme-newlexeme-lexicalcategory-empty-error'
  | 'wikibaselexeme-newlexeme-lexicalcategory-invalid-error'

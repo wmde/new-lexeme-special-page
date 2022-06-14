@@ -2,6 +2,7 @@
 import { ref, computed } from 'vue';
 import escapeRegExp from 'lodash/escapeRegExp';
 import WikitLookup from './WikitLookup';
+import { Link as WikitLink } from '@wmde/wikit-vue-components';
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
 import { useLanguageCodesProvider } from '@/plugins/LanguageCodesProviderPlugin/LanguageCodesProvider';
 import { useConfig } from '@/plugins/ConfigPlugin/Config';
@@ -84,6 +85,7 @@ const error = computed( () => {
 		),
 	};
 } );
+const helpUrl = messages.get( 'wikibaselexeme-newlexeme-lemma-language-help-link-target' );
 </script>
 
 <script lang="ts">
@@ -112,5 +114,23 @@ export default {
 		<template #no-results>
 			{{ messages.getUnescaped( 'wikibase-entityselector-notfound' ) }}
 		</template>
+		<template #suffix>
+			<span class="wbl-snl-spelling-variant-lookup__help-link">
+				<wikit-link :href="helpUrl"> {{ messages.getUnescaped(
+					'wikibaselexeme-newlexeme-lemma-language-help-link-text'
+				) }}</wikit-link>
+			</span>
+		</template>
 	</wikit-lookup>
 </template>
+
+<style lang="scss" scoped>
+@import "@wmde/wikit-tokens/variables";
+
+.wbl-snl-spelling-variant-lookup {
+	&__help-link {
+		padding-block-end: $wikit-Label-padding-block-end;
+		display: inline-block;
+	}
+}
+</style>
