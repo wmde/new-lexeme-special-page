@@ -36,8 +36,8 @@ languageCodesProvider.getLanguages().forEach(
 const menuItems = ref( [] as WikitMenuItem[] );
 
 const emit = defineEmits( {
-	'update:modelValue': ( selectedLang: string | null ) => {
-		return selectedLang;
+	'update:modelValue': ( selectedLang: Props['modelValue'] ) => {
+		return selectedLang === null || selectedLang.length > 0;
 	},
 } );
 

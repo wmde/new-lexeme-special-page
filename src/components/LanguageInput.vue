@@ -14,7 +14,10 @@ interface Props {
 
 defineProps<Props>();
 
-defineEmits( [ 'update:modelValue', 'update:searchInput' ] );
+defineEmits<{
+	( e: 'update:modelValue', modelValue: Props['modelValue'] ): void;
+	( e: 'update:searchInput', searchInput: Props['searchInput'] ): void;
+}>();
 
 const messages = useMessages();
 
