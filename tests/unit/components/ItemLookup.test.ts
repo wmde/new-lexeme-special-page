@@ -1,11 +1,14 @@
-import { mount } from '@vue/test-utils';
 import ItemLookup from '@/components/ItemLookup.vue';
+import {
+	mount,
+	VueWrapper,
+} from '@vue/test-utils';
 import { Lookup as WikitLookup } from '@wmde/wikit-vue-components';
 
 jest.mock( 'lodash/debounce', () => jest.fn( ( fn ) => fn ) );
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-function createLookup( propsOverrides: any = {} ) {
+function createLookup( propsOverrides: any = {} ): VueWrapper<any> {
 	return mount( ItemLookup, {
 		props: {
 			label: 'some label',
@@ -15,6 +18,10 @@ function createLookup( propsOverrides: any = {} ) {
 			...propsOverrides,
 		},
 	} );
+}
+
+async function setSearchInput( lookup: VueWrapper, searchInput: string ): Promise<void> {
+	await lookup.find( 'input' ).setValue( searchInput );
 }
 
 const exampleSearchResults = [
@@ -75,7 +82,7 @@ describe( 'ItemLookup', () => {
 			const searchForItems = jest.fn().mockReturnValue( [] );
 			const lookup = createLookup( { searchForItems } );
 
-			await lookup.find( 'input' ).setValue( 'foo' );
+			await setSearchInput( lookup, 'foo' );
 
 			expect( searchForItems ).toHaveBeenCalledWith( 'foo' );
 		} );
@@ -84,7 +91,7 @@ describe( 'ItemLookup', () => {
 			const searchForItems = jest.fn();
 			const lookup = createLookup( { searchForItems } );
 
-			await lookup.find( 'input' ).setValue( '' );
+			await setSearchInput( lookup, '' );
 
 			expect( searchForItems ).not.toHaveBeenCalled();
 		} );
@@ -92,7 +99,7 @@ describe( 'ItemLookup', () => {
 		it( ':searchForItems - method is called on scroll with offset', async () => {
 			const searchForItems = jest.fn().mockReturnValue( exampleSearchResults );
 			const lookup = createLookup( { searchForItems } );
-			await lookup.find( 'input' ).setValue( 'foo' );
+			await setSearchInput( lookup, 'foo' );
 
 			await lookup.findComponent( WikitLookup ).vm.$emit( 'scroll' );
 
@@ -103,7 +110,7 @@ describe( 'ItemLookup', () => {
 		it( ':value - selects the given Item', async () => {
 			const searchForItems = jest.fn().mockReturnValue( exampleSearchResults );
 			const lookup = createLookup( { searchForItems } );
-			await lookup.find( 'input' ).setValue( 'foo' );
+			await setSearchInput( lookup, 'foo' );
 			const selectedItemId = 1;
 
 			await lookup.setProps( { value: exampleSearchResults[ selectedItemId ] } );
@@ -153,7 +160,7 @@ describe( 'ItemLookup', () => {
 			const searchForItems = jest.fn().mockReturnValue( exampleSearchResults );
 			const lookup = createLookup( { searchForItems } );
 
-			await lookup.find( 'input' ).setValue( 'foo' );
+			await setSearchInput( lookup, 'foo' );
 
 			const wikitLookup = lookup.getComponent( WikitLookup );
 			expect( wikitLookup.props( 'menuItems' ) ).toStrictEqual( [
@@ -241,7 +248,7 @@ describe( 'ItemLookup', () => {
 			] );
 			const lookup = createLookup( { searchForItems, itemSuggestions } );
 
-			await lookup.find( 'input' ).setValue( 'foo' );
+			await setSearchInput( lookup, 'foo' );
 
 			const wikitLookup = lookup.getComponent( WikitLookup );
 			expect( wikitLookup.props( 'menuItems' ) ).toStrictEqual( [
@@ -276,7 +283,7 @@ describe( 'ItemLookup', () => {
 			const searchForItems = jest.fn().mockReturnValue( exampleSearchResults );
 			const lookup = createLookup( { searchForItems } );
 
-			await lookup.find( 'input' ).setValue( 'foo' );
+			await setSearchInput( lookup, 'foo' );
 
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-ignore
@@ -286,7 +293,7 @@ describe( 'ItemLookup', () => {
 		it( '@update:modelValue - emits the search result of the selected option', async () => {
 			const searchForItems = jest.fn().mockReturnValue( exampleSearchResults );
 			const lookup = createLookup( { searchForItems } );
-			await lookup.find( 'input' ).setValue( 'foo' );
+			await setSearchInput( lookup, 'foo' );
 			const selectedItemId = 0;
 
 			await lookup.findComponent( WikitLookup ).vm.$emit(
