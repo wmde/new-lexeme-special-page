@@ -16,6 +16,7 @@ export default interface RootState {
 	languageCodeFromLanguageItem: string | undefined | null | false;
 	lexicalCategory: SearchedItemOption | null;
 	spellingVariant: string;
+	spellingVariantSearchInput: string;
 	globalErrors: SubmitError[];
 	perFieldErrors: {
 		lemmaErrors: PerFieldError[];

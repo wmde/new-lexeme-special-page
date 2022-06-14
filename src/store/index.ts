@@ -35,6 +35,7 @@ export default function initStore( {
 				languageCodeFromLanguageItem: undefined,
 				lexicalCategory: null,
 				spellingVariant: '',
+				spellingVariantSearchInput: '',
 				globalErrors: [],
 				perFieldErrors: {
 					lemmaErrors: [],
