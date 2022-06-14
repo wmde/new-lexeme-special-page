@@ -13,7 +13,9 @@ interface Props {
 
 defineProps<Props>();
 
-defineEmits( [ 'update:modelValue' ] );
+defineEmits<{
+	( e: 'update:modelValue', modelValue: Props['modelValue'] ): void;
+}>();
 
 const messages = useMessages();
 
