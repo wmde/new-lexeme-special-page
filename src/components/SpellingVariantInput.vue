@@ -37,7 +37,7 @@ const menuItems = ref( [] as WikitMenuItem[] );
 
 const emit = defineEmits( {
 	'update:modelValue': ( selectedLang: string | null ) => {
-		return selectedLang;
+		return selectedLang === null || selectedLang.length > 0;
 	},
 } );
 
