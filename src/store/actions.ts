@@ -16,6 +16,7 @@ import LangCodeRetriever from '@/data-access/LangCodeRetriever';
 import LanguageCodesProvider from '@/data-access/LanguageCodesProvider';
 import LexemeCreator from '@/data-access/LexemeCreator';
 import Tracker from '@/data-access/tracking/Tracker';
+import MessageKeys from '@/plugins/MessagesPlugin/MessageKeys';
 import {
 	ActionContext,
 	ActionTree,
