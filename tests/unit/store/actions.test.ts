@@ -163,6 +163,7 @@ describe( CREATE_LEXEME, () => {
 					language: { id: 'Q123', display: {} },
 					lexicalCategory: { id: 'Q234', display: {} },
 					spellingVariant: '',
+					spellingVariantSearchInput: '',
 				} as RootState;
 			},
 			actions,
