@@ -434,6 +434,7 @@ describe( HANDLE_INIT_PARAMS, () => {
 			language: { id: 'Q123', display: {} },
 			lexicalCategory: { id: 'Q234', display: {} },
 			spellingVariant: 'bar',
+			spellingVariantSearchInput: 'bar',
 			languageCodeFromLanguageItem: false,
 			globalErrors: [],
 			perFieldErrors: {
@@ -476,6 +477,7 @@ describe( HANDLE_INIT_PARAMS, () => {
 					language: null,
 					lexicalCategory: null,
 					spellingVariant: '',
+					spellingVariantSearchInput: '',
 					languageCodeFromLanguageItem: undefined,
 					globalErrors: [],
 					perFieldErrors: {
@@ -514,6 +516,7 @@ describe( HANDLE_INIT_PARAMS, () => {
 			language,
 			lexicalCategory,
 			spellingVariant: 'en-gb',
+			spellingVariantSearchInput: 'en-gb',
 			languageCodeFromLanguageItem: 'en',
 			globalErrors: [],
 			perFieldErrors: {
@@ -543,6 +546,7 @@ describe( HANDLE_INIT_PARAMS, () => {
 					language: null,
 					lexicalCategory: null,
 					spellingVariant: '',
+					spellingVariantSearchInput: '',
 					languageCodeFromLanguageItem: undefined,
 					globalErrors: [],
 					perFieldErrors: {

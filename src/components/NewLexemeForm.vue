@@ -19,6 +19,7 @@ import {
 	SET_LEMMA,
 	SET_LEXICAL_CATEGORY,
 	SET_SPELLING_VARIANT,
+	SET_SPELLING_VARIANT_SEARCH_INPUT,
 } from '@/store/mutations';
 import { useWikiRouter } from '@/plugins/WikiRouterPlugin/WikiRouter';
 
@@ -71,6 +72,14 @@ const spellingVariant = computed( {
 		if ( newSpellingVariant ) {
 			store.commit( CLEAR_PER_FIELD_ERRORS, 'spellingVariantErrors' );
 		}
+	},
+} );
+const spellingVariantSearchInput = computed( {
+	get(): string {
+		return store.state.spellingVariantSearchInput;
+	},
+	set( newSpellingVariantSearchInput: string ): void {
+		store.commit( SET_SPELLING_VARIANT_SEARCH_INPUT, newSpellingVariantSearchInput );
 	},
 } );
 
@@ -135,6 +144,7 @@ export default {
 		<spelling-variant-input
 			v-if="showSpellingVariantInput"
 			v-model="spellingVariant"
+			v-model:search-input="spellingVariantSearchInput"
 		/>
 		<lexical-category-input
 			v-model="lexicalCategory"

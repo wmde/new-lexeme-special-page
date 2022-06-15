@@ -14,6 +14,7 @@ export const SET_LEMMA = 'setLemma';
 export const SET_LANGUAGE = 'setLanguage';
 export const SET_LEXICAL_CATEGORY = 'setLexicalCategory';
 export const SET_SPELLING_VARIANT = 'setSpellingVariant';
+export const SET_SPELLING_VARIANT_SEARCH_INPUT = 'setSpellingVariantSearchInput';
 export const SET_LANGUAGE_CODE_FROM_LANGUAGE_ITEM = 'setLanguageCodeFromLanguageItem';
 export const ADD_ERRORS = 'addErrors';
 export const ADD_PER_FIELD_ERROR = 'addPerFieldError';
@@ -32,6 +33,10 @@ export default {
 	},
 	[ SET_SPELLING_VARIANT ]( state: RootState, spellingVariant: string ): void {
 		state.spellingVariant = spellingVariant;
+	},
+	[ SET_SPELLING_VARIANT_SEARCH_INPUT ](
+		state: RootState, spellingVariantSearchInput: string ): void {
+		state.spellingVariantSearchInput = spellingVariantSearchInput;
 	},
 	[ SET_LANGUAGE_CODE_FROM_LANGUAGE_ITEM ](
 		state: RootState,
