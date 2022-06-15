@@ -216,6 +216,43 @@ describe( CREATE_LEXEME, () => {
 			field: 'lexicalCategoryErrors',
 		} );
 	} );
+	it( 'shows a per-field error for invalid lexical category and language and rejects', async () => {
+		const actions = createActions(
+			unusedLexemeCreator,
+			unusedLangCodeRetriever,
+			unusedLanguageCodesProvider,
+			unusedTracker,
+		);
+		const mockMutations = {
+			[ ADD_PER_FIELD_ERROR ]: jest.fn(),
+		};
+		const store = createStore( {
+			state(): RootState {
+				return {
+					lemma: 'example lemma',
+					language: null,
+					languageSearchInput: { },
+					lexicalCategory: null,
+					lexicalCategorySearchInput: { },
+					spellingVariant: 'en',
+				} as RootState;
+			},
+			actions,
+			mutations: mockMutations,
+		} );
+
+		await expect( store.dispatch( CREATE_LEXEME ) ).rejects.toStrictEqual( new Error( 'Not all fields are valid' ) );
+
+		expect( mockMutations[ ADD_PER_FIELD_ERROR ] ).toHaveBeenCalledTimes( 2 );
+		expect( mockMutations[ ADD_PER_FIELD_ERROR ].mock.calls[ 0 ][ 1 ] ).toStrictEqual( {
+			error: { messageKey: 'wikibaselexeme-newlexeme-language-invalid-error' },
+			field: 'languageErrors',
+		} );
+		expect( mockMutations[ ADD_PER_FIELD_ERROR ].mock.calls[ 1 ][ 1 ] ).toStrictEqual( {
+			error: { messageKey: 'wikibaselexeme-newlexeme-lexicalcategory-invalid-error' },
+			field: 'lexicalCategoryErrors',
+		} );
+	} );
 
 } );
 
