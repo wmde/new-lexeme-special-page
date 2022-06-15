@@ -231,9 +231,9 @@ describe( CREATE_LEXEME, () => {
 				return {
 					lemma: 'example lemma',
 					language: null,
-					languageSearchInput: { },
+					languageSearchInput: 'invalid input',
 					lexicalCategory: null,
-					lexicalCategorySearchInput: { },
+					lexicalCategorySearchInput: 'invalid input',
 					spellingVariant: 'en',
 				} as RootState;
 			},
