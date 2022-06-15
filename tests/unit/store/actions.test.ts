@@ -432,7 +432,9 @@ describe( HANDLE_INIT_PARAMS, () => {
 		const state = (): RootState => ( {
 			lemma: 'lemma',
 			language: { id: 'Q123', display: {} },
+			languageSearchInput: '',
 			lexicalCategory: { id: 'Q234', display: {} },
+			lexicalCategorySearchInput: '',
 			spellingVariant: 'bar',
 			spellingVariantSearchInput: 'bar',
 			languageCodeFromLanguageItem: false,
@@ -475,7 +477,9 @@ describe( HANDLE_INIT_PARAMS, () => {
 				return {
 					lemma: '',
 					language: null,
+					languageSearchInput: '',
 					lexicalCategory: null,
+					lexicalCategorySearchInput: '',
 					spellingVariant: '',
 					spellingVariantSearchInput: '',
 					languageCodeFromLanguageItem: undefined,
@@ -514,7 +518,9 @@ describe( HANDLE_INIT_PARAMS, () => {
 		expect( store.state ).toStrictEqual( {
 			lemma: 'lemma',
 			language,
+			languageSearchInput: language.display.label.value,
 			lexicalCategory,
+			lexicalCategorySearchInput: lexicalCategory.display.label.value,
 			spellingVariant: 'en-gb',
 			spellingVariantSearchInput: 'en-gb',
 			languageCodeFromLanguageItem: 'en',
@@ -544,7 +550,9 @@ describe( HANDLE_INIT_PARAMS, () => {
 				return {
 					lemma: '',
 					language: null,
+					languageSearchInput: '',
 					lexicalCategory: null,
+					lexicalCategorySearchInput: '',
 					spellingVariant: '',
 					spellingVariantSearchInput: '',
 					languageCodeFromLanguageItem: undefined,

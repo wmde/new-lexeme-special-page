@@ -13,8 +13,10 @@ interface PerFieldError {
 export default interface RootState {
 	lemma: string;
 	language: SearchedItemOption | null;
+	languageSearchInput: string;
 	languageCodeFromLanguageItem: string | undefined | null | false;
 	lexicalCategory: SearchedItemOption | null;
+	lexicalCategorySearchInput: string;
 	spellingVariant: string;
 	spellingVariantSearchInput: string;
 	globalErrors: SubmitError[];

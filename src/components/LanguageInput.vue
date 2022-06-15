@@ -9,12 +9,14 @@ import { useConfig } from '@/plugins/ConfigPlugin/Config';
 
 interface Props {
 	modelValue: SearchedItemOption | null;
+	searchInput: string;
 }
 
 defineProps<Props>();
 
 defineEmits<{
 	( e: 'update:modelValue', modelValue: Props['modelValue'] ): void;
+	( e: 'update:searchInput', searchInput: Props['searchInput'] ): void;
 }>();
 
 const messages = useMessages();
@@ -61,9 +63,11 @@ export default {
 				config.placeholderExampleData.languageLabel
 			)"
 			:value="modelValue"
+			:search-input="searchInput"
 			:search-for-items="searchForItems"
 			:error="error"
 			@update:model-value="$emit( 'update:modelValue', $event )"
+			@update:search-input="$emit( 'update:searchInput', $event )"
 		/>
 	</div>
 </template>

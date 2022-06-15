@@ -32,8 +32,10 @@ export default function initStore( {
 			return {
 				lemma: '',
 				language: null,
+				languageSearchInput: '',
 				languageCodeFromLanguageItem: undefined,
 				lexicalCategory: null,
+				lexicalCategorySearchInput: '',
 				spellingVariant: '',
 				spellingVariantSearchInput: '',
 				globalErrors: [],

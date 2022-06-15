@@ -2,7 +2,6 @@
 import {
 	computed,
 	ref,
-	watchEffect,
 } from 'vue';
 import { SearchedItemOption } from '@/data-access/ItemSearcher';
 import WikitLookup from './WikitLookup';
@@ -15,30 +14,26 @@ interface Props {
 	placeholder: string;
 	value: SearchedItemOption | null;
 	searchForItems: ( searchTerm: string, offset?: number ) => Promise<SearchedItemOption[]>;
+	searchInput: string;
 	error?: { type: 'error'|'warning'; message: string } | null;
 	itemSuggestions?: SearchedItemOption[];
 }
 const props = withDefaults( defineProps<Props>(), {
 	error: null,
 	itemSuggestions: () => [],
+	searchInput: '',
 } );
 
 const emit = defineEmits( {
 	'update:modelValue': ( value: Props['value'] ) => {
 		return value === null || /^Q\d+$/.test( value.id );
 	},
-} );
-
-const searchInput = ref( '' );
-watchEffect( () => {
-	if ( props.value ) {
-		searchInput.value = props.value.display.label?.value ?? props.value.id;
-	}
+	'update:searchInput': null,
 } );
 
 // itemSuggestions matching the current searchInput
 const suggestedOptions = computed( () => {
-	const regExp = new RegExp( `\\b${escapeRegExp( searchInput.value )}`, 'i' );
+	const regExp = new RegExp( `\\b${escapeRegExp( props.searchInput )}`, 'i' );
 	return props.itemSuggestions.filter(
 		( suggestion ) => regExp.test( suggestion.display.label?.value || '' ),
 	);
@@ -75,7 +70,7 @@ const debouncedSearchForItems = debounce( async ( debouncedInputValue: string ) 
 	searchedOptions.value = await props.searchForItems( debouncedInputValue );
 }, 150 );
 const onSearchInput = ( inputValue: string ) => {
-	searchInput.value = inputValue;
+	emit( 'update:searchInput', inputValue );
 	if ( inputValue.trim() === '' ) {
 		searchedOptions.value = [];
 		return;
@@ -92,7 +87,7 @@ const onSearchInput = ( inputValue: string ) => {
 
 const onScroll = async () => {
 	const searchReults = await props.searchForItems(
-		searchInput.value,
+		props.searchInput,
 		searchedOptions.value.length,
 	);
 	searchedOptions.value = [ ...searchedOptions.value, ...searchReults ];
@@ -141,7 +136,7 @@ const messages = useMessages();
 	<wikit-lookup
 		:label="label"
 		:placeholder="placeholder"
-		:search-input="searchInput"
+		:search-input="props.searchInput"
 		:menu-items="wikitMenuItems"
 		:value="wikitValue"
 		:error="error"

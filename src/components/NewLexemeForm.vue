@@ -16,8 +16,10 @@ import LexicalCategoryInput from '@/components/LexicalCategoryInput.vue';
 import ErrorMessage from '@/components/ErrorMessage.vue';
 import {
 	CLEAR_PER_FIELD_ERRORS,
+	SET_LANGUAGE_SEARCH_INPUT,
 	SET_LEMMA,
 	SET_LEXICAL_CATEGORY,
+	SET_LEXICAL_CATEGORY_SEARCH_INPUT,
 	SET_SPELLING_VARIANT,
 	SET_SPELLING_VARIANT_SEARCH_INPUT,
 } from '@/store/mutations';
@@ -48,6 +50,14 @@ const language = computed( {
 		}
 	},
 } );
+const languageSearchInput = computed( {
+	get(): string {
+		return store.state.languageSearchInput;
+	},
+	set( newLanguageSearchInput: string ): void {
+		store.commit( SET_LANGUAGE_SEARCH_INPUT, newLanguageSearchInput );
+	},
+} );
 const lexicalCategory = computed( {
 	get(): SearchedItemOption | null {
 		return store.state.lexicalCategory;
@@ -57,6 +67,14 @@ const lexicalCategory = computed( {
 		if ( newLexicalCategory ) {
 			store.commit( CLEAR_PER_FIELD_ERRORS, 'lexicalCategoryErrors' );
 		}
+	},
+} );
+const lexicalCategorySearchInput = computed( {
+	get(): string {
+		return store.state.lexicalCategorySearchInput;
+	},
+	set( newLexicalCategorySearchInput: string ): void {
+		store.commit( SET_LEXICAL_CATEGORY_SEARCH_INPUT, newLexicalCategorySearchInput );
 	},
 } );
 const showSpellingVariantInput = computed( () => {
@@ -140,6 +158,7 @@ export default {
 		/>
 		<language-input
 			v-model="language"
+			v-model:search-input="languageSearchInput"
 		/>
 		<spelling-variant-input
 			v-if="showSpellingVariantInput"
@@ -148,6 +167,7 @@ export default {
 		/>
 		<lexical-category-input
 			v-model="lexicalCategory"
+			v-model:search-input="lexicalCategorySearchInput"
 		/>
 		<!-- eslint-disable-next-line vue/no-v-html -->
 		<p class="wbl-snl-copyright" v-html="copyrightText" />
