@@ -31,6 +31,7 @@ import {
 	SET_LEXICAL_CATEGORY,
 	SET_LEXICAL_CATEGORY_SEARCH_INPUT,
 	SET_SPELLING_VARIANT,
+	SET_SPELLING_VARIANT_SEARCH_INPUT,
 } from './mutations';
 import RootState from './RootState';
 
@@ -175,6 +176,7 @@ export default function createActions(
 			}
 			if ( params.spellVarCode !== undefined ) {
 				commit( SET_SPELLING_VARIANT, params.spellVarCode );
+				commit( SET_SPELLING_VARIANT_SEARCH_INPUT, params.spellVarCode );
 			}
 			if ( params.language !== undefined ) {
 				commit( SET_LANGUAGE, {

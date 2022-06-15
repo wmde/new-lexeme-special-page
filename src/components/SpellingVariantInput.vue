@@ -9,6 +9,7 @@ import { useStore } from 'vuex';
 
 interface Props {
 	modelValue: string | null;
+	searchInput: string;
 }
 
 interface WikitMenuItem {
@@ -17,7 +18,9 @@ interface WikitMenuItem {
 	value: string;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults( defineProps<Props>(), {
+	searchInput: '',
+} );
 
 const languageCodesProvider = useLanguageCodesProvider();
 const messages = useMessages();
@@ -39,11 +42,11 @@ const emit = defineEmits( {
 	'update:modelValue': ( selectedLang: Props['modelValue'] ) => {
 		return selectedLang === null || selectedLang.length > 0;
 	},
+	'update:searchInput': null,
 } );
 
-const searchInput = ref( '' );
 const onSearchInput = ( inputValue: string ) => {
-	searchInput.value = inputValue;
+	emit( 'update:searchInput', inputValue );
 	if ( inputValue.trim() === '' ) {
 		menuItems.value = [];
 		return;

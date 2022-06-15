@@ -18,6 +18,7 @@ export default interface RootState {
 	lexicalCategory: SearchedItemOption | null;
 	lexicalCategorySearchInput: string;
 	spellingVariant: string;
+	spellingVariantSearchInput: string;
 	globalErrors: SubmitError[];
 	perFieldErrors: {
 		lemmaErrors: PerFieldError[];

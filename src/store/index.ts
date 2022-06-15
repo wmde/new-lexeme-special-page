@@ -37,6 +37,7 @@ export default function initStore( {
 				lexicalCategory: null,
 				lexicalCategorySearchInput: '',
 				spellingVariant: '',
+				spellingVariantSearchInput: '',
 				globalErrors: [],
 				perFieldErrors: {
 					lemmaErrors: [],
