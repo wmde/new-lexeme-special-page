@@ -197,7 +197,9 @@ describe( CREATE_LEXEME, () => {
 				return {
 					lemma: 'example lemma',
 					language: null,
+					languageSearchInput: '',
 					lexicalCategory: null,
+					lexicalCategorySearchInput: '',
 					spellingVariant: 'en',
 				} as RootState;
 			},
@@ -286,7 +288,6 @@ describe( CREATE_LEXEME, () => {
 			field: 'spellingVariantErrors',
 		} );
 	} );
-
 } );
 
 describe( 'HANDLE_LANGUAGE_CHANGE', () => {
