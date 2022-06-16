@@ -16,6 +16,7 @@ import LangCodeRetriever from '@/data-access/LangCodeRetriever';
 import LanguageCodesProvider from '@/data-access/LanguageCodesProvider';
 import LexemeCreator from '@/data-access/LexemeCreator';
 import Tracker from '@/data-access/tracking/Tracker';
+import MessageKeys from '@/plugins/MessagesPlugin/MessageKeys';
 import {
 	ActionContext,
 	ActionTree,
@@ -81,17 +82,29 @@ export default function createActions(
 				formData.validLemma = state.lemma;
 			}
 			if ( !state.language ) {
+				let messageKey: MessageKeys;
+				if ( state.languageSearchInput ) {
+					messageKey = 'wikibaselexeme-newlexeme-language-invalid-error';
+				} else {
+					messageKey = 'wikibaselexeme-newlexeme-language-empty-error';
+				}
 				commit(
 					ADD_PER_FIELD_ERROR,
-					{ field: 'languageErrors', error: { messageKey: 'wikibaselexeme-newlexeme-language-empty-error' } },
+					{ field: 'languageErrors', error: { messageKey: messageKey } },
 				);
 			} else {
 				formData.validLanguageId = state.language.id;
 			}
 			if ( !state.lexicalCategory ) {
+				let messageKey: MessageKeys;
+				if ( state.lexicalCategorySearchInput ) {
+					messageKey = 'wikibaselexeme-newlexeme-lexicalcategory-invalid-error';
+				} else {
+					messageKey = 'wikibaselexeme-newlexeme-lexicalcategory-empty-error';
+				}
 				commit(
 					ADD_PER_FIELD_ERROR,
-					{ field: 'lexicalCategoryErrors', error: { messageKey: 'wikibaselexeme-newlexeme-lexicalcategory-empty-error' } },
+					{ field: 'lexicalCategoryErrors', error: { messageKey: messageKey } },
 				);
 			} else {
 				formData.validLexicalCategoryId = state.lexicalCategory.id;
