@@ -163,6 +163,7 @@ describe( CREATE_LEXEME, () => {
 					language: { id: 'Q123', display: {} },
 					lexicalCategory: { id: 'Q234', display: {} },
 					spellingVariant: '',
+					spellingVariantSearchInput: '',
 				} as RootState;
 			},
 			actions,
@@ -255,7 +256,38 @@ describe( CREATE_LEXEME, () => {
 			field: 'lexicalCategoryErrors',
 		} );
 	} );
+	it( 'shows a per-field error for invalid spelling variant and rejects', async () => {
+		const actions = createActions(
+			unusedLexemeCreator,
+			unusedLangCodeRetriever,
+			unusedLanguageCodesProvider,
+			unusedTracker,
+		);
+		const mockMutations = {
+			[ ADD_PER_FIELD_ERROR ]: jest.fn(),
+		};
+		const store = createStore( {
+			state(): RootState {
+				return {
+					lemma: 'example lemma',
+					language: { id: 'Q123', display: {} },
+					lexicalCategory: { id: 'Q234', display: {} },
+					spellingVariant: '',
+					spellingVariantSearchInput: 'invalid input',
+				} as RootState;
+			},
+			actions,
+			mutations: mockMutations,
+		} );
 
+		await expect( store.dispatch( CREATE_LEXEME ) ).rejects.toStrictEqual( new Error( 'Not all fields are valid' ) );
+
+		expect( mockMutations[ ADD_PER_FIELD_ERROR ] ).toHaveBeenCalledTimes( 1 );
+		expect( mockMutations[ ADD_PER_FIELD_ERROR ].mock.calls[ 0 ][ 1 ] ).toStrictEqual( {
+			error: { messageKey: 'wikibaselexeme-newlexeme-lemma-language-invalid-error' },
+			field: 'spellingVariantErrors',
+		} );
+	} );
 } );
 
 describe( 'HANDLE_LANGUAGE_CHANGE', () => {

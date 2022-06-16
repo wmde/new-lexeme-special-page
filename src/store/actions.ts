@@ -115,9 +115,15 @@ export default function createActions(
 				} else if ( state.languageCodeFromLanguageItem ) {
 					formData.validSpellingVariant = state.languageCodeFromLanguageItem;
 				} else {
+					let messageKey: MessageKeys;
+					if ( state.spellingVariantSearchInput ) {
+						messageKey = 'wikibaselexeme-newlexeme-lemma-language-invalid-error';
+					} else {
+						messageKey = 'wikibaselexeme-newlexeme-lemma-language-empty-error';
+					}
 					commit(
 						ADD_PER_FIELD_ERROR,
-						{ field: 'spellingVariantErrors', error: { messageKey: 'wikibaselexeme-newlexeme-lemma-language-empty-error' } },
+						{ field: 'spellingVariantErrors', error: { messageKey: messageKey } },
 					);
 				}
 			}
