@@ -44,8 +44,8 @@
 	},
 	"dependencies": {
 		"@wmde/wikibase-datamodel-types": "^0.2.0",
-		"@wmde/wikit-tokens": "^3.0.0-alpha.2",
-		"@wmde/wikit-vue-components": "^3.0.0-alpha.4",
+		"@wmde/wikit-tokens": "^3.0.0-alpha.6",
+		"@wmde/wikit-vue-components": "^3.0.0-alpha.6",
 		"vue": "^3.2.30",
 		"vuex": "^4.0.2"
 	},
