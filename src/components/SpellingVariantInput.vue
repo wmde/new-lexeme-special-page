@@ -86,6 +86,7 @@ const error = computed( () => {
 	};
 } );
 const helpUrl = messages.get( 'wikibaselexeme-newlexeme-lemma-language-help-link-target' );
+const helpLinkText = messages.get( 'wikibaselexeme-newlexeme-lemma-language-help-link-text' );
 </script>
 
 <script lang="ts">
@@ -116,9 +117,7 @@ export default {
 		</template>
 		<template #suffix>
 			<span class="wbl-snl-spelling-variant-lookup__help-link">
-				<wikit-link :href="helpUrl"> {{ messages.getUnescaped(
-					'wikibaselexeme-newlexeme-lemma-language-help-link-text'
-				) }}</wikit-link>
+				<wikit-link :href="helpUrl">{{ helpLinkText }}</wikit-link>
 			</span>
 		</template>
 	</wikit-lookup>
