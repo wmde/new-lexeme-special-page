@@ -26,6 +26,9 @@
 		"check-types": "vue-tsc --noEmit",
 		"cypress:open": "cypress open"
 	},
+	"browserslist": [
+		"extends browserslist-config-wikimedia/modern-es6-only"
+	],
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/wmde/new-lexeme-special-page.git"
@@ -63,6 +66,7 @@
 		"@wmde/eslint-config-wikimedia-typescript": "^0.2.3",
 		"autoprefixer": "^10.4.7",
 		"axe-core": "^4.4.1",
+		"browserslist-config-wikimedia": "^0.4.0",
 		"cypress": "^9.4.1",
 		"cypress-axe": "^0.14.0",
 		"eslint": "^8.8.0",
