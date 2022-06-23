@@ -195,7 +195,7 @@ export default {
 
 .wbl-snl-form {
 	& > * + * {
-		margin-block-start: $dimension-layout-xsmall;
+		margin-top: $dimension-layout-xsmall;
 	}
 
 	// Box model
