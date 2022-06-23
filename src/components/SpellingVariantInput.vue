@@ -128,7 +128,7 @@ export default {
 
 .wbl-snl-spelling-variant-lookup {
 	&__help-link {
-		padding-block-end: $wikit-Label-padding-block-end;
+		padding-bottom: $wikit-Label-padding-block-end;
 		display: inline-block;
 	}
 }
