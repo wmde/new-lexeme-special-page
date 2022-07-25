@@ -13,6 +13,9 @@ module.exports = {
 		'./jest.overrides.js',
 	],
 	testEnvironment: 'jsdom',
+	testEnvironmentOptions: {
+		customExportConditions: [ 'node', 'node-addons' ],
+	},
 	testPathIgnorePatterns: [ '<rootDir>/cypress/' ],
 	transform: {
 		'^.*\\.ts$': 'ts-jest',
