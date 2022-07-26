@@ -117,7 +117,7 @@ export default {
 		</template>
 		<template #suffix>
 			<span class="wbl-snl-spelling-variant-lookup__help-link">
-				<wikit-link :href="helpUrl">{{ helpLinkText }}</wikit-link>
+				<wikit-link :href="helpUrl" target="_blank">{{ helpLinkText }}</wikit-link>
 			</span>
 		</template>
 	</wikit-lookup>
