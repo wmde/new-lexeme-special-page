@@ -62,7 +62,7 @@
 		"@vue/test-utils": "v2.0.2",
 		"@vue/vue3-jest": "^28.0.0",
 		"@wmde/eslint-config-wikimedia-typescript": "^0.2.3",
-		"axe-core": "^4.4.1",
+		"axe-core": "^4.4.3",
 		"cypress": "^10.3.1",
 		"cypress-axe": "^1.0.0",
 		"eslint": "^8.20.0",
