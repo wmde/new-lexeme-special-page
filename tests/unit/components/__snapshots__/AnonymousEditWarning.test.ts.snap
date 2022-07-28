@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AnonymousEditWarning matches snapshot if anonymous 1`] = `
+"<!-- eslint-disable vue/no-v-html -->
+<p class=\\"wbl-snl-anonymous-edit-warning\\">wikibase-anonymouseditwarning</p>
+<!-- eslint-enable -->"
+`;

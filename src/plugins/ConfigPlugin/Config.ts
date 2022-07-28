@@ -5,6 +5,7 @@ import {
 } from 'vue';
 
 export interface Config {
+	readonly isAnonymous: boolean;
 	readonly licenseUrl: string;
 	readonly licenseName: string;
 	readonly wikibaseLexemeTermLanguages: Map<string, string>;
