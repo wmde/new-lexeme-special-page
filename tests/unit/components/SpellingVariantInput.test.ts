@@ -166,4 +166,11 @@ describe( 'SpellingVariantInput', () => {
 
 		} );
 	} );
+
+	it( 'input is required', () => {
+		const lookup = createLookup();
+		const input = lookup.find( 'input' );
+
+		expect( input.attributes( 'aria-required' ) ).toBe( 'true' );
+	} );
 } );
