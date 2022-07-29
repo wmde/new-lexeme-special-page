@@ -66,6 +66,7 @@ export default {
 			:search-input="searchInput"
 			:search-for-items="searchForItems"
 			:error="error"
+			:aria-required="true"
 			@update:model-value="$emit( 'update:modelValue', $event )"
 			@update:search-input="$emit( 'update:searchInput', $event )"
 		/>

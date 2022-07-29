@@ -109,6 +109,7 @@ export default {
 		:menu-items="menuItems"
 		:value="selectedOption"
 		:error="error"
+		:aria-required="true"
 		@update:search-input="onSearchInput"
 		@input="onOptionSelected"
 	>
