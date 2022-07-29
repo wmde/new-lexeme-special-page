@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import ItemLookup from '@/components/ItemLookup.vue';
+import RequiredAsterisk from '@/components/RequiredAsterisk.vue';
 import { SearchedItemOption } from '@/data-access/ItemSearcher';
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
 import { useItemSearch } from '@/plugins/ItemSearchPlugin/ItemSearch';
@@ -63,6 +64,10 @@ export default {
 			:aria-required="true"
 			@update:model-value="$emit( 'update:modelValue', $event )"
 			@update:search-input="$emit( 'update:searchInput', $event )"
-		/>
+		>
+			<template #suffix>
+				<required-asterisk />
+			</template>
+		</item-lookup>
 	</div>
 </template>
