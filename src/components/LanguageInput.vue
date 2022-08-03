@@ -3,6 +3,7 @@ import { SearchedItemOption } from '@/data-access/ItemSearcher';
 import { useStore } from 'vuex';
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
 import ItemLookup from '@/components/ItemLookup.vue';
+import RequiredAsterisk from '@/components/RequiredAsterisk.vue';
 import { useItemSearch } from '@/plugins/ItemSearchPlugin/ItemSearch';
 import { computed } from 'vue';
 import { useConfig } from '@/plugins/ConfigPlugin/Config';
@@ -69,6 +70,10 @@ export default {
 			:aria-required="true"
 			@update:model-value="$emit( 'update:modelValue', $event )"
 			@update:search-input="$emit( 'update:searchInput', $event )"
-		/>
+		>
+			<template #suffix>
+				<required-asterisk />
+			</template>
+		</item-lookup>
 	</div>
 </template>

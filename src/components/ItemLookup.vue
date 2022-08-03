@@ -150,5 +150,8 @@ const messages = useMessages();
 		<template #no-results>
 			{{ messages.getUnescaped( 'wikibase-entityselector-notfound' ) }}
 		</template>
+		<template #suffix>
+			<slot name="suffix" />
+		</template>
 	</wikit-lookup>
 </template>
