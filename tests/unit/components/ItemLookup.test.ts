@@ -262,6 +262,16 @@ describe( 'ItemLookup', () => {
 				},
 			] );
 		} );
+
+		it.each( [
+			[ false, 'false' ],
+			[ true, 'true' ],
+		] )( ':ariaRequired(%p)', ( propValue, attributeValue ) => {
+			const lookup = createLookup( { ariaRequired: propValue } );
+			const input = lookup.find( 'input' );
+
+			expect( input.attributes( 'aria-required' ) ).toBe( attributeValue );
+		} );
 	} );
 
 	describe( '@events', () => {

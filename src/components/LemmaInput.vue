@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { TextInput } from '@wmde/wikit-vue-components';
+import RequiredAsterisk from '@/components/RequiredAsterisk.vue';
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
 import { useConfig } from '@/plugins/ConfigPlugin/Config';
 import { useStore } from 'vuex';
@@ -62,5 +63,9 @@ export default {
 		:error="error"
 		:value="modelValue"
 		@input="$emit( 'update:modelValue', $event )"
-	/>
+	>
+		<template #suffix>
+			<required-asterisk />
+		</template>
+	</text-input>
 </template>

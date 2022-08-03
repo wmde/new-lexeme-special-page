@@ -3,6 +3,7 @@ import { ref, computed } from 'vue';
 import escapeRegExp from 'lodash/escapeRegExp';
 import WikitLookup from './WikitLookup';
 import { Link as WikitLink } from '@wmde/wikit-vue-components';
+import RequiredAsterisk from '@/components/RequiredAsterisk.vue';
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
 import { useLanguageCodesProvider } from '@/plugins/LanguageCodesProviderPlugin/LanguageCodesProvider';
 import { useConfig } from '@/plugins/ConfigPlugin/Config';
@@ -109,6 +110,7 @@ export default {
 		:menu-items="menuItems"
 		:value="selectedOption"
 		:error="error"
+		:aria-required="true"
 		@update:search-input="onSearchInput"
 		@input="onOptionSelected"
 	>
@@ -116,6 +118,7 @@ export default {
 			{{ messages.getUnescaped( 'wikibase-entityselector-notfound' ) }}
 		</template>
 		<template #suffix>
+			<required-asterisk />
 			<span class="wbl-snl-spelling-variant-lookup__help-link">
 				<wikit-link :href="helpUrl" target="_blank">{{ helpLinkText }}</wikit-link>
 			</span>

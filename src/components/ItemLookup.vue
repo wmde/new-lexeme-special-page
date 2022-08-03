@@ -17,11 +17,13 @@ interface Props {
 	searchInput: string;
 	error?: { type: 'error'|'warning'; message: string } | null;
 	itemSuggestions?: SearchedItemOption[];
+	ariaRequired?: boolean;
 }
 const props = withDefaults( defineProps<Props>(), {
 	error: null,
 	itemSuggestions: () => [],
 	searchInput: '',
+	ariaRequired: false,
 } );
 
 const emit = defineEmits( {
@@ -140,12 +142,16 @@ const messages = useMessages();
 		:menu-items="wikitMenuItems"
 		:value="wikitValue"
 		:error="error"
+		:aria-required="ariaRequired"
 		@update:search-input="onSearchInput"
 		@scroll="onScroll"
 		@input="onWikitOptionSelected"
 	>
 		<template #no-results>
 			{{ messages.getUnescaped( 'wikibase-entityselector-notfound' ) }}
+		</template>
+		<template #suffix>
+			<slot name="suffix" />
 		</template>
 	</wikit-lookup>
 </template>
