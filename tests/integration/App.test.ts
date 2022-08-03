@@ -37,6 +37,7 @@ describe( 'App.vue', () => {
 			tracker: unusedTracker,
 		} );
 		const emptyConfig: Config = {
+			isAnonymous: false,
 			licenseUrl: '',
 			licenseName: '',
 			wikibaseLexemeTermLanguages: new Map(),

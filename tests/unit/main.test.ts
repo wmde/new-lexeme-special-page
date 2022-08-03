@@ -16,6 +16,7 @@ describe( 'createAndMount', () => {
 
 		const instance = createAndMount( {
 			rootSelector: '#test-app',
+			isAnonymous: false,
 			licenseUrl: '',
 			licenseName: '',
 			wikibaseLexemeTermLanguages: new Map( [
