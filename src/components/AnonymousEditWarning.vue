@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import WarningMessage from '@/components/WarningMessage.vue';
 import { useConfig } from '@/plugins/ConfigPlugin/Config';
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
 import { computed } from 'vue';
@@ -11,20 +12,19 @@ const config = useConfig();
 </script>
 
 <template>
-	<!-- eslint-disable vue/no-v-html -->
-	<p
+	<warning-message
 		v-if="config.isAnonymous"
 		class="wbl-snl-anonymous-edit-warning"
-		v-html="warning"
-	/>
-	<!-- eslint-enable -->
+	>
+		<!-- eslint-disable-next-line vue/no-v-html -->
+		<span v-html="warning" />
+	</warning-message>
 </template>
 
 <style lang="scss" scoped>
 @import "@wmde/wikit-tokens/variables";
-@import "@wmde/wikit-vue-components/src/styles/mixins/Typography";
 
 .wbl-snl-anonymous-edit-warning {
-	@include body;
+	margin: $dimension-spacing-small 0;
 }
 </style>

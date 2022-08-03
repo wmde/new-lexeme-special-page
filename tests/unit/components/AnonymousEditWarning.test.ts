@@ -16,7 +16,7 @@ describe( 'AnonymousEditWarning', () => {
 			},
 		} );
 
-		expect( warning.element.childElementCount ).toBe( 0 );
+		expect( warning.isVisible() ).toBe( false );
 		expect( messages.get ).not.toHaveBeenCalled();
 	} );
 
