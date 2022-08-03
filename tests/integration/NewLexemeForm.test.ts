@@ -21,6 +21,7 @@ describe( 'NewLexemeForm', () => {
 	let store: ReturnType<typeof initStore>;
 
 	const emptyConfig: Config = {
+		isAnonymous: false,
 		licenseUrl: '',
 		licenseName: '',
 		wikibaseLexemeTermLanguages: new Map(),

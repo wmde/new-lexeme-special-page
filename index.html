@@ -19,6 +19,7 @@
 
 				const config = {
 					rootSelector: '#app',
+					isAnonymous: false,
 					licenseUrl: 'https://creativecommons.org/publicdomain/zero/1.0/',
 					licenseName: 'Creative Commons CC0',
 					wikibaseLexemeTermLanguages: new Map([
@@ -117,6 +118,9 @@
 				const params = new URLSearchParams( location.search );
 				if ( params.has( 'initParams' ) ) {
 					config.initParams = JSON.parse( params.get( 'initParams' ) );
+				}
+				if ( params.has( 'isAnonymous' ) ) {
+					config.isAnonymous = params.get( 'isAnonymous' ) !== 'false';
 				}
 
 				createAndMount( config, services );
