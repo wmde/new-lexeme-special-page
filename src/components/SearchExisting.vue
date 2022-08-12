@@ -29,5 +29,8 @@ const searchMessage = computed( () => messages.get(
 
 .wbl-snl-search-existing {
 	@include body;
+
+	margin-top: 1rem;
+	margin-bottom: 1rem;
 }
 </style>

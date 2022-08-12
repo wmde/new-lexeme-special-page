@@ -12,6 +12,7 @@
 			"namespaces": ["wbl-snl-"]
 		},
 		"indentation": "tab",
-		"selector-max-id": 1
+		"selector-max-id": 1,
+		"unit-disallowed-list": null
 	}
 }
