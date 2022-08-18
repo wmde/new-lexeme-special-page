@@ -211,7 +211,9 @@ export default {
 .wbl-snl-copyright {
 	@include small-text;
 
+	font-size: 0.8125rem;
 	font-style: italic;
+	margin-bottom: 0;
 }
 
 </style>
