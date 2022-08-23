@@ -26,5 +26,7 @@ const config = useConfig();
 
 .wbl-snl-anonymous-edit-warning {
 	margin: $dimension-spacing-small 0;
+	margin-top: 1rem;
+	margin-bottom: 1rem;
 }
 </style>
