@@ -22,9 +22,7 @@ const config = useConfig();
 </template>
 
 <style lang="scss" scoped>
-@import "@wmde/wikit-tokens/variables";
-
 .wbl-snl-anonymous-edit-warning {
-	margin: $dimension-spacing-small 0;
+	margin: 1rem 0;
 }
 </style>
