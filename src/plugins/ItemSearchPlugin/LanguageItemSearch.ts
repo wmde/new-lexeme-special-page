@@ -8,6 +8,6 @@ export const LanguageItemSearchKey: InjectionKey<ItemSearcher> = Symbol( 'Langua
 
 export function useLanguageItemSearch(): ItemSearcher {
 	return inject( LanguageItemSearchKey, () => {
-		throw new Error( 'No ItemSearcher provided!' );
+		throw new Error( 'No LanguageItemSearcher provided!' );
 	}, true );
 }
