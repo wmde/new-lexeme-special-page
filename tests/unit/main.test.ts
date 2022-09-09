@@ -31,8 +31,10 @@ describe( 'createAndMount', () => {
 				spellingVariant: '',
 			},
 			maxLemmaLength: 1000,
+			availableSearchProfiles: [],
 		}, {
 			itemSearcher: unusedItemSearcher,
+			languageItemSearcher: unusedItemSearcher,
 			lexemeCreator: unusedLexemeCreator,
 			searchLinker: {
 				getSearchUrlForLexeme: jest.fn().mockReturnValue( 'https://example.com' ),

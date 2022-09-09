@@ -14,6 +14,7 @@ import unusedTracker from '../mocks/unusedTracker';
 import { nextTick } from 'vue';
 import Messages, { MessagesKey } from '@/plugins/MessagesPlugin/Messages';
 import DevMessagesRepository from '@/plugins/MessagesPlugin/DevMessagesRepository';
+import { LanguageItemSearchKey } from '@/plugins/ItemSearchPlugin/LanguageItemSearch';
 
 jest.mock( 'lodash/debounce', () => jest.fn( ( fn ) => fn ) );
 
@@ -33,6 +34,7 @@ describe( 'NewLexemeForm', () => {
 			spellingVariant: '',
 		},
 		maxLemmaLength: 1000,
+		availableSearchProfiles: [],
 	};
 
 	function mountForm( storeServices: Partial<StoreServices> = {}, pluginOverrides = {} ) {
@@ -50,6 +52,7 @@ describe( 'NewLexemeForm', () => {
 					[ ConfigKey as symbol ]: emptyConfig,
 					[ MessagesKey as symbol ]: new Messages( new DevMessagesRepository() ),
 					[ ItemSearchKey as symbol ]: new DevItemSearcher(),
+					[ LanguageItemSearchKey as symbol ]: new DevItemSearcher(),
 					[ LanguageCodesProviderKey as symbol ]: unusedLanguageCodesProvider,
 					[ WikiRouterKey as symbol ]: null,
 					...pluginOverrides,

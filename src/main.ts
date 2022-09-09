@@ -21,6 +21,7 @@ import WikiRouter from './plugins/WikiRouterPlugin/WikiRouter';
 import LangCodeRetriever from './data-access/LangCodeRetriever';
 import { LanguageCodesProviderKey } from './plugins/LanguageCodesProviderPlugin/LanguageCodesProvider';
 import { MapLanguageCodesProvider } from './data-access/LanguageCodesProvider';
+import { LanguageItemSearchKey } from '@/plugins/ItemSearchPlugin/LanguageItemSearch';
 
 export interface CreateAndMountConfig extends Config {
 	rootSelector: string;
@@ -29,6 +30,7 @@ export interface CreateAndMountConfig extends Config {
 
 export interface Services {
 	itemSearcher: ItemSearcher;
+	languageItemSearcher: ItemSearcher;
 	messagesRepository?: MessagesRepository;
 	langCodeRetriever: LangCodeRetriever;
 	lexemeCreator: LexemeCreator;
@@ -55,6 +57,7 @@ export default function createAndMount(
 	app.provide( ConfigKey, config );
 	app.provide( MessagesKey, new Messages( services.messagesRepository ) );
 	app.provide( ItemSearchKey, services.itemSearcher );
+	app.provide( LanguageItemSearchKey, services.languageItemSearcher );
 	app.provide( SearchLinkerKey, services.searchLinker );
 	app.provide( WikiRouterKey, services.wikiRouter );
 	app.provide(

@@ -16,13 +16,18 @@ export default class MwApiItemSearcher implements ItemSearcher {
 		this.languageCode = languageCode;
 	}
 
-	public async searchItems( searchTerm: string, offset?: number ): Promise<SearchedItemOption[]> {
+	public async searchItems(
+		searchTerm: string,
+		offset?: number,
+		additionalParams: Record<string, string> = {},
+	): Promise<SearchedItemOption[]> {
 		// TODO handle errors
 		const response = await this.api.get( {
 			...commonParams,
 			search: searchTerm,
 			language: this.languageCode,
 			continue: offset,
+			...additionalParams,
 		} ) as WbSearchEntitiesResponse;
 
 		return processResponse( response );

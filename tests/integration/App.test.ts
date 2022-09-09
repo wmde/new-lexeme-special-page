@@ -14,6 +14,7 @@ import { ItemSearchKey } from '@/plugins/ItemSearchPlugin/ItemSearch';
 import DevItemSearcher from '@/data-access/DevItemSearcher';
 import DevMessagesRepository from '@/plugins/MessagesPlugin/DevMessagesRepository';
 import MediaWikiSearchLinker from '@/plugins/SearchLinkerPlugin/MediaWikiSearchLinker';
+import { LanguageItemSearchKey } from '@/plugins/ItemSearchPlugin/LanguageItemSearch';
 
 describe( 'App.vue', () => {
 
@@ -49,6 +50,7 @@ describe( 'App.vue', () => {
 				spellingVariant: '',
 			},
 			maxLemmaLength: 1000,
+			availableSearchProfiles: [],
 		};
 		const lexemeNS = 146;
 		const testUrl = 'https://example.com';
@@ -65,6 +67,7 @@ describe( 'App.vue', () => {
 					[ WikiRouterKey as symbol ]: null,
 					[ MessagesKey as symbol ]: new Messages( new DevMessagesRepository() ),
 					[ ItemSearchKey as symbol ]: new DevItemSearcher(),
+					[ LanguageItemSearchKey as symbol ]: new DevItemSearcher(),
 				},
 			},
 		} );

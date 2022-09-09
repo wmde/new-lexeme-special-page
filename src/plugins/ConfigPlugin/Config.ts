@@ -17,6 +17,7 @@ export interface Config {
 		spellingVariant: string;
 	};
 	readonly maxLemmaLength: number;
+	readonly availableSearchProfiles: string[];
 }
 
 export const ConfigKey: InjectionKey<Config> = Symbol( 'Config' );
