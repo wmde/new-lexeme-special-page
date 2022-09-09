@@ -18,7 +18,6 @@ describe( 'LanguageItemSearcher', () => {
 			expectedOptionalParams: [ undefined, { profile: 'language' } ],
 		},
 	] )( '$name', async ( { availableSearchProfiles, offset, expectedOptionalParams } ) => {
-		// const availableSearchProfiles = [ 'language', 'default' ];
 		const itemSearcher = new MwApiItemSearcher( unusedApi, 'en' );
 		const spy = jest.spyOn( itemSearcher, 'searchItems' ).mockImplementation( () => Promise.resolve( [] ) );
 		const languageItemSearcher = new LanguageItemSearcher(
