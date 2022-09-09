@@ -14,7 +14,11 @@ import ItemSearcher, { SearchedItemOption } from '@/data-access/ItemSearcher';
  */
 export default class DevItemSearcher implements ItemSearcher {
 
-	public async searchItems( searchTerm: string, offset = 0 ): Promise<SearchedItemOption[]> {
+	public async searchItems(
+		searchTerm: string,
+		offset = 0,
+		additionalParams = {},
+	): Promise<SearchedItemOption[]> {
 		const match = searchTerm.match( /^=(Q[1-9][0-9]*)$/ );
 		if ( match ) {
 			const itemId = match[ 1 ];
@@ -40,6 +44,7 @@ export default class DevItemSearcher implements ItemSearcher {
 			continue: offset.toString(),
 			format: 'json',
 			origin: '*',
+			...additionalParams,
 		} ) ).then( ( r ) => r.json() ) as WbSearchEntitiesResponse;
 
 		return processResponse( response );

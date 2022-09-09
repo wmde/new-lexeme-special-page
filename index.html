@@ -16,6 +16,7 @@
 				import DevItemSearcher from './src/data-access/DevItemSearcher';
 				import DevLexemeCreator from './src/data-access/DevLexemeCreator';
 				import DevLangCodeRetriever from './src/data-access/DevLangCodeRetriever';
+				import LanguageItemSearcher from './src/data-access/LanguageItemSearcher';
 
 				const config = {
 					rootSelector: '#app',
@@ -96,8 +97,13 @@
 					},
 					maxLemmaLength: 100,
 				};
+				const devItemSearcher = new DevItemSearcher();
 				const services = {
-					itemSearcher: new DevItemSearcher(),
+					itemSearcher: devItemSearcher,
+					languageItemSearcher: new LanguageItemSearcher(
+						devItemSearcher,
+						['default', 'language'],
+					),
 					langCodeRetriever: new DevLangCodeRetriever(),
 					messagesRepository: new DevMessagesRepository(),
 					lexemeCreator: new DevLexemeCreator(),

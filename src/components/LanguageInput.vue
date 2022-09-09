@@ -4,7 +4,7 @@ import { useStore } from 'vuex';
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
 import ItemLookup from '@/components/ItemLookup.vue';
 import RequiredAsterisk from '@/components/RequiredAsterisk.vue';
-import { useItemSearch } from '@/plugins/ItemSearchPlugin/ItemSearch';
+import { useLanguageItemSearch } from '@/plugins/ItemSearchPlugin/LanguageItemSearch';
 import { computed } from 'vue';
 import { useConfig } from '@/plugins/ConfigPlugin/Config';
 
@@ -22,7 +22,7 @@ defineEmits<{
 
 const messages = useMessages();
 
-const searcher = useItemSearch();
+const searcher = useLanguageItemSearch();
 const searchForItems = searcher.searchItems.bind( searcher );
 
 const store = useStore();

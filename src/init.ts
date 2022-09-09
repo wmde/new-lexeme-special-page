@@ -11,6 +11,7 @@ import { MediaWiki } from './@types/mediawiki';
 import { ComponentPublicInstance } from 'vue';
 import MediaWikiRouter from './plugins/WikiRouterPlugin/MediaWikiRouter';
 import MwApiLangCodeRetriever from './data-access/MwApiLangCodeRetriever';
+import LanguageItemSearcher from '@/data-access/LanguageItemSearcher';
 
 interface InitConfig extends CreateAndMountConfig {
 	tags: string[];
@@ -27,6 +28,10 @@ export default function init( config: InitConfig, mw: MediaWiki ): ComponentPubl
 	} );
 
 	const itemSearcher = new MwApiItemSearcher( api, languageCode );
+	const languageItemSearcher = new LanguageItemSearcher(
+		itemSearcher,
+		config.availableSearchProfiles,
+	);
 	const langCodeRetriever = new MwApiLangCodeRetriever( api, mw.config.get( 'LexemeLanguageCodePropertyId' ) as string );
 	const messagesRepository = new MwMessagesRepository( mw.message );
 	const lexemeCreator = new MwApiLexemeCreator( api, config.tags );
@@ -39,6 +44,7 @@ export default function init( config: InitConfig, mw: MediaWiki ): ComponentPubl
 
 	const services: Services = {
 		itemSearcher,
+		languageItemSearcher,
 		langCodeRetriever,
 		messagesRepository,
 		lexemeCreator,
