@@ -106,7 +106,7 @@ If a dependency can only be updated with substantial manual work,
 you can create a new task for it and skip it in the context of the current chore.
 
 The recommended way to update dependencies is to collect related dependency updates into grouped commits.
-This can be one commit for each of:
+For example, this can be one commit for each of:
 
 - all ESLint-related dependency updates
 - all Jest-related dependency updates
