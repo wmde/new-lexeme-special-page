@@ -88,3 +88,33 @@ After you've started the dev server, you can open the interactive browser tests 
 ```sh
 npm run cypress:open
 ```
+
+### Chore: Dependency Updates
+
+You can see which dependencies have new releases by first making sure your local dependencies are up-to-date by executing `npm ci` and then running `npm outdated`.
+The following dependencies should be ignored:
+
+- Wikit (i.e. `@wmde/wikit-tokens` and `@wmde/wikit-vue-components`):
+  we’re using a newer pre-release version and don’t want to downgrade to the latest full release.
+- Vue and Vuex:
+  in production, we use the versions shipped by MediaWiki core,
+  so we should use the same versions for testing.
+
+All other dependencies should generally be updated to the latest version.
+If you discover that a dependency cannot be updated for some reason, please add it to the above list.
+If a dependency can only be updated with substantial manual work,
+you can create a new task for it and skip it in the context of the current chore.
+
+The recommended way to update dependencies is to collect related dependency updates into grouped commit.
+This can be one commit for each of:
+
+- all ESLint-related dependency updates
+- all Jest-related dependency updates
+- all Vue-related dependency updates
+- all PostCSS/Stylelint-related dependency updates
+- `npm update` for all other dependency updates
+
+Make sure that all checks still pass for every commit.
+
+Once all dependency updates are merged, update the submodule version in WikibaseLexeme by running `npm run bump-special-new-lexeme` there:
+see [New Lexeme Special Page in the WikibaseLexeme dev README](https://github.com/wikimedia/mediawiki-extensions-WikibaseLexeme/blob/master/README-dev.md#new-lexeme-special-page).
