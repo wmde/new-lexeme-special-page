@@ -101,7 +101,7 @@ The following dependencies should be ignored:
   so we should use the same versions for testing.
 
 All other dependencies should generally be updated to the latest version.
-If you discover that a dependency cannot be updated for some reason, please add it to the above list.
+If you discover that a dependency should not be updated for some reason, please add it to the above list.
 If a dependency can only be updated with substantial manual work,
 you can create a new task for it and skip it in the context of the current chore.
 
