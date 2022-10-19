@@ -99,6 +99,7 @@ The following dependencies should be ignored:
 - Vue and Vuex:
   in production, we use the versions shipped by MediaWiki core,
   so we should use the same versions for testing.
+  The current versions shipped by MediaWiki core are listed in [foreign-resources.yaml](https://gerrit.wikimedia.org/g/mediawiki/core/+/master/resources/lib/foreign-resources.yaml).
 
 All other dependencies should generally be updated to the latest version.
 If you discover that a dependency should not be updated for some reason, please add it to the above list.
