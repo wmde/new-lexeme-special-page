@@ -105,7 +105,9 @@ If you discover that a dependency should not be updated for some reason, please 
 If a dependency can only be updated with substantial manual work,
 you can create a new task for it and skip it in the context of the current chore.
 
-The recommended way to update dependencies is to collect related dependency updates into grouped commits.
+The recommended way to update dependencies is to collect related dependency updates into grouped commits;
+this keeps the number of commits to review manageable (compared to having one commit for every update),
+while keeping the scope of each commit limited and increasing reviewability and debuggability (compared to combining all updates in a single commit).
 For example, this can be one commit for each of:
 
 - all ESLint-related dependency updates
