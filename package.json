@@ -46,7 +46,7 @@
 		"@wmde/wikibase-datamodel-types": "^0.2.0",
 		"@wmde/wikit-tokens": "^3.0.0-alpha.8",
 		"@wmde/wikit-vue-components": "^3.0.0-alpha.8",
-		"jest-environment-jsdom": "^29.0.1",
+		"jest-environment-jsdom": "^29.2.2",
 		"vue": "^3.2.38",
 		"vuex": "^4.0.2"
 	},
