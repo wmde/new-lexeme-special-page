@@ -8,9 +8,10 @@ module.exports = {
 	extends: [
 		'wikimedia',
 		'wikimedia/node',
-		'wikimedia/client-common', // client-es6 still extends vue2 config
-		'wikimedia/vue3-es6',
-		'wikimedia/language/es2021', // this should ensure that we can use all the new features, not only es6
+		'wikimedia/client-common',
+		'wikimedia/vue3-common',
+		// we do not import any wikimedia/language/es* config:
+		// if it compiles, we’re allowed to use it
 		'@wmde/wikimedia-typescript',
 		'@vue/typescript/recommended',
 		'plugin:cypress/recommended',
