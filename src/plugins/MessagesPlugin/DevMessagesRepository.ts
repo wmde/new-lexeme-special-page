@@ -17,7 +17,7 @@ const messages: Record<MessageKeys, string> = {
 	'wikibaselexeme-newlexeme-lemma-language-empty-error': 'The spelling variant field is empty; please make an entry.',
 	'wikibaselexeme-newlexeme-lemma-language-invalid-error': 'Spelling variant must be a valid language code.',
 	'wikibaselexeme-newlexeme-lemma-language-placeholder-with-example': 'Language code for the Lemma\'s spelling variant, e.g. \'$1\'',
-	'wikibaselexeme-newlexeme-lemma-language-help-link-target': 'https://www.wikidata.org/wiki/Special:MyLanguage/Help:Monolingual_text_languages',
+	'wikibaselexeme-newlexeme-lemma-language-help-link-target': 'https://www.wikidata.org/wiki/Special:MyLanguage/Wikidata:Lexicographical_data/Spelling_variant',
 	'wikibaselexeme-newlexeme-lemma-language-help-link-text': '(Help)',
 	'wikibaselexeme-newlexeme-search-existing': 'You can check whether a Lexeme already exists by using <a href="$1">the search</a>. You can also learn more about Lexemes in the help box below.',
 	'wikibaselexeme-newlexeme-submit': 'Create Lexeme',
