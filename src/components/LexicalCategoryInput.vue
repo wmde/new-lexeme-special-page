@@ -50,6 +50,7 @@ export default {
 
 <template>
 	<div class="wbl-snl-lexical-category-lookup">
+		<!-- eslint-disable-next-line vuejs-accessibility/tabindex-no-positive -->
 		<item-lookup
 			:label="messages.getUnescaped( 'wikibaselexeme-newlexeme-lexicalcategory' )"
 			:placeholder="messages.getUnescaped(
@@ -62,6 +63,7 @@ export default {
 			:item-suggestions="lexicalCategorySuggestions"
 			:error="error"
 			:aria-required="true"
+			tabindex="1"
 			@update:model-value="$emit( 'update:modelValue', $event )"
 			@update:search-input="$emit( 'update:searchInput', $event )"
 		>

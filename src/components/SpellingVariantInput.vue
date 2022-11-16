@@ -99,6 +99,7 @@ export default {
 </script>
 
 <template>
+	<!-- eslint-disable-next-line vuejs-accessibility/tabindex-no-positive -->
 	<wikit-lookup
 		class="wbl-snl-spelling-variant-lookup"
 		:label="messages.getUnescaped( 'wikibaselexeme-newlexeme-lemma-language' )"
@@ -111,6 +112,7 @@ export default {
 		:value="selectedOption"
 		:error="error"
 		:aria-required="true"
+		tabindex="1"
 		@update:search-input="onSearchInput"
 		@input="onOptionSelected"
 	>
@@ -120,7 +122,14 @@ export default {
 		<template #suffix>
 			<required-asterisk />
 			<span class="wbl-snl-spelling-variant-lookup__help-link">
-				<wikit-link :href="helpUrl" target="_blank">{{ helpLinkText }}</wikit-link>
+				<!-- eslint-disable-next-line vuejs-accessibility/tabindex-no-positive -->
+				<wikit-link
+					:href="helpUrl"
+					tabindex="1"
+					target="_blank"
+				>
+					{{ helpLinkText }}
+				</wikit-link>
 			</span>
 		</template>
 	</wikit-lookup>

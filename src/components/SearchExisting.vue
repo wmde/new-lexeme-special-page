@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
 import { useSearchLinker } from '@/plugins/SearchLinkerPlugin/SearchLinker';
-import { computed } from 'vue';
+import { computed, onMounted } from 'vue';
 import { useStore } from 'vuex';
 
 const messages = useMessages();
@@ -16,11 +16,22 @@ const searchMessage = computed( () => messages.get(
 	searchUrl.value,
 ) );
 
+onMounted( () => {
+	const linkNodes = document.querySelectorAll( '#wbl-snl-search-existing a' );
+	linkNodes.forEach( ( linkNode ) => {
+		linkNode.setAttribute( 'tabindex', '1' );
+	} );
+} );
+
 </script>
 
 <template>
 	<!-- eslint-disable-next-line vue/no-v-html -->
-	<p class="wbl-snl-search-existing" v-html="searchMessage" />
+	<p
+		id="wbl-snl-search-existing"
+		class="wbl-snl-search-existing"
+		v-html="searchMessage"
+	/>
 </template>
 
 <style lang="scss" scoped>

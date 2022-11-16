@@ -51,6 +51,7 @@ export default {
 </script>
 
 <template>
+	<!-- eslint-disable-next-line vuejs-accessibility/tabindex-no-positive -->
 	<text-input
 		class="wbl-snl-lemma-input"
 		:label="messages.getUnescaped( 'wikibaselexeme-newlexeme-lemma' )"
@@ -60,6 +61,7 @@ export default {
 		)"
 		name="lemma"
 		aria-required="true"
+		tabindex="1"
 		:error="error"
 		:value="modelValue"
 		@input="$emit( 'update:modelValue', $event )"

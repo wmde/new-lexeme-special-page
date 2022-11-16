@@ -4,6 +4,7 @@ import { CREATE_LEXEME, HANDLE_LANGUAGE_CHANGE } from '@/store/actions';
 import {
 	computed,
 	ref,
+	onMounted,
 } from 'vue';
 import { useStore } from 'vuex';
 import { Button as WikitButton } from '@wmde/wikit-vue-components';
@@ -141,6 +142,13 @@ const onSubmit = async () => {
 	submitting.value = false;
 };
 
+onMounted( () => {
+	const linkNodes = document.querySelectorAll( '#wbl-snl-copyright a' );
+	linkNodes.forEach( ( linkNode ) => {
+		linkNode.setAttribute( 'tabindex', '3' );
+	} );
+} );
+
 </script>
 
 <script lang="ts">
@@ -176,12 +184,14 @@ export default {
 			<span v-html="error" />
 		</error-message>
 		<div>
+			<!-- eslint-disable-next-line vuejs-accessibility/tabindex-no-positive -->
 			<wikit-button
 				class="form-button-submit"
 				type="progressive"
 				variant="primary"
 				native-type="submit"
 				:disabled="submitting"
+				tabindex="2"
 			>
 				{{ submitButtonText }}
 			</wikit-button>
