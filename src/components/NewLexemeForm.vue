@@ -4,6 +4,7 @@ import { CREATE_LEXEME, HANDLE_LANGUAGE_CHANGE } from '@/store/actions';
 import {
 	computed,
 	ref,
+	onMounted,
 } from 'vue';
 import { useStore } from 'vuex';
 import { Button as WikitButton } from '@wmde/wikit-vue-components';
@@ -141,6 +142,13 @@ const onSubmit = async () => {
 	submitting.value = false;
 };
 
+onMounted( () => {
+	const linkNodes = document.querySelectorAll( '#wbl-snl-copyright a' );
+	linkNodes.forEach( ( linkNode ) => {
+		linkNode.setAttribute( 'tabindex', '-1' );
+	} );
+} );
+
 </script>
 
 <script lang="ts">
@@ -170,7 +178,11 @@ export default {
 			v-model:search-input="lexicalCategorySearchInput"
 		/>
 		<!-- eslint-disable-next-line vue/no-v-html -->
-		<p class="wbl-snl-copyright" v-html="copyrightText" />
+		<p
+			id="wbl-snl-copyright"
+			class="wbl-snl-copyright"
+			v-html="copyrightText"
+		/>
 		<error-message v-if="error">
 			<!-- eslint-disable-next-line vue/no-v-html -->
 			<span v-html="error" />
