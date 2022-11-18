@@ -30,6 +30,7 @@ const messages: Record<MessageKeys, string> = {
 	'wikibase-entityselector-notfound': 'No match was found',
 	'wikibase-shortcopyrightwarning': 'By clicking "$1", you agree to the <a href="./$2">terms of use</a>, and you irrevocably agree to release your contribution under the <a href="$3">$4</a>.',
 	copyrightpage: 'Project:Copyrights',
+	'wikibaselexeme-form-field-required': 'This field is required',
 };
 
 /** Messages repository for the dev entry point. */

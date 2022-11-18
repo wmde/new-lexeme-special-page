@@ -1,3 +1,9 @@
+<script setup lang="ts">
+import { useMessages } from '@/plugins/MessagesPlugin/Messages';
+
+const messages = useMessages();
+</script>
+
 <script lang="ts">
 export default {
 	compatConfig: {
@@ -10,6 +16,7 @@ export default {
 	<span
 		class="wbl-snl-required-asterisk"
 		aria-hidden="true"
+		:title="messages.getUnescaped( 'wikibaselexeme-form-field-required' )"
 	>*</span>
 </template>
 

@@ -26,6 +26,7 @@ type MessageKeys
  | 'wikibase-lexeme-lemma-language-option'
  | 'wikibase-entityselector-notfound'
  | 'wikibase-shortcopyrightwarning'
- | 'copyrightpage';
+ | 'copyrightpage'
+ | 'wikibaselexeme-form-field-required';
 
 export default MessageKeys;
