@@ -210,7 +210,8 @@ export default {
 
 .wbl-snl-copyright {
 	@include small-text;
-
+        font-style: italic;
+        font-synthesis: none;
 	font-size: 0.8125rem;
 	margin-bottom: 0;
 }
