@@ -213,6 +213,7 @@ export default {
 
 	font-size: 0.8125rem;
 	font-style: italic;
+	font-synthesis: none;
 	margin-bottom: 0;
 }
 
