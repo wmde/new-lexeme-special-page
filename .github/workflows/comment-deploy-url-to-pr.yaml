@@ -14,6 +14,6 @@ jobs:
               # This hash ⬇ is also calculated and used in the deploy workflow in demo.yaml to  push the dist/ to Netlify
               run: echo "::set-output name=hash::$(echo '${{ github.ref }}' | shasum | awk '{print substr($1,0,36)}')"
             - name: Comment on PR
-              uses: thollander/actions-comment-pull-request@v1.5.0
+              uses: thollander/actions-comment-pull-request@v1.6.0
               with:
                   message: "<https://${{ steps.get_hash.outputs.hash }}--new-lexeme-special-page.netlify.app>"
