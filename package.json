@@ -65,7 +65,7 @@
 		"axe-core": "^4.5.2",
 		"cypress": "^11.2.0",
 		"cypress-axe": "^1.1.0",
-		"eslint": "^8.28.0",
+		"eslint": "^8.31.0",
 		"eslint-config-wikimedia": "^0.23.0",
 		"eslint-plugin-cypress": "^2.12.1",
 		"eslint-plugin-vue": "^9.8.0",
