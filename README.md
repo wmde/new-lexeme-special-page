@@ -100,6 +100,8 @@ The following dependencies should be ignored:
   in production, we use the versions shipped by MediaWiki core,
   so we should use the same versions for testing.
   The current versions shipped by MediaWiki core are listed in [foreign-resources.yaml](https://gerrit.wikimedia.org/g/mediawiki/core/+/master/resources/lib/foreign-resources.yaml).
+- Typescript:
+  Vue up until version 3.2.38 (which we currently use) [doesn't support typescript 4.8+](https://github.com/vuejs/core/issues/6554).
 - Vite 3:
   WMF CI is using Node 14.17, but Vite 3 requires Node 14.18 or higher. The upgrade of WMF CI is tracked in [T314470](https://phabricator.wikimedia.org/T314470), the update of Vite itself in [T314468](https://phabricator.wikimedia.org/T314468).
 
