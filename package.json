@@ -55,7 +55,7 @@
 		"@rushstack/eslint-patch": "^1.2.0",
 		"@types/jest": "^29.2.5",
 		"@types/lodash": "^4.14.191",
-		"@typescript-eslint/eslint-plugin": "^5.48.1",
+		"@typescript-eslint/eslint-plugin": "^5.54.0",
 		"@typescript-eslint/parser": "^5.48.1",
 		"@vitejs/plugin-vue": "^2.3.4",
 		"@vue/eslint-config-typescript": "^11.0.2",
