@@ -38,6 +38,13 @@ const error = computed( () => {
 		),
 	};
 } );
+
+const itemLookupLabelMessage = computed(
+	() => messages.getUnescaped( 'wikibaselexeme-newlexeme-lexicalcategory' ) );
+const itemLookupPlaceholderMessage = computed(
+	() => messages.getUnescaped(
+		'wikibaselexeme-newlexeme-lexicalcategory-placeholder-with-example',
+		exampleLexCategory ) );
 </script>
 
 <script lang="ts">
@@ -51,11 +58,8 @@ export default {
 <template>
 	<div class="wbl-snl-lexical-category-lookup">
 		<item-lookup
-			:label="messages.getUnescaped( 'wikibaselexeme-newlexeme-lexicalcategory' )"
-			:placeholder="messages.getUnescaped(
-				'wikibaselexeme-newlexeme-lexicalcategory-placeholder-with-example',
-				exampleLexCategory
-			)"
+			:label="itemLookupLabelMessage"
+			:placeholder="itemLookupPlaceholderMessage"
 			:value="modelValue"
 			:search-input="searchInput"
 			:search-for-items="searchForItems"

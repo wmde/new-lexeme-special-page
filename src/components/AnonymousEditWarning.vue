@@ -8,12 +8,12 @@ const messages = useMessages();
 const warning = computed(
 	() => messages.get( 'wikibase-anonymouseditwarning' ) );
 const config = useConfig();
-
+const isAnonymous = config.isAnonymous;
 </script>
 
 <template>
 	<warning-message
-		v-if="config.isAnonymous"
+		v-if="isAnonymous"
 		class="wbl-snl-anonymous-edit-warning"
 	>
 		<!-- eslint-disable-next-line vue/no-v-html -->

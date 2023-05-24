@@ -26,6 +26,11 @@ const props = withDefaults( defineProps<Props>(), {
 	ariaRequired: false,
 } );
 
+// todo
+const propsSearchInput = computed( () => {
+	return props.searchInput;
+} );
+
 const emit = defineEmits( {
 	'update:modelValue': ( value: Props['value'] ) => {
 		return value === null || /^Q\d+$/.test( value.id );
@@ -132,13 +137,16 @@ const onWikitOptionSelected = ( value: unknown ) => {
 };
 
 const messages = useMessages();
+const noResultsMessage = computed(
+	() => messages.getUnescaped( 'wikibase-entityselector-notfound' ) );
+
 </script>
 
 <template>
 	<wikit-lookup
 		:label="label"
 		:placeholder="placeholder"
-		:search-input="props.searchInput"
+		:search-input="propsSearchInput"
 		:menu-items="wikitMenuItems"
 		:value="wikitValue"
 		:error="error"
@@ -148,7 +156,7 @@ const messages = useMessages();
 		@input="onWikitOptionSelected"
 	>
 		<template #no-results>
-			{{ messages.getUnescaped( 'wikibase-entityselector-notfound' ) }}
+			{{ noResultsMessage }}
 		</template>
 		<template #suffix>
 			<slot name="suffix" />

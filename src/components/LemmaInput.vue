@@ -17,6 +17,12 @@ defineEmits<{
 }>();
 
 const messages = useMessages();
+const textInputLabelMessage = computed(
+	() => messages.getUnescaped( 'wikibaselexeme-newlexeme-lemma' ) );
+const textInputPlaceholderMessage = computed(
+	() => messages.getUnescaped(
+		'wikibaselexeme-newlexeme-lemma-placeholder-with-example',
+		exampleLemma ) );
 
 const config = useConfig();
 const exampleLemma = config.placeholderExampleData.lemma;
@@ -53,11 +59,8 @@ export default {
 <template>
 	<text-input
 		class="wbl-snl-lemma-input"
-		:label="messages.getUnescaped( 'wikibaselexeme-newlexeme-lemma' )"
-		:placeholder="messages.getUnescaped(
-			'wikibaselexeme-newlexeme-lemma-placeholder-with-example',
-			exampleLemma
-		)"
+		:label="textInputLabelMessage"
+		:placeholder="textInputPlaceholderMessage"
 		name="lemma"
 		aria-required="true"
 		:error="error"

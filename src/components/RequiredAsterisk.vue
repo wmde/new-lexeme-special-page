@@ -1,7 +1,10 @@
 <script setup lang="ts">
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
+import { computed } from 'vue/dist/vue';
 
 const messages = useMessages();
+const fieldRequiredMessage = computed(
+	() => messages.getUnescaped( 'wikibaselexeme-form-field-required' ) );
 </script>
 
 <script lang="ts">
@@ -16,7 +19,7 @@ export default {
 	<span
 		class="wbl-snl-required-asterisk"
 		aria-hidden="true"
-		:title="messages.getUnescaped( 'wikibaselexeme-form-field-required' )"
+		:title="fieldRequiredMessage"
 	>*</span>
 </template>
 

@@ -21,6 +21,12 @@ defineEmits<{
 }>();
 
 const messages = useMessages();
+const itemLookupLabelMessage = computed(
+	() => messages.getUnescaped( 'wikibaselexeme-newlexeme-language' ) );
+const itemLookupPlaceholderMessage = computed(
+	() => messages.getUnescaped(
+		'wikibaselexeme-newlexeme-language-placeholder-with-example',
+		config.placeholderExampleData.languageLabel ) );
 
 const searcher = useLanguageItemSearch();
 const searchForItems = searcher.searchItems.bind( searcher );
@@ -58,11 +64,8 @@ export default {
 <template>
 	<div class="wbl-snl-language-lookup">
 		<item-lookup
-			:label="messages.getUnescaped( 'wikibaselexeme-newlexeme-language' )"
-			:placeholder="messages.getUnescaped(
-				'wikibaselexeme-newlexeme-language-placeholder-with-example',
-				config.placeholderExampleData.languageLabel
-			)"
+			:label="itemLookupLabelMessage"
+			:placeholder="itemLookupPlaceholderMessage"
 			:value="modelValue"
 			:search-input="searchInput"
 			:search-for-items="searchForItems"

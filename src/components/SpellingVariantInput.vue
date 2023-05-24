@@ -27,6 +27,16 @@ const props = withDefaults( defineProps<Props>(), {
 const languageCodesProvider = useLanguageCodesProvider();
 const messages = useMessages();
 
+const wikitLookupLabelMessage = computed(
+	() => messages.get( 'wikibaselexeme-newlexeme-lemma-language' ) );
+const wikitLookupPlaceholderMessage = computed(
+	() => messages.getUnescaped(
+		'wikibaselexeme-newlexeme-lemma-language-placeholder-with-example',
+		config.placeholderExampleData.spellingVariant,
+	) );
+const noResultsMessage = computed(
+	() => messages.getUnescaped( 'wikibase-entityselector-notfound' ) );
+
 const wbLexemeTermLanguages: WikitMenuItem[] = [];
 languageCodesProvider.getLanguages().forEach(
 	( name, code ) => {
@@ -101,11 +111,8 @@ export default {
 <template>
 	<wikit-lookup
 		class="wbl-snl-spelling-variant-lookup"
-		:label="messages.getUnescaped( 'wikibaselexeme-newlexeme-lemma-language' )"
-		:placeholder="messages.getUnescaped(
-			'wikibaselexeme-newlexeme-lemma-language-placeholder-with-example',
-			config.placeholderExampleData.spellingVariant
-		)"
+		:label="wikitLookupLabelMessage"
+		:placeholder="wikitLookupPlaceholderMessage"
 		:search-input="searchInput"
 		:menu-items="menuItems"
 		:value="selectedOption"
@@ -115,7 +122,7 @@ export default {
 		@input="onOptionSelected"
 	>
 		<template #no-results>
-			{{ messages.getUnescaped( 'wikibase-entityselector-notfound' ) }}
+			{{ noResultsMessage }}
 		</template>
 		<template #suffix>
 			<required-asterisk />
