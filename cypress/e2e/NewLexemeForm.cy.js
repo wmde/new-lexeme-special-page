@@ -147,17 +147,18 @@ describe( 'NewLexemeForm', () => {
 		cy.get( '.wbl-snl-language-lookup input' )
 			.then( ( $input ) => {
 				expect( $input ).to.have.value( 'test language' );
-			} )
-			.click()
-			.then( () => {
-				cy.get( '.wbl-snl-language-lookup .wikit-OptionsMenu__item__label' )
-					.then( ( $element ) => {
-						expect( $element ).to.have.text( 'test language' );
-					} );
-				cy.get( '.wbl-snl-language-lookup .wikit-OptionsMenu__item__description' )
-					.then( ( $element ) => {
-						expect( $element ).to.have.text( 'test language description' );
-					} );
+			} );
+
+		cy.get( '.wbl-snl-language-lookup input' ).click();
+
+		cy.get( '.wbl-snl-language-lookup .wikit-OptionsMenu__item__label' )
+			.then( ( $element ) => {
+				expect( $element ).to.have.text( 'test language' );
+			} );
+
+		cy.get( '.wbl-snl-language-lookup .wikit-OptionsMenu__item__description' )
+			.then( ( $element ) => {
+				expect( $element ).to.have.text( 'test language description' );
 			} );
 
 		cy.get( '.wbl-snl-lexical-category-lookup input' )
