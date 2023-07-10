@@ -7,6 +7,9 @@ on:
 jobs:
     comment-on-pr:
         runs-on: ubuntu-latest
+        permissions:
+            pull-requests: write
+
         name: Comment deploy URL to PR
         steps:
             - name: Get branch hash
