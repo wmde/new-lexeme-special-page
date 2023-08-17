@@ -121,5 +121,12 @@ For example, this can be one commit for each of:
 
 Make sure that all checks still pass for every commit.
 
-Once all dependency updates are merged, update the submodule version in WikibaseLexeme by running `npm run bump-special-new-lexeme` there:
-see [New Lexeme Special Page in the WikibaseLexeme dev README](https://github.com/wikimedia/mediawiki-extensions-WikibaseLexeme/blob/master/README-dev.md#new-lexeme-special-page).
+Once all dependency updates are merged, update the submodule version in WikibaseLexeme (see below).
+
+## Updating the submodule version in WikibaseLexeme
+
+This repository is a git submodule in WikibaseLexeme.
+That submodule needs to be updated there for changes here to be deployed to production.
+
+To update the submodule version in WikibaseLexeme run `npm run bump-special-new-lexeme` there.
+See [New Lexeme Special Page in the WikibaseLexeme dev README](https://github.com/wikimedia/mediawiki-extensions-WikibaseLexeme/blob/master/README-dev.md#new-lexeme-special-page) for more details.
