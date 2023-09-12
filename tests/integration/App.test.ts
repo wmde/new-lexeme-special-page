@@ -15,6 +15,7 @@ import DevItemSearcher from '@/data-access/DevItemSearcher';
 import DevMessagesRepository from '@/plugins/MessagesPlugin/DevMessagesRepository';
 import MediaWikiSearchLinker from '@/plugins/SearchLinkerPlugin/MediaWikiSearchLinker';
 import { LanguageItemSearchKey } from '@/plugins/ItemSearchPlugin/LanguageItemSearch';
+import { AuthenticationLinkerKey } from '@/plugins/AuthenticationLinkerPlugin/AuthenticationLinker';
 
 describe( 'App.vue', () => {
 
@@ -64,6 +65,7 @@ describe( 'App.vue', () => {
 						mwUtilGetUrl,
 						lexemeNS,
 					),
+					[ AuthenticationLinkerKey as symbol ]: null,
 					[ WikiRouterKey as symbol ]: null,
 					[ MessagesKey as symbol ]: new Messages( new DevMessagesRepository() ),
 					[ ItemSearchKey as symbol ]: new DevItemSearcher(),

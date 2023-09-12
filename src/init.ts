@@ -12,6 +12,7 @@ import { ComponentPublicInstance } from 'vue';
 import MediaWikiRouter from './plugins/WikiRouterPlugin/MediaWikiRouter';
 import MwApiLangCodeRetriever from './data-access/MwApiLangCodeRetriever';
 import LanguageItemSearcher from '@/data-access/LanguageItemSearcher';
+import MediaWikiAuthenticationLinker from '@/plugins/AuthenticationLinkerPlugin/MediaWikiAuthenticationLinker';
 
 interface InitConfig extends CreateAndMountConfig {
 	tags: string[];
@@ -39,6 +40,10 @@ export default function init( config: InitConfig, mw: MediaWiki ): ComponentPubl
 		mw.util.getUrl,
 		( mw.config.get( 'wgNamespaceIds' ) as Record<string, number> ).lexeme,
 	);
+	const authenticationLinker = new MediaWikiAuthenticationLinker(
+		mw.util.getUrl,
+		mw.config.get( 'wgPageName' ) as string,
+	);
 	const tracker = new MwTracker( mw.track );
 	const wikiRouter = new MediaWikiRouter( mw.util.getUrl );
 
@@ -49,6 +54,7 @@ export default function init( config: InitConfig, mw: MediaWiki ): ComponentPubl
 		messagesRepository,
 		lexemeCreator,
 		searchLinker,
+		authenticationLinker,
 		tracker,
 		wikiRouter,
 	};

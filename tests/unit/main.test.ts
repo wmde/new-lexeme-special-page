@@ -39,6 +39,10 @@ describe( 'createAndMount', () => {
 			searchLinker: {
 				getSearchUrlForLexeme: jest.fn().mockReturnValue( 'https://example.com' ),
 			},
+			authenticationLinker: {
+				getLoginLink: jest.fn(),
+				getCreateAccountLink: jest.fn(),
+			},
 			tracker: unusedTracker,
 			wikiRouter: unusedWikiRouter,
 			langCodeRetriever: unusedLangCodeRetriever,

@@ -3,10 +3,16 @@ import WarningMessage from '@/components/WarningMessage.vue';
 import { useConfig } from '@/plugins/ConfigPlugin/Config';
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
 import { computed } from 'vue';
+import { useAuthenticationLinker } from '@/plugins/AuthenticationLinkerPlugin/AuthenticationLinker';
 
+const authenticationLinker = useAuthenticationLinker();
 const messages = useMessages();
 const warning = computed(
-	() => messages.get( 'wikibase-anonymouseditwarning' ) );
+	() => messages.get(
+		'wikibase-anonymouseditwarning',
+		authenticationLinker.getLoginLink(),
+		authenticationLinker.getCreateAccountLink(),
+	) );
 const config = useConfig();
 
 </script>

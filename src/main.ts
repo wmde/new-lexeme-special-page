@@ -3,6 +3,7 @@ import LexemeCreator from '@/data-access/LexemeCreator';
 import { ItemSearchKey } from '@/plugins/ItemSearchPlugin/ItemSearch';
 import { Config, ConfigKey } from '@/plugins/ConfigPlugin/Config';
 import SearchLinker, { SearchLinkerKey } from '@/plugins/SearchLinkerPlugin/SearchLinker';
+import AuthenticationLinker, { AuthenticationLinkerKey } from '@/plugins/AuthenticationLinkerPlugin/AuthenticationLinker';
 import Tracker from '@/data-access/tracking/Tracker';
 import {
 	HANDLE_INIT_PARAMS,
@@ -35,6 +36,7 @@ export interface Services {
 	langCodeRetriever: LangCodeRetriever;
 	lexemeCreator: LexemeCreator;
 	searchLinker: SearchLinker;
+	authenticationLinker: AuthenticationLinker;
 	tracker: Tracker;
 	wikiRouter: WikiRouter;
 }
@@ -59,6 +61,7 @@ export default function createAndMount(
 	app.provide( ItemSearchKey, services.itemSearcher );
 	app.provide( LanguageItemSearchKey, services.languageItemSearcher );
 	app.provide( SearchLinkerKey, services.searchLinker );
+	app.provide( AuthenticationLinkerKey, services.authenticationLinker );
 	app.provide( WikiRouterKey, services.wikiRouter );
 	app.provide(
 		LanguageCodesProviderKey,
