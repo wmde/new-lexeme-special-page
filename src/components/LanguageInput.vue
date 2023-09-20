@@ -77,3 +77,14 @@ export default {
 		</item-lookup>
 	</div>
 </template>
+
+<style lang="scss">
+@import "@wmde/wikit-tokens/variables";
+
+/* stylelint-disable plugin/stylelint-bem-namics, selector-class-pattern */
+.wbl-snl-language-lookup .wikit .wikit-Lookup__label-wrapper {
+	gap: $dimension-spacing-xsmall;
+}
+/* stylelint-enable plugin/stylelint-bem-namics, selector-class-pattern */
+
+</style>

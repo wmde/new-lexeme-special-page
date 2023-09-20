@@ -69,3 +69,13 @@ export default {
 		</template>
 	</text-input>
 </template>
+
+<style lang="scss">
+@import "@wmde/wikit-tokens/variables";
+
+/* stylelint-disable plugin/stylelint-bem-namics, selector-class-pattern */
+.wbl-snl-lemma-input.wikit .wikit-TextInput__label-wrapper {
+	gap: $dimension-spacing-xsmall;
+}
+/* stylelint-enable plugin/stylelint-bem-namics, selector-class-pattern */
+</style>

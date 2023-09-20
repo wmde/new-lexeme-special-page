@@ -24,6 +24,9 @@ export default {
 @import "@wmde/wikit-tokens/variables";
 
 .wbl-snl-required-asterisk {
+	font-size: $font-size-xxlarge;
+	line-height: 0;
+
 	&:not(:first-child) {
 		margin-inline-start: $dimension-spacing-small;
 	}
