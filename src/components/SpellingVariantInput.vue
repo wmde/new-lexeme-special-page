@@ -126,10 +126,16 @@ export default {
 	</wikit-lookup>
 </template>
 
-<style lang="scss" scoped>
+<style lang="scss">
 @import "@wmde/wikit-tokens/variables";
 
 .wbl-snl-spelling-variant-lookup {
+	/* stylelint-disable plugin/stylelint-bem-namics, selector-class-pattern */
+	&.wikit .wikit-Lookup__label-wrapper {
+		gap: $dimension-spacing-xsmall;
+	}
+	/* stylelint-enable plugin/stylelint-bem-namics, selector-class-pattern */
+
 	&__help-link {
 		padding-bottom: $wikit-Label-padding-block-end;
 		display: inline-block;
