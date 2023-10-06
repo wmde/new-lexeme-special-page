@@ -1,4 +1,5 @@
-# New Lexeme Special Page form
+New Lexeme Special Page form
+============================
 
 This repository holds the form for the [NewLexeme special page](https://www.wikidata.org/wiki/Special:NewLexeme) on Wikidata.
 
