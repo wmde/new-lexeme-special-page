@@ -40,7 +40,7 @@
 	},
 	"homepage": "https://github.com/wmde/new-lexeme-special-page#readme",
 	"engines": {
-		"node": ">=14"
+		"node": ">=16"
 	},
 	"dependencies": {
 		"@wmde/wikibase-datamodel-types": "^0.2.0",
