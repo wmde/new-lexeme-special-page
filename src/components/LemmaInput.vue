@@ -71,7 +71,7 @@ export default {
 </template>
 
 <style lang="scss">
-@import "@wmde/wikit-tokens/variables";
+@import '@wmde/wikit-tokens/variables';
 
 /* stylelint-disable plugin/stylelint-bem-namics, selector-class-pattern */
 .wbl-snl-lemma-input.wikit .wikit-TextInput__label-wrapper {
