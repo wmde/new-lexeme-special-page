@@ -10,12 +10,7 @@ jobs:
             - name: Setup Node.js
               uses: actions/setup-node@v3
               with:
-                  node-version: "14"
-
-            - name: Setup NPM
-              run: npm install -g npm@8
-              # Node 14 (above) comes with NPM v6,
-              # which does not install peer dependencies that we need
+                  node-version: "16"
 
             - name: Install Dependencies
               run: npm ci
