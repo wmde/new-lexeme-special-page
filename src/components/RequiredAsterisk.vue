@@ -21,17 +21,17 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import "@wmde/wikit-tokens/variables";
+@import '@wmde/wikit-tokens/variables';
 
 .wbl-snl-required-asterisk {
 	font-size: $font-size-xxlarge;
 	line-height: 0;
 
-	&:not(:first-child) {
+	&:not( :first-child ) {
 		margin-inline-start: $dimension-spacing-small;
 	}
 
-	&:not(:last-child) {
+	&:not( :last-child ) {
 		margin-inline-end: $dimension-spacing-small;
 	}
 }

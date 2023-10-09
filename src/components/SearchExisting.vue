@@ -24,8 +24,8 @@ const searchMessage = computed( () => messages.get(
 </template>
 
 <style lang="scss" scoped>
-@import "@wmde/wikit-tokens/variables";
-@import "@wmde/wikit-vue-components/src/styles/mixins/Typography";
+@import '@wmde/wikit-tokens/variables';
+@import '@wmde/wikit-vue-components/src/styles/mixins/Typography';
 
 .wbl-snl-search-existing {
 	@include body;
