@@ -102,6 +102,15 @@ The following dependencies should be ignored:
   The current versions shipped by MediaWiki core are listed in [foreign-resources.yaml](https://gerrit.wikimedia.org/g/mediawiki/core/+/master/resources/lib/foreign-resources.yaml).
 - Typescript:
   Vue up until version 3.2.38 (which we currently use) [doesn't support typescript 4.8+](https://github.com/vuejs/core/issues/6554).
+- Prettier:
+  [Jest 29.65.2](https://github.com/jestjs/jest/blob/main/CHANGELOG.md#2962) is not compatible with Prettier 3.
+  This might be resolved with the next release ([Jest#14566](https://github.com/jestjs/jest/pull/14566)),
+  so be sure to check whether a newer Jest version is available that includes Prettier 3 compatibility.
+- ESLint and related packages:
+  Known issues ([T341552](https://phabricator.wikimedia.org/T341552)) that are beyond the scope of chores.
+- Vue Test Utils (`@vue/test-utils`):
+  Seems to require a newer Vue.js version (see [#492](https://github.com/wmde/new-lexeme-special-page/pull/492)),
+  though it’s worth checking whether that’s still the case in newer VTU versions.
 
 All other dependencies should generally be updated to the latest version.
 If you discover that a dependency should not be updated for some reason, please add it to the above list.
