@@ -127,7 +127,7 @@ export default {
 </template>
 
 <style lang="scss">
-@import "@wmde/wikit-tokens/variables";
+@import '@wmde/wikit-tokens/variables';
 
 .wbl-snl-spelling-variant-lookup {
 	/* stylelint-disable plugin/stylelint-bem-namics, selector-class-pattern */

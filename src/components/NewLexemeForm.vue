@@ -190,8 +190,8 @@ export default {
 </template>
 
 <style scoped lang="scss">
-@import "@wmde/wikit-tokens/variables";
-@import "@wmde/wikit-vue-components/src/styles/mixins/Typography";
+@import '@wmde/wikit-tokens/variables';
+@import '@wmde/wikit-vue-components/src/styles/mixins/Typography';
 
 .wbl-snl-form {
 	& > * + * {
