@@ -2,7 +2,6 @@ import { MessagesKey } from '@/plugins/MessagesPlugin/Messages';
 import {
 	DOMWrapper,
 	mount,
-	MountingOptions,
 } from '@vue/test-utils';
 import LemmaInput from '@/components/LemmaInput.vue';
 import { ConfigKey } from '@/plugins/ConfigPlugin/Config';
@@ -19,8 +18,15 @@ describe( 'LemmaInput', () => {
 
 	let store: Store<RootState>;
 
-	// eslint-disable-next-line @typescript-eslint/no-explicit-any
-	function createComponent( config: Partial<MountingOptions<any>> = {} ) {
+	function createComponent( config: {
+		props?: {
+			modelValue?: string;
+		};
+		global?: {
+			// eslint-disable-next-line @typescript-eslint/no-explicit-any
+			provide?: Record<symbol, any>;
+		};
+	} = {} ) {
 		store = initStore( {
 			lexemeCreator: unusedLexemeCreator,
 			langCodeRetriever: unusedLangCodeRetriever,
@@ -29,7 +35,6 @@ describe( 'LemmaInput', () => {
 		} );
 
 		return mount( LemmaInput, {
-			...config,
 			props: {
 				modelValue: '',
 				...config.props,
