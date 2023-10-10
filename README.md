@@ -106,7 +106,7 @@ The following dependencies should be ignored:
   [Jest 29.65.2](https://github.com/jestjs/jest/blob/main/CHANGELOG.md#2962) is not compatible with Prettier 3.
   This might be resolved with the next release ([Jest#14566](https://github.com/jestjs/jest/pull/14566)),
   so be sure to check whether a newer Jest version is available that includes Prettier 3 compatibility.
-- ESLint and related packages:
+- ESLint and some related packages:
   Known issues ([T341552](https://phabricator.wikimedia.org/T341552)) that are beyond the scope of chores.
 - Vue Test Utils (`@vue/test-utils`):
   Seems to require a newer Vue.js version (see [#492](https://github.com/wmde/new-lexeme-special-page/pull/492)),
