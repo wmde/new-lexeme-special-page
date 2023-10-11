@@ -35,6 +35,7 @@ const emit = defineEmits( {
 
 // itemSuggestions matching the current searchInput
 const suggestedOptions = computed( () => {
+	// eslint-disable-next-line security/detect-non-literal-regexp -- escapeRegExp used
 	const regExp = new RegExp( `\\b${escapeRegExp( props.searchInput )}`, 'i' );
 	return props.itemSuggestions.filter(
 		( suggestion ) => regExp.test( suggestion.display.label?.value || '' ),

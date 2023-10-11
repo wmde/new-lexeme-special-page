@@ -54,6 +54,7 @@ const onSearchInput = ( inputValue: string ) => {
 		return;
 	}
 
+	// eslint-disable-next-line security/detect-non-literal-regexp -- escapeRegExp used
 	const regExp = new RegExp( `\\b${escapeRegExp( inputValue )}`, 'i' );
 	menuItems.value = wbLexemeTermLanguages.filter(
 		( lang ) => regExp.test( lang.label ),
