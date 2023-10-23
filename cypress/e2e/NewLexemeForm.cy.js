@@ -40,10 +40,10 @@ describe( 'NewLexemeForm', () => {
 
 		cy.intercept( { query: { action: 'wbgetclaims' } }, {
 			claims: {
-				P218: [ {
+				P305: [ {
 					mainsnak: {
 						snaktype: 'value',
-						property: 'P218',
+						property: 'P305',
 						hash: 'faa942355921695b9fa30805f0bb66bc7ed5a433',
 						datavalue: {
 							value: 'en-gb',
