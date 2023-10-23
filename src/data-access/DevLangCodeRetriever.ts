@@ -12,6 +12,6 @@ export default class DevLangCodeRetriever implements LangCodeRetriever {
 			origin: '*',
 		} ) ).then( ( r ) => r.json() ) as WbGetClaimsResponse;
 
-		return processWbGetClaimsResponse( response, 'P218' );
+		return processWbGetClaimsResponse( response, 'P305' );
 	}
 }
