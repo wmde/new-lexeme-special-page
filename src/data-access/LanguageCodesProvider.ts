@@ -18,6 +18,6 @@ export class MapLanguageCodesProvider implements LanguageCodesProvider {
 	}
 
 	public isValid( langCode: string ): boolean {
-		return this.validLanguages.has( langCode );
+		return this.validLanguages.has( langCode.toLowerCase() );
 	}
 }

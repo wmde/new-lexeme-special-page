@@ -10,6 +10,14 @@ describe( 'MapLanguageCodesProvider', () => {
 
 			expect( actual ).toBe( true );
 		} );
+		it( 'it returns true for valid language codes regardless of case', () => {
+			const listOfValidCodes = new Map( [ [ 'en', 'English' ], [ 'en-gb', 'British English' ], [ 'de', 'German' ] ] );
+			const sut = new MapLanguageCodesProvider( listOfValidCodes );
+
+			const actual = sut.isValid( 'en-GB' );
+
+			expect( actual ).toBe( true );
+		} );
 		it( 'returns "false" for an invalid language code', () => {
 			const listOfValidCodes = new Map( [ [ 'en', 'English' ], [ 'en-gb', 'British English' ], [ 'de', 'German' ] ] );
 			const sut = new MapLanguageCodesProvider( listOfValidCodes );
