@@ -44,6 +44,17 @@ export default class MwApiLexemeCreator implements LexemeCreator {
 				},
 				language: lexemeLanguageItemId,
 				lexicalCategory: lexicalCategoryItemId,
+				forms: [
+					{
+						add: '',
+						representations: {
+							[ lemmaLanguageCode ]: {
+								language: lemmaLanguageCode,
+								value: lemma,
+							},
+						},
+					},
+				],
 			} ),
 			errorformat: 'html',
 			formatversion: 2,
