@@ -355,7 +355,8 @@ describe( 'HANDLE_LANGUAGE_CHANGE', () => {
 	} );
 
 	it( 'validates and sets to state if valid lang code was returned', async () => {
-		const getLanguageCodeFromItemMock = jest.fn().mockResolvedValue( 'de' );
+		// T349652: en-GB from item (preferred IETF lanugage tag format) is lowercased to en-gb (MediaWiki code)
+		const getLanguageCodeFromItemMock = jest.fn().mockResolvedValue( 'en-GB' );
 		const isValidMock = jest.fn().mockReturnValue( true );
 		const actions = createActions(
 			unusedLexemeCreator,
@@ -387,9 +388,9 @@ describe( 'HANDLE_LANGUAGE_CHANGE', () => {
 
 		expect( store.state.language ).toStrictEqual( { id: 'Q456' } );
 		expect( store.state.spellingVariant ).toBe( '' );
-		expect( store.state.languageCodeFromLanguageItem ).toBe( 'de' );
+		expect( store.state.languageCodeFromLanguageItem ).toBe( 'en-gb' );
 		expect( getLanguageCodeFromItemMock ).toHaveBeenCalledWith( 'Q456' );
-		expect( isValidMock ).toHaveBeenCalledWith( 'de' );
+		expect( isValidMock ).toHaveBeenCalledWith( 'en-gb' );
 	} );
 
 	it( 'validates and sets false state if invalid lang code was returned', async () => {
