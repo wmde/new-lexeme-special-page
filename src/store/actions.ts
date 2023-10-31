@@ -221,6 +221,9 @@ export default function createActions(
 			{ commit }: RootContext,
 			languageCode: string | undefined | null | false,
 		) {
+			if ( typeof languageCode === 'string' ) {
+				languageCode = languageCode.toLowerCase(); // T349652
+			}
 			if ( typeof languageCode === 'string' && !languageCodesProvider.isValid( languageCode ) ) {
 				languageCode = false;
 			}
