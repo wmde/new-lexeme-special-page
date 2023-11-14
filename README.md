@@ -111,6 +111,9 @@ The following dependencies should be ignored:
 - Vue Test Utils (`@vue/test-utils`):
   Seems to require a newer Vue.js version (see [#492](https://github.com/wmde/new-lexeme-special-page/pull/492)),
   though it’s worth checking whether that’s still the case in newer VTU versions.
+- lint-staged:
+  [v15.0.0](https://github.com/lint-staged/lint-staged/releases/tag/v15.0.0) drops compatibility with Node 16,
+  which we still use in CI (see also “Prerequisites” above; Node 18 upgrade pending in [T331180](https://phabricator.wikimedia.org/T331180)).
 
 All other dependencies should generally be updated to the latest version.
 If you discover that a dependency should not be updated for some reason, please add it to the above list.
