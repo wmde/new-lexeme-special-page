@@ -355,7 +355,8 @@ describe( 'HANDLE_LANGUAGE_CHANGE', () => {
 	} );
 
 	it( 'validates and sets to state if valid lang code was returned', async () => {
-		// T349652: en-GB from item (preferred IETF lanugage tag format) is lowercased to en-gb (MediaWiki code)
+		// T349652: en-GB from item (preferred IETF lanugage tag format)
+		// is lowercased to en-gb (MediaWiki code)
 		const getLanguageCodeFromItemMock = jest.fn().mockResolvedValue( 'en-GB' );
 		const isValidMock = jest.fn().mockReturnValue( true );
 		const actions = createActions(
