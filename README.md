@@ -133,6 +133,11 @@ For example, this can be one commit for each of:
 
 Make sure that all checks still pass for every commit.
 
+If you’re working with dependabot,
+and it ran into the limit of open pull requests or its PRs are otherwise outdated,
+you can trigger a new run at
+[Insights > Dependency graph > Dependabot](https://github.com/wmde/new-lexeme-special-page/network/updates) > Recent update jobs > Check for updates.
+
 Once all dependency updates are merged, update the submodule version in WikibaseLexeme (see below).
 
 ## Updating the submodule version in WikibaseLexeme
