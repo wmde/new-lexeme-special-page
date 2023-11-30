@@ -47,7 +47,7 @@
 		"@wmde/wikit-tokens": "^3.0.0-alpha.12",
 		"@wmde/wikit-vue-components": "^3.0.0-alpha.12",
 		"jest-environment-jsdom": "^29.7.0",
-		"vue": "^3.2.38",
+		"vue": "3.3.9",
 		"vuex": "^4.0.2"
 	},
 	"devDependencies": {
