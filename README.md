@@ -100,17 +100,12 @@ The following dependencies should be ignored:
   in production, we use the versions shipped by MediaWiki core,
   so we should use the same versions for testing.
   The current versions shipped by MediaWiki core are listed in [foreign-resources.yaml](https://gerrit.wikimedia.org/g/mediawiki/core/+/master/resources/lib/foreign-resources.yaml).
-- Typescript:
-  Vue up until version 3.2.38 (which we currently use) [doesn't support typescript 4.8+](https://github.com/vuejs/core/issues/6554).
 - Prettier:
   [Jest 29.65.2](https://github.com/jestjs/jest/blob/main/CHANGELOG.md#2962) is not compatible with Prettier 3.
   This might be resolved with the next release ([Jest#14566](https://github.com/jestjs/jest/pull/14566)),
   so be sure to check whether a newer Jest version is available that includes Prettier 3 compatibility.
 - ESLint and some related packages:
   Known issues ([T341552](https://phabricator.wikimedia.org/T341552)) that are beyond the scope of chores.
-- Vue Test Utils (`@vue/test-utils`):
-  Seems to require a newer Vue.js version (see [#492](https://github.com/wmde/new-lexeme-special-page/pull/492)),
-  though it’s worth checking whether that’s still the case in newer VTU versions.
 - lint-staged:
   [v15.0.0](https://github.com/lint-staged/lint-staged/releases/tag/v15.0.0) drops compatibility with Node 16,
   which we still use in CI (see also “Prerequisites” above; Node 18 upgrade pending in [T331180](https://phabricator.wikimedia.org/T331180)).
