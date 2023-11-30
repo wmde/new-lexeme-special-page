@@ -9,7 +9,8 @@ jest.mock( 'lodash/debounce', () => jest.fn( ( fn ) => fn ) );
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 function createLookup( propsOverrides: any = {} ): VueWrapper<any> {
-	return mount( ItemLookup, {
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	return mount( ItemLookup as any, {
 		props: {
 			label: 'some label',
 			placeholder: 'some placeholder',
