@@ -6,7 +6,7 @@ Please report bugs on [phabricator](https://phabricator.wikimedia.org/project/vi
 
 ## Local Development
 
-_**Prerequisites: This repository requires node v16 and up**_
+_**Prerequisites: This repository requires node v18 and up**_
 
 ### Initial setup
 
