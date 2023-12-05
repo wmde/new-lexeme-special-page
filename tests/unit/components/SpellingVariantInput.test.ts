@@ -45,7 +45,7 @@ describe( 'SpellingVariantInput', () => {
 			await lookup.find( 'input' ).setValue( 'foo' );
 
 			await lookup.setProps( {
-				value: 'en',
+				modelValue: 'en',
 			} );
 
 			expect( lookup.findComponent( WikitLookup ).props().value )
