@@ -50,4 +50,26 @@ describe( 'AnonymousEditWarning', () => {
 		expect( messages.get ).toHaveBeenCalledWith( 'wikibase-anonymouseditwarning', 'loginLink', 'createAccountLink' );
 	} );
 
+	it( 'uses alternative message if tempuser is enabled', () => {
+		const messages = { get: jest.fn().mockImplementation( ( ...params ) =>
+			`(${params.join( ', ' )})`,
+		) };
+		const authenticationLinker = {
+			getLoginLink: jest.fn().mockReturnValue( 'loginLink' ),
+			getCreateAccountLink: jest.fn().mockReturnValue( 'createAccountLink' ),
+		};
+		const warning = mount( AnonymousEditWarning, {
+			global: {
+				provide: {
+					[ ConfigKey as symbol ]: { isAnonymous: true, tempUserEnabled: true },
+					[ MessagesKey as symbol ]: messages,
+					[ AuthenticationLinkerKey as symbol ]: authenticationLinker,
+				},
+			},
+		} );
+
+		expect( warning.html() ).toMatchSnapshot();
+		expect( messages.get ).toHaveBeenCalledWith( 'wikibase-anonymouseditnotificationtempuser', 'loginLink', 'createAccountLink' );
+	} );
+
 } );

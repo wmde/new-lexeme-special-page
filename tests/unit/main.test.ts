@@ -32,6 +32,7 @@ describe( 'createAndMount', () => {
 			},
 			maxLemmaLength: 1000,
 			availableSearchProfiles: [],
+			tempUserEnabled: false,
 		}, {
 			itemSearcher: unusedItemSearcher,
 			languageItemSearcher: unusedItemSearcher,
