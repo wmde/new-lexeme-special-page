@@ -109,6 +109,10 @@ The following dependencies should be ignored:
 - lint-staged:
   [v15.0.0](https://github.com/lint-staged/lint-staged/releases/tag/v15.0.0) drops compatibility with Node 16,
   which we still use in CI (see also “Prerequisites” above; Node 18 upgrade pending in [T331180](https://phabricator.wikimedia.org/T331180)).
+- Node.js version:
+  The GitHub Workflows here should use the same Node.js version as the `mwgate-nodeXX-docker` CI job in WikibaseLexeme,
+  because that job builds this app for the `test:snl-distnodiff` script.
+  The upgrade to Node 18 there is tracked in [T331180](https://phabricator.wikimedia.org/T331180).
 
 All other dependencies should generally be updated to the latest version.
 If you discover that a dependency should not be updated for some reason, please add it to the above list.
