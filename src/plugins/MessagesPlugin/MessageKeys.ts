@@ -23,6 +23,7 @@ type MessageKeys
  | 'wikibaselexeme-newlexeme-lemma-too-long-error'
  | 'wikibaselexeme-newlexeme-invalid-language-code-warning'
  | 'wikibase-anonymouseditwarning'
+ | 'wikibase-anonymouseditnotificationtempuser'
  | 'wikibase-lexeme-lemma-language-option'
  | 'wikibase-entityselector-notfound'
  | 'wikibase-shortcopyrightwarning'
