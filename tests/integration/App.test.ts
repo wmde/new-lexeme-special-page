@@ -52,6 +52,7 @@ describe( 'App.vue', () => {
 			},
 			maxLemmaLength: 1000,
 			availableSearchProfiles: [],
+			tempUserEnabled: false,
 		};
 		const lexemeNS = 146;
 		const testUrl = 'https://example.com';
