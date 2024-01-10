@@ -35,6 +35,7 @@ describe( 'NewLexemeForm', () => {
 		},
 		maxLemmaLength: 1000,
 		availableSearchProfiles: [],
+		tempUserEnabled: false,
 	};
 
 	function mountForm( storeServices: Partial<StoreServices> = {}, pluginOverrides = {} ) {
