@@ -8,6 +8,7 @@ export interface Config {
 	readonly isAnonymous: boolean;
 	readonly licenseUrl: string;
 	readonly licenseName: string;
+	readonly tempUserEnabled: boolean;
 	readonly wikibaseLexemeTermLanguages: Map<string, string>;
 	readonly lexicalCategorySuggestions: SearchedItemOption[];
 	readonly placeholderExampleData: {
