@@ -94,6 +94,7 @@ npm run cypress:open
 You can see which dependencies have new releases by first making sure your local dependencies are up-to-date by executing `npm ci` and then running `npm outdated`.
 The following dependencies should be ignored:
 
+- @namics/stylelint-bem - version 10 drops support for node < 18.12, which we still need for CI
 - Wikit (i.e. `@wmde/wikit-tokens` and `@wmde/wikit-vue-components`):
   we’re using a newer pre-release version and don’t want to downgrade to the latest full release.
 - Vue and Vuex:
