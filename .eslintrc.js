@@ -31,6 +31,6 @@ module.exports = {
 
 		// rule has no support for our @/ aliases;
 		// the designated replacement, plugin:import, was a pain so we ditched it
-		'node/no-missing-import': 'off',
+		'n/no-missing-import': 'off',
 	},
 };

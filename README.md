@@ -105,8 +105,6 @@ The following dependencies should be ignored:
   [Jest 29.65.2](https://github.com/jestjs/jest/blob/main/CHANGELOG.md#2962) is not compatible with Prettier 3.
   This might be resolved with the next release ([Jest#14566](https://github.com/jestjs/jest/pull/14566)),
   so be sure to check whether a newer Jest version is available that includes Prettier 3 compatibility.
-- ESLint and some related packages:
-  Known issues ([T341552](https://phabricator.wikimedia.org/T341552)) that are beyond the scope of chores.
 - lint-staged:
   [v15.0.0](https://github.com/lint-staged/lint-staged/releases/tag/v15.0.0) drops compatibility with Node 16,
   which we still use in CI (see also “Prerequisites” above; Node 18 upgrade pending in [T331180](https://phabricator.wikimedia.org/T331180)).
