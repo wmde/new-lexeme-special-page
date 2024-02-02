@@ -94,7 +94,6 @@ npm run cypress:open
 You can see which dependencies have new releases by first making sure your local dependencies are up-to-date by executing `npm ci` and then running `npm outdated`.
 The following dependencies should be ignored:
 
-- @namics/stylelint-bem - version 10 drops support for node < 18.12, which we still need for CI
 - Wikit (i.e. `@wmde/wikit-tokens` and `@wmde/wikit-vue-components`):
   we’re using a newer pre-release version and don’t want to downgrade to the latest full release.
 - Vue and Vuex:
@@ -105,13 +104,10 @@ The following dependencies should be ignored:
   [Jest 29.65.2](https://github.com/jestjs/jest/blob/main/CHANGELOG.md#2962) is not compatible with Prettier 3.
   This might be resolved with the next release ([Jest#14566](https://github.com/jestjs/jest/pull/14566)),
   so be sure to check whether a newer Jest version is available that includes Prettier 3 compatibility.
-- lint-staged:
-  [v15.0.0](https://github.com/lint-staged/lint-staged/releases/tag/v15.0.0) drops compatibility with Node 16,
-  which we still use in CI (see also “Prerequisites” above; Node 18 upgrade pending in [T331180](https://phabricator.wikimedia.org/T331180)).
 - Node.js version:
   The GitHub Workflows here should use the same Node.js version as the `mwgate-nodeXX-docker` CI job in WikibaseLexeme,
-  because that job builds this app for the `test:snl-distnodiff` script.
-  The upgrade to Node 18 there is tracked in [T331180](https://phabricator.wikimedia.org/T331180).
+  because that job builds this app for the `test:snl-distnodiff` script. This version is currently Node 18.
+  The upgrade to Node 20 there is tracked in [T343827](https://phabricator.wikimedia.org/T343827).
 
 All other dependencies should generally be updated to the latest version.
 If you discover that a dependency should not be updated for some reason, please add it to the above list.
