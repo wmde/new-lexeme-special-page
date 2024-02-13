@@ -55,6 +55,47 @@ describe( 'MwApiLexemeCreator', () => {
 		} );
 	} );
 
+	it( 'Follows redirect if API returns redirect', async () => {
+		const loginUrl = 'https://wiki.example/login?redirectto=somewhere';
+		const api: MwApi = {
+			...unusedApi,
+			assertCurrentUser: ( params: object ) => ( { assert: 'user', ...params } ),
+			postWithEditToken: jest.fn().mockResolvedValue( {
+				entity: { id: 'L123' },
+				tempuserredirect: loginUrl,
+			} ),
+		};
+		const lexemeCreator = new MwApiLexemeCreator( api, mwGetUrl, [ 'tag' ] );
+
+		const redirectUrl = await lexemeCreator.createLexeme(
+			'lemma',
+			'en',
+			'Q123',
+			'Q456',
+		);
+
+		expect( redirectUrl.toString() ).toBe( loginUrl );
+		expect( api.postWithEditToken ).toHaveBeenCalledTimes( 1 );
+		expect( api.postWithEditToken ).toHaveBeenCalledWith( {
+			action: 'wbeditentity',
+			new: 'lexeme',
+			tags: [ 'tag' ],
+			data: JSON.stringify( {
+				lemmas: {
+					en: {
+						language: 'en',
+						value: 'lemma',
+					},
+				},
+				language: 'Q123',
+				lexicalCategory: 'Q456',
+			} ),
+			assert: 'user',
+			errorformat: 'html',
+			formatversion: 2,
+		} );
+	} );
+
 	describe( 'error handling', () => {
 
 		it( 'maps API errors', () => {

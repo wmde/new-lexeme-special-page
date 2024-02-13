@@ -6,6 +6,7 @@ type WbEditEntityResponse = {
 	entity: {
 		id: string;
 	};
+	tempuserredirect?: string|null;
 };
 
 type ApiResult = {
@@ -76,6 +77,9 @@ export default class MwApiLexemeCreator implements LexemeCreator {
 			} );
 
 		const entityResponse = response as WbEditEntityResponse;
+		if ( entityResponse.tempuserredirect ) {
+			return new URL( entityResponse.tempuserredirect );
+		}
 		return new URL( this.getUrl( `Special:EntityPage/${entityResponse.entity.id}` ) );
 	}
 
