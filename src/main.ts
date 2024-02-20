@@ -17,8 +17,8 @@ import initStore from './store';
 import App from './App.vue';
 import Messages, { MessagesKey } from './plugins/MessagesPlugin/Messages';
 import MessagesRepository from './plugins/MessagesPlugin/MessagesRepository';
-import { WikiRouterKey } from './plugins/WikiRouterPlugin/WikiRouter';
-import WikiRouter from './plugins/WikiRouterPlugin/WikiRouter';
+import { UrlLauncherKey } from '@/plugins/UrlLauncherPlugin/UrlLauncher';
+import UrlLauncher from '@/plugins/UrlLauncherPlugin/UrlLauncher';
 import LangCodeRetriever from './data-access/LangCodeRetriever';
 import { LanguageCodesProviderKey } from './plugins/LanguageCodesProviderPlugin/LanguageCodesProvider';
 import { MapLanguageCodesProvider } from './data-access/LanguageCodesProvider';
@@ -38,7 +38,7 @@ export interface Services {
 	searchLinker: SearchLinker;
 	authenticationLinker: AuthenticationLinker;
 	tracker: Tracker;
-	wikiRouter: WikiRouter;
+	urlLauncher: UrlLauncher;
 }
 
 export default function createAndMount(
@@ -62,7 +62,7 @@ export default function createAndMount(
 	app.provide( LanguageItemSearchKey, services.languageItemSearcher );
 	app.provide( SearchLinkerKey, services.searchLinker );
 	app.provide( AuthenticationLinkerKey, services.authenticationLinker );
-	app.provide( WikiRouterKey, services.wikiRouter );
+	app.provide( UrlLauncherKey, services.urlLauncher );
 	app.provide(
 		LanguageCodesProviderKey,
 		languageCodesProvider,

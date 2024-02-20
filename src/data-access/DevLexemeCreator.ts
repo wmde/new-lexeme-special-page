@@ -10,7 +10,7 @@ export default class DevLexemeCreator implements LexemeCreator {
 		lemmaLanguageCode: string,
 		lexemeLanguageItemId: string,
 		lexicalCategoryItemId: string,
-	): Promise<string> {
+	): Promise<URL> {
 
 		await nextTick(); // let Vue update the DOM before blocking alert()
 		// eslint-disable-next-line no-alert
@@ -23,7 +23,7 @@ export default class DevLexemeCreator implements LexemeCreator {
 			} ];
 			return Promise.reject( errors );
 		}
-		return 'L1';
+		return new URL( window.origin + '/Special:EntityPage/L1' );
 	}
 
 }

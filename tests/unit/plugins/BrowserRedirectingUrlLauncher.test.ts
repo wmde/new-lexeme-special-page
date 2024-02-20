@@ -1,6 +1,6 @@
-import MediaWikiRouter from '@/plugins/WikiRouterPlugin/MediaWikiRouter';
+import BrowserRedirectingUrlLauncher from '@/plugins/UrlLauncherPlugin/BrowserRedirectingUrlLauncher';
 
-describe( 'MediaWikiRouter', () => {
+describe( 'UrlLauncher', () => {
 	const location = global.window.location;
 
 	beforeEach( () => {
@@ -11,11 +11,9 @@ describe( 'MediaWikiRouter', () => {
 		} );
 	} );
 
-	it( 'delegates to mw.util.getUrl', () => {
-		const title = 'Some page';
-		const url = '/w/index.php?title=Some_page';
-		const getUrlMock = jest.fn().mockReturnValue( url );
-		const router = new MediaWikiRouter( getUrlMock );
+	it( 'updates window.location', () => {
+		const url = 'https://wiki.example/w/index.php?title=Some_page';
+		const router = new BrowserRedirectingUrlLauncher();
 
 		// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 		// @ts-ignore
@@ -28,9 +26,8 @@ describe( 'MediaWikiRouter', () => {
 			set: setHrefSpy,
 		} );
 
-		router.goToTitle( title );
+		router.goToURL( new URL( url ) );
 
-		expect( getUrlMock ).toHaveBeenCalledWith( title );
 		expect( setHrefSpy ).toHaveBeenCalledWith( url );
 	} );
 } );

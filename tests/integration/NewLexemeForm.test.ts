@@ -7,7 +7,7 @@ import initStore, { StoreServices } from '@/store';
 import unusedLexemeCreator from '../mocks/unusedLexemeCreator';
 import { ItemSearchKey } from '@/plugins/ItemSearchPlugin/ItemSearch';
 import DevItemSearcher from '@/data-access/DevItemSearcher';
-import { WikiRouterKey } from '@/plugins/WikiRouterPlugin/WikiRouter';
+import { UrlLauncherKey } from '@/plugins/UrlLauncherPlugin/UrlLauncher';
 import unusedLangCodeRetriever from '../mocks/unusedLangCodeRetriever';
 import unusedLanguageCodesProvider from '../mocks/unusedLanguageCodesProvider';
 import unusedTracker from '../mocks/unusedTracker';
@@ -55,7 +55,7 @@ describe( 'NewLexemeForm', () => {
 					[ ItemSearchKey as symbol ]: new DevItemSearcher(),
 					[ LanguageItemSearchKey as symbol ]: new DevItemSearcher(),
 					[ LanguageCodesProviderKey as symbol ]: unusedLanguageCodesProvider,
-					[ WikiRouterKey as symbol ]: null,
+					[ UrlLauncherKey as symbol ]: null,
 					...pluginOverrides,
 				},
 			},
@@ -177,8 +177,10 @@ describe( 'NewLexemeForm', () => {
 	describe( 'calls the API to create the Lexeme and then redirects to it', () => {
 
 		it( 'with language code from language item', async () => {
-			const createLexeme = jest.fn().mockReturnValue( 'L123' );
-			const goToTitle = jest.fn();
+			const createLexeme = jest.fn().mockReturnValue(
+				new URL( 'https://wiki.example/Special:EntityPage/L123' ),
+			);
+			const goToURL = jest.fn();
 
 			const wrapper = mountForm( {
 				lexemeCreator: { createLexeme },
@@ -189,7 +191,7 @@ describe( 'NewLexemeForm', () => {
 				},
 				tracker: { increment: jest.fn() },
 			}, {
-				[ WikiRouterKey as symbol ]: { goToTitle },
+				[ UrlLauncherKey as symbol ]: { goToURL },
 			} );
 
 			await setLemmaInput( wrapper, 'foo' );
@@ -203,12 +205,14 @@ describe( 'NewLexemeForm', () => {
 			await flushPromises();
 
 			expect( createLexeme ).toHaveBeenCalledWith( 'foo', 'de', 'Q123', 'Q456' );
-			expect( goToTitle ).toHaveBeenCalledWith( 'Special:EntityPage/L123' );
+			expect( goToURL ).toHaveBeenCalledWith( new URL( 'https://wiki.example/Special:EntityPage/L123' ) );
 		} );
 
 		it( 'with spelling variant', async () => {
-			const createLexeme = jest.fn().mockReturnValue( 'L123' );
-			const goToTitle = jest.fn();
+			const createLexeme = jest.fn().mockReturnValue(
+				new URL( 'https://wiki.example/Special:EntityPage/L123' ),
+			);
+			const goToURL = jest.fn();
 
 			const wrapper = mountForm( {
 				lexemeCreator: { createLexeme },
@@ -219,7 +223,7 @@ describe( 'NewLexemeForm', () => {
 				[ LanguageCodesProviderKey as symbol ]: {
 					getLanguages: () => new Map( [ [ 'en-gb', 'British English' ] ] ),
 				},
-				[ WikiRouterKey as symbol ]: { goToTitle },
+				[ UrlLauncherKey as symbol ]: { goToURL },
 			} );
 
 			await setLemmaInput( wrapper, 'foo' );
@@ -237,7 +241,7 @@ describe( 'NewLexemeForm', () => {
 			await flushPromises();
 
 			expect( createLexeme ).toHaveBeenCalledWith( 'foo', 'en-gb', 'Q123', 'Q456' );
-			expect( goToTitle ).toHaveBeenCalledWith( 'Special:EntityPage/L123' );
+			expect( goToURL ).toHaveBeenCalledWith( new URL( 'https://wiki.example/Special:EntityPage/L123' ) );
 		} );
 
 		it( 'disables button when submitting and reenables on error', async () => {
@@ -246,7 +250,7 @@ describe( 'NewLexemeForm', () => {
 				reject = reject_;
 			} );
 			const createLexeme = jest.fn().mockReturnValue( promise );
-			const goToTitle = jest.fn();
+			const goToURL = jest.fn();
 
 			const wrapper = mountForm( {
 				lexemeCreator: { createLexeme },
@@ -257,7 +261,7 @@ describe( 'NewLexemeForm', () => {
 				},
 				tracker: { increment: jest.fn() },
 			}, {
-				[ WikiRouterKey as symbol ]: { goToTitle },
+				[ UrlLauncherKey as symbol ]: { goToURL },
 			} );
 
 			await setLemmaInput( wrapper, 'foo' );
@@ -278,7 +282,7 @@ describe( 'NewLexemeForm', () => {
 
 			expect( submitButton.attributes( 'disabled' ) ).toBe( undefined );
 			expect( submitButton.text() ).toBe( 'Create Lexeme' );
-			expect( goToTitle ).not.toHaveBeenCalled();
+			expect( goToURL ).not.toHaveBeenCalled();
 		} );
 
 	} );

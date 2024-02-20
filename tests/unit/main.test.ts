@@ -1,6 +1,6 @@
 import createAndMount from '@/main';
 import unusedTracker from '../mocks/unusedTracker';
-import unusedWikiRouter from '../mocks/unusedWikiRouter';
+import unusedUrlLauncher from '../mocks/unusedUrlLauncher';
 import unusedItemSearcher from '../mocks/unusedItemSearcher';
 import unusedLexemeCreator from '../mocks/unusedLexemeCreator';
 import unusedLangCodeRetriever from '../mocks/unusedLangCodeRetriever';
@@ -45,7 +45,7 @@ describe( 'createAndMount', () => {
 				getCreateAccountLink: jest.fn(),
 			},
 			tracker: unusedTracker,
-			wikiRouter: unusedWikiRouter,
+			urlLauncher: unusedUrlLauncher,
 			langCodeRetriever: unusedLangCodeRetriever,
 		} );
 
