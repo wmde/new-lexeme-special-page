@@ -23,7 +23,7 @@ import {
 	SET_SPELLING_VARIANT,
 	SET_SPELLING_VARIANT_SEARCH_INPUT,
 } from '@/store/mutations';
-import { useWikiRouter } from '@/plugins/WikiRouterPlugin/WikiRouter';
+import { useUrlLauncher } from '@/plugins/UrlLauncherPlugin/UrlLauncher';
 
 const config = useConfig();
 const $messages = useMessages();
@@ -129,12 +129,12 @@ const error = computed( () => {
 
 	return null;
 } );
-const wikiRouter = useWikiRouter();
+const urlLauncher = useUrlLauncher();
 const onSubmit = async () => {
 	submitting.value = true;
 	try {
-		const lexemeId = await store.dispatch( CREATE_LEXEME );
-		await wikiRouter.goToTitle( `Special:EntityPage/${lexemeId}` );
+		const targetUrl = await store.dispatch( CREATE_LEXEME );
+		await urlLauncher.goToURL( targetUrl );
 	} catch {
 		// Error is already in store and handled by ErrorMessage component
 	}

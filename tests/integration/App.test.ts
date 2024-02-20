@@ -8,7 +8,7 @@ import unusedLanguageCodesProvider from '../mocks/unusedLanguageCodesProvider';
 import unusedTracker from '../mocks/unusedTracker';
 import { SearchLinkerKey } from '@/plugins/SearchLinkerPlugin/SearchLinker';
 import { Config, ConfigKey } from '@/plugins/ConfigPlugin/Config';
-import { WikiRouterKey } from '@/plugins/WikiRouterPlugin/WikiRouter';
+import { UrlLauncherKey } from '@/plugins/UrlLauncherPlugin/UrlLauncher';
 import Messages, { MessagesKey } from '@/plugins/MessagesPlugin/Messages';
 import { ItemSearchKey } from '@/plugins/ItemSearchPlugin/ItemSearch';
 import DevItemSearcher from '@/data-access/DevItemSearcher';
@@ -67,7 +67,7 @@ describe( 'App.vue', () => {
 						lexemeNS,
 					),
 					[ AuthenticationLinkerKey as symbol ]: null,
-					[ WikiRouterKey as symbol ]: null,
+					[ UrlLauncherKey as symbol ]: null,
 					[ MessagesKey as symbol ]: new Messages( new DevMessagesRepository() ),
 					[ ItemSearchKey as symbol ]: new DevItemSearcher(),
 					[ LanguageItemSearchKey as symbol ]: new DevItemSearcher(),

@@ -12,6 +12,10 @@ function mockRejectedDeferred( ...args: unknown[] ): unknown {
 	};
 }
 
+function mwGetUrl( pageName: string | null ) {
+	return `https://wiki.example/${pageName}`;
+}
+
 describe( 'MwApiLexemeCreator', () => {
 
 	it( 'POSTs the right data', async () => {
@@ -20,16 +24,16 @@ describe( 'MwApiLexemeCreator', () => {
 			assertCurrentUser: ( params: object ) => ( { assert: 'user', ...params } ),
 			postWithEditToken: jest.fn().mockResolvedValue( { entity: { id: 'L123' } } ),
 		};
-		const lexemeCreator = new MwApiLexemeCreator( api, [ 'tag' ] );
+		const lexemeCreator = new MwApiLexemeCreator( api, mwGetUrl, [ 'tag' ] );
 
-		const id = await lexemeCreator.createLexeme(
+		const redirectUrl = await lexemeCreator.createLexeme(
 			'lemma',
 			'en',
 			'Q123',
 			'Q456',
 		);
 
-		expect( id ).toBe( 'L123' );
+		expect( redirectUrl.toString() ).toBe( 'https://wiki.example/Special:EntityPage/L123' );
 		expect( api.postWithEditToken ).toHaveBeenCalledTimes( 1 );
 		expect( api.postWithEditToken ).toHaveBeenCalledWith( {
 			action: 'wbeditentity',
@@ -65,7 +69,7 @@ describe( 'MwApiLexemeCreator', () => {
 				assertCurrentUser: ( params: object ) => ( { assert: 'user', ...params } ),
 				postWithEditToken: jest.fn().mockReturnValue( deferred ),
 			};
-			const lexemeCreator = new MwApiLexemeCreator( api );
+			const lexemeCreator = new MwApiLexemeCreator( api, mwGetUrl );
 
 			return expect( () => lexemeCreator.createLexeme(
 				'lemma',
@@ -90,7 +94,7 @@ describe( 'MwApiLexemeCreator', () => {
 				assertCurrentUser: ( params: object ) => ( { assert: 'user', ...params } ),
 				postWithEditToken: jest.fn().mockReturnValue( deferred ),
 			};
-			const lexemeCreator = new MwApiLexemeCreator( api );
+			const lexemeCreator = new MwApiLexemeCreator( api, mwGetUrl );
 
 			return expect( () => lexemeCreator.createLexeme(
 				'lemma',

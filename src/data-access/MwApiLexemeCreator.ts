@@ -1,4 +1,4 @@
-import { MwApi } from '@/@types/mediawiki';
+import { MwApi, MwUtilGetUrl } from '@/@types/mediawiki';
 import LexemeCreator from '@/data-access/LexemeCreator';
 import { SubmitError } from '@/store/RootState';
 
@@ -18,10 +18,12 @@ type ApiResult = {
 export default class MwApiLexemeCreator implements LexemeCreator {
 
 	private api: MwApi;
+	private getUrl: MwUtilGetUrl;
 	private tags: string[];
 
-	public constructor( api: MwApi, tags: string[] = [] ) {
+	public constructor( api: MwApi, getUrl: MwUtilGetUrl, tags: string[] = [] ) {
 		this.api = api;
+		this.getUrl = getUrl;
 		this.tags = tags;
 	}
 
@@ -30,7 +32,7 @@ export default class MwApiLexemeCreator implements LexemeCreator {
 		lemmaLanguageCode: string,
 		lexemeLanguageItemId: string,
 		lexicalCategoryItemId: string,
-	): Promise<string> {
+	): Promise<URL> {
 		const params = this.api.assertCurrentUser( {
 			action: 'wbeditentity',
 			new: 'lexeme',
@@ -73,7 +75,8 @@ export default class MwApiLexemeCreator implements LexemeCreator {
 				return Promise.reject( errors );
 			} );
 
-		return ( response as WbEditEntityResponse ).entity.id;
+		const entityResponse = response as WbEditEntityResponse;
+		return new URL( this.getUrl( `Special:EntityPage/${entityResponse.entity.id}` ) );
 	}
 
 }

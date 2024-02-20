@@ -82,7 +82,7 @@ describe( 'NewLexemeForm', () => {
 				'Create Lexeme "test lemma"@en-gb as Q123 Q456',
 			);
 			expect( spy ).to.have.been.calledWith(
-				'Navigating to: Special:EntityPage/L1',
+				`Navigating to: ${ Cypress.config().baseUrl }Special:EntityPage/L1`,
 			);
 		} );
 	} );
@@ -119,7 +119,7 @@ describe( 'NewLexemeForm', () => {
 				'Create Lexeme "test lemma"@en-ca as Q123 Q456',
 			);
 			expect( spy ).to.have.been.calledWith(
-				'Navigating to: Special:EntityPage/L1',
+				`Navigating to: ${ Cypress.config().baseUrl }Special:EntityPage/L1`,
 			);
 		} );
 	} );
@@ -174,7 +174,7 @@ describe( 'NewLexemeForm', () => {
 				'Create Lexeme "test lemma"@en-gb as Q123 Q456',
 			);
 			expect( spy ).to.have.been.calledWith(
-				'Navigating to: Special:EntityPage/L1',
+				`Navigating to: ${ Cypress.config().baseUrl }Special:EntityPage/L1`,
 			);
 		} );
 	} );

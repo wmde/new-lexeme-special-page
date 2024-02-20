@@ -143,7 +143,7 @@ export default function createActions(
 
 			return formData;
 		},
-		async [ CREATE_LEXEME ]( { commit, dispatch }: RootContext ): Promise<string> {
+		async [ CREATE_LEXEME ]( { commit, dispatch }: RootContext ): Promise<URL> {
 			const {
 				validLemma,
 				validLanguageId,
