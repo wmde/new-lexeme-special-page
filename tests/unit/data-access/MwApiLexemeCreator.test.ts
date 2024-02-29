@@ -13,7 +13,8 @@ function mockRejectedDeferred( ...args: unknown[] ): unknown {
 }
 
 function mwGetUrl( pageName: string | null ) {
-	return `https://wiki.example/${pageName}`;
+	// relative URL (T358754), relative to testEnvironmentOptions.url in jest.config.js
+	return `/${pageName}`;
 }
 
 describe( 'MwApiLexemeCreator', () => {

@@ -15,6 +15,7 @@ module.exports = {
 	testEnvironment: 'jsdom',
 	testEnvironmentOptions: {
 		customExportConditions: [ 'node', 'node-addons' ],
+		url: 'https://wiki.example/',
 	},
 	testPathIgnorePatterns: [ '<rootDir>/cypress/' ],
 	transform: {
