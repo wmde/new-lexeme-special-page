@@ -77,10 +77,11 @@ export default class MwApiLexemeCreator implements LexemeCreator {
 			} );
 
 		const entityResponse = response as WbEditEntityResponse;
+		const base = window.location.href;
 		if ( entityResponse.tempuserredirect ) {
-			return new URL( entityResponse.tempuserredirect );
+			return new URL( entityResponse.tempuserredirect, base );
 		}
-		return new URL( this.getUrl( `Special:EntityPage/${entityResponse.entity.id}` ) );
+		return new URL( this.getUrl( `Special:EntityPage/${entityResponse.entity.id}` ), base );
 	}
 
 }

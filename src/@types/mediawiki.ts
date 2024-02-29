@@ -20,6 +20,7 @@ interface MwConfig {
 
 export type MwTrack = ( topic: `${'timing' | 'counter'}.${string}`, data?: object | number | string ) => void;
 
+/** Return a URL for the given page name and params. Note that the returned URL may be relative! */
 export type MwUtilGetUrl = ( pageName: string|null, params?: Record<string, unknown> ) => string;
 
 export interface MediaWiki {
