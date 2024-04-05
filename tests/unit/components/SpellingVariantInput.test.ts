@@ -42,13 +42,12 @@ describe( 'SpellingVariantInput', () => {
 	describe( ':props', () => {
 		it( ':value - selects the selected language', async () => {
 			const lookup = createLookup();
-			await lookup.find( 'input' ).setValue( 'foo' );
-
+			await lookup.find( 'input' ).setValue( 'en' );
 			await lookup.setProps( {
-				value: 'en',
+				modelValue: 'English (en)',
 			} );
 
-			expect( lookup.findComponent( WikitLookup ).props().value )
+			expect( lookup.findComponent( WikitLookup ).props().value.value )
 				.toStrictEqual( 'en' );
 		} );
 
