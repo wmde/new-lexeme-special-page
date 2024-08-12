@@ -37,6 +37,8 @@ export default class DevItemSearcher implements ItemSearcher {
 			} ];
 		}
 
+		// This is the browser's `fetch` API, not node's
+		// eslint-disable-next-line n/no-unsupported-features/node-builtins
 		const response = await fetch( 'https://www.wikidata.org/w/api.php?' + new URLSearchParams( {
 			...commonParams,
 			search: searchTerm,
