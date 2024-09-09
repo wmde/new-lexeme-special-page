@@ -21,7 +21,7 @@ function getBuildConfig( isAppBuild: boolean ): BuildOptions {
 			formats: [ 'cjs' ],
 		},
 		rollupOptions: {
-			external: [ 'vue', 'vuex' ],
+			external: [ 'vue', 'vuex', '@wikimedia/codex' ],
 		},
 	};
 }

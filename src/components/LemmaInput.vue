@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { TextInput } from '@wmde/wikit-vue-components';
-import RequiredAsterisk from '@/components/RequiredAsterisk.vue';
+import { CdxField, CdxTextInput } from '@wikimedia/codex';
+import RequiredAsterisk from '@/components/RequiredAsterisk.vue'; // eslint-disable-line @typescript-eslint/no-unused-vars
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
 import { useConfig } from '@/plugins/ConfigPlugin/Config';
 import { useStore } from 'vuex';
@@ -51,23 +51,32 @@ export default {
 </script>
 
 <template>
-	<text-input
-		class="wbl-snl-lemma-input"
-		:label="messages.getUnescaped( 'wikibaselexeme-newlexeme-lemma' )"
-		:placeholder="messages.getUnescaped(
-			'wikibaselexeme-newlexeme-lemma-placeholder-with-example',
-			exampleLemma
-		)"
-		name="lemma"
-		aria-required="true"
-		:error="error"
-		:value="modelValue"
-		@input="$emit( 'update:modelValue', $event )"
+	<!-- TODO should :status and :messages be separate computeds? -->
+	<cdx-field
+		:status="error !== null ? 'error' : 'default'"
+		:messages="error !== null ? { error: error.message } : {}"
 	>
-		<template #suffix>
-			<required-asterisk />
-		</template>
-	</text-input>
+		<!-- TODO check escaping of :placeholder -->
+		<cdx-text-input
+			class="wbl-snl-lemma-input"
+			:placeholder="messages.getUnescaped(
+				'wikibaselexeme-newlexeme-lemma-placeholder-with-example',
+				exampleLemma
+			)"
+			name="lemma"
+			aria-required="true"
+			:model-value="modelValue"
+			@update:modelValue="$emit( 'update:modelValue', $event )"
+		>
+			<!-- TODO codex docs say don’t mark required labels with an asterisk…
+			<template #suffix>
+				<required-asterisk />
+			</template>
+			-->
+		</cdx-text-input>
+		<template #label>{{ messages.getUnescaped( 'wikibaselexeme-newlexeme-lemma' ) }}</template><!-- TODO check escaping -->
+	</cdx-field>
+
 </template>
 
 <style lang="scss">
