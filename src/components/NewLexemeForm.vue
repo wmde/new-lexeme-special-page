@@ -6,7 +6,7 @@ import {
 	ref,
 } from 'vue';
 import { useStore } from 'vuex';
-import { Button as WikitButton } from '@wmde/wikit-vue-components';
+import { CdxButton } from '@wikimedia/codex';
 import { useConfig } from '@/plugins/ConfigPlugin/Config';
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
 import LemmaInput from '@/components/LemmaInput.vue';
@@ -176,21 +176,22 @@ export default {
 			<span v-html="error" />
 		</error-message>
 		<div>
-			<wikit-button
+			<cdx-button
 				class="form-button-submit"
-				type="progressive"
-				variant="primary"
-				native-type="submit"
+				action="progressive"
+				weight="primary"
+				type="submit"
 				:disabled="submitting"
 			>
 				{{ submitButtonText }}
-			</wikit-button>
+			</cdx-button>
 		</div>
 	</form>
 </template>
 
 <style scoped lang="scss">
-@import '@wmde/wikit-tokens/variables';
+@import '@wmde/wikit-tokens/variables'; // TODO remove
+@import '@wikimedia/codex-design-tokens/theme-wikimedia-ui';
 @import '@wmde/wikit-vue-components/src/styles/mixins/Typography';
 
 .wbl-snl-form {
@@ -203,9 +204,9 @@ export default {
 
 	// Border
 	border-style: $border-style-base;
-	border-width: $border-width-thin;
+	border-width: $border-width-base;
 	border-radius: $border-radius-base;
-	border-color: $border-color-base-subtle;
+	border-color: $border-color-muted;
 }
 
 .wbl-snl-copyright {
