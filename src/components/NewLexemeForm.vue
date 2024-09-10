@@ -202,10 +202,10 @@ export default {
 	padding: $dimension-layout-small;
 
 	// Border
-	border-style: $border-style-base;
-	border-width: $border-width-thin;
-	border-radius: $border-radius-base;
-	border-color: $border-color-base-subtle;
+	border-style: var( --border-style-base );
+	border-width: var( --border-width-base );
+	border-radius: var( --border-radius-base );
+	border-color: var( --border-color-muted );
 }
 
 .wbl-snl-copyright {
