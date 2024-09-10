@@ -43,6 +43,8 @@
 		"node": ">=16"
 	},
 	"dependencies": {
+		"@wikimedia/codex": "^1.12.0",
+		"@wikimedia/codex-design-tokens": "^1.12.0",
 		"@wmde/wikibase-datamodel-types": "^0.2.0",
 		"@wmde/wikit-tokens": "^3.0.0-alpha.12",
 		"@wmde/wikit-vue-components": "^3.0.0-alpha.12",
