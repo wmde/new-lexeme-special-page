@@ -33,7 +33,9 @@ const warning = computed(
 </template>
 
 <style lang="scss" scoped>
+@import '@/styles/custom-variables.css';
+
 .wbl-snl-anonymous-edit-warning {
-	margin: 1rem 0;
+	margin: var( --dimension-layout-xsmall ) 0;
 }
 </style>

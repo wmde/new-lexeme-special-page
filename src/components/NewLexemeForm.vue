@@ -191,30 +191,31 @@ export default {
 </template>
 
 <style scoped lang="scss">
-@import '@wmde/wikit-tokens/variables';
-@import '@wmde/wikit-vue-components/src/styles/mixins/Typography';
+@import '@/styles/custom-variables.css';
+@import '@wikimedia/codex-design-tokens/theme-wikimedia-ui';
 
 .wbl-snl-form {
 	& > * + * {
-		margin-top: $dimension-layout-xsmall;
+		margin-top: var( --dimension-layout-xsmall );
 	}
 
 	// Box model
-	padding: $dimension-layout-small;
+	padding: var( --dimension-layout-small );
 
 	// Border
 	border-style: $border-style-base;
-	border-width: $border-width-thin;
+	border-width: $border-width-base;
 	border-radius: $border-radius-base;
-	border-color: $border-color-base-subtle;
+	border-color: $border-color-muted;
 }
 
 .wbl-snl-copyright {
-	@include small-text;
-
-	font-size: 0.8125rem;
-	font-style: italic;
-	font-synthesis: none;
+	/* codex Body S */
+	font-family: $font-family-system-sans;
+	font-size: $font-size-small;
+	font-weight: $font-weight-normal;
+	line-height: $line-height-medium;
+	color: $color-base;
 	margin-bottom: 0;
 }
 

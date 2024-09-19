@@ -83,11 +83,3 @@ export default {
 		</template>
 	</cdx-field>
 </template>
-
-<style lang="scss">
-@import '@wmde/wikit-tokens/variables';
-
-.wbl-snl-required-asterisk {
-	margin-inline-start: $dimension-spacing-xsmall;
-}
-</style>

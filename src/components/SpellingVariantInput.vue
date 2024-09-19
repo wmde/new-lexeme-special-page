@@ -127,13 +127,18 @@ export default {
 </template>
 
 <style lang="scss">
-@import '@wmde/wikit-tokens/variables';
+@import '@wikimedia/codex-design-tokens/theme-wikimedia-ui';
 
 .wbl-snl-spelling-variant-lookup {
 	/* stylelint-disable plugin/stylelint-bem-namics, selector-class-pattern */
 	&.wikit .wikit-Lookup__label-wrapper {
-		gap: $dimension-spacing-xsmall;
+		gap: $spacing-50;
 	}
 	/* stylelint-enable plugin/stylelint-bem-namics, selector-class-pattern */
+
+	&__help-link {
+		padding-bottom: $spacing-50;
+		display: inline-block;
+	}
 }
 </style>
