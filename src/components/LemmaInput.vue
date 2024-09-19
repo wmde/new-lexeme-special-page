@@ -71,11 +71,11 @@ export default {
 </template>
 
 <style lang="scss">
-@import '@wmde/wikit-tokens/variables';
+@import '@wikimedia/codex-design-tokens/theme-wikimedia-ui';
 
 /* stylelint-disable plugin/stylelint-bem-namics, selector-class-pattern */
 .wbl-snl-lemma-input.wikit .wikit-TextInput__label-wrapper {
-	gap: $dimension-spacing-xsmall;
+	gap: $spacing-50;
 }
 /* stylelint-enable plugin/stylelint-bem-namics, selector-class-pattern */
 </style>

@@ -190,17 +190,16 @@ export default {
 </template>
 
 <style scoped lang="scss">
-@import '@wmde/wikit-tokens/variables'; // TODO remove
+@import '@/styles/custom-variables.css';
 @import '@wikimedia/codex-design-tokens/theme-wikimedia-ui';
-@import '@wmde/wikit-vue-components/src/styles/mixins/Typography';
 
 .wbl-snl-form {
 	& > * + * {
-		margin-top: $dimension-layout-xsmall;
+		margin-top: var( --dimension-layout-xsmall );
 	}
 
 	// Box model
-	padding: $dimension-layout-small;
+	padding: var( --dimension-layout-xsmall );
 
 	// Border
 	border-style: $border-style-base;
@@ -210,12 +209,12 @@ export default {
 }
 
 .wbl-snl-copyright {
-	@include small-text;
-
-	font-size: 0.8125rem;
-	font-style: italic;
-	font-synthesis: none;
-	margin-bottom: 0;
+	/* codex Body S */
+	font-family: $font-family-system-sans;
+	font-size: $font-size-small;
+	font-weight: $font-weight-normal;
+	line-height: $line-height-medium;
+	color: $color-base;
 }
 
 </style>
