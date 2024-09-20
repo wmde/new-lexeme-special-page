@@ -1,10 +1,9 @@
 <script setup lang="ts">
-import { Message as WikitMessage } from '@wmde/wikit-vue-components';
-
+import { CdxMessage } from '@wikimedia/codex';
 </script>
 
 <template>
-	<wikit-message type="error">
+	<cdx-message type="error">
 		<slot />
-	</wikit-message>
+	</cdx-message>
 </template>
