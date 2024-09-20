@@ -273,7 +273,7 @@ describe( 'NewLexemeForm', () => {
 
 			await wrapper.trigger( 'submit' );
 
-			const submitButton = wrapper.find( '.wikit-Button' );
+			const submitButton = wrapper.find( '.cdx-button' );
 			expect( submitButton.attributes( 'disabled' ) ).toBe( '' );
 			expect( submitButton.text() ).toBe( 'Creating Lexeme...' );
 
