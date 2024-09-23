@@ -71,7 +71,7 @@ describe( 'LemmaInput', () => {
 			store.state.perFieldErrors.lemmaErrors.push( { messageKey: 'wikibaselexeme-newlexeme-lemma-empty-error' } );
 			await nextTick();
 
-			expect( lemmaInputWrapper.get( '.wikit-ValidationMessage--error' ).text() ).toContain( '⧼wikibaselexeme-newlexeme-lemma-empty-error⧽' );
+			expect( lemmaInputWrapper.get( '.cdx-message--error' ).text() ).toContain( '⧼wikibaselexeme-newlexeme-lemma-empty-error⧽' );
 		} );
 
 		it( 'displays an error message when input is too longer than configured', async () => {
@@ -82,8 +82,8 @@ describe( 'LemmaInput', () => {
 				global: { provide: { [ MessagesKey as symbol ]: { getUnescaped: messageGet } } },
 			} );
 
-			expect( lemmaInputWrapper.get( '.wikit-ValidationMessage--error' ).text() ).toContain( '⧼wikibaselexeme-newlexeme-lemma-too-long-error⧽' );
-			expect( messageGet ).toHaveBeenNthCalledWith( 3, 'wikibaselexeme-newlexeme-lemma-too-long-error', '8' );
+			expect( lemmaInputWrapper.get( '.cdx-message--error' ).text() ).toContain( '⧼wikibaselexeme-newlexeme-lemma-too-long-error⧽' );
+			expect( messageGet ).toHaveBeenNthCalledWith( 1, 'wikibaselexeme-newlexeme-lemma-too-long-error', '8' );
 		} );
 
 		it( 'counts multi-byte characters as code points', async () => {

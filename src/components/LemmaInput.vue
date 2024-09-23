@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { TextInput } from '@wmde/wikit-vue-components';
+import { CdxField, CdxTextInput } from '@wikimedia/codex';
 import RequiredAsterisk from '@/components/RequiredAsterisk.vue';
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
 import { useConfig } from '@/plugins/ConfigPlugin/Config';
@@ -51,31 +51,33 @@ export default {
 </script>
 
 <template>
-	<text-input
+	<cdx-field
 		class="wbl-snl-lemma-input"
-		:label="messages.getUnescaped( 'wikibaselexeme-newlexeme-lemma' )"
-		:placeholder="messages.getUnescaped(
-			'wikibaselexeme-newlexeme-lemma-placeholder-with-example',
-			exampleLemma
-		)"
-		name="lemma"
-		aria-required="true"
-		:error="error"
-		:value="modelValue"
-		@input="$emit( 'update:modelValue', $event )"
+		:status="error !== null ? 'error' : 'default'"
+		:messages="error !== null ? { error: error.message } : {}"
 	>
-		<template #suffix>
-			<required-asterisk />
+		<!-- eslint-disable vue/v-on-event-hyphenation -->
+		<cdx-text-input
+			:placeholder="messages.getUnescaped(
+				'wikibaselexeme-newlexeme-lemma-placeholder-with-example',
+				exampleLemma
+			)"
+			name="lemma"
+			aria-required="true"
+			:model-value="modelValue"
+			@update:modelValue="$emit( 'update:modelValue', $event )"
+		/>
+		<!-- eslint-enable -->
+		<template #label>
+			{{ messages.getUnescaped( 'wikibaselexeme-newlexeme-lemma' ) }}<required-asterisk />
 		</template>
-	</text-input>
+	</cdx-field>
 </template>
 
 <style lang="scss">
 @import '@wmde/wikit-tokens/variables';
 
-/* stylelint-disable plugin/stylelint-bem-namics, selector-class-pattern */
-.wbl-snl-lemma-input.wikit .wikit-TextInput__label-wrapper {
-	gap: $dimension-spacing-xsmall;
+.wbl-snl-required-asterisk {
+	margin-inline-start: $dimension-spacing-xsmall;
 }
-/* stylelint-enable plugin/stylelint-bem-namics, selector-class-pattern */
 </style>
