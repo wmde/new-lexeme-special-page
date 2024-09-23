@@ -1,6 +1,9 @@
-import { mount } from '@vue/test-utils';
+import {
+	mount,
+	VueWrapper,
+} from '@vue/test-utils';
 import SpellingVariantInput from '@/components/SpellingVariantInput.vue';
-import { Lookup as WikitLookup } from '@wmde/wikit-vue-components';
+import { CdxLookup } from '@wikimedia/codex';
 import { LanguageCodesProviderKey } from '@/plugins/LanguageCodesProviderPlugin/LanguageCodesProvider';
 import DevMessagesRepository from '@/plugins/MessagesPlugin/DevMessagesRepository';
 import Messages, { MessagesKey } from '@/plugins/MessagesPlugin/Messages';
@@ -38,26 +41,32 @@ function createLookup( config: Record<string, unknown> = {} ) {
 	} );
 }
 
+async function setSearchInput( lookup: VueWrapper, searchInput: string ): Promise<void> {
+	await lookup.find( 'input' ).setValue( searchInput );
+	await lookup.setProps( { searchInput } );
+}
+
 describe( 'SpellingVariantInput', () => {
 	describe( ':props', () => {
 		it( ':value - selects the selected language', async () => {
 			const lookup = createLookup();
+
 			await lookup.find( 'input' ).setValue( 'en' );
 			await lookup.setProps( {
 				modelValue: 'English (en)',
 			} );
 
-			expect( lookup.findComponent( WikitLookup ).props().value.value )
-				.toStrictEqual( 'en' );
+			expect( lookup.find( 'div.cdx-text-input' ).get( 'input' ).element.value )
+				.toStrictEqual( 'English (en)' );
 		} );
 
-		it( ':menuItems - returned suggestions are provided to Wikit Lookup', async () => {
+		it( ':menuItems - returned suggestions are provided to Codex Lookup', async () => {
 			const lookup = createLookup();
 
-			await lookup.find( 'input' ).setValue( 'en' );
+			await setSearchInput( lookup, 'en' );
 
-			const wikitLookup = lookup.getComponent( WikitLookup );
-			expect( wikitLookup.props( 'menuItems' ) ).toStrictEqual( [
+			const codexLookup = lookup.getComponent( CdxLookup );
+			expect( codexLookup.props( 'menuItems' ) ).toStrictEqual( [
 				{
 					description: '',
 					label: 'English (en)',
@@ -126,11 +135,11 @@ describe( 'SpellingVariantInput', () => {
 				},
 			} );
 
-			await lookup.find( 'input' ).setValue( userInput );
+			await setSearchInput( lookup, userInput );
 
-			const wikitLookup = lookup.getComponent( WikitLookup );
+			const codexLookup = lookup.getComponent( CdxLookup );
 			// eslint-disable-next-line @typescript-eslint/no-explicit-any
-			expect( wikitLookup.props( 'menuItems' ).map( ( option: any ) => option.value ) ).toStrictEqual( expectedOptionValues );
+			expect( codexLookup.props( 'menuItems' ).map( ( option: any ) => option.value ) ).toStrictEqual( expectedOptionValues );
 		} );
 	} );
 
@@ -138,25 +147,18 @@ describe( 'SpellingVariantInput', () => {
 		it( '@update:modelValue - emits null when the input is changed', async () => {
 			const lookup = createLookup();
 
-			await lookup.find( 'input' ).setValue( 'foo' );
+			await setSearchInput( lookup, 'foo' );
 
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-ignore
-			expect( lookup.emitted( 'update:modelValue' )[ 0 ][ 0 ] ).toBe( null );
+			expect( lookup.emitted( 'update:modelValue' )[ 0 ][ 0 ] ).toBe( undefined );
 		} );
 
 		it( '@update:modelValue - emits the value of the selected option', async () => {
 			const lookup = createLookup();
-			await lookup.find( 'input' ).setValue( 'en' );
+			await setSearchInput( lookup, 'en' );
 
-			await lookup.findComponent( WikitLookup ).vm.$emit(
-				'input',
-				{
-					label: 'foo',
-					description: '',
-					value: 'en',
-				},
-			);
+			await lookup.findComponent( CdxLookup ).vm.$emit( 'update:selected', 'en' );
 
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 			// @ts-ignore
@@ -166,10 +168,4 @@ describe( 'SpellingVariantInput', () => {
 		} );
 	} );
 
-	it( 'input is required', () => {
-		const lookup = createLookup();
-		const input = lookup.find( 'input' );
-
-		expect( input.attributes( 'aria-required' ) ).toBe( 'true' );
-	} );
 } );

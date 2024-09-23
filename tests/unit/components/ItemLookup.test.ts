@@ -3,7 +3,7 @@ import {
 	mount,
 	VueWrapper,
 } from '@vue/test-utils';
-import { Lookup as WikitLookup } from '@wmde/wikit-vue-components';
+import { CdxLookup } from '@wikimedia/codex';
 
 jest.mock( 'lodash/debounce', () => jest.fn( ( fn ) => fn ) );
 
@@ -103,7 +103,7 @@ describe( 'ItemLookup', () => {
 			const lookup = createLookup( { searchForItems } );
 			await setSearchInput( lookup, 'foo' );
 
-			await lookup.findComponent( WikitLookup ).vm.$emit( 'scroll' );
+			await lookup.findComponent( CdxLookup ).vm.$emit( 'load-more' );
 
 			expect( searchForItems ).toHaveBeenCalledTimes( 2 );
 			expect( searchForItems ).toHaveBeenNthCalledWith( 2, 'foo', 4 );
@@ -113,11 +113,11 @@ describe( 'ItemLookup', () => {
 			const searchForItems = jest.fn().mockReturnValue( exampleSearchResults );
 			const lookup = createLookup( { searchForItems } );
 			await setSearchInput( lookup, 'foo' );
-			const selectedItemId = 1;
+			const selectedItemId = 0;
 
-			await lookup.setProps( { value: exampleSearchResults[ selectedItemId ] } );
+			await lookup.setProps( { inputValue: exampleSearchResults[ selectedItemId ] } );
 
-			expect( lookup.findComponent( WikitLookup ).props().value.label )
+			expect( lookup.find( 'div.cdx-text-input' ).get( 'input' ).element.value )
 				.toBe( exampleSearchResults[ selectedItemId ].display.label?.value );
 		} );
 
@@ -134,7 +134,7 @@ describe( 'ItemLookup', () => {
 				searchForItems,
 			} );
 
-			expect( lookup.findComponent( WikitLookup ).props().menuItems )
+			expect( lookup.findComponent( CdxLookup ).props().menuItems )
 				.toStrictEqual( [ {
 					value: 'Q1',
 					label: 'some label',
@@ -143,14 +143,14 @@ describe( 'ItemLookup', () => {
 			expect( searchForItems ).not.toHaveBeenCalled();
 		} );
 
-		it( ':searchForItems - returned suggestions are provided to Wikit Lookup', async () => {
+		it( ':searchForItems - returned suggestions are provided to Codex Lookup', async () => {
 			const searchForItems = jest.fn().mockReturnValue( exampleSearchResults );
 			const lookup = createLookup( { searchForItems } );
 
 			await setSearchInput( lookup, 'foo' );
 
-			const wikitLookup = lookup.getComponent( WikitLookup );
-			expect( wikitLookup.props( 'menuItems' ) ).toStrictEqual( [
+			const codexLookup = lookup.getComponent( CdxLookup );
+			expect( codexLookup.props( 'menuItems' ) ).toStrictEqual( [
 				{
 					description: 'bar',
 					label: 'foo',
@@ -237,8 +237,8 @@ describe( 'ItemLookup', () => {
 
 			await setSearchInput( lookup, 'foo' );
 
-			const wikitLookup = lookup.getComponent( WikitLookup );
-			expect( wikitLookup.props( 'menuItems' ) ).toStrictEqual( [
+			const codexLookup = lookup.getComponent( CdxLookup );
+			expect( codexLookup.props( 'menuItems' ) ).toStrictEqual( [
 				// suggestions
 				{
 					description: '',
@@ -263,16 +263,6 @@ describe( 'ItemLookup', () => {
 				},
 			] );
 		} );
-
-		it.each( [
-			[ false, 'false' ],
-			[ true, 'true' ],
-		] )( ':ariaRequired(%p)', ( propValue, attributeValue ) => {
-			const lookup = createLookup( { ariaRequired: propValue } );
-			const input = lookup.find( 'input' );
-
-			expect( input.attributes( 'aria-required' ) ).toBe( attributeValue );
-		} );
 	} );
 
 	describe( '@events', () => {
@@ -293,13 +283,9 @@ describe( 'ItemLookup', () => {
 			await setSearchInput( lookup, 'foo' );
 			const selectedItemId = 0;
 
-			await lookup.findComponent( WikitLookup ).vm.$emit(
-				'input',
-				{
-					label: exampleSearchResults[ selectedItemId ].display.label?.value,
-					description: exampleSearchResults[ selectedItemId ].display.description.value,
-					value: exampleSearchResults[ selectedItemId ].id,
-				},
+			await lookup.findComponent( CdxLookup ).vm.$emit(
+				'update:selected',
+				exampleSearchResults[ selectedItemId ].id,
 			);
 
 			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
