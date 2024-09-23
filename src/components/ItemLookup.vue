@@ -1,10 +1,20 @@
 <script setup lang="ts">
 import {
 	computed,
+	ComputedRef,
 	ref,
+	toRef,
 } from 'vue';
 import { SearchedItemOption } from '@/data-access/ItemSearcher';
-import WikitLookup from './WikitLookup';
+import {
+	CdxLookup,
+	CdxField,
+	MenuItemData,
+	ValidationStatusType,
+	ValidationMessages,
+	useModelWrapper,
+} from '@wikimedia/codex';
+import RequiredAsterisk from '@/components/RequiredAsterisk.vue';
 import debounce from 'lodash/debounce';
 import escapeRegExp from 'lodash/escapeRegExp';
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
@@ -19,6 +29,7 @@ interface Props {
 	itemSuggestions?: SearchedItemOption[];
 	ariaRequired?: boolean;
 }
+
 const props = withDefaults( defineProps<Props>(), {
 	error: null,
 	itemSuggestions: () => [],
@@ -32,6 +43,8 @@ const emit = defineEmits( {
 	},
 	'update:searchInput': null,
 } );
+
+const selection = ref( null );
 
 // itemSuggestions matching the current searchInput
 const suggestedOptions = computed( () => {
@@ -72,8 +85,7 @@ const onOptionSelected = ( value: SearchedItemOption | null ) => {
 const debouncedSearchForItems = debounce( async ( debouncedInputValue: string ) => {
 	searchedOptions.value = await props.searchForItems( debouncedInputValue );
 }, 150 );
-const onSearchInput = ( inputValue: string ) => {
-	emit( 'update:searchInput', inputValue );
+const onInput = ( inputValue: string ) => {
 	if ( inputValue.trim() === '' ) {
 		searchedOptions.value = [];
 		return;
@@ -88,7 +100,7 @@ const onSearchInput = ( inputValue: string ) => {
 	debouncedSearchForItems( inputValue );
 };
 
-const onScroll = async () => {
+const onLoadMore = async () => {
 	const searchReults = await props.searchForItems(
 		props.searchInput,
 		searchedOptions.value.length,
@@ -96,18 +108,8 @@ const onScroll = async () => {
 	searchedOptions.value = [ ...searchedOptions.value, ...searchReults ];
 };
 
-// the remaining setup translates multilingual SearchedItemOptions to monolingual WikitItemOptions
-
-interface WikitMenuItem {
-	label: string;
-	description: string;
-	tag?: string;
-}
-interface WikitItemOption extends WikitMenuItem {
-	value: string;
-}
-
-function searchResultToMonolingualOption( searchResult: SearchedItemOption ): WikitItemOption {
+// translate a single multilingual SearchedItemOption to a monolingual MenuItemData
+function searchResultToMonolingualOption( searchResult: SearchedItemOption ): MenuItemData {
 	return {
 		label: searchResult.display.label?.value || searchResult.id,
 		description: searchResult.display.description?.value || '',
@@ -115,44 +117,83 @@ function searchResultToMonolingualOption( searchResult: SearchedItemOption ): Wi
 	};
 }
 
-const wikitMenuItems = computed( () => {
+// translate multilingual SearchedItemOptions to monolingual MenuItemData array
+const codexMenuItems: ComputedRef<MenuItemData[]> = computed( () => {
 	return menuItems.value.map( searchResultToMonolingualOption );
 } );
 
-const wikitValue = computed( () => {
-	if ( props.value === null ) {
-		return null;
-	}
-	return searchResultToMonolingualOption( props.value );
-} );
-
-const onWikitOptionSelected = ( value: unknown ) => {
-	const wikitOption = value as WikitItemOption | null;
-	const searchOption = menuItems.value.find( ( item ) => item.id === wikitOption?.value );
+const onCodexOptionSelected = ( selectedItem: string | null ) => {
+	const searchOption = menuItems.value.find( ( item ) => item.id === selectedItem );
 	return onOptionSelected( searchOption ?? null );
 };
 
 const messages = useMessages();
+
+const menuConfig = {
+	visibleItemLimit: 6,
+};
+
+const fieldStatus = computed( (): ValidationStatusType => {
+	if ( !props.error ) {
+		return 'default';
+	}
+	return props.error.type;
+} );
+
+const errorMessages = computed( (): ValidationMessages => {
+	if ( props.error ) {
+		if ( props.error.type === 'error' ) {
+			return { error: props.error.message };
+		}
+		if ( props.error.type === 'warning' ) {
+			return { warning: props.error.message };
+		}
+	}
+	return {};
+} );
+
+/**
+ * We want to pass the searchInput property from the parent component
+ * to the child component. The searchInput property comes in read-only
+ * and receives updates from the parent (it is a ref / computed value).
+ * Use the `useModelWrapper` helper here to turn the read-only property
+ * into a computed value that emits updates on change.
+ */
+const searchInputWrapper = useModelWrapper(
+	toRef( props, 'searchInput' ),
+	emit,
+	'update:searchInput',
+);
+
 </script>
 
 <template>
-	<wikit-lookup
-		:label="label"
-		:placeholder="placeholder"
-		:search-input="props.searchInput"
-		:menu-items="wikitMenuItems"
-		:value="wikitValue"
-		:error="error"
-		:aria-required="ariaRequired"
-		@update:search-input="onSearchInput"
-		@scroll="onScroll"
-		@input="onWikitOptionSelected"
-	>
-		<template #no-results>
-			{{ messages.getUnescaped( 'wikibase-entityselector-notfound' ) }}
+	<cdx-field
+		:status="fieldStatus"
+		:messages="errorMessages">
+		<cdx-lookup
+			v-model:selected="selection"
+			v-model:input-value="searchInputWrapper"
+			:aria-required="ariaRequired"
+			:placeholder="placeholder"
+			:menu-items="codexMenuItems"
+			:menu-config="menuConfig"
+			@load-more="onLoadMore"
+			@input="onInput"
+			@update:selected="onCodexOptionSelected"
+		>
+			<template #no-results>
+				{{ messages.getUnescaped( 'wikibase-entityselector-notfound' ) }}
+			</template>
+		</cdx-lookup>
+		<template #label>
+			{{ label }}<required-asterisk v-if="ariaRequired" />
 		</template>
-		<template #suffix>
-			<slot name="suffix" />
-		</template>
-	</wikit-lookup>
+	</cdx-field>
 </template>
+
+<style scoped lang="scss">
+.wbl-snl-required-asterisk {
+	margin-inline-start: var( --dimension-spacing-xsmall );
+}
+</style>
