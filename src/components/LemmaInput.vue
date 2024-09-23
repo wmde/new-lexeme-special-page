@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { CdxField, CdxTextInput } from '@wikimedia/codex';
+import { CdxField, CdxTextInput, ValidationMessages, ValidationStatusType } from '@wikimedia/codex';
 import RequiredAsterisk from '@/components/RequiredAsterisk.vue';
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
 import { useConfig } from '@/plugins/ConfigPlugin/Config';
@@ -21,23 +21,33 @@ const messages = useMessages();
 const config = useConfig();
 const exampleLemma = config.placeholderExampleData.lemma;
 const store = useStore();
-const error = computed( () => {
+const error = computed( (): {
+	status: ValidationStatusType;
+	messages: ValidationMessages;
+} => {
 	const inputLength = Array.from( props.modelValue ).length;
 	if ( inputLength > config.maxLemmaLength ) {
 		return {
-			type: 'error',
-			message: messages.getUnescaped(
-				'wikibaselexeme-newlexeme-lemma-too-long-error',
-				config.maxLemmaLength.toString(),
-			),
+			status: 'error',
+			messages: {
+				error: messages.getUnescaped(
+					'wikibaselexeme-newlexeme-lemma-too-long-error',
+					config.maxLemmaLength.toString(),
+				),
+			},
 		};
 	}
 	if ( !store.state.perFieldErrors.lemmaErrors.length ) {
-		return null;
+		return {
+			status: 'default',
+			messages: {},
+		};
 	}
 	return {
-		type: 'error',
-		message: messages.getUnescaped( store.state.perFieldErrors.lemmaErrors[ 0 ].messageKey ),
+		status: 'error',
+		messages: {
+			error: messages.getUnescaped( store.state.perFieldErrors.lemmaErrors[ 0 ].messageKey ),
+		},
 	};
 } );
 </script>
@@ -53,8 +63,8 @@ export default {
 <template>
 	<cdx-field
 		class="wbl-snl-lemma-input"
-		:status="error !== null ? 'error' : 'default'"
-		:messages="error !== null ? { error: error.message } : {}"
+		:status="error.status"
+		:messages="error.messages"
 	>
 		<!-- eslint-disable vue/v-on-event-hyphenation -->
 		<cdx-text-input
