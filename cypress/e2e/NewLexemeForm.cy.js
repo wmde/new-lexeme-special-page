@@ -66,13 +66,13 @@ describe( 'NewLexemeForm', () => {
 		cy.get( '.wbl-snl-language-lookup input' )
 			.type( '=Q123', { delay: 0 } );
 		checkA11y( '.wbl-snl-language-lookup' );
-		cy.get( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).click();
+		cy.get( '.wbl-snl-language-lookup .cdx-menu-item' ).click();
 
 		cy.wait( '@LanguageCodeRetrieval' );
 
 		cy.get( '.wbl-snl-lexical-category-lookup input' )
 			.type( '=Q456', { delay: 0 } );
-		cy.get( '.wbl-snl-lexical-category-lookup .wikit-OptionsMenu__item' ).click();
+		cy.get( '.wbl-snl-lexical-category-lookup .cdx-menu-item' ).click();
 
 		cy.get( '.wbl-snl-form' )
 			.submit();
@@ -99,17 +99,17 @@ describe( 'NewLexemeForm', () => {
 
 		cy.get( '.wbl-snl-language-lookup input' )
 			.type( '=Q123', { delay: 0 } );
-		cy.get( '.wbl-snl-language-lookup .wikit-OptionsMenu__item' ).click();
+		cy.get( '.wbl-snl-language-lookup .cdx-menu-item' ).click();
 
 		cy.get( '.wbl-snl-lexical-category-lookup input' )
 			.type( '=Q456', { delay: 0 } );
-		cy.get( '.wbl-snl-lexical-category-lookup .wikit-OptionsMenu__item' ).click();
+		cy.get( '.wbl-snl-lexical-category-lookup .cdx-menu-item' ).click();
 
 		cy.wait( '@LanguageCodeRetrieval' );
 
 		cy.get( '.wbl-snl-spelling-variant-lookup input' )
 			.type( 'en-ca', { delay: 0 } );
-		cy.get( '.wbl-snl-spelling-variant-lookup .wikit-OptionsMenu__item' ).click();
+		cy.get( '.wbl-snl-spelling-variant-lookup .cdx-menu-item' ).click();
 
 		cy.get( '.wbl-snl-form' )
 			.submit();
@@ -151,12 +151,12 @@ describe( 'NewLexemeForm', () => {
 
 		cy.get( '.wbl-snl-language-lookup input' ).click();
 
-		cy.get( '.wbl-snl-language-lookup .wikit-OptionsMenu__item__label' )
+		cy.get( '.wbl-snl-language-lookup .cdx-menu-item__text__label' )
 			.then( ( $element ) => {
 				expect( $element ).to.have.text( 'test language' );
 			} );
 
-		cy.get( '.wbl-snl-language-lookup .wikit-OptionsMenu__item__description' )
+		cy.get( '.wbl-snl-language-lookup .cdx-menu-item__text__description' )
 			.then( ( $element ) => {
 				expect( $element ).to.have.text( 'test language description' );
 			} );

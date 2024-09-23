@@ -1,4 +1,7 @@
 * {
+	/* spacing */
+	--dimension-spacing-xsmall: 0.25em;
+
 	/* layout */
 	--dimension-layout-xsmall: 1rem;
 	--dimension-layout-small: 1.5rem;
