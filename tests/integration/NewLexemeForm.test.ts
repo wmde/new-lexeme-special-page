@@ -309,11 +309,11 @@ describe( 'NewLexemeForm', () => {
 			await wrapper.trigger( 'submit' );
 
 			const lemmaInputWrapper = wrapper.get( '.wbl-snl-lemma-input' );
-			expect( lemmaInputWrapper.get( '.wikit-ValidationMessage--error' ).text() ).toBe( messagesPlugin.get( 'wikibaselexeme-newlexeme-lemma-empty-error' ) );
+			expect( lemmaInputWrapper.get( '.cdx-message--error' ).text() ).toBe( messagesPlugin.get( 'wikibaselexeme-newlexeme-lemma-empty-error' ) );
 
 			await lemmaInputWrapper.get( 'input' ).setValue( 'foo' );
 
-			expect( lemmaInputWrapper.find( '.wikit-ValidationMessage--error' ).exists() ).toBe( false );
+			expect( lemmaInputWrapper.find( '.cdx-message--error' ).exists() ).toBe( false );
 
 			expect( createLexeme ).not.toHaveBeenCalled();
 		} );
