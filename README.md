@@ -100,10 +100,6 @@ The following dependencies should be ignored:
   in production, we use the versions shipped by MediaWiki core,
   so we should use the same versions for testing.
   The current versions shipped by MediaWiki core are listed in [foreign-resources.yaml](https://gerrit.wikimedia.org/g/mediawiki/core/+/master/resources/lib/foreign-resources.yaml).
-- Prettier:
-  [Jest 29.65.2](https://github.com/jestjs/jest/blob/main/CHANGELOG.md#2962) is not compatible with Prettier 3.
-  This might be resolved with the next release ([Jest#14566](https://github.com/jestjs/jest/pull/14566)),
-  so be sure to check whether a newer Jest version is available that includes Prettier 3 compatibility.
 - Node.js version:
   The GitHub Workflows here should use the same Node.js version as the `mwgate-nodeXX-docker` CI job in WikibaseLexeme,
   because that job builds this app for the `test:snl-distnodiff` script. This version is currently Node 18.
