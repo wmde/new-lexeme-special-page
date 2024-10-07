@@ -201,7 +201,7 @@ describe( 'NewLexemeForm', () => {
 			const spellingVariantInput = wrapper.find( '.wbl-snl-spelling-variant-lookup input' );
 			expect( spellingVariantInput.exists() ).toBe( false );
 
-			await wrapper.trigger( 'submit' );
+			await wrapper.find( 'button' ).trigger( 'click' );
 			await flushPromises();
 
 			expect( createLexeme ).toHaveBeenCalledWith( 'foo', 'de', 'Q123', 'Q456' );
@@ -237,7 +237,7 @@ describe( 'NewLexemeForm', () => {
 			await spellingVariantInput.setValue( 'en' );
 			await wrapper.find( '.wbl-snl-spelling-variant-lookup .wikit-OptionsMenu__item' ).trigger( 'click' );
 
-			await wrapper.trigger( 'submit' );
+			await wrapper.find( 'button' ).trigger( 'click' );
 			await flushPromises();
 
 			expect( createLexeme ).toHaveBeenCalledWith( 'foo', 'en-gb', 'Q123', 'Q456' );
@@ -271,7 +271,7 @@ describe( 'NewLexemeForm', () => {
 			const spellingVariantInput = wrapper.find( '.wbl-snl-spelling-variant-lookup input' );
 			expect( spellingVariantInput.exists() ).toBe( false );
 
-			await wrapper.trigger( 'submit' );
+			await wrapper.find( 'button' ).trigger( 'click' );
 
 			const submitButton = wrapper.find( '.cdx-button' );
 			expect( submitButton.attributes( 'disabled' ) ).toBe( '' );
@@ -306,7 +306,7 @@ describe( 'NewLexemeForm', () => {
 			await selectLanguage( wrapper, '=Q123' );
 			await selectLexicalCategory( wrapper, '=Q456' );
 
-			await wrapper.trigger( 'submit' );
+			await wrapper.find( 'button' ).trigger( 'click' );
 
 			const lemmaInputWrapper = wrapper.get( '.wbl-snl-lemma-input' );
 			expect( lemmaInputWrapper.get( '.cdx-message--error' ).text() ).toBe( messagesPlugin.get( 'wikibaselexeme-newlexeme-lemma-empty-error' ) );
@@ -336,7 +336,7 @@ describe( 'NewLexemeForm', () => {
 			await setLemmaInput( wrapper, 'foo' );
 			await selectLanguage( wrapper, '=Q123' );
 
-			await wrapper.trigger( 'submit' );
+			await wrapper.find( 'button' ).trigger( 'click' );
 
 			const lexicalCategoryInputWrapper = wrapper.get( '.wbl-snl-lexical-category-lookup' );
 			expect( lexicalCategoryInputWrapper.get( '.wikit-ValidationMessage--error' ).text() )
@@ -366,7 +366,7 @@ describe( 'NewLexemeForm', () => {
 			await setLemmaInput( wrapper, 'foo' );
 			await selectLexicalCategory( wrapper, '=Q456' );
 
-			await wrapper.trigger( 'submit' );
+			await wrapper.find( 'button' ).trigger( 'click' );
 
 			const languageInputWrapper = wrapper.get( '.wbl-snl-language-lookup' );
 			expect( languageInputWrapper.get( '.wikit-ValidationMessage--error' ).text() )
@@ -403,7 +403,7 @@ describe( 'NewLexemeForm', () => {
 			await selectLanguage( wrapper );
 			await selectLexicalCategory( wrapper );
 
-			await wrapper.trigger( 'submit' );
+			await wrapper.find( 'button' ).trigger( 'click' );
 
 			const spellingVariantInputWrapper = wrapper.get( '.wbl-snl-spelling-variant-lookup' );
 			expect( spellingVariantInputWrapper.get( '.wikit-ValidationMessage--error' ).text() )
