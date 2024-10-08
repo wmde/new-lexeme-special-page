@@ -152,7 +152,7 @@ export default {
 </script>
 
 <template>
-	<form class="wbl-snl-form" @submit.prevent="onSubmit">
+	<form class="wbl-snl-form">
 		<lemma-input
 			v-model="lemma"
 		/>
@@ -182,6 +182,7 @@ export default {
 				weight="primary"
 				type="submit"
 				:disabled="submitting"
+				@click.prevent="onSubmit"
 			>
 				{{ submitButtonText }}
 			</cdx-button>

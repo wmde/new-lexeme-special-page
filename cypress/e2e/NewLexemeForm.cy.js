@@ -74,8 +74,8 @@ describe( 'NewLexemeForm', () => {
 			.type( '=Q456', { delay: 0 } );
 		cy.get( '.wbl-snl-lexical-category-lookup .wikit-OptionsMenu__item' ).click();
 
-		cy.get( '.wbl-snl-form' )
-			.submit();
+		cy.get( '.wbl-snl-form button' )
+			.click();
 
 		cy.get( '@alert' ).then( ( spy ) => {
 			expect( spy ).to.have.been.calledWith(
@@ -111,8 +111,8 @@ describe( 'NewLexemeForm', () => {
 			.type( 'en-ca', { delay: 0 } );
 		cy.get( '.wbl-snl-spelling-variant-lookup .wikit-OptionsMenu__item' ).click();
 
-		cy.get( '.wbl-snl-form' )
-			.submit();
+		cy.get( '.wbl-snl-form button' )
+			.click();
 
 		cy.get( '@alert' ).then( ( spy ) => {
 			expect( spy ).to.have.been.calledWith(
@@ -166,8 +166,8 @@ describe( 'NewLexemeForm', () => {
 				expect( $input ).to.have.value( 'Q456' );
 			} );
 
-		cy.get( '.wbl-snl-form' )
-			.submit();
+		cy.get( '.wbl-snl-form button' )
+			.click();
 
 		cy.get( '@alert' ).then( ( spy ) => {
 			expect( spy ).to.have.been.calledWith(
