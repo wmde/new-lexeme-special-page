@@ -73,10 +73,10 @@ export default {
 </template>
 
 <style lang="scss">
-@import '@wmde/wikit-tokens/variables';
+@import '@wikimedia/codex-design-tokens/theme-wikimedia-ui';
 /* stylelint-disable selector-class-pattern */
 .wbl-snl-lexical-category-lookup .wikit .wikit-Lookup__label-wrapper {
-	gap: $dimension-spacing-xsmall;
+	gap: $spacing-50;
 }
 /* stylelint-enable selector-class-pattern */
 

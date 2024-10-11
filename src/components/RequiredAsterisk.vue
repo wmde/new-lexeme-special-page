@@ -21,18 +21,12 @@ export default {
 </template>
 
 <style lang="scss" scoped>
-@import '@wmde/wikit-tokens/variables';
+@import '../styles/custom-variables.css';
+@import '@wikimedia/codex-design-tokens/theme-wikimedia-ui';
 
 .wbl-snl-required-asterisk {
-	font-size: $font-size-xxlarge;
+	font-size: $font-size-x-large;
 	line-height: 0;
-
-	&:not( :first-child ) {
-		margin-inline-start: $dimension-spacing-small;
-	}
-
-	&:not( :last-child ) {
-		margin-inline-end: $dimension-spacing-small;
-	}
+	margin-inline-start: var( --dimension-spacing-xsmall );
 }
 </style>
