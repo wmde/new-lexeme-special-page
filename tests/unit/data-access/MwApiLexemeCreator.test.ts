@@ -90,6 +90,17 @@ describe( 'MwApiLexemeCreator', () => {
 				},
 				language: 'Q123',
 				lexicalCategory: 'Q456',
+				forms: [
+					{
+						add: '',
+						representations: {
+							en: {
+								language: 'en',
+								value: 'lemma',
+							},
+						},
+					},
+				],
 			} ),
 			assert: 'user',
 			errorformat: 'html',
