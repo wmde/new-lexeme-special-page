@@ -43,7 +43,7 @@
 		"node": ">=16"
 	},
 	"dependencies": {
-		"@wikimedia/codex": "^1.13.1",
+		"@wikimedia/codex": "^1.14.0",
 		"@wikimedia/codex-design-tokens": "^1.13.1",
 		"@wmde/wikibase-datamodel-types": "^0.2.0",
 		"@wmde/wikit-tokens": "^3.0.0-alpha.12",
