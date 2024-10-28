@@ -162,7 +162,7 @@ describe( 'NewLexemeForm', () => {
 		await selectLanguage( wrapper );
 		await nextTick();
 
-		const warning = wrapper.find( '.wikit-ValidationMessage--warning' );
+		const warning = wrapper.find( '.cdx-message--warning' );
 		expect( warning.exists() ).toBe( false );
 
 		const spellingVariantLookup = wrapper.find( '.wbl-snl-spelling-variant-lookup input' );

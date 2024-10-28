@@ -94,8 +94,6 @@ npm run cypress:open
 You can see which dependencies have new releases by first making sure your local dependencies are up-to-date by executing `npm ci` and then running `npm outdated`.
 The following dependencies should be ignored:
 
-- Wikit (i.e. `@wmde/wikit-tokens` and `@wmde/wikit-vue-components`):
-  we’re using a newer pre-release version and don’t want to downgrade to the latest full release.
 - Vue and Vuex:
   in production, we use the versions shipped by MediaWiki core,
   so we should use the same versions for testing.
