@@ -94,11 +94,4 @@ export default {
 
 <style lang="scss">
 @import '@wikimedia/codex-design-tokens/theme-wikimedia-ui';
-
-/* stylelint-disable selector-class-pattern */
-.wbl-snl-language-lookup .wikit .wikit-Lookup__label-wrapper {
-	gap: $spacing-50;
-}
-/* stylelint-enable selector-class-pattern */
-
 </style>

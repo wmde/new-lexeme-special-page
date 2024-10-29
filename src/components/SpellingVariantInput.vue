@@ -133,12 +133,6 @@ export default {
 @import '@wikimedia/codex-design-tokens/theme-wikimedia-ui';
 
 .wbl-snl-spelling-variant-lookup {
-	/* stylelint-disable plugin/stylelint-bem-namics, selector-class-pattern */
-	&.wikit .wikit-Lookup__label-wrapper {
-		gap: $spacing-50;
-	}
-	/* stylelint-enable plugin/stylelint-bem-namics, selector-class-pattern */
-
 	&__help-link {
 		padding-bottom: $spacing-50;
 		display: inline-block;
