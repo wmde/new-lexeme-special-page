@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import {
+	ref,
+	computed,
+	toRef,
+} from 'vue';
 import escapeRegExp from 'lodash/escapeRegExp';
 import {
 	CdxLookup,
@@ -7,6 +11,7 @@ import {
 	MenuItemData,
 	ValidationMessages,
 	ValidationStatusType,
+	useModelWrapper,
 } from '@wikimedia/codex';
 import RequiredAsterisk from '@/components/RequiredAsterisk.vue';
 import { useMessages } from '@/plugins/MessagesPlugin/Messages';
@@ -15,7 +20,6 @@ import { useConfig } from '@/plugins/ConfigPlugin/Config';
 import { useStore } from 'vuex';
 
 interface Props {
-	modelValue: string | number | undefined;
 	searchInput: string;
 }
 
@@ -40,14 +44,19 @@ languageCodesProvider.getLanguages().forEach(
 const menuItems = ref( [] as MenuItemData[] );
 
 const emit = defineEmits( {
-	'update:modelValue': ( selectedLang: Props['modelValue'] ) => {
-		return selectedLang === null ||
+	'update:modelValue': ( selectedLang ) => {
+		return selectedLang === null || selectedLang === undefined ||
 			typeof selectedLang === 'string' && selectedLang.length > 0;
 	},
 	'update:searchInput': null,
 } );
 
+const lastInput = ref( null as string|null );
 const onInput = ( inputValue: string ) => {
+	if ( lastInput.value === inputValue ) {
+		return;
+	}
+	lastInput.value = inputValue;
 	emit( 'update:searchInput', inputValue );
 	if ( inputValue.trim() === '' ) {
 		menuItems.value = [];
@@ -89,6 +98,19 @@ const errorMessages = computed( (): ValidationMessages => {
 			store.state.perFieldErrors.spellingVariantErrors[ 0 ].messageKey,
 		) };
 } );
+
+/**
+ * We want to pass the searchInput property from the parent component
+ * to the child component. The searchInput property comes in read-only
+ * and receives updates from the parent (it is a ref / computed value).
+ * Use the `useModelWrapper` helper here to turn the read-only property
+ * into a computed value that emits updates on change.
+ */
+const searchInputWrapper = useModelWrapper(
+	toRef( props, 'searchInput' ),
+	emit,
+	'update:searchInput',
+);
 </script>
 
 <script lang="ts">
@@ -106,13 +128,12 @@ export default {
 		:messages="errorMessages">
 		<cdx-lookup
 			v-model:selected="selection"
+			v-model:input-value="searchInputWrapper"
 			:placeholder="messages.getUnescaped(
 				'wikibaselexeme-newlexeme-lemma-language-placeholder-with-example',
 				config.placeholderExampleData.spellingVariant
 			)"
-			:search-input="searchInput"
 			:menu-items="menuItems"
-			:input-value="props.modelValue"
 			@input="onInput"
 			@update:selected="onOptionSelected"
 		>
