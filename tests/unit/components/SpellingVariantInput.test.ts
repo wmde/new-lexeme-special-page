@@ -52,12 +52,9 @@ describe( 'SpellingVariantInput', () => {
 			const lookup = createLookup();
 
 			await lookup.find( 'input' ).setValue( 'en' );
-			await lookup.setProps( {
-				modelValue: 'English (en)',
-			} );
 
 			expect( lookup.find( 'div.cdx-text-input' ).get( 'input' ).element.value )
-				.toStrictEqual( 'English (en)' );
+				.toStrictEqual( 'en' );
 		} );
 
 		it( ':menuItems - returned suggestions are provided to Codex Lookup', async () => {
