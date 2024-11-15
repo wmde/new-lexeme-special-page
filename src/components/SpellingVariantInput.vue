@@ -68,7 +68,6 @@ const onInput = ( inputValue: string ) => {
 	menuItems.value = wbLexemeTermLanguages.filter(
 		( lang ) => lang.label && regExp.test( lang.label ),
 	);
-	onOptionSelected( inputValue );
 };
 
 const selection = ref( null );

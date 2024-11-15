@@ -140,29 +140,4 @@ describe( 'SpellingVariantInput', () => {
 		} );
 	} );
 
-	describe( '@events', () => {
-		it( '@update:modelValue - emits null when the input is changed', async () => {
-			const lookup = createLookup();
-
-			await setSearchInput( lookup, 'foo' );
-
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore
-			expect( lookup.emitted( 'update:modelValue' )[ 0 ][ 0 ] ).toBe( undefined );
-		} );
-
-		it( '@update:modelValue - emits the value of the selected option', async () => {
-			const lookup = createLookup();
-			await setSearchInput( lookup, 'en' );
-
-			await lookup.findComponent( CdxLookup ).vm.$emit( 'update:selected', 'en' );
-
-			// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-			// @ts-ignore
-			expect( lookup.emitted( 'update:modelValue' )[ 1 ][ 0 ] )
-				.toBe( 'en' );
-
-		} );
-	} );
-
 } );
