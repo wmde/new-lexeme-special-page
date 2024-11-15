@@ -51,7 +51,7 @@
 		"vuex": "4.0.2"
 	},
 	"devDependencies": {
-		"@namics/stylelint-bem": "^10.0.1",
+		"@namics/stylelint-bem": "^10.1.0",
 		"@rushstack/eslint-patch": "^1.10.4",
 		"@types/jest": "^29.5.13",
 		"@types/lodash": "^4.17.10",
