@@ -195,10 +195,6 @@ export default {
 @import '@wikimedia/codex-design-tokens/theme-wikimedia-ui';
 
 .wbl-snl-form {
-	& > * + * {
-		margin-top: var( --dimension-layout-xsmall );
-	}
-
 	// Box model
 	padding: var( --dimension-layout-small );
 
@@ -207,6 +203,10 @@ export default {
 	border-width: $border-width-base;
 	border-radius: $border-radius-base;
 	border-color: $border-color-muted;
+
+	& > * + * {
+		margin-top: var( --dimension-layout-xsmall );
+	}
 }
 
 .wbl-snl-copyright {
