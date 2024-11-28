@@ -139,6 +139,7 @@ const messages = useMessages();
 
 const menuConfig = {
 	visibleItemLimit: 6,
+	boldLabel: true,
 };
 
 const fieldStatus = computed( (): ValidationStatusType => {
