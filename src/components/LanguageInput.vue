@@ -61,14 +61,6 @@ const searchInputWrapper = useModelWrapper(
 );
 </script>
 
-<script lang="ts">
-export default {
-	compatConfig: {
-		MODE: 3,
-	},
-};
-</script>
-
 <template>
 	<div class="wbl-snl-language-lookup">
 		<item-lookup

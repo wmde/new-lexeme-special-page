@@ -52,14 +52,6 @@ const error = computed( (): {
 } );
 </script>
 
-<script lang="ts">
-export default {
-	compatConfig: {
-		MODE: 3,
-	},
-};
-</script>
-
 <template>
 	<cdx-field
 		class="wbl-snl-lemma-input"

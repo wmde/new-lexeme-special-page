@@ -40,14 +40,6 @@ const error = computed( () => {
 } );
 </script>
 
-<script lang="ts">
-export default {
-	compatConfig: {
-		MODE: 3,
-	},
-};
-</script>
-
 <template>
 	<div class="wbl-snl-lexical-category-lookup">
 		<item-lookup

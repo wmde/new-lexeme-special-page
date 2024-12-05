@@ -112,14 +112,6 @@ const searchInputWrapper = useModelWrapper(
 );
 </script>
 
-<script lang="ts">
-export default {
-	compatConfig: {
-		MODE: 3,
-	},
-};
-</script>
-
 <template>
 	<cdx-field
 		class="wbl-snl-spelling-variant-lookup"
