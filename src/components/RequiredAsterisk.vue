@@ -4,14 +4,6 @@ import { useMessages } from '@/plugins/MessagesPlugin/Messages';
 const messages = useMessages();
 </script>
 
-<script lang="ts">
-export default {
-	compatConfig: {
-		MODE: 3,
-	},
-};
-</script>
-
 <template>
 	<span
 		class="wbl-snl-required-asterisk"

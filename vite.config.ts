@@ -35,15 +35,7 @@ export default defineConfig( {
 		},
 	},
 	plugins: [
-		vue( {
-			template: {
-				compilerOptions: {
-					compatConfig: {
-						MODE: 3,
-					},
-				},
-			},
-		} ),
+		vue(),
 		banner( '/*!/*@nomin*/' ),
 	],
 } );

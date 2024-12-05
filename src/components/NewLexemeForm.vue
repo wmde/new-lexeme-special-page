@@ -143,14 +143,6 @@ const onSubmit = async () => {
 
 </script>
 
-<script lang="ts">
-export default {
-	compatConfig: {
-		MODE: 3,
-	},
-};
-</script>
-
 <template>
 	<form class="wbl-snl-form">
 		<lemma-input
