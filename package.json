@@ -51,7 +51,7 @@
 		"vuex": "4.0.2"
 	},
 	"devDependencies": {
-		"@namics/stylelint-bem": "^10.0.1",
+		"@namics/stylelint-bem": "^10.1.0",
 		"@rushstack/eslint-patch": "^1.10.4",
 		"@types/jest": "^29.5.13",
 		"@types/lodash": "^4.17.10",
@@ -80,9 +80,9 @@
 		"prettier": "^3.3.3",
 		"sass": "^1.79.5",
 		"start-server-and-test": "^2.0.8",
-		"stylelint": "^16.9.0",
+		"stylelint": "^16.12.0",
 		"stylelint-config-recommended-vue": "^1.5.0",
-		"stylelint-config-standard-scss": "^13.1.0",
+		"stylelint-config-standard-scss": "^14.0.0",
 		"stylelint-config-wikimedia": "^0.17.2",
 		"ts-jest": "^29.2.5",
 		"typescript": "^5.6.3",
