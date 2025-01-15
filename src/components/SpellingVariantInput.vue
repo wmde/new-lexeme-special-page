@@ -142,11 +142,11 @@ const searchInputWrapper = useModelWrapper(
 </template>
 
 <style lang="scss">
-@import '@wikimedia/codex-design-tokens/theme-wikimedia-ui';
+@use '@wikimedia/codex-design-tokens/theme-wikimedia-ui';
 
 .wbl-snl-spelling-variant-lookup {
 	&__help-link {
-		padding-bottom: $spacing-50;
+		padding-bottom: theme-wikimedia-ui.$spacing-50;
 		display: inline-block;
 	}
 }

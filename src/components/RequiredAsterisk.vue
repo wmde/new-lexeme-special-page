@@ -13,11 +13,11 @@ const messages = useMessages();
 </template>
 
 <style lang="scss" scoped>
+@use '@wikimedia/codex-design-tokens/theme-wikimedia-ui';
 @import '../styles/custom-variables.css';
-@import '@wikimedia/codex-design-tokens/theme-wikimedia-ui';
 
 .wbl-snl-required-asterisk {
-	font-size: $font-size-x-large;
+	font-size: theme-wikimedia-ui.$font-size-x-large;
 	line-height: 0;
 	margin-inline-start: var( --dimension-spacing-xsmall );
 }

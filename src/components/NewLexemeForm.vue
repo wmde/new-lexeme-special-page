@@ -183,18 +183,18 @@ const onSubmit = async () => {
 </template>
 
 <style scoped lang="scss">
+@use '@wikimedia/codex-design-tokens/theme-wikimedia-ui';
 @import '@/styles/custom-variables.css';
-@import '@wikimedia/codex-design-tokens/theme-wikimedia-ui';
 
 .wbl-snl-form {
 	// Box model
 	padding: var( --dimension-layout-small );
 
 	// Border
-	border-style: $border-style-base;
-	border-width: $border-width-base;
-	border-radius: $border-radius-base;
-	border-color: $border-color-muted;
+	border-style: theme-wikimedia-ui.$border-style-base;
+	border-width: theme-wikimedia-ui.$border-width-base;
+	border-radius: theme-wikimedia-ui.$border-radius-base;
+	border-color: theme-wikimedia-ui.$border-color-muted;
 
 	& > * + * {
 		margin-top: var( --dimension-layout-xsmall );
@@ -203,11 +203,11 @@ const onSubmit = async () => {
 
 .wbl-snl-copyright {
 	/* codex Body S */
-	font-family: $font-family-system-sans;
-	font-size: $font-size-small;
-	font-weight: $font-weight-normal;
-	line-height: $line-height-medium;
-	color: $color-base;
+	font-family: theme-wikimedia-ui.$font-family-system-sans;
+	font-size: theme-wikimedia-ui.$font-size-small;
+	font-weight: theme-wikimedia-ui.$font-weight-normal;
+	line-height: theme-wikimedia-ui.$line-height-medium;
+	color: theme-wikimedia-ui.$color-base;
 	margin-bottom: 0;
 }
 

@@ -85,5 +85,5 @@ const searchInputWrapper = useModelWrapper(
 </template>
 
 <style lang="scss">
-@import '@wikimedia/codex-design-tokens/theme-wikimedia-ui';
+@use '@wikimedia/codex-design-tokens/theme-wikimedia-ui';
 </style>
