@@ -26,7 +26,7 @@ function createLookup( config: Record<string, unknown> = {} ) {
 	} );
 	return mount( SpellingVariantInput, {
 		props: {
-			modelValue: '',
+			searchInput: '',
 		},
 		global: {
 			plugins: [ store ],
@@ -119,7 +119,7 @@ describe( 'SpellingVariantInput', () => {
 			} );
 			const lookup = mount( SpellingVariantInput, {
 				props: {
-					modelValue: '',
+					searchInput: '',
 				},
 				global: {
 					plugins: [ store ],
