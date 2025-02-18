@@ -16,6 +16,7 @@ function createLookup( propsOverrides: any = {} ): VueWrapper<any> {
 			placeholder: 'some placeholder',
 			searchForItems: jest.fn(),
 			value: null,
+			searchInput: 'input',
 			...propsOverrides,
 		},
 	} );

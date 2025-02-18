@@ -9,9 +9,6 @@ module.exports = {
 		'^@/(.*)$': '<rootDir>/src/$1',
 		'\\.css$': '<rootDir>/tests/mocks/styleMock.js',
 	},
-	setupFiles: [
-		'./jest.overrides.js',
-	],
 	testEnvironment: 'jsdom',
 	testEnvironmentOptions: {
 		customExportConditions: [ 'node', 'node-addons' ],
