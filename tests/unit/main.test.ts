@@ -9,13 +9,13 @@ describe( 'createAndMount', () => {
 
 	it( 'mounts created app on given selector', () => {
 		const rootElement = document.createElement( 'div' );
-		rootElement.id = 'test-app';
+		rootElement.id = 'wbl-snl-intro-text-wrapper';
 		document.body.append( rootElement );
 		const discardedElement = document.createElement( 'div' );
 		rootElement.append( discardedElement );
 
 		const instance = createAndMount( {
-			rootSelector: '#test-app',
+			rootSelector: '#wbl-snl-intro-text-wrapper',
 			isAnonymous: false,
 			licenseUrl: '',
 			licenseName: '',
