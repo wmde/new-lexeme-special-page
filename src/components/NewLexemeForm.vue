@@ -194,7 +194,7 @@ const onSubmit = async () => {
 	border-style: theme-wikimedia-ui.$border-style-base;
 	border-width: theme-wikimedia-ui.$border-width-base;
 	border-radius: theme-wikimedia-ui.$border-radius-base;
-	border-color: theme-wikimedia-ui.$border-color-muted;
+	border-color: var( --border-color-muted );
 
 	& > * + * {
 		margin-top: var( --dimension-layout-xsmall );
@@ -207,7 +207,7 @@ const onSubmit = async () => {
 	font-size: theme-wikimedia-ui.$font-size-small;
 	font-weight: theme-wikimedia-ui.$font-weight-normal;
 	line-height: theme-wikimedia-ui.$line-height-medium;
-	color: theme-wikimedia-ui.$color-base;
+	color: var( --color-base );
 	margin-bottom: 0;
 }
 

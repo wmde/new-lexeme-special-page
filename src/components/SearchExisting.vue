@@ -33,7 +33,7 @@ const searchMessage = computed( () => messages.get(
 	font-size: theme-wikimedia-ui.$font-size-small;
 	font-weight: theme-wikimedia-ui.$font-weight-normal;
 	line-height: theme-wikimedia-ui.$line-height-medium;
-	color: theme-wikimedia-ui.$color-base;
+	color: var( --color-base );
 
 	/* margins */
 	margin-top: var( --dimension-layout-xsmall );
