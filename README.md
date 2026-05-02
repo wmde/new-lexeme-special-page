@@ -1,3 +1,5 @@
+Development moved to Wikimedia Gerrit: https://gerrit.wikimedia.org/g/wikibase/new-lexeme-special-page.
+
 # New Lexeme Special Page form
 
 This repository holds the form for the [NewLexeme special page](https://www.wikidata.org/wiki/Special:NewLexeme) on Wikidata.
